@@ -9,6 +9,8 @@ config:
   xdebug: false
 services:
   appserver:
+    build:
+      - composer install
     run:
       - cp .env.example .env
       - php artisan key:generate
@@ -22,3 +24,5 @@ tooling:
     service: node
   npm:
     service: node
+  artisan:
+    cmd: "php artisan"
