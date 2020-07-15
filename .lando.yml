@@ -15,11 +15,14 @@ services:
       - cp .env.example .env
       - php artisan key:generate
       - php artisan migrate
-      - npm install && npm run dev
   database:
     portforward: 7650
   node:
     type: node:11
+    build:
+      - npm install
+    command:
+      - npm run dev
 tooling:
   node:
     service: node
