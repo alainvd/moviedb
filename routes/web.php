@@ -28,3 +28,7 @@ Route::get('/livewire', function () {
 Route::get('/tailwind', function () {
     return view('tailwind');
 });
+
+Route::get('/skeleton', function () {
+    return view('skeleton');
+});
