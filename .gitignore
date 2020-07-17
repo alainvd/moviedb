@@ -21,3 +21,4 @@ composer.lock
 /storage/debugbar/
 /phpunit.xml
 /.phpunit.result.cache
+public/mix-manifest.json

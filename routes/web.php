@@ -29,6 +29,10 @@ Route::get('/tailwind', function () {
     return view('tailwind');
 });
 
-Route::get('/skeleton', function () {
-    return view('skeleton');
+Route::get('/movies', function () {
+    return view('movies');
+});
+
+Route::get('/movie/detail', function () {
+    return view('movie-detail');
 });
