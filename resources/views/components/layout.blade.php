@@ -25,7 +25,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <img class="h-8 w-8" src="{{asset('images/vector.svg')}}"
-                             alt="Workflow logo">
+                             alt="Movie DB logo">
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline">
@@ -42,17 +42,31 @@
                     <div class="ml-4 flex items-center md:ml-6">
 
 
-                        <span class="inline-flex rounded-md shadow-sm">
-                          <button type="button"
-                                  class="mr-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
-    <svg width="24" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20 12H4M12 4V20V4Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+                        <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+                            <div class="max-w-lg w-full lg:max-w-xs">
+                                <label for="search" class="sr-only">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <input id="search" class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:text-gray-900 sm:text-sm transition duration-150 ease-in-out" placeholder="Search" type="search">
+                                </div>
+                            </div>
+                        </div>
+
+{{--                        <span class="inline-flex rounded-md shadow-sm">--}}
+{{--                          <button type="button"--}}
+{{--                                  class="mr-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">--}}
+{{--    <svg width="24" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--<path d="M20 12H4M12 4V20V4Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>--}}
+{{--</svg>--}}
 
 
-                              New Media
-                          </button>
-                        </span>
+{{--                              New Media--}}
+{{--                          </button>--}}
+{{--                        </span>--}}
 
                         <button
                             class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
@@ -75,23 +89,7 @@
                                          alt="">
                                 </button>
                             </div>
-                            <!--
-                              Profile dropdown panel, show/hide based on dropdown state.
 
-                              Entering: "transition ease-out duration-100"
-                                From: "transform opacity-0 scale-95"
-                                To: "transform opacity-100 scale-100"
-                              Leaving: "transition ease-in duration-75"
-                                From: "transform opacity-100 scale-100"
-                                To: "transform opacity-0 scale-95"
-                            -->
-                            {{--                            <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">--}}
-                            {{--                                <div class="py-1 rounded-md bg-white shadow-xs">--}}
-                            {{--                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>--}}
-                            {{--                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>--}}
-                            {{--                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
                         </div>
                     </div>
                 </div>
