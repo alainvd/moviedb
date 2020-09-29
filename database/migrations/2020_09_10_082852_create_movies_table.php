@@ -27,7 +27,7 @@ class CreateMoviesTable extends Migration
             $table->string('european_nationality_flag',255)->nullable();
             $table->longText('european_nationality_basis')->nullable();
             $table->string('cost_currency')->nullable();
-            $table->date('cost_currency_date');
+            $table->date('cost_currency_date')->nullable();
             $table->string('film_type')->nullable();
             $table->string('film_length')->nullable();
             $table->string('film_format')->nullable();

@@ -44,105 +44,112 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="bg-white">
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    The lives of Others
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    2006
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Florian Henckel von Donnersmarck
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Italy
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Matteo SOLARO
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    30-06-2020
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Complete
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center flex justify-center">
-                                    <svg width="20" height="20" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.208 2.44c.25-.768 1.335-.768 1.585 0l1.265 3.894a.833.833 0 00.792.575h4.096c.807 0 1.142 1.034.49 1.509l-3.313 2.406a.833.833 0 00-.303.932l1.265 3.895c.25.768-.63 1.407-1.282.931l-3.313-2.406a.834.834 0 00-.98 0l-3.313 2.406c-.653.476-1.532-.164-1.282-.931l1.265-3.895a.833.833 0 00-.302-.932L2.564 8.418c-.653-.475-.316-1.509.49-1.509H7.15a.833.833 0 00.793-.575L9.208 2.44v0z"
-                                            stroke="#D69E2E" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"/>
-                                    </svg>
-                                </td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    A Prophet
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    2009
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Jacques Audiard
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    France
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Vioaine SOMJA
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    30-06-2020
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Incomplete
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
+                            @foreach($movies as $movie)
+                                @if($loop->odd)
+                                    <tr class="bg-white">
+                                @else
+                                    <tr class="bg-gray-100">
+                                        @endif
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                            <a href="{{route('movie_detail', ['movie'=>$movie->id])}}">{{$movie->original_title}}</a>
+{{--                                            {{$movie->id}}--}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
+                                            {{$movie->year_of_copyright}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
+                                            ---
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
+                                            {{$movie->film_country_of_origin}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
+                                            Matteo SOLARO
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
+                                            30-06-2020
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
+                                            Complete
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center flex justify-center">
+                                            <svg width="20" height="20" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M9.208 2.44c.25-.768 1.335-.768 1.585 0l1.265 3.894a.833.833 0 00.792.575h4.096c.807 0 1.142 1.034.49 1.509l-3.313 2.406a.833.833 0 00-.303.932l1.265 3.895c.25.768-.63 1.407-1.282.931l-3.313-2.406a.834.834 0 00-.98 0l-3.313 2.406c-.653.476-1.532-.164-1.282-.931l1.265-3.895a.833.833 0 00-.302-.932L2.564 8.418c-.653-.475-.316-1.509.49-1.509H7.15a.833.833 0 00.793-.575L9.208 2.44v0z"
+                                                    stroke="#D69E2E" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"/>
+                                            </svg>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+{{--                                    <tr class="bg-gray-100">--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">--}}
+{{--                                            A Prophet--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            2009--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            Jacques Audiard--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            France--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            Vioaine SOMJA--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            30-06-2020--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            Incomplete--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
 
-                                </td>
-                            </tr>
-                            <tr class="bg-white">
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    The lives of Others
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    2006
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Florian Henckel von Donnersmarck
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    Italy
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    -
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    30-06-2020
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
-                                    New
-                                </td>
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                    <tr class="bg-white">--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">--}}
+{{--                                            The lives of Others--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            2006--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            Florian Henckel von Donnersmarck--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            Italy--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            ---}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            30-06-2020--}}
+{{--                                        </td>--}}
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">--}}
+{{--                                            New--}}
+{{--                                        </td>--}}
 
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center flex justify-center">
-                                    <svg width="20" height="20" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.208 2.44c.25-.768 1.335-.768 1.585 0l1.265 3.894a.833.833 0 00.792.575h4.096c.807 0 1.142 1.034.49 1.509l-3.313 2.406a.833.833 0 00-.303.932l1.265 3.895c.25.768-.63 1.407-1.282.931l-3.313-2.406a.834.834 0 00-.98 0l-3.313 2.406c-.653.476-1.532-.164-1.282-.931l1.265-3.895a.833.833 0 00-.302-.932L2.564 8.418c-.653-.475-.316-1.509.49-1.509H7.15a.833.833 0 00.793-.575L9.208 2.44v0z"
-                                            stroke="#D69E2E" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"/>
-                                    </svg>
-                                    <svg width="20" height="20" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.208 2.44c.25-.768 1.335-.768 1.585 0l1.265 3.894a.833.833 0 00.792.575h4.096c.807 0 1.142 1.034.49 1.509l-3.313 2.406a.833.833 0 00-.303.932l1.265 3.895c.25.768-.63 1.407-1.282.931l-3.313-2.406a.834.834 0 00-.98 0l-3.313 2.406c-.653.476-1.532-.164-1.282-.931l1.265-3.895a.833.833 0 00-.302-.932L2.564 8.418c-.653-.475-.316-1.509.49-1.509H7.15a.833.833 0 00.793-.575L9.208 2.44v0z"
-                                            stroke="#D69E2E" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"/>
-                                    </svg>
-                                </td>
+{{--                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center flex justify-center">--}}
+{{--                                            <svg width="20" height="20" fill="none"--}}
+{{--                                                 xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                <path--}}
+{{--                                                    d="M9.208 2.44c.25-.768 1.335-.768 1.585 0l1.265 3.894a.833.833 0 00.792.575h4.096c.807 0 1.142 1.034.49 1.509l-3.313 2.406a.833.833 0 00-.303.932l1.265 3.895c.25.768-.63 1.407-1.282.931l-3.313-2.406a.834.834 0 00-.98 0l-3.313 2.406c-.653.476-1.532-.164-1.282-.931l1.265-3.895a.833.833 0 00-.302-.932L2.564 8.418c-.653-.475-.316-1.509.49-1.509H7.15a.833.833 0 00.793-.575L9.208 2.44v0z"--}}
+{{--                                                    stroke="#D69E2E" stroke-width="2" stroke-linecap="round"--}}
+{{--                                                    stroke-linejoin="round"/>--}}
+{{--                                            </svg>--}}
+{{--                                            <svg width="20" height="20" fill="none"--}}
+{{--                                                 xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                <path--}}
+{{--                                                    d="M9.208 2.44c.25-.768 1.335-.768 1.585 0l1.265 3.894a.833.833 0 00.792.575h4.096c.807 0 1.142 1.034.49 1.509l-3.313 2.406a.833.833 0 00-.303.932l1.265 3.895c.25.768-.63 1.407-1.282.931l-3.313-2.406a.834.834 0 00-.98 0l-3.313 2.406c-.653.476-1.532-.164-1.282-.931l1.265-3.895a.833.833 0 00-.302-.932L2.564 8.418c-.653-.475-.316-1.509.49-1.509H7.15a.833.833 0 00.793-.575L9.208 2.44v0z"--}}
+{{--                                                    stroke="#D69E2E" stroke-width="2" stroke-linecap="round"--}}
+{{--                                                    stroke-linejoin="round"/>--}}
+{{--                                            </svg>--}}
+{{--                                        </td>--}}
 
-                            </tr>
+{{--                                    </tr>--}}
 
                             </tbody>
                         </table>

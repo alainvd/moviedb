@@ -4,7 +4,7 @@
             {{--            <div class="md:flex md:items-center md:justify-between">--}}
             <div class="flex-1 min-w-0 flex flex-row justify-between">
                 <div><h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-                        MDB2020/0423 - Movie details
+                        MDB{{$movie->year_of_copyright}}/{{$movie->id}} - {{$movie->original_title}}
                     </h2>
                 </div>
                 <div class="text-gray-600 inline-block align-baseline mt-3">Modified on 7 January 2020 by John Smith
@@ -24,25 +24,36 @@
                             <label for="original_title" class="block text-sm font-medium leading-5 text-gray-800">Original
                                 Title</label>
                             <input id="original_title"
-                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            value="{{$movie->original_title}}"
+                            >
                         </div>
 
                         <div class="col-start-7 col-end-9">
-                            <label for="status" class="block text-sm font-medium leading-5 text-gray-700">Status</label>
+                            <label for="status" class="block text-sm font-medium leading-5 text-gray-700">Europen Flag
+                                Status</label>
                             <select id="status"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                <option>Incomplete</option>
-                                <option>Complete</option>
+                                <option>OK</option>
+                                <option>Under Processing</option>
+                                <option>Not OK</option>
+                                <option>Missing information</option>
                             </select>
                         </div>
 
 
                         <div class="col-start-1 col-span-2">
-                            <label for="nationality" class="block text-sm font-medium leading-5 text-gray-700">Nationality</label>
+                            <label for="nationality" class="block text-sm font-medium leading-5 text-gray-700">Country
+                                of Origin</label>
                             <select id="nationality"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                <option>Belgian</option>
-                                <option>French</option>
+                                @foreach($countries as $country_code => $country_name)
+                                    @if($country_code == $movie->film_country_of_origin)
+                                    <option selected value="{{$country_code}}">{{$country_name}}</option>
+                                    @else
+                                        <option value="{{$country_code}}">{{$country_name}}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
 
@@ -51,12 +62,13 @@
                                    class="block text-sm font-medium leading-5 text-gray-700">Copyright</label>
                             <select id="copyright"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                <option>2006</option>
-                                <option>2007</option>
-                                <option>2008</option>
-                                <option>2009</option>
-                                <option>2010</option>
-                                <option>2011</option>
+                                @foreach($years as $year)
+                                    @if($year == $movie->year_of_copyright)
+                                    <option selected>{{$year}}</option>
+                                    @else
+                                        <option>{{$year}}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
 
@@ -65,8 +77,9 @@
                                 Genre</label>
                             <select id="film_genre"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                <option>Fiction</option>
-                                <option>Drama</option>
+                                @foreach($genres as $genre)
+                                    <option>{{$genre}}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -77,7 +90,7 @@
                             <select id="delivery_platform"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>Features / Cinema</option>
-                                <option>...</option>
+                                <option>TV</option>
                             </select>
                         </div>
 
@@ -87,9 +100,8 @@
                             <select id="audience"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>All</option>
-                                <option>13+</option>
-                                <option>16+</option>
-                                <option>18+</option>
+                                <option selected>Adults</option>
+                                <option>Children</option>
                             </select>
                         </div>
 
@@ -105,14 +117,24 @@
 
                     </div>
 
+
                     <div class="grid grid-cols-9 gap-6 mt-16">
+
                         <div class="col-start-1 col-span-4">
+                            <label for="imdb" class="block text-sm font-medium leading-5 text-gray-800">IMDB URL - <a target="_blank" href="{{$movie->imdb_url}}">Visit</a></label>
+                            <input id="original_title"
+                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                   value="{{$movie->imdb_url}}"
+                            >
+                        </div>
+
+                        <div class="col-start-5 col-span-4">
                             <label for="ID" class="block text-sm font-medium leading-5 text-gray-800">ID</label>
                             <input id="ID"
                                    class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
 
                         </div>
-                        <div class="col-start-5 col-span-2 mt-6">
+                        <div class="col-start-9 col-span-2 mt-6">
                                                             <span class="ml-5 rounded-md shadow-sm">
               <button type="button"
                       class="mt-1 py-2 px-3 border border-gray-700 rounded-md text-xs leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
@@ -120,6 +142,8 @@
               </button>
             </span>
                         </div>
+
+
 
                         <div class="col-start-1 col-span-9">
                             <label for="synopsis"
@@ -144,38 +168,52 @@
 
                     <div class="grid grid-cols-9 gap-6 my-12">
                         <div class="col-start-1 col-span-3">
-                            <label for="start_photography" class="block text-sm font-medium leading-5 text-gray-800">Start Date of Principal Photography</label>
+                            <label for="start_photography" class="block text-sm font-medium leading-5 text-gray-800">Start
+                                Date of Principal Photography</label>
                             <input id="start_photography"
-                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="dd/mm/yyyy">
+                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                   placeholder="dd/mm/yyyy"
+                                value="{{\Illuminate\Support\Carbon::parse($movie->shooting_start)->format('d/m/Y')}}">
                         </div>
 
                         <div class="col-start-4 col-span-3">
-                            <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End Date of Principal Photography</label>
+                            <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End
+                                Date of Principal Photography</label>
                             <input id="end_photography"
-                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="dd/mm/yyyy">
+                                   class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                   placeholder="dd/mm/yyyy"
+                                   value="{{\Illuminate\Support\Carbon::parse($movie->shooting_end)->format('d/m/Y')}}">
                         </div>
 
                         <div class="col-start-7 col-span-3">
-                            <label for="shooting_language" class="block text-sm font-medium leading-5 text-gray-700">Shooting Language</label>
+                            <label for="shooting_language" class="block text-sm font-medium leading-5 text-gray-700">Shooting
+                                Language</label>
                             <select id="shooting_language"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                <option>French</option>
-                                <option>English</option>
+                                @foreach($languages as $lang)
+                                    <option>{{$lang}}</option>
+                                @endforeach
                             </select>
                         </div>
 
                         <div class="col-start-1 col-span-3">
-                            <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film Length (in minutes)</label>
+                            <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film
+                                Length (in minutes)</label>
                             <input id="film_length"
                                    class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                         </div>
 
                         <div class="col-start-4 col-span-3">
-                            <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film Format</label>
+                            <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film
+                                Format</label>
                             <select id="film_format"
                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>35mm</option>
-                                <option>70mm</option>
+                                <option>DCP</option>
+                                <option>16:9</option>
+                                <option>HD</option>
+                                <option>4K</option>
+                                <option>2:35</option>
                             </select>
                         </div>
 
@@ -191,7 +229,8 @@
                     <div class="flex mt-12 justify-end">
 
  <span class="inline-flex rounded-md shadow-sm mr-8">
-  <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+  <button type="button"
+          class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
 Save Changes
   </button>
 </span>

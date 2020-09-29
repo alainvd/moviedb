@@ -30,12 +30,5 @@ Route::get('/tailwind', function () {
     return view('tailwind');
 });
 
-Route::get('/movies', function () {
-    return view('movies');
-});
-
-//Route::get('/movie/detail', function () {
-//    return view('movie-detail');
-//});
-
-Route::get('/movie/detail', [MovieDetailsController::class, 'show']);
+Route::get('movies', [\App\Http\Controllers\MovieController::class,'index']);
+Route::get('/movie/detail/{movie}', [MovieDetailsController::class, 'show'])->name('movie_detail');
