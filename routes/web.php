@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieDetailsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,8 @@ Route::get('/movies', function () {
     return view('movies');
 });
 
-Route::get('/movie/detail', function () {
-    return view('movie-detail');
-});
+//Route::get('/movie/detail', function () {
+//    return view('movie-detail');
+//});
+
+Route::get('/movie/detail', [MovieDetailsController::class, 'show']);
