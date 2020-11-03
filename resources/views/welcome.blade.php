@@ -1,42 +1,40 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<x-layout>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-</head>
-<body class="bg-gray-100 h-screen antialiased leading-none">
-<div class="flex flex-col">
-    @if(Route::has('login'))
-        <div class="absolute top-0 right-0 mt-4 mr-4">
-            @auth
-                <a href="{{ url('/home') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Home') }}</a>
-            @else
-                <a href="{{ route('login') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase pr-6">{{ __('Login') }}</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Register') }}</a>
-                @endif
-            @endauth
+    <div class="md:flex">
+        <div class="m-4 p-4 md:w-1/2">
+            <div class="my-4">
+                <h2 class="text-black text-4xl leading-10">Welcome to MediaDB</h2>
+            </div>
+            <div class="my-4">
+                <span class="text-gray-700 font-sans leading-6 text-xl">The European Commission Media tool supporting Media Programme implementation in Europe</span>
+            </div>
+            <div class="my-4 py-3">
+                <span class="p-3 border-2 border-indigo-700 text-sm text-indigo-700 font-bold">Select a Call</span>
+            </div>
+            <div class="my-4 py-3">
+                <span class="p-3 border-2 border-indigo-700 text-sm text-indigo-700 font-bold">enter your project ID</span>
+                <span class="p-3 border-2 border-indigo-700 text-sm text-white font-bold bg-indigo-700">Create media dossier</span>
+            </div>
         </div>
-    @endif
-
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="flex flex-col justify-around h-full">
-            <div>
-                <h1 class="text-gray-600 text-center font-light tracking-wider text-5xl mb-6">
-                    {{ config('app.name', 'Laravel') }}
-                </h1>
+        <div class="m-4 p-4 md:w-1/2">
+            <img src="/images/undraw_videographer.png" alt="Videographer">
+        </div>
+    </div>
+    <div class="md:flex">
+        <div class="m-4 p-4 md:w-1/2">
+            <img src="/images/undraw_video_game_night.png" alt="Videogame night">
+        </div>
+        <div class="m-4 p-4 md:w-1/2">
+            <div class="my-4">
+                <h2 class="text-black text-4xl leading-10">Looking for help?</h2>
+            </div>
+            <div class="my-4">
+                <span class="text-gray-700 font-sans leading-6 text-xl">you can contact us ... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel.</span>
+            </div>
+            <div class="my-4 py-3">
+                <span class="p-3 border-2 border-indigo-700 text-sm text-white font-bold bg-indigo-700">contact the helpdesk</span>
             </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+</x-layout>
