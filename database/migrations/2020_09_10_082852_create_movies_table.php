@@ -39,7 +39,6 @@ class CreateMoviesTable extends Migration
             $table->integer('source_film_id')->default(false); // ???
             $table->string('username')->nullable();
             $table->date('audit_date')->nullable();
-
             $table->date('eu_net_change_date')->nullable();
             $table->date('eu_net_change_name')->nullable();
 
