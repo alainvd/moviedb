@@ -2,10 +2,11 @@
 
 namespace App;
 
+use App\Interfaces\Grantable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Movie extends Model
+class Movie extends Model implements Grantable
 {
     use HasFactory;
 
