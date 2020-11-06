@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubmissionsTable extends Migration
+class CreateVideogamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateSubmissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('submissions', function (Blueprint $table) {
+        Schema::create('videogames', function (Blueprint $table) {
             $table->id();
-            $table->string('status', 100);
-            $table->unsignedBigInteger('call_id');
+            $table->string('vgdb', 400);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateSubmissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submissions');
+        Schema::dropIfExists('videogames');
     }
 }

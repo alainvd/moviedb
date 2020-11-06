@@ -2,8 +2,19 @@
 
 @section('content')
     @foreach($submissions as $submission)
-        {{$submission}}<br/>
-        {{$submission->call()->get()}}<br/>
+    <ul>
+        <li>
+            {{$submission}}
+        <ol>
+            <li>
+                {{$submission->call()->get()}}
+            </li>
+        </ol>
+
+        </li>
+    </ul>
+
+
     @endforeach
 @endsection
 

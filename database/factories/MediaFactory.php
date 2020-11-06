@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Videogame;
+use App\Media;
 
-class VideogameFactory extends Factory
+class MediaFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Videogame::class;
+    protected $model = Media::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +23,9 @@ class VideogameFactory extends Factory
     public function definition()
     {
         return [
-            'vgdb' => $this->faker->word,
+            'title' => $this->faker->sentence(4),
+            'grantable_id' => $this->faker->numberBetween(1,5),
+            'grantable_type' => $this->faker->randomElement(["App\Movie","App\Videogame"])
         ];
     }
 }

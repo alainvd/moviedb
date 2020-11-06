@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Movie;
+use App\Videogame;
 use Illuminate\Database\Seeder;
 
-class MovieSeeder extends Seeder
+class VideogameSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class MovieSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()->count(5)->create();
+        Videogame::factory()->count(5)->create();
     }
 }

@@ -33,18 +33,6 @@ Route::get('/tailwind', function () {
 Route::get('movies', [\App\Http\Controllers\MovieController::class,'index']);
 Route::get('/movie/detail/{movie}', [MovieDetailsController::class, 'show'])->name('movie_detail');
 
-
 Route::resource('call', 'CallController')->only('index');
-
 Route::resource('submission', 'SubmissionController')->only('index');
-
-
-
-Route::resource('call', 'CallController')->only('index');
-
-Route::resource('submission', 'SubmissionController')->only('index');
-
-
-Route::resource('call', 'CallController')->only('index');
-
-Route::resource('submission', 'SubmissionController')->only('index');
+Route::resource('media', 'MediaController')->only('index');

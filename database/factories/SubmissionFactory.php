@@ -24,7 +24,8 @@ class SubmissionFactory extends Factory
     public function definition()
     {
         return [
-            'status' => $this->faker->word,
+            'project_ref_id' => $this->faker->word,
+            'status' => $this->faker->randomElement(["accepted","rejected"]),
             'call_id' => Call::factory(),
         ];
     }

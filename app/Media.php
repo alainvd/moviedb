@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Call extends Model
+class Media extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,9 @@ class Call extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'description',
-        'published_at',
-        'status',
+        'title',
+        'grantable_id',
+        'grantable_type',
     ];
 
     /**
@@ -30,18 +29,9 @@ class Call extends Model
         'id' => 'integer',
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'published_at',
-    ];
 
-
-    public function submissions()
+    public function grantable()
     {
-        return $this->hasMany(\App\Submission::class);
+        return $this->morphTo();
     }
 }

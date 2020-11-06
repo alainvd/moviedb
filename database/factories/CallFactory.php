@@ -26,6 +26,7 @@ class CallFactory extends Factory
             'name' => $this->faker->name,
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
+            'status' => $this->faker->randomElement(["open","closed"]),
         ];
     }
 }

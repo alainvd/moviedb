@@ -15,6 +15,7 @@ class Submission extends Model
      * @var array
      */
     protected $fillable = [
+        'project_ref_id',
         'status',
         'call_id',
     ];
@@ -34,5 +35,4 @@ class Submission extends Model
     {
         return $this->belongsTo(\App\Call::class);
     }
-
 }

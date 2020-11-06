@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVideoGamesTable extends Migration
+class CreateCallsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateVideoGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('video_games', function (Blueprint $table) {
+        Schema::create('calls', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 400);
+            $table->longText('description')->nullable();
+            $table->timestamp('published_at')->nullable();
+            $table->enum('status', ["open","closed"]);
             $table->timestamps();
-
-            $table->string('original_name', 255);
-            $table->integer('igdb')->nullable();
-            $table->integer('publisher')->nullable();
-            $table->integer('developer')->nullable();
-
         });
     }
 
@@ -32,6 +30,6 @@ class CreateVideoGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('video_games');
+        Schema::dropIfExists('calls');
     }
 }

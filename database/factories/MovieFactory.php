@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Movie;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Movie;
 
 class MovieFactory extends Factory
 {
@@ -23,7 +24,15 @@ class MovieFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'imdb_url' => $this->faker->url,
+            'original_title' => $this->faker->sentence(3, true),
+            'shooting_start' => $this->faker->date(),
+            'shooting_end' => $this->faker->date(),
+            'year_of_copyright' => $this->faker->numberBetween(2000,2020),
+            'european_nationality_flag' => 'OK',
+            'film_country_of_origin' => $this->faker->randomElement(["BE","FR","NL"]),
         ];
+
+
     }
 }

@@ -15,7 +15,6 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-
             $table->string('original_title', 255);
             $table->string('imdb_url')->nullable();
             $table->string('isan', 255)->nullable();
@@ -41,6 +40,7 @@ class CreateMoviesTable extends Migration
             $table->date('audit_date')->nullable();
             $table->date('eu_net_change_date')->nullable();
             $table->date('eu_net_change_name')->nullable();
+
 
             $table->timestamps();
         });

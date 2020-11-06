@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Call extends Model
+class Videogame extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,7 @@ class Call extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'description',
-        'published_at',
-        'status',
+        'vgdb',
     ];
 
     /**
@@ -30,18 +27,13 @@ class Call extends Model
         'id' => 'integer',
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'published_at',
-    ];
 
-
-    public function submissions()
+    public function media()
     {
-        return $this->hasMany(\App\Submission::class);
+        return $this->morphOne(\App\Media::class, 'grantable');
+    }
+
+    public function whoami(){
+        return "I'm a video game ... BIIP BIP BIIIIIP";
     }
 }
