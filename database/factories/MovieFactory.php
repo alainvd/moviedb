@@ -28,9 +28,11 @@ class MovieFactory extends Factory
             'original_title' => $this->faker->sentence(3, true),
             'shooting_start' => $this->faker->date(),
             'shooting_end' => $this->faker->date(),
-            'year_of_copyright' => $this->faker->numberBetween(2000,2020),
+            'year_of_copyright' => $this->faker->numberBetween(2000, 2020),
             'european_nationality_flag' => 'OK',
-            'film_country_of_origin' => $this->faker->randomElement(["BE","FR","NL"]),
+            'film_country_of_origin' => $this->faker->randomElement(["BE", "FR", "NL"]),
+            'isan' => 'isan-' . $this->faker->unique()->numberBetween(10000, 99999),
+            'eidr' => 'eidr-' . $this->faker->unique()->numberBetween(10000, 99999),
         ];
 
 

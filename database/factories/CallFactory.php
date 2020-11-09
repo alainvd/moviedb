@@ -23,7 +23,7 @@ class CallFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->company,
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(["open","closed"]),
