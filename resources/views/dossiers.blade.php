@@ -43,7 +43,7 @@
         </div>
     </div>
     <div>
-        <div x-data="{ showClosed: false }" x-on:toggle.window="showClosed = !showClosed" class="m-4 p-4">
+        <div class="m-4 p-4">
             <div class="my-4">
                 <h2 class="text-black text-4xl leading-10">Your dossiers</h2>
             </div>
@@ -52,13 +52,7 @@
                     recorded in MediaDB.</span>
             </div>
             <div class="inline-block float-right text-indigo-700 font-semibold text-sm">
-                <input
-                    @click="$dispatch('toggleClosed')"
-                    class="m-2"
-                    type="checkbox"
-                    name="show"
-                    id="show"
-                >
+                <input class="m-2" type="checkbox" name="show" id="show">
                 <label for="show">Show Closed Calls</label>
             </div>
             <div class="mt-8 space-y-2 sm:space-y-4 clear-right">
