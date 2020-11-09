@@ -36,3 +36,15 @@ Route::get('/movie/detail/{movie}', [MovieDetailsController::class, 'show'])->na
 Route::resource('call', 'CallController')->only('index');
 Route::resource('submission', 'SubmissionController')->only('index');
 Route::resource('media', 'MediaController')->only('index');
+
+Route::get('/auth/login', function(){
+    cas()->authenticate();
+});
+
+Route::get('/auth/logout', [
+    'middleware' => 'cas.auth',
+    function(){
+        cas()->logout();
+    }
+]);
+Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
