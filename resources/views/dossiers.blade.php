@@ -52,8 +52,6 @@
                     recorded in MediaDB.</span>
             </div>
             <div class="inline-block float-right text-indigo-700 font-semibold text-sm">
-                <!-- <input class="m-2" type="checkbox" name="show" id="show">
-                <label for="show">Show Closed Calls</label> -->
                 @livewire('show-closed-calls')
             </div>
             <div class="mt-8 space-y-2 sm:space-y-4 clear-right">

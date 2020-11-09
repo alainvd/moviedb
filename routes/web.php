@@ -30,6 +30,7 @@ Route::get('/tailwind', function () {
     return view('tailwind');
 });
 
+<<<<<<< HEAD
 Route::get('movies', [\App\Http\Controllers\MovieController::class,'index']);
 Route::get('/movie/detail/{movie}', [MovieDetailsController::class, 'show'])->name('movie_detail');
 
@@ -49,29 +50,43 @@ Route::get('/auth/logout', [
 ]);
 Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 
+=======
+>>>>>>> 9a5803e1e267585a0765210b8e1162a3b9fbd318
 Route::get('homepage', function () {
     return view('homepage');
 })->name('homepage');
 
 $dossiers = [
+<<<<<<< HEAD
     [
         'id' => 1,
+=======
+    (object) [
+>>>>>>> 9a5803e1e267585a0765210b8e1162a3b9fbd318
         'project' => 'PROJECT REF ID',
         'shield' => true,
         'call' => 'Call DISTRAUTO 2020',
         'edit' => false,
         'closed' => false,
     ],
+<<<<<<< HEAD
     [
         'id' => 2,
+=======
+    (object) [
+>>>>>>> 9a5803e1e267585a0765210b8e1162a3b9fbd318
         'project' => 'PROJECT REF ID',
         'shield' => false,
         'call' => 'Call DISTRAUTO 2020',
         'edit' => false,
         'closed' => false,
     ],
+<<<<<<< HEAD
     [
         'id' => 3,
+=======
+    (object) [
+>>>>>>> 9a5803e1e267585a0765210b8e1162a3b9fbd318
         'project' => 'PROJECT REF ID',
         'shield' => false,
         'call' => 'Call DISTRAUTO 2019 - CLOSED',
@@ -85,7 +100,11 @@ Route::get('dossiers', function () use ($dossiers) {
 
 Route::get('internal', function () {
     return view('internal');
+<<<<<<< HEAD
 })->name('internal');
+=======
+});
+>>>>>>> 9a5803e1e267585a0765210b8e1162a3b9fbd318
 
 Route::get('movies', [MovieController::class, 'index'])->name('movies');
 Route::get('/movie/detail/{movie}', [MovieDetailsController::class,'show',])->name('movie_detail');
