@@ -58,21 +58,24 @@ Route::get('homepage', function () {
 })->name('homepage');
 
 $dossiers = [
-    (object) [
+    [
+        'id' => 1,
         'project' => 'PROJECT REF ID',
         'shield' => true,
         'call' => 'Call DISTRAUTO 2020',
         'edit' => false,
         'closed' => false,
     ],
-    (object) [
+    [
+        'id' => 2,
         'project' => 'PROJECT REF ID',
         'shield' => false,
         'call' => 'Call DISTRAUTO 2020',
         'edit' => false,
         'closed' => false,
     ],
-    (object) [
+    [
+        'id' => 3,
         'project' => 'PROJECT REF ID',
         'shield' => false,
         'call' => 'Call DISTRAUTO 2019 - CLOSED',
