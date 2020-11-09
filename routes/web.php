@@ -30,5 +30,40 @@ Route::get('/tailwind', function () {
     return view('tailwind');
 });
 
-Route::get('movies', [\App\Http\Controllers\MovieController::class,'index']);
-Route::get('/movie/detail/{movie}', [MovieDetailsController::class, 'show'])->name('movie_detail');
+Route::get('homepage', function () {
+    return view('homepage');
+})->name('homepage');
+
+$dossiers = [
+    (object) [
+        'project' => 'PROJECT REF ID',
+        'shield' => true,
+        'call' => 'Call DISTRAUTO 2020',
+        'edit' => false,
+        'closed' => false,
+    ],
+    (object) [
+        'project' => 'PROJECT REF ID',
+        'shield' => false,
+        'call' => 'Call DISTRAUTO 2020',
+        'edit' => false,
+        'closed' => false,
+    ],
+    (object) [
+        'project' => 'PROJECT REF ID',
+        'shield' => false,
+        'call' => 'Call DISTRAUTO 2019 - CLOSED',
+        'edit' => true,
+        'closed' => true,
+    ],
+];
+Route::get('dossiers', function () use ($dossiers) {
+    return view('dossiers', ['dossiers' => $dossiers]);
+})->name('dossiers');
+
+Route::get('internal', function () {
+    return view('internal');
+});
+
+Route::get('movies', [MovieController::class, 'index'])->name('movies');
+Route::get('/movie/detail/{movie}', [MovieDetailsController::class,'show',])->name('movie_detail');
