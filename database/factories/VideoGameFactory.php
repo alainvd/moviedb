@@ -23,7 +23,8 @@ class VideogameFactory extends Factory
     public function definition()
     {
         return [
-            'vgdb' => $this->faker->word,
+            'name' => $this->faker->words(5,true),
+            'vgdb' => 'vgdb-' . $this->faker->unique()->numberBetween(10000,99999),
         ];
     }
 }
