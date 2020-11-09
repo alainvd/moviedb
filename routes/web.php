@@ -53,3 +53,33 @@ Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->mid
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 
 
+Route::get('homepage', function () {
+    return view('homepage');
+})->name('homepage');
+
+$dossiers = [
+    (object) [
+        'project' => 'PROJECT REF ID',
+        'shield' => true,
+        'call' => 'Call DISTRAUTO 2020',
+        'edit' => false,
+        'closed' => false,
+    ],
+    (object) [
+        'project' => 'PROJECT REF ID',
+        'shield' => false,
+        'call' => 'Call DISTRAUTO 2020',
+        'edit' => false,
+        'closed' => false,
+    ],
+    (object) [
+        'project' => 'PROJECT REF ID',
+        'shield' => false,
+        'call' => 'Call DISTRAUTO 2019 - CLOSED',
+        'edit' => true,
+        'closed' => true,
+    ],
+];
+Route::get('dossiers', function () use ($dossiers) {
+    return view('dossiers', ['dossiers' => $dossiers]);
+})->name('dossiers');
