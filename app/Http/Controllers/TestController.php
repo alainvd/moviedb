@@ -10,5 +10,7 @@ class TestController extends Controller
     {
         dump(cas()->user());
         dump(cas()->getAttributes());
+
+        return view('test.cas');
     }
 }
