@@ -15,6 +15,7 @@ class CreateVideogamesTable extends Migration
     {
         Schema::create('videogames', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 400);
             $table->string('vgdb', 400);
             $table->timestamps();
         });
