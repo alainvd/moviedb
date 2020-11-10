@@ -4,7 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Media;
 use App\Movie;
-use App\Videogame;
+use App\VideoGame;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,7 +21,7 @@ class MediaControllerTest extends TestCase
     public function index_displays_view()
     {
         $movies = Movie::factory()->count(5)->create();
-        $videogames = Videogame::factory()->count(5)->create();
+        $videogames = VideoGame::factory()->count(5)->create();
         $media = Media::factory()->count(3)->create();
 
         $response = $this->get(route('media.index'));

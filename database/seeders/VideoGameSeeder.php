@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Videogame as VideoGame;
+use App\VideoGame;
 use Illuminate\Database\Seeder;
 
 class VideoGameSeeder extends Seeder
