@@ -140,7 +140,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'cas_version'         => env('CAS_VERSION', "2.0"),
-    
+
     /*
     |--------------------------------------------------------------------------
     | Enable PHPCas Debug Mode
@@ -166,5 +166,10 @@ return [
     | This should only be used for developmental purposes.  getAttributes()
     | will return null in this condition.
      */
-    'cas_masquerade'      => env('CAS_MASQUERADE', '')
+    'cas_masquerade'      => env('CAS_MASQUERADE', ''),
+
+
+    'cas_service_validate_query'      => env('CAS_SERVICE_VALIDATE_QUERY', '')
+
+
 ];

@@ -41,7 +41,7 @@ Route::get('/auth/login', function(){
     cas()->authenticate();
 });
 
-Route::get('/auth/logout', [
+Route::get('/test/cas/logout', [
     'middleware' => 'cas.auth',
     function(){
         cas()->logout();
