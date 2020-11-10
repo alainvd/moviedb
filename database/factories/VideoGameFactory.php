@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Videogame;
 
-class VideogameFactory extends Factory
+class VideoGameFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
