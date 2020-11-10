@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Tools\Generic;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','eu_login_username'
     ];
 
     /**
@@ -36,4 +38,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function firstOrCreateByAttributes($attributes)
+    {
+        $password = Str::random(16);
+
+        // Check if there is a user associated with this email
+        return User::firstOrCreate(
+            ['eu_login_username' => $attributes['uid']],
+            [
+                'name' => $attributes['firstName'] . ' ' . $attributes['lastName'],
+                'email' => $attributes['email'],
+                'password' => $password,
+            ]
+        );
+    }
 }

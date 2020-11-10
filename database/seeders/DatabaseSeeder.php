@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
          $this->call(\Database\Seeders\MovieSeeder::class);
          $this->call(\Database\Seeders\VideogameSeeder::class);
          $this->call(\Database\Seeders\MediaSeeder::class);
+         $this->call(\Database\Seeders\UserSeeder::class);
 //         $this->call(\Database\Seeders\MediaSeeder::class);
 //         $this->call(\Database\Seeders\MovieSeeder::class);
     }
