@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Videogame;
+use App\VideoGame;
 
 class VideoGameFactory extends Factory
 {
@@ -13,7 +13,7 @@ class VideoGameFactory extends Factory
      *
      * @var string
      */
-    protected $model = Videogame::class;
+    protected $model = VideoGame::class;
 
     /**
      * Define the model's default state.
