@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Default User",
             'email' => Str::random(10).'@gmail.com',
-            'eu_login_username' => env("CAS_MASQUERADE"),
+            'eu_login_username' => env("CAS_MASQUERADE", "moviedb-user"),
             'password' => Hash::make('password'),
         ]);
     }
