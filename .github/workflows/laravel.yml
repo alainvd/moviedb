@@ -29,4 +29,5 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
+        CAS_MASQUERADE: user
       run: vendor/bin/phpunit tests
