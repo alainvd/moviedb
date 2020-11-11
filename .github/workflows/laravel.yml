@@ -21,11 +21,6 @@ jobs:
         path: ~/.composer/cache/files
         key: dependencies-composer-${{ hashFiles('composer.json') }}
 
-    - name: PHPUnit  
-      uses: php-actions/phpunit@v9
-      with:
-        configuration: ./phpunit.xml
-        
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -49,3 +44,6 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+
+    - name: PHPUnit v9
+      uses: php-actions/phpunit@v9
