@@ -21,6 +21,11 @@ jobs:
         path: ~/.composer/cache/files
         key: dependencies-composer-${{ hashFiles('composer.json') }}
 
+    - name: PHPUnit  
+      uses: php-actions/phpunit@v9
+      with:
+        configuration: ./phpunit.xml
+        
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -44,15 +49,3 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        APP_ENV: testing
-        BCRYPT_ROUNDS: 4
-        CACHE_DRIVER: array
-        DB_CONNECTION: sqlite
-        DB_DATABASE: memory
-        QUEUE_CONNECTION: sync
-        SESSION_DRIVER: array
-        CAS_MASQUERADE: demouol
-      run: php artisan test
