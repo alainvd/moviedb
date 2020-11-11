@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Movie;
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,11 +18,19 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => "Default User",
-            'email' => Str::random(10).'@gmail.com',
-            'eu_login_username' => env("CAS_MASQUERADE", "moviedb-user"),
-            'password' => Hash::make('password'),
-        ]);
+
+        User::factory()->create([
+            'name' => "Editor",
+            'email' => 'editor@media-database.eu',
+            'eu_login_username' => env("CAS_MASQUERADE", "mediadb-editor"),
+            'password' => Hash::make(Str::random(20)),
+        ])->assignRole('editor');
+
+        User::factory()->create([
+            'name' => "Super Admin",
+            'email' => 'super-admin@media-database.eu',
+            'eu_login_username' => env("CAS_MASQUERADE", "mediadb-admin"),
+            'password' => Hash::make(Str::random(20)),
+        ])->assignRole('super admin');
     }
 }
