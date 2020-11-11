@@ -43,10 +43,7 @@
         </div>
     </div>
     <div class="md:flex">
-        <div class="m-4 p-4 md:w-1/2">
-            <img src="/images/undraw_video_game_night.png" alt="Videogamenight">
-        </div>
-        <div class="m-4 p-4 md:w-1/2">
+        <div class="m-4 p-4 w-full md:w-1/2 md:order-last">
             <div class="my-4">
                 <h2 class="text-black text-4xl leading-10">Looking for help?</h2>
             </div>
@@ -59,6 +56,9 @@
                     contact the helpdesk
                 </button>
             </div>
+        </div>
+        <div class="m-4 p-4 w-full md:w-1/2">
+            <img src="/images/undraw_video_game_night.png" alt="Videogamenight">
         </div>
     </div>
 
