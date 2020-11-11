@@ -8,6 +8,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        dd('Dashboard coming soon');
+        return('Dashboard coming soon');
     }
 }
