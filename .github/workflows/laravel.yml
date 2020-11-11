@@ -35,4 +35,4 @@ jobs:
         QUEUE_CONNECTION: sync
         SESSION_DRIVER: array
         CAS_MASQUERADE: demouol
-      run: php artisan test
+      run: vendor/bin/phpunit
