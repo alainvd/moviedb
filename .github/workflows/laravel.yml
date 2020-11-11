@@ -31,9 +31,6 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Delete composer.json
-      run: rm composer.json
-
     - name: Install Composer dependencies
       run: composer install --prefer-dist --no-interaction --no-suggest
 
