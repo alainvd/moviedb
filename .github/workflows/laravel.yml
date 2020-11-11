@@ -27,6 +27,12 @@ jobs:
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
+        APP_ENV: testing
+        BCRYPT_ROUNDS: 4
+        CACHE_DRIVER: array
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
+        QUEUE_CONNECTION: sync
+        SESSION_DRIVER: array
+        CAS_MASQUERADE: demouol
+      run: php artisan test
