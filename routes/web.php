@@ -47,4 +47,9 @@ Route::get('/test/cas/logout', [
         cas()->logout();
     }
 ]);
+
 Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
+
+Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
+
+
