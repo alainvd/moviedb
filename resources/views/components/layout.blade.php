@@ -62,7 +62,7 @@
                                 </svg>
                             </button>
                             <!-- Profile dropdown -->
-                            <div @click.away="open = false" class="ml-3 relative">
+                            <div x-data="{ open: false }" @click.away="open = false" class="ml-3 relative">
                                 <div>
                                     <button @click="open = !open"
                                         class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
