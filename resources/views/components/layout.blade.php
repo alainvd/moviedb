@@ -33,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hidden md:block">
+                    <div class="hidden md:block z-10">
                         <div class="ml-4 flex items-center md:ml-6">
                             <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
                                 <div class="max-w-lg w-full lg:max-w-xs">
