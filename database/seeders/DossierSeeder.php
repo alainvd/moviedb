@@ -22,7 +22,11 @@ class DossierSeeder extends Seeder
         $count = Media::all()->count();
         Media::all()->each(function ($media) use ($count) {
             $dossier = Dossier::factory()->create();
-            $dossier->media()->attach(rand(1, $count));
+            $rand = rand(1,3);
+            for($cpt=0;$cpt<$rand;$cpt++){
+                $dossier->media()->attach(rand(1, $count));
+            }
+
         });
 
 
