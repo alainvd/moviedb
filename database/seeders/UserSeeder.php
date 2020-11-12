@@ -22,14 +22,14 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => "Editor",
             'email' => 'editor@media-database.eu',
-            'eu_login_username' => env("CAS_MASQUERADE", "mediadb-editor"),
+            'eu_login_username' => "mediadb-editor",
             'password' => Hash::make(Str::random(20)),
         ])->assignRole('editor');
 
         User::factory()->create([
             'name' => "Super Admin",
             'email' => 'super-admin@media-database.eu',
-            'eu_login_username' => env("CAS_MASQUERADE", "mediadb-admin"),
+            'eu_login_username' => "mediadb-admin",
             'password' => Hash::make(Str::random(20)),
         ])->assignRole('super admin');
     }

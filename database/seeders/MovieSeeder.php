@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Media;
 use App\Movie;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,15 @@ class MovieSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()->count(5)->create();
+        Movie::factory()->count(10)->create();
+
+        Movie::all()->each(function ($movie) {
+            Media::factory()->create([
+                'title' => $movie->original_title,
+                'grantable_id' => $movie->id,
+                'grantable_type' => "App\Movie"
+            ]);
+        });
+
     }
 }

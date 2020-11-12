@@ -1,0 +1,14 @@
+models:
+  Dossier:
+    project_ref_id: string:20
+    action: string:20
+    year: integer
+    relationships:
+      belongsToMany: Media
+
+
+controllers:
+  Dossier:
+    index:
+      query: all
+      render: dossier.index with:dossiers
