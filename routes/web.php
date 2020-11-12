@@ -53,3 +53,12 @@ Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->mid
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 
 
+
+
+Route::resource('dossier', 'DossierController')->only('index');
+
+
+Route::resource('dossier', 'DossierController')->only('index');
+
+
+Route::resource('dossier', 'DossierController')->only('index');
