@@ -82,10 +82,3 @@ $dossiers = [
 Route::get('dossiers', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
 })->name('dossiers');
-
-Route::get('internal', function () {
-    return view('internal');
-})->name('internal');
-
-Route::get('movies', [MovieController::class, 'index'])->name('movies');
-Route::get('/movie/detail/{movie}', [MovieDetailsController::class,'show',])->name('movie_detail');
