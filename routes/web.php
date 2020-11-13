@@ -82,6 +82,6 @@ $dossiers = [
         'closed' => true,
     ],
 ];
-Route::get('dossiers', function () use ($dossiers) {
+Route::get('dossiers_test', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers');
+})->name('dossiers_test');
