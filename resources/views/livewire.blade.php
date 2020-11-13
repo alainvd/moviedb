@@ -1,21 +1,17 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Livewire</title>
     <livewire:styles>
-
-
-        </head>
+</head>
 
 <body>
-<livewire:scripts>
+    <livewire:search-posts />
+    <livewire:search-profiles />
 
-    <livewire:search-posts/>
-    <livewire:search-profiles/>
-
-
-
+    <livewire:scripts>
 </body>
 
 </html>
