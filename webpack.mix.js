@@ -22,7 +22,12 @@ if (mix.inProduction()) {
   mix.version();
 }
 
-mix.browserSync({
-   proxy: 'moviedb.test',
-   notify: false
-});
+
+if (!mix.inProduction()) {
+    mix.browserSync({
+        proxy: process.env.MIX_LOCAL || 'moviedb.test',
+        notify: false
+    });
+}
+
+
