@@ -85,3 +85,13 @@ $dossiers = [
 Route::get('dossiers_test', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
 })->name('dossiers_test');
+
+
+Route::resource('dossier', 'DossierController')->only('index');
+
+
+Route::resource('dossier', 'DossierController')->only('index');
+
+
+Route::resource('dossier', 'DossierController')->only('index');
+
