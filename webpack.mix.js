@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 require('laravel-mix-tailwind');
-require('laravel-mix-purgecss')
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -20,9 +20,11 @@ mix.js('resources/js/app.js', 'public/js')
 
 if (mix.inProduction()) {
   mix.version();
+} else {
+    mix.browserSync({
+        proxy: 'moviedb.test',
+        notify: false
+    });
 }
 
-mix.browserSync({
-   proxy: 'moviedb.test',
-   notify: false
-});
+
