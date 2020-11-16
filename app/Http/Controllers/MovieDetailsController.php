@@ -32,9 +32,10 @@ class MovieDetailsController extends Controller
 
         $genres = [
             "Fiction",
+            "Creative Documentary",
             "Animation",
-            "Documentary",
-            "Live-action children film"
+            "Series",
+            "Live-action children film",
         ];
 
 

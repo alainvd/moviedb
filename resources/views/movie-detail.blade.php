@@ -86,6 +86,7 @@
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>Features / Cinema</option>
                                 <option>TV</option>
+                                <option>Digital</option>
                             </select>
                         </div>
 
@@ -95,18 +96,17 @@
                             <select id="audience"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>All</option>
-                                <option selected>Adults</option>
                                 <option>Children</option>
+                                <option selected>Adults</option>
                             </select>
                         </div>
 
                         <div class="col-start-7 col-span-2">
-                            <label for="film_type" class="block text-sm font-medium leading-5 text-gray-700">Film
-                                Type</label>
+                            <label for="film_type" class="block text-sm font-medium leading-5 text-gray-700">Film Type</label>
                             <select id="film_type"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>One-off</option>
-                                <option>Recurring</option>
+                                <option>Series</option>
                             </select>
                         </div>
                     </div>
@@ -198,11 +198,8 @@
                             <select id="film_format"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>35mm</option>
-                                <option>DCP</option>
-                                <option>16:9</option>
-                                <option>HD</option>
-                                <option>4K</option>
-                                <option>2:35</option>
+                                <option>Digital</option>
+                                <option>Other</option>
                             </select>
                         </div>
                     </div>
