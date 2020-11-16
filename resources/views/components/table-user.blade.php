@@ -16,7 +16,11 @@
                                 ROLE
                             </th>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
-                                FULL NAME
+                                FIRST NAME
+                            </th>
+                            <th
+                                class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
+                                LAST NAME
                             </th>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
                                 GENDER
@@ -36,38 +40,38 @@
                         <tbody>
 
                         @foreach($users as $user)
-                            <!-- Odd row -->
-                            @if($loop->odd)
-                                <tr class="bg-white">
-                            @else
-                                <tr class="bg-gray-100">
-                                    @endif
-
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                        {{$user->role}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{$user->name}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{$user->gender}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{$user->nationality1}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{$user->nationality2}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{$user->country_of_residence}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-
-
+                        <!-- Odd row -->
+                        @if($loop->odd)
+                        <tr class="bg-white">
+                        @else
+                        <tr class="bg-gray-100">
+                        @endif
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                {{$user->role}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                {{$user->first_name}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                {{$user->last_name}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                {{$user->gender}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                {{$user->nationality1}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                {{$user->nationality2}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                {{$user->country_of_residence}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            </td>
+                        </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -79,6 +83,6 @@
                       class="mt-3 py-2 px-3 border border-gray-700 rounded-md text-xs leading-4 font-medium text-gray-900 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
                 Add
               </button>
-</span>
+        </span>
     </div>
 </div>

@@ -1,7 +1,8 @@
+cast-crew
 <div>
     <div class="pb-5">
         <h3 class="text-xl leading-6 font-medium text-gray-900">
-            Sales Agents
+            {{ $title }}
         </h3>
     </div>
 
@@ -14,59 +15,70 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
-                                    NAME
+                                    ROLE
                                 </th>
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
-                                    COUNTRY
+                                    FIRST NAME
                                 </th>
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
-                                    CONTACT PERSON
+                                    LAST NAME
                                 </th>
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
-                                    EMAIL
+                                    GENDER
+                                </th>
+                                <th
+                                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
+                                    NATIONALITY 1
+                                </th>
+                                <th
+                                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
+                                    NATIONALITY 2
+                                </th>
+                                <th
+                                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider">
+                                    RESIDENCE
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white">
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    Gloria Patterson
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    France
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    -
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    -
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                </td>
-                            </tr>
+                            @foreach($users as $user)
+                                <!-- Odd row -->
+                                @if($loop->odd)
+                                    <tr class="bg-white">
+                                    @else
+                                    <tr class="bg-gray-100">
+                                @endif
 
-                            <tr class="bg-gray-100">
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    Robert Peterson
+                                    {{ $user->role }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    France
+                                    {{ $user->first_name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    -
+                                    {{ $user->last_name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    rpeterson@gmail.com
+                                    {{ $user->gender }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    {{ $user->nationality1 }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    {{ $user->nationality2 }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    {{ $user->country_of_residence }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
-                            </tr>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

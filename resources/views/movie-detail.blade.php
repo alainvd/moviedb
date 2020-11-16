@@ -27,8 +27,7 @@
                         </div>
 
                         <div class="col-start-7 col-end-9">
-                            <label for="status" class="block text-sm font-medium leading-5 text-gray-700">European Flag
-                                Status</label>
+                            <label for="status" class="block text-sm font-medium leading-5 text-gray-700">European Flag Status</label>
                             <select id="status"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>OK</option>
@@ -39,8 +38,7 @@
                         </div>
 
                         <div class="col-start-1 col-span-2">
-                            <label for="nationality" class="block text-sm font-medium leading-5 text-gray-700">Country
-                                of Origin</label>
+                            <label for="nationality" class="block text-sm font-medium leading-5 text-gray-700">Country of Origin</label>
                             <select id="nationality"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 @foreach($countries as $country_code => $country_name)
@@ -69,8 +67,7 @@
                         </div>
 
                         <div class="col-start-7 col-span-2">
-                            <label for="film_genre" class="block text-sm font-medium leading-5 text-gray-700">Film
-                                Genre</label>
+                            <label for="film_genre" class="block text-sm font-medium leading-5 text-gray-700">Film Genre</label>
                             <select id="film_genre"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 @foreach($genres as $genre)
@@ -157,8 +154,7 @@
                     <div class="grid grid-cols-9 gap-6 my-12">
                         <div class="col-start-1 col-span-3">
                             <label for="start_photography"
-                                class="block text-sm font-medium leading-5 text-gray-800">Start Date of Principal
-                                Photography</label>
+                                class="block text-sm font-medium leading-5 text-gray-800">Start Date of Principal Photography</label>
                             <input id="start_photography"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 placeholder="dd/mm/yyyy"
@@ -166,8 +162,7 @@
                         </div>
 
                         <div class="col-start-4 col-span-3">
-                            <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End
-                                Date of Principal Photography</label>
+                            <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End Date of Principal Photography</label>
                             <input id="end_photography"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 placeholder="dd/mm/yyyy"
@@ -186,15 +181,13 @@
                         </div>
 
                         <div class="col-start-1 col-span-3">
-                            <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film
-                                Length (in minutes)</label>
+                            <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film Length (in minutes)</label>
                             <input id="film_length"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                         </div>
 
                         <div class="col-start-4 col-span-3">
-                            <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film
-                                Format</label>
+                            <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film Format</label>
                             <select id="film_format"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>35mm</option>
