@@ -16,6 +16,7 @@ class CreateCallsTable extends Migration
         Schema::create('calls', function (Blueprint $table) {
             $table->id();
             $table->string('name', 400);
+            $table->string('action', 20);
             $table->longText('description')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->enum('status', ["open","closed"]);

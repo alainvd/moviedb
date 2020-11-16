@@ -44,4 +44,8 @@ class Call extends Model
     {
         return $this->hasMany(\App\Submission::class);
     }
+
+    public function action(){
+        return $this->hasOne(\App\Models\Action::class);
+    }
 }
