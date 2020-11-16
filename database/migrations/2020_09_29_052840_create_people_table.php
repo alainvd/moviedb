@@ -15,6 +15,8 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('media_id');
+            $table->enum('type', ["cast","crew"]);
             $table->string('role');
             $table->string('first_name');
             $table->string('last_name');

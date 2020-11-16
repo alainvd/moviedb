@@ -26,10 +26,24 @@ class Movie extends Model implements Grantable
         'id' => 'integer',
     ];
 
-
     public function media()
     {
         return $this->morphOne(\App\Media::class, 'grantable');
+    }
+
+    public function people()
+    {
+        return $this->hasMany(\App\Models\Person::class, 'media_id', 'id');
+    }
+
+    public function getCast()
+    {
+        return $this->people()->where('type', 'cast')->get();
+    }
+
+    public function getCrew()
+    {
+        return $this->people()->where('type', 'crew')->get();
     }
 
     public function whoami(){

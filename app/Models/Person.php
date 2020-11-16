@@ -14,4 +14,10 @@ class Person extends Model
     {
 
     }
+
+    public function media()
+    {
+        return $this->belongsTo(\App\Media::class, 'media_id', 'id');
+    }
+
 }
