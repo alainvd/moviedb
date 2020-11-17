@@ -3,17 +3,22 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Movie;
 
-class MovieDetails extends Component
+class MovieDetailForm extends Component
 {
 
-    public $movie;
+    public Movie $movie;
     public $crew;
     public $cast;
     public $languages;
     public $years;
     public $genres;
     public $countries;
+
+    protected $rules = [
+        'movie.original_title' => 'string|min:100',
+    ];
 
     public function mount($movie, $crew, $cast, $languages, $years, $genres, $countries)
     {
@@ -26,9 +31,21 @@ class MovieDetails extends Component
         $this->countries = $countries;
     }
 
+    public function save()
+    {
+        // validate
+        // save
+        if (!$this->movie->exists) {
+            $this->movie->save();
+            return redirect()->to('/movie/detail/' . $this->movie->id);            
+        } else {
+            $this->movie->save();
+        }
+    }
+
     public function render()
     {
-        return view('livewire.movie-details', [
+        return view('livewire.movie-detail-form', [
             'movie'=>$this->movie,
             'countries'=>$this->countries,
             'crew'=>$this->crew,

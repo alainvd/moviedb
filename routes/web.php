@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDetailsController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::get('/tailwind', function () {
 
 Route::get('movies', [\App\Http\Controllers\MovieController::class,'index'])->name('movies');
 Route::get('/movie/detail/{movie}', [MovieDetailsController::class, 'show'])->name('movie_detail');
+Route::get('/movie/create', [MovieDetailsController::class, 'create'])->name('movie_create');
 
 Route::resource('call', 'CallController')->only('index');
 Route::resource('submission', 'SubmissionController')->only('index');
