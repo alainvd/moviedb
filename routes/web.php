@@ -95,3 +95,10 @@ Route::resource('dossier', 'DossierController')->only('index');
 
 Route::resource('dossier', 'DossierController')->only('index');
 
+
+
+Route::resource('step', 'StepController')->only('index');
+
+Route::resource('step-definition', 'StepDefinitionController')->only('index');
+
+Route::resource('checklist', 'ChecklistController')->only('index');

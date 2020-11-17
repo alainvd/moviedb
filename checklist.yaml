@@ -1,0 +1,41 @@
+models:
+  Step:
+    category: string
+    description: string
+    relationships:
+      hasMany: StepDefinition,Checklist
+
+  StepDefinition:
+    action: string:20
+    step_id: integer
+    position: integer
+    version: integer
+    relationships:
+      belongsTo: Step
+      hasOne: Action
+
+  Checklist:
+    position: integer
+    status: string
+    dossier_id: integer
+    step_id: integer
+    status_by: string
+    relationships:
+      belongsTo: Step
+
+
+controllers:
+  Step:
+    index:
+      query: all
+      render: step.index with:steps
+  StepDefinition:
+    index:
+      query: all
+      render: stepdefinitions.index with:stepdefinitions
+  Checklist:
+    index:
+      query: all
+      render: checklist.index with:checklists
+
+seeders: Step, StepDefinition, Checklist

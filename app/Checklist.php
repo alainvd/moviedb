@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dossier extends Model
+class Checklist extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,11 @@ class Dossier extends Model
      * @var array
      */
     protected $fillable = [
-        'project_ref_id',
-        'action',
-        'year',
+        'position',
+        'status',
+        'dossier_id',
+        'step_id',
+        'status_by',
     ];
 
     /**
@@ -30,15 +32,18 @@ class Dossier extends Model
     ];
 
 
+    public function step()
+    {
+        return $this->belongsTo(\App\Step::class);
+    }
+
+    public function dossier()
+    {
+        return $this->belongsTo(\App\Dossier::class);
+    }
+
     public function media()
     {
-        return $this->belongsToMany(\App\Media::class);
+        return $this->belongsTo(\App\Media::class);
     }
-
-    public function checklists()
-    {
-        return $this->hasMany(\App\Checklist::class);
-    }
-
-
 }
