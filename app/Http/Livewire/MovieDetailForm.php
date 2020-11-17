@@ -17,7 +17,19 @@ class MovieDetailForm extends Component
     public $countries;
 
     protected $rules = [
-        'movie.original_title' => 'string|min:100',
+        'movie.original_title' => 'string|min:255',
+        'movie.european_nationality_flag' => 'string|min:255',
+        'movie.film_country_of_origin' => 'string|min:255',
+        'movie.year_of_copyright' => 'int',
+        'movie.film_type' => 'string|min:255',
+        'movie.imdb_url' => 'string|min:255',
+        // 'movie.shooting_start' => 'date_format:d/m/Y',
+        'movie.shooting_start' => 'date',
+        // 'movie.shooting_end' => 'date_format:d/m/Y',
+        'movie.shooting_end' => 'date',
+        'movie.film_length' => 'string|min:255',
+        'movie.film_format' => 'string|min:255',
+        
     ];
 
     public function mount($movie, $crew, $cast, $languages, $years, $genres, $countries)

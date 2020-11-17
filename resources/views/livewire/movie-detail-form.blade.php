@@ -8,7 +8,7 @@
                     </h2>
                 </div>
                 <div class="text-gray-600 inline-block align-baseline mt-3">
-                    Modified on 7 January 2020 by John Smith
+                    Modified on {{ $movie->updated_at->format('d F Y') }} by John Smith
                 </div>
             </div>
         </div>
@@ -20,15 +20,16 @@
                     <div class="grid grid-cols-8 gap-6">
                         <div class="col-start-1 col-span-6">
                             <label for="original_title"
-                                class="block text-sm font-medium leading-5 text-gray-800">Original Title</label>
+                                class="block text-sm font-medium leading-5 text-gray-800">Original Title (wired)</label>
                             <input id="original_title"
                                 wire:model="movie.original_title"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                         </div>
 
                         <div class="col-start-7 col-end-9">
-                            <label for="status" class="block text-sm font-medium leading-5 text-gray-700">European Flag Status</label>
+                            <label for="status" class="block text-sm font-medium leading-5 text-gray-700">European Flag Status (wired)</label>
                             <select id="status"
+                                wire:model="movie.european_nationality_flag"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>OK</option>
                                 <option>Under Processing</option>
@@ -38,30 +39,24 @@
                         </div>
 
                         <div class="col-start-1 col-span-2">
-                            <label for="nationality" class="block text-sm font-medium leading-5 text-gray-700">Country of Origin</label>
+                            <label for="nationality" class="block text-sm font-medium leading-5 text-gray-700">Country of Origin (wired)</label>
                             <select id="nationality"
+                                wire:model="movie.film_country_of_origin"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 @foreach($countries as $country_code => $country_name)
-                                    @if($country_code == $movie->film_country_of_origin)
-                                        <option selected value="{{ $country_code }}">{{ $country_name }}</option>
-                                    @else
-                                        <option value="{{ $country_code }}">{{ $country_name }}</option>
-                                    @endif
+                                    <option value="{{ $country_code }}">{{ $country_name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="col-start-4 col-span-2">
                             <label for="copyright"
-                                class="block text-sm font-medium leading-5 text-gray-700">Copyright</label>
+                                class="block text-sm font-medium leading-5 text-gray-700">Copyright (wired)</label>
                             <select id="copyright"
+                                wire:model="movie.year_of_copyright"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 @foreach($years as $year)
-                                    @if($year == $movie->year_of_copyright)
-                                        <option selected>{{ $year }}</option>
-                                    @else
-                                        <option>{{ $year }}</option>
-                                    @endif
+                                    <option>{{ $year }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -99,8 +94,9 @@
                         </div>
 
                         <div class="col-start-7 col-span-2">
-                            <label for="film_type" class="block text-sm font-medium leading-5 text-gray-700">Film Type</label>
+                            <label for="film_type" class="block text-sm font-medium leading-5 text-gray-700">Film Type (wired)</label>
                             <select id="film_type"
+                                wire:model="movie.film_type"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>One-off</option>
                                 <option>Series</option>
@@ -112,8 +108,9 @@
                         <div class="col-start-1 col-span-4">
                             <label for="imdb" class="block text-sm font-medium leading-5 text-gray-800">IMDB URL - <a
                                     target="_blank" href="{{ $movie->imdb_url }}"
-                                    class="text-indigo-600 hover:text-indigo-900">Visit</a></label>
+                                    class="text-indigo-600 hover:text-indigo-900">Visit</a> (wired)</label>
                             <input id="original_title"
+                                wire:model="movie.imdb_url"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 value="{{ $movie->imdb_url }}">
                         </div>
@@ -154,16 +151,18 @@
                     <div class="grid grid-cols-9 gap-6 my-12">
                         <div class="col-start-1 col-span-3">
                             <label for="start_photography"
-                                class="block text-sm font-medium leading-5 text-gray-800">Start Date of Principal Photography</label>
+                                class="block text-sm font-medium leading-5 text-gray-800">Start Date of Principal Photography (wired, todo)</label>
                             <input id="start_photography"
+                                wire:model="movie.shooting_start"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 placeholder="dd/mm/yyyy"
                                 value="{{ \Illuminate\Support\Carbon::parse($movie->shooting_start)->format('d/m/Y') }}">
                         </div>
 
                         <div class="col-start-4 col-span-3">
-                            <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End Date of Principal Photography</label>
+                            <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End Date of Principal Photography (wired, todo)</label>
                             <input id="end_photography"
+                                wire:model="movie.shooting_end"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 placeholder="dd/mm/yyyy"
                                 value="{{ \Illuminate\Support\Carbon::parse($movie->shooting_end)->format('d/m/Y') }}">
@@ -181,14 +180,16 @@
                         </div>
 
                         <div class="col-start-1 col-span-3">
-                            <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film Length (in minutes)</label>
+                            <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film Length (in minutes) (wired)</label>
                             <input id="film_length"
+                                wire:model="movie.film_length"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                         </div>
 
                         <div class="col-start-4 col-span-3">
-                            <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film Format</label>
+                            <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film Format (wired)</label>
                             <select id="film_format"
+                                wire:model="movie.film_format"
                                 class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 <option>35mm</option>
                                 <option>Digital</option>
