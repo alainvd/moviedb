@@ -17,19 +17,18 @@ class MovieDetailForm extends Component
     public $countries;
 
     protected $rules = [
-        'movie.original_title' => 'string|min:255',
-        'movie.european_nationality_flag' => 'string|min:255',
-        'movie.film_country_of_origin' => 'string|min:255',
-        'movie.year_of_copyright' => 'int',
-        'movie.film_type' => 'string|min:255',
-        'movie.imdb_url' => 'string|min:255',
+        'movie.original_title' => 'string|max:255',
+        'movie.european_nationality_flag' => 'string|max:255',
+        'movie.film_country_of_origin' => 'string|max:255',
+        'movie.year_of_copyright' => 'integer',
+        'movie.film_type' => 'string|max:255',
+        'movie.imdb_url' => 'string|max:255',
         // 'movie.shooting_start' => 'date_format:d/m/Y',
         'movie.shooting_start' => 'date',
         // 'movie.shooting_end' => 'date_format:d/m/Y',
         'movie.shooting_end' => 'date',
-        'movie.film_length' => 'string|min:255',
-        'movie.film_format' => 'string|min:255',
-        
+        'movie.film_length' => 'string|max:255',
+        'movie.film_format' => 'string|max:255',        
     ];
 
     public function mount($movie, $crew, $cast, $languages, $years, $genres, $countries)
@@ -45,13 +44,14 @@ class MovieDetailForm extends Component
 
     public function save()
     {
-        // validate
-        // save
+        $this->validate();
+        // TODO: notify about validation error
         if (!$this->movie->exists) {
             $this->movie->save();
             return redirect()->to('/movie/detail/' . $this->movie->id);            
         } else {
             $this->movie->save();
+            $this->emitSelf('notify-saved');
         }
     }
 

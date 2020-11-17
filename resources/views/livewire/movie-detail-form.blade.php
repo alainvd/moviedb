@@ -24,6 +24,7 @@
                             <input id="original_title"
                                 wire:model="movie.original_title"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                            @error('movie.original_title') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-7 col-end-9">
@@ -36,6 +37,7 @@
                                 <option>Not OK</option>
                                 <option>Missing information</option>
                             </select>
+                            @error('movie.european_nationality_flag') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-1 col-span-2">
@@ -47,6 +49,7 @@
                                     <option value="{{ $country_code }}">{{ $country_name }}</option>
                                 @endforeach
                             </select>
+                            @error('movie.film_country_of_origin') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-4 col-span-2">
@@ -59,6 +62,7 @@
                                     <option>{{ $year }}</option>
                                 @endforeach
                             </select>
+                            @error('movie.year_of_copyright') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-7 col-span-2">
@@ -101,6 +105,7 @@
                                 <option>One-off</option>
                                 <option>Series</option>
                             </select>
+                            @error('movie.film_type') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
                     </div>
 
@@ -109,10 +114,11 @@
                             <label for="imdb" class="block text-sm font-medium leading-5 text-gray-800">IMDB URL - <a
                                     target="_blank" href="{{ $movie->imdb_url }}"
                                     class="text-indigo-600 hover:text-indigo-900">Visit</a> (wired)</label>
-                            <input id="original_title"
+                            <input id="imdb_url"
                                 wire:model="movie.imdb_url"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 value="{{ $movie->imdb_url }}">
+                            @error('movie.imdb_url') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-5 col-span-4">
@@ -157,6 +163,7 @@
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 placeholder="dd/mm/yyyy"
                                 value="{{ \Illuminate\Support\Carbon::parse($movie->shooting_start)->format('d/m/Y') }}">
+                            @error('movie.shooting_start') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-4 col-span-3">
@@ -166,6 +173,7 @@
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                 placeholder="dd/mm/yyyy"
                                 value="{{ \Illuminate\Support\Carbon::parse($movie->shooting_end)->format('d/m/Y') }}">
+                            @error('movie.shooting_end') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-7 col-span-3">
@@ -184,6 +192,7 @@
                             <input id="film_length"
                                 wire:model="movie.film_length"
                                 class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                            @error('movie.film_length') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-start-4 col-span-3">
@@ -195,6 +204,7 @@
                                 <option>Digital</option>
                                 <option>Other</option>
                             </select>
+                            @error('movie.film_format') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
                         </div>
                     </div>
 
@@ -204,7 +214,23 @@
 
                     <x-table-sales></x-table-sales>
 
-                    <div class="flex mt-12 justify-end">
+                    <div class="flex mt-12 justify-end items-center space-x-3">
+                        <span>
+                                <span
+                                    x-data="{ open: false }"
+                                    x-init="
+                                        @this.on('notify-saved', () => {
+                                            setTimeout(() => { open = false }, 2500);
+                                            open = true;
+                                        })
+                                    "
+                                    x-show.transition.out.duration.1000ms="open"
+                                    style="display: none;"
+                                    class="text-gray-600">
+                                    Saved!
+                                </span>
+                        </span>
+
                         <span class="inline-flex rounded-md shadow-sm mr-8">
                             <button type="submit"
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
