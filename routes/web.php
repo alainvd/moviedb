@@ -89,12 +89,8 @@ Route::get('dossiers_test', function () use ($dossiers) {
 
 Route::resource('dossier', 'DossierController')->only('index');
 
-
-Route::resource('dossier', 'DossierController')->only('index');
-
-
-Route::resource('dossier', 'DossierController')->only('index');
-
+Route::view('/projects', 'coming-soon');
+Route::view('/reports', 'coming-soon');
 
 
 Route::resource('step', 'StepController')->only('index');

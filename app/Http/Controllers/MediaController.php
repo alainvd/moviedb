@@ -16,9 +16,9 @@ class MediaController extends Controller
     {
         $medium = Media::all();
 
-        foreach ($medium as $media){
-            dump($this->getDetails($media->grantable));
-        }
+        // foreach ($medium as $media){
+        //     dump($this->getDetails($media->grantable));
+        // }
 
         return view('media.index', compact('medium'));
     }
