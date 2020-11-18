@@ -17,7 +17,9 @@ class CreateDossiersTable extends Migration
             $table->id();
             $table->string('project_ref_id', 20);
             $table->string('action', 20);
+            $table->string('status');
             $table->integer('year');
+            $table->integer('call_id');
             $table->timestamps();
         });
     }

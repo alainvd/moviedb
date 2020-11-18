@@ -40,9 +40,9 @@ class Call extends Model
     ];
 
 
-    public function submissions()
+    public function dossiers()
     {
-        return $this->hasMany(\App\Submission::class);
+        return $this->hasMany(\App\Dossier::class);
     }
 
     public function action(){

@@ -39,7 +39,7 @@ class CallFactory extends Factory
             "TV"];
         return [
             'name' => $this->faker->company,
-            'action' => $this->faker->unique()->randomElement($actions),
+            'action' => $this->faker->randomElement($actions),
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(["open","closed"]),

@@ -24,6 +24,6 @@ class StepDefinitionControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('stepdefinitions.index');
-        $response->assertViewHas('stepdefinitions');
+        $response->assertViewHas('stepDefinitions');
     }
 }
