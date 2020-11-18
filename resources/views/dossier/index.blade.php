@@ -1,7 +1,17 @@
-{{--
-    @extends('layouts.app')
+@extends('layouts.app')
 
-    @section('content')
-        dossier.index template
-    @endsection
---}}
+@section('content')
+    <ul>
+        @foreach($dossiers as $dossier)
+            <li>
+                {{$dossier}}
+                <ol>
+                    @foreach($dossier->checklists as $checklists)
+                        {{$checklists}}
+                    @endforeach
+                </ol>
+            </li>
+        @endforeach
+    </ul>
+
+@endsection

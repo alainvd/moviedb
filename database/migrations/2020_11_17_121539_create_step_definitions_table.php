@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubmissionsTable extends Migration
+class CreateStepDefinitionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateSubmissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('submissions', function (Blueprint $table) {
+        Schema::create('step_definitions', function (Blueprint $table) {
             $table->id();
-            $table->string('project_ref_id', 40);
-            $table->enum('status', ["accepted","rejected"]);
-            $table->unsignedBigInteger('call_id');
+            $table->string('action', 20);
+            $table->unsignedInteger('step_id');
+            $table->unsignedInteger('position');
+            $table->unsignedInteger('version')->default(1);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateSubmissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submissions');
+        Schema::dropIfExists('step_definitions');
     }
 }
