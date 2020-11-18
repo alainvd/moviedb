@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Call;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Dossier;
@@ -26,6 +27,8 @@ class DossierFactory extends Factory
             'project_ref_id' => $this->faker->word,
             'action' => $this->faker->word,
             'year' => $this->faker->numberBetween(1990, 2020),
+            'status' => $this->faker->randomElement(["accepted","rejected"]),
+            'call_id' => Call::factory(),
         ];
     }
 }
