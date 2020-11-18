@@ -4,17 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Call;
-use App\Submission;
+use App\Step;
 
-class SubmissionFactory extends Factory
+class StepFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Submission::class;
+    protected $model = Step::class;
 
     /**
      * Define the model's default state.
@@ -24,9 +23,8 @@ class SubmissionFactory extends Factory
     public function definition()
     {
         return [
-            'project_ref_id' => $this->faker->unique()->numberBetween(100000,555555),
-            'status' => $this->faker->randomElement(["accepted","rejected"]),
-            'call_id' => Call::factory(),
+            'category' => $this->faker->word,
+            'description' => $this->faker->text,
         ];
     }
 }

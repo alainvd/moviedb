@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDossiersTable extends Migration
+class CreateChecklistsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateDossiersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dossiers', function (Blueprint $table) {
+        Schema::create('checklists', function (Blueprint $table) {
             $table->id();
-            $table->string('project_ref_id', 20);
-            $table->string('action', 20);
+            $table->unsignedInteger('position');
             $table->string('status');
-            $table->integer('year');
-            $table->integer('call_id');
+            $table->unsignedInteger('dossier_id');
+            $table->unsignedInteger('media_id');
+            $table->unsignedInteger('step_id');
+            $table->string('status_by')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateDossiersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dossiers');
+        Schema::dropIfExists('checklists');
     }
 }

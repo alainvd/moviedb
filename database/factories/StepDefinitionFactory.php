@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Call;
+use App\Step;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Dossier;
+use App\StepDefinition;
 
-class DossierFactory extends Factory
+class StepDefinitionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Dossier::class;
+    protected $model = StepDefinition::class;
 
     /**
      * Define the model's default state.
@@ -24,11 +24,10 @@ class DossierFactory extends Factory
     public function definition()
     {
         return [
-            'project_ref_id' => $this->faker->word,
             'action' => $this->faker->word,
-            'year' => $this->faker->numberBetween(1990, 2020),
-            'status' => $this->faker->randomElement(["accepted","rejected"]),
-            'call_id' => Call::factory(),
+            'step_id' => Step::factory(),
+            'position' => $this->faker->numberBetween(1, 200),
+            'version' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

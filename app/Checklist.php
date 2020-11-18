@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Submission extends Model
+class Checklist extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,11 @@ class Submission extends Model
      * @var array
      */
     protected $fillable = [
-        'project_ref_id',
+        'position',
         'status',
-        'call_id',
+        'dossier_id',
+        'step_id',
+        'status_by',
     ];
 
     /**
@@ -27,12 +29,21 @@ class Submission extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'call_id' => 'integer',
     ];
 
 
-    public function call()
+    public function step()
     {
-        return $this->belongsTo(\App\Call::class);
+        return $this->belongsTo(\App\Step::class);
+    }
+
+    public function dossier()
+    {
+        return $this->belongsTo(\App\Dossier::class);
+    }
+
+    public function media()
+    {
+        return $this->belongsTo(\App\Media::class);
     }
 }
