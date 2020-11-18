@@ -1,12 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
+<x-layout>
     <ul>
         @foreach($medium as $media)
-            <li>
-                {{$media->title}} [{{$media->grantable_type}}]<br/>{{$media->grantable->whoami()}}
-            </li>
+        <li>
+            {{$media->title}} [{{$media->grantable_type}}]<br />
+        </li>
         @endforeach
     </ul>
-
-@endsection
+</x-layout>
