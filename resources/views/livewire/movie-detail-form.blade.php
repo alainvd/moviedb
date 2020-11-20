@@ -161,16 +161,16 @@
                         <table>
                         @foreach ($peopleOnForm as $person)
                             <tr>
-                                <td>{{ $person->first_name }}</td>
-                                <td>{{ $person->last_name }}</td>
-                                <td><a wire:click="showModal({{ $person->id }})" wire:key="{{ $person->id }}">Edit</a></td>
+                                <td>{{ $person['first_name'] }}</td>
+                                <td>{{ $person['last_name'] }}</td>
+                                <td><a wire:click="showModalEdit('{{ $person['key'] }}')" wire:key="{{ $person['key'] }}">Edit</a></td>
                             </tr>
                         @endforeach
                         </table>
                     </div>
 
                     <div class="mt-5">
-                        <a wire:click="showModal" wire:loading.attr="disabled">
+                        <a wire:click="showModalNew" wire:loading.attr="disabled">
                             Add person
                         </a>
                     </div>

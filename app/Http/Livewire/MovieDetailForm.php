@@ -6,16 +6,29 @@ use Livewire\Component;
 use App\Movie;
 use App\Media;
 use App\Models\Person;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class MovieDetailForm extends Component
 {
 
+    // Movie data for Livewire
     public Movie $movie;
+
+    // While editing people, we store a copy of all people in a local array.
+    // We also convert each person in to array (there were issues otherwise).
+    // TODO: or we could store people in People models, just not save them?
     public $peopleOnForm;
+
+    // When to show modal
     public $showingModal = false;
+
+    // While editing person has to be a Model, for Livewire to wire it's fields.
+    // TODO: or we can have property for each field.
     public Person $personEditing;
 
+    /**
+     * Each wired fields needs to be here or it will be filtered
+     */
     protected $rules = [
         'movie.original_title' => 'required|string|max:255',
         'movie.european_nationality_flag' => 'string|max:255',
@@ -30,6 +43,8 @@ class MovieDetailForm extends Component
         'movie.film_length' => 'string|max:255',
         'movie.film_format' => 'string|max:255',       
         
+        'personEditing.id' => '',
+        'personEditing.key' => '',
         'personEditing.first_name' => 'string|max:255',
         'personEditing.last_name' => 'string|max:255',
     ];
@@ -38,12 +53,18 @@ class MovieDetailForm extends Component
     {
         if ($movie_id) {
             $this->movie = Movie::where('id', $movie_id)->first();
-            $this->peopleOnForm = $this->movie->people;
+            // Make a copy of people in array (TODO: change to collection?)
+            $this->peopleOnForm = $this->movie->people->toArray();
+            $this->peopleOnForm = array_map(
+                function ($a) {
+                    $a['key'] = Str::random(10);
+                    return $a;
+                },
+                $this->peopleOnForm
+            );
         } else {
             $this->movie = new Movie;
-            // This has to be Eloquent Collection.
-            // If simple Collection or array, Livewire does not preserve models inside, turns them into arrays.
-            $this->peopleOnForm = new \Illuminate\Database\Eloquent\Collection;
+            $this->peopleOnForm = [];
         };
     }
 
@@ -67,64 +88,83 @@ class MovieDetailForm extends Component
     {
         $this->movie->save();
 
+        // (Everything is an array at this point)
+        // TODO: somehow mark which need to be updated
         foreach ($this->peopleOnForm as $person) {
-            $person->media_id = $this->movie->id;
-            $person->save();
+            // Save new people
+            if (!isset($person['id'])) {
+                unset($person['key']);
+                $this->movie->people()->create($person);
+            }
+            // Update existing people
+            else {
+                unset($person['key']);
+                unset($person['created_at']);
+                unset($person['updated_at']);
+                Person::where('id', $person['id'])->update($person);
+            }
         }
     }
 
-    public function showModal($id = null)
+    /**
+     * Editing person modal
+     */
+    public function showModalEdit($key = null)
     {
-        if ($id) {
-            $this->personEditing = Person::where('id', $id)->first();
-        } else {
-            $this->personEditing = new Person;
-        }
+        // NOTES: Convert to model, because Livewire can only wire Model properties
+        // TODO: or I can create property for each field?
+
+        // Just take the data from array and convert to People model
+        $personEditing = array_filter(
+            $this->peopleOnForm,
+            function($a) use ($key) {
+                if ($a['key'] == $key) return $a;
+            }
+        );
+        $personEditing = array_shift($personEditing);
+        $this->personEditing = new Person($personEditing);
 
         $this->showingModal = true;
     }
 
+    /**
+     * New person modal
+     */
+    public function showModalNew() {
+        $this->personEditing = new Person;
+
+        $this->showingModal = true;
+    }
+
+    /**
+     * Save person locally
+     */
     public function savePerson()
     {
         $this->showingModal = false;
 
-        if ($this->personEditing->id) {
-            $this->personEditing->save();
-            // Reflect changed person in peopleOnForm
-            // TODO: there must be a better way
-            $ppp = $this->peopleOnForm->where('id', $this->personEditing->id)->first();
-            $ppp->first_name = $this->personEditing->first_name;
-            $ppp->last_name = $this->personEditing->last_name;
-        } else {
-            // TODO: details
-            $this->personEditing->type = 'crew';
-            $this->personEditing->role = 'director';
-            $this->personEditing->gender = 'Male';
-            $this->personEditing->nationality1 = 'Belgium';
-            $this->personEditing->country_of_residence = 'Belgium';
+        // For Livewire purposes, this is a Model
+        // save to the array, with unique id
+        $personEditing = $this->personEditing->toArray();
+        $personEditing['type'] = 'crew';
+        $personEditing['role'] = 'director';
+        $personEditing['gender'] = 'Male';
+        $personEditing['nationality1'] = 'Belgium';
+        $personEditing['country_of_residence'] = 'Belgium';
 
-            // NOTE 1:
-            // While editing people, we store them in a Collection.
-            // Livewire properties can store Collection and EloquentCollection
-            // (but not array):
-            // https://laravel-livewire.com/docs/2.x/properties#important-notes:~:text=Properties%20can%20ONLY%20be%20either%20JavaScript
-            
-            // NOTE 2:
-            // We want to store unsaved people (with Person model) while editing movie form
-            // But Laravel/Tailwind doesn't like to work with unsaved Models
-            // So we're saving people without media_id reference, until the whole movie is saved.
-
-            // TODO:
-            // There is still an issue of EDITING people, which are already stored to media.
-            // There are always updated, regardless if we save the movie.
-            // E.g. When starting to edit, People has to be a true copy (detached from database).
-            // And only save them, when saving whole movie.
-
-            // TODO:
-            // Same situation with removing people
-
-            $this->personEditing->save();
-            $this->peopleOnForm->push($this->personEditing);
+        // find by key - update or add
+        $findPerson = array_filter(
+            $this->peopleOnForm,
+            function($a) use ($personEditing) {
+                if ($a['key'] == $personEditing['key']) return $a;
+            }
+        );
+        if ($findPerson) {
+            $findPersonKey = array_key_first($findPerson);
+            $this->peopleOnForm[$findPersonKey] = $personEditing;
+        }
+        else {
+            $this->peopleOnForm[] = $personEditing;
         }
     }
 
