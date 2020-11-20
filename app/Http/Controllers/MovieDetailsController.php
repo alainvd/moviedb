@@ -8,49 +8,19 @@ use Illuminate\Http\Request;
 class MovieDetailsController extends Controller
 {
 
-    private function default_values() {
-
-        $languages = [
-            "French","Bulgarian","English","German","Italian","Spanish","Arab","Bambara","Tamashek","Danish"
-        ];
-
-        $countries = [
-            "BE"=>"Belgium",
-            "FR"=>"France"
-        ];
-
-        $years = [];
-        for ($year=2020; $year>1990; $year-- ){
-            $years[]=$year;
-        }
-
-        $genres = [
-            "Fiction",
-            "Creative Documentary",
-            "Animation",
-            "Series",
-            "Live-action children film",
-        ];
-
-        return [$languages, $countries, $years, $genres];
-    }
-
+    /**
+     * Show movie details edit form
+     */
     public function show(Movie $movie){
-
-        $cast = $movie->getCast();
-        $crew = $movie->getCrew();
-        [$languages, $countries, $years, $genres] = $this->default_values();
-
-        return view('movie-detail', compact(['movie','crew','cast','languages','years','genres','countries']));
+        return view('movie-detail', ['movie_id' => $movie->id]);
     }
 
+    /**
+     * Form for creating new movie
+     */
     public function create()
     {
-        $movie = new Movie;
-        $cast = [];
-        $crew = [];
-        [$languages, $countries, $years, $genres] = $this->default_values();
-        return view('movie-detail', compact(['movie','crew','cast','languages','years','genres','countries']));
+        return view('movie-detail');
     }
 
 }

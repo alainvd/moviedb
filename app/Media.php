@@ -29,6 +29,40 @@ class Media extends Model
         'id' => 'integer',
     ];
 
+    const LANGUAGES = [
+        "fr" => "French",
+        "bu" => "Bulgarian",
+        "en" => "English",
+        "de" => "German",
+        "it" => "Italian",
+        "es" => "Spanish",
+        "ar" => "Arab",
+        "ba" => "Bambara",
+        "ta" => "Tamashek",
+        "dk" => "Danish"
+    ];
+
+    const COUNTRIES = [
+        "BE"=>"Belgium",
+        "FR"=>"France"
+    ];
+
+    static function YEARS()
+    {
+        $yrs = [];
+        for ($year=2020; $year>1990; $year-- ){
+            $yrs[]=$year;
+        }
+        return $yrs;
+    }
+
+    const GENRES = [
+        "fiction" => "Fiction",
+        "creative_documentary" => "Creative Documentary",
+        "animation" => "Animation",
+        "series" => "Series",
+        "live_action_children_film" => "Live-action children film",
+    ];
 
     public function grantable()
     {

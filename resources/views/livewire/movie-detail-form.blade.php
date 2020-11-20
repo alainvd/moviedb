@@ -8,7 +8,7 @@
                     </h2>
                 </div>
                 <div class="text-gray-600 inline-block align-baseline mt-3">
-                    Modified on {{ $movie->updated_at->format('d F Y') }} by John Smith
+                    Modified on {{-- $movie->updated_at->format('d F Y') --}} by John Smith
                 </div>
             </div>
         </div>
@@ -148,11 +148,32 @@
 
                     <hr class="mt-10 mb-10">
 
-                    <x-table-user :title="'Cast'" :users="$cast"></x-table-user>
+                    {{--<x-table-user :title="'Cast'" :users="$cast"></x-table-user>--}}
 
                     <hr class="mt-10 mb-10">
 
-                    <x-table-user :title="'Crew'" :users="$crew"></x-table-user>
+                    {{--<x-table-user :title="'Crew'" :users="$crew"></x-table-user>--}}
+
+                    <hr class="mt-10 mb-10">
+
+                    <div>
+                        <h3>Table with people (work in progress)</h3>
+                        <table>
+                        @foreach ($peopleOnForm as $person)
+                            <tr>
+                                <td>{{ $person->first_name }}</td>
+                                <td>{{ $person->last_name }}</td>
+                                <td><a wire:click="showModal({{ $person->id }})" wire:key="{{ $person->id }}">Edit</a></td>
+                            </tr>
+                        @endforeach
+                        </table>
+                    </div>
+
+                    <div class="mt-5">
+                        <a wire:click="showModal" wire:loading.attr="disabled">
+                            Add person
+                        </a>
+                    </div>
 
                     <div class="grid grid-cols-9 gap-6 my-12">
                         <div class="col-start-1 col-span-3">
@@ -248,5 +269,39 @@
                 </div>
             </div>
         </div>
+
     </form>
+
+    <!-- Add/Edit Person Modal -->
+    <x-modal.dialog wire:model="showingModal">
+        <x-slot name="title">
+            Add/Edit person
+        </x-slot>
+
+        <x-slot name="content">
+
+            <form wire:submit.prevent="savePerson">
+                <div>
+                    <label for="first_name">First name</label>
+                    <input id="first_name"
+                        wire:model="personEditing.first_name"
+                        >
+                </div>
+                <div>
+                    <label for="last_name">Last name</label>
+                    <input id="last_name"
+                        wire:model="personEditing.last_name"
+                        >
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+    
+        </x-slot>
+
+        <x-slot name="footer">
+        </x-slot>
+    </x-modal.dialog>
+
 </div>
