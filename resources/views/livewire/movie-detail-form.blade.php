@@ -290,6 +290,8 @@
                         <option value="crew">Crew</option>
                         <option value="cast">Cast</option>
                     </select>
+                    @error('personEditing.type') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
@@ -300,18 +302,24 @@
                         <option value="director">Director</option>
                         <option value="scriptwrited">Scriptwriter</option>
                     </select>
+                    @error('personEditing.role') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
                     <label for="first_name" class="block text-sm font-medium leading-5 text-gray-700">First name</label>
                     <input wire:model="personEditing.first_name" id="first_name"
                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    @error('personEditing.first_name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
                     <label for="last_name" class="block text-sm font-medium leading-5 text-gray-700">Last name</label>
                     <input wire:model="personEditing.last_name" id="last_name"
                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    @error('personEditing.last_name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
@@ -322,6 +330,8 @@
                         <option value="female">Female</option>
                         <option value="na">N/A</option>
                     </select>
+                    @error('personEditing.gender') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
@@ -333,6 +343,8 @@
                         <option value="french">French</option>
                         <option value="german">German</option>
                     </select>
+                    @error('personEditing.nationality1') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
@@ -344,6 +356,8 @@
                         <option value="french">French</option>
                         <option value="german">German</option>
                     </select>
+                    @error('personEditing.nationality2') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
@@ -355,6 +369,8 @@
                         <option value="fr">France</option>
                         <option value="de">Germany</option>
                     </select>
+                    @error('personEditing.country_of_residence') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="flex justify-end items-center space-x-3">

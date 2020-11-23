@@ -50,7 +50,7 @@ class MovieDetailForm extends Component
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
-        'movie.original_title' => 'required|string|max:255',
+        'movie.original_title' => 'required|string|max:255|min:3',
         'movie.european_nationality_flag' => 'string|max:255',
         'movie.film_country_of_origin' => 'string|max:255',
         'movie.year_of_copyright' => 'integer',
@@ -61,18 +61,22 @@ class MovieDetailForm extends Component
         // 'movie.shooting_end' => 'date_format:d/m/Y',
         'movie.shooting_end' => 'date',
         'movie.film_length' => 'string|max:255',
-        'movie.film_format' => 'string|max:255',       
+        'movie.film_format' => 'string|max:255',
         
         'personEditing.id' => '',
         'personEditing.key' => '',
         'personEditing.type' => 'string|max:255',
         'personEditing.role' => 'string|max:255',
-        'personEditing.first_name' => 'string|max:255',
+        'personEditing.first_name' => 'required|string|max:255|min:3',
         'personEditing.last_name' => 'string|max:255',
         'personEditing.gender' => 'string|max:255',
         'personEditing.nationality1' => 'string|max:255',
         'personEditing.nationality2' => 'string|max:255',
         'personEditing.country_of_residence' => 'string|max:255',
+    ];
+
+    protected $validationAttributes = [
+        'personEditing.first_name' => 'first name'
     ];
 
     public function mount($movie_id = null)
@@ -165,18 +169,13 @@ class MovieDetailForm extends Component
      */
     public function savePerson()
     {
+        $validatedData = $this->validate();
         $this->showingEditModal = false;
 
         // For Livewire purposes, this is a Model
         // save to the array, with unique id
         $personEditing = $this->personEditing->toArray();
-        $personEditing['type'] = 'crew';
-        $personEditing['role'] = 'director';
-        $personEditing['gender'] = 'male';
-        $personEditing['nationality1'] = 'belgian';
-        $personEditing['nationality2'] = 'belgian';
-        $personEditing['country_of_residence'] = 'be';
-
+        
         // find by key - update or add
         $findPerson = $this->findPersonOnForm($personEditing['key']);
         if ($findPerson) {
