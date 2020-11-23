@@ -20,11 +20,17 @@ class MovieDetailForm extends Component
     public $peopleOnForm;
 
     // When to show modal
-    public $showingModal = false;
+    public $showingEditModal = false;
 
     // While editing person has to be a Model, for Livewire to wire it's fields.
     // TODO: or we can have property for each field.
     public Person $personEditing;
+
+    // When to show modal
+    public $showingDeleteModal = false;
+
+    // Which person to delete
+    public $deletePersonKey;
 
     /**
      * Each wired fields needs to be here or it will be filtered
@@ -109,7 +115,7 @@ class MovieDetailForm extends Component
     /**
      * Editing person modal
      */
-    public function showModalEdit($key = null)
+    public function showModalEdit($key)
     {
         // NOTES: Convert to model, because Livewire can only wire Model properties
         // TODO: or I can create property for each field?
@@ -124,16 +130,19 @@ class MovieDetailForm extends Component
         $personEditing = array_shift($personEditing);
         $this->personEditing = new Person($personEditing);
 
-        $this->showingModal = true;
+        $this->showingEditModal = true;
     }
 
     /**
      * New person modal
      */
-    public function showModalNew() {
+    public function showModalAdd() {
+        // Create a new empty person
+        // Add unique key
         $this->personEditing = new Person;
+        $this->personEditing['key'] = Str::random(10);
 
-        $this->showingModal = true;
+        $this->showingEditModal = true;
     }
 
     /**
@@ -141,7 +150,7 @@ class MovieDetailForm extends Component
      */
     public function savePerson()
     {
-        $this->showingModal = false;
+        $this->showingEditModal = false;
 
         // For Livewire purposes, this is a Model
         // save to the array, with unique id
@@ -159,6 +168,8 @@ class MovieDetailForm extends Component
                 if ($a['key'] == $personEditing['key']) return $a;
             }
         );
+        // dd($this->peopleOnForm);
+        // dd($findPerson);
         if ($findPerson) {
             $findPersonKey = array_key_first($findPerson);
             $this->peopleOnForm[$findPersonKey] = $personEditing;
@@ -166,6 +177,30 @@ class MovieDetailForm extends Component
         else {
             $this->peopleOnForm[] = $personEditing;
         }
+    }
+
+    /**
+     * When deleting
+     */
+    public function showModalDelete($key) {
+        $this->showingDeleteModal = true;
+        $this->deletePersonKey = $key;
+    }
+
+    /**
+     * Delete person
+     */
+    public function deletePerson() {
+        $findPerson = array_filter(
+            $this->peopleOnForm,
+            function($a) {
+                if ($a['key'] == $this->deletePersonKey) return $a;
+            }
+        );
+        if ($findPerson) {
+            unset($this->peopleOnForm[array_key_first($findPerson)]);
+        }
+        $this->showingDeleteModal = false;
     }
 
     public function render()

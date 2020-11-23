@@ -160,17 +160,18 @@
                         <h3>Table with people (work in progress)</h3>
                         <table>
                         @foreach ($peopleOnForm as $person)
-                            <tr>
+                            <tr wire:key="{{ $person['key'] }}">
                                 <td>{{ $person['first_name'] }}</td>
                                 <td>{{ $person['last_name'] }}</td>
-                                <td><a wire:click="showModalEdit('{{ $person['key'] }}')" wire:key="{{ $person['key'] }}">Edit</a></td>
+                                <td><a wire:click="showModalEdit('{{ $person['key'] }}')">Edit</a></td>
+                                <td><a wire:click="showModalDelete('{{ $person['key'] }}')">Delete</a></td>
                             </tr>
                         @endforeach
                         </table>
                     </div>
 
                     <div class="mt-5">
-                        <a wire:click="showModalNew" wire:loading.attr="disabled">
+                        <a wire:click="showModalAdd" wire:loading.attr="disabled">
                             Add person
                         </a>
                     </div>
@@ -273,7 +274,7 @@
     </form>
 
     <!-- Add/Edit Person Modal -->
-    <x-modal.dialog wire:model="showingModal">
+    <x-modal.dialog wire:model="showingEditModal">
         <x-slot name="title">
             Add/Edit person
         </x-slot>
@@ -303,5 +304,22 @@
         <x-slot name="footer">
         </x-slot>
     </x-modal.dialog>
+
+    <!-- Delete Person Modal -->
+    <form wire:submit.prevent="deletePerson">
+        <x-modal.confirmation wire:model.defer="showingDeleteModal">
+            <x-slot name="title">Delete person</x-slot>
+    
+            <x-slot name="content">
+                <div class="py-8">Do you want to remove this person?</div>
+            </x-slot>
+    
+            <x-slot name="footer">
+                <x-button wire:click="$set('showingDeleteModal', false)">Cancel</x-button>
+    
+                <x-button type="submit">Delete</x-button>
+            </x-slot>
+        </x-modal.confirmation>
+    </form>
 
 </div>
