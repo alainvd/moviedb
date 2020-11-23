@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Person;
+use App\Crew;
 use Illuminate\Database\Seeder;
 
-class PersonSeeder extends Seeder
+class CrewSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class PersonSeeder extends Seeder
      */
     public function run()
     {
-        Person::factory()->count(5)->create();
+        Crew::factory()->count(5)->create();
     }
 }

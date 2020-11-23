@@ -40,4 +40,6 @@ class VideoGame extends Model implements Grantable
     {
         return "I'm a video game ... BIIP BIP BIIIIIP";
     }
+
+
 }
