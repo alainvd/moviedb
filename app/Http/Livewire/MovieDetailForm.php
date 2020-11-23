@@ -33,6 +33,20 @@ class MovieDetailForm extends Component
     public $deletePersonKey;
 
     /**
+     * Find person in the array
+     */
+    private function findPersonOnForm($key)
+    {
+        $findPerson = array_filter(
+            $this->peopleOnForm,
+            function($a) use ($key) {
+                if ($a['key'] == $key) return $a;
+            }
+        );
+        return $findPerson;
+    }
+
+    /**
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
@@ -51,8 +65,14 @@ class MovieDetailForm extends Component
         
         'personEditing.id' => '',
         'personEditing.key' => '',
+        'personEditing.type' => 'string|max:255',
+        'personEditing.role' => 'string|max:255',
         'personEditing.first_name' => 'string|max:255',
         'personEditing.last_name' => 'string|max:255',
+        'personEditing.gender' => 'string|max:255',
+        'personEditing.nationality1' => 'string|max:255',
+        'personEditing.nationality2' => 'string|max:255',
+        'personEditing.country_of_residence' => 'string|max:255',
     ];
 
     public function mount($movie_id = null)
@@ -121,12 +141,7 @@ class MovieDetailForm extends Component
         // TODO: or I can create property for each field?
 
         // Just take the data from array and convert to People model
-        $personEditing = array_filter(
-            $this->peopleOnForm,
-            function($a) use ($key) {
-                if ($a['key'] == $key) return $a;
-            }
-        );
+        $personEditing = $this->findPersonOnForm($key);
         $personEditing = array_shift($personEditing);
         $this->personEditing = new Person($personEditing);
 
@@ -157,19 +172,13 @@ class MovieDetailForm extends Component
         $personEditing = $this->personEditing->toArray();
         $personEditing['type'] = 'crew';
         $personEditing['role'] = 'director';
-        $personEditing['gender'] = 'Male';
-        $personEditing['nationality1'] = 'Belgium';
-        $personEditing['country_of_residence'] = 'Belgium';
+        $personEditing['gender'] = 'male';
+        $personEditing['nationality1'] = 'belgian';
+        $personEditing['nationality2'] = 'belgian';
+        $personEditing['country_of_residence'] = 'be';
 
         // find by key - update or add
-        $findPerson = array_filter(
-            $this->peopleOnForm,
-            function($a) use ($personEditing) {
-                if ($a['key'] == $personEditing['key']) return $a;
-            }
-        );
-        // dd($this->peopleOnForm);
-        // dd($findPerson);
+        $findPerson = $this->findPersonOnForm($personEditing['key']);
         if ($findPerson) {
             $findPersonKey = array_key_first($findPerson);
             $this->peopleOnForm[$findPersonKey] = $personEditing;
@@ -191,12 +200,7 @@ class MovieDetailForm extends Component
      * Delete person
      */
     public function deletePerson() {
-        $findPerson = array_filter(
-            $this->peopleOnForm,
-            function($a) {
-                if ($a['key'] == $this->deletePersonKey) return $a;
-            }
-        );
+        $findPerson = $this->findPersonOnForm($this->deletePersonKey);
         if ($findPerson) {
             unset($this->peopleOnForm[array_key_first($findPerson)]);
         }
