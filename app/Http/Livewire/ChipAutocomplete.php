@@ -10,7 +10,6 @@ use Livewire\Component;
  * @todo reset scroll on search
  * @todo maintain filter when text in input
  *
- * @done max height for autocomplete list
  */
 class ChipAutocomplete extends Component
 {
@@ -18,7 +17,6 @@ class ChipAutocomplete extends Component
         'chipRemoved' => 'removeItem',
     ];
 
-    // public $options;
     public $search;
     public $selected;
     public $options;
@@ -26,11 +24,15 @@ class ChipAutocomplete extends Component
     public function mount()
     {
         $this->selected = collect([]);
-        $this->options = Language::where('name', 'like', "%{$this->search}%")
-            ->orWhere('code', 'like', "%{$this->search}%")
+
+        $this->options = Language::where(function ($query) {
+            $query->where('name', 'like', "%{$this->search}%")
+                ->orWhere('code', 'like', "%{$this->search}%");
+        })
             ->orderBy('code')
             ->get()
-            ->map(fn ($lang) => $lang->label)
+            ->each(fn ($lang) => $lang->chipLabel = strtoupper($lang->code))
+            ->reject(fn ($lang) => $this->selected->contains($lang->label))
             ->toArray();
     }
 
@@ -47,6 +49,7 @@ class ChipAutocomplete extends Component
 
     public function render()
     {
+
         return view('livewire.chip-autocomplete');
     }
 }
