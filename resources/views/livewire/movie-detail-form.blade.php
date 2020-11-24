@@ -15,8 +15,12 @@
 
         <div class="flex flex-col mt-4 px-0 sm:px-4">
             <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                
                 <div
                     class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 bg-white p-4 sm:p-10">
+
+                    @livewire('person-table', ['movie_id' => $movie->id])
+
                     <div class="grid grid-cols-8 gap-6">
                         <div class="col-start-1 col-span-6">
                             <label for="original_title"
@@ -160,32 +164,6 @@
 
                     <hr class="mt-10 mb-10">
 
-                    <div>
-                        <h3>Table with people (work in progress)</h3>
-                        <table>
-                            @foreach ($peopleOnForm as $person)
-                            <tr wire:key="{{ $person['key'] }}">
-                                <td>{{ $person['type'] }}</td>
-                                <td>{{ $person['role'] }}</td>
-                                <td>{{ $person['first_name'] }}</td>
-                                <td>{{ $person['last_name'] }}</td>
-                                <td>{{ $person['gender'] }}</td>
-                                <td>{{ $person['nationality1'] }}</td>
-                                <td>{{ $person['nationality2'] }}</td>
-                                <td>{{ $person['country_of_residence'] }}</td>
-                                <td><a wire:click="showModalEdit('{{ $person['key'] }}')">Edit</a></td>
-                                <td><a wire:click="showModalDelete('{{ $person['key'] }}')">Delete</a></td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-
-                    <div class="mt-5">
-                        <a wire:click="showModalAdd" wire:loading.attr="disabled">
-                            Add person
-                        </a>
-                    </div>
-
                     <div class="grid grid-cols-9 gap-6 my-12">
                         <div class="col-start-1 col-span-3">
                             <label for="start_photography"
@@ -273,135 +251,6 @@
             </div>
         </div>
 
-    </form>
-
-    <!-- Add/Edit Person Modal -->
-    <x-modal.dialog wire:model="showingEditModal">
-        <x-slot name="title">
-            Add/Edit person
-        </x-slot>
-
-        <x-slot name="content">
-            <form wire:submit.prevent="savePerson" class="space-y-2">
-                <div>
-                    <label for="type" class="block text-sm font-medium leading-5 text-gray-700">Type</label>
-                    <select wire:model="personEditing.type" id="type"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="crew">Crew</option>
-                        <option value="cast">Cast</option>
-                    </select>
-                    @error('personEditing.type') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="role" class="block text-sm font-medium leading-5 text-gray-700">Role</label>
-                    <select wire:model="personEditing.role" id="role"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="actor">Actor</option>
-                        <option value="director">Director</option>
-                        <option value="scriptwrited">Scriptwriter</option>
-                    </select>
-                    @error('personEditing.role') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="first_name" class="block text-sm font-medium leading-5 text-gray-700">First name</label>
-                    <input wire:model="personEditing.first_name" id="first_name"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('personEditing.first_name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="last_name" class="block text-sm font-medium leading-5 text-gray-700">Last name</label>
-                    <input wire:model="personEditing.last_name" id="last_name"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('personEditing.last_name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="gender" class="block text-sm font-medium leading-5 text-gray-700">Gender</label>
-                    <select wire:model="personEditing.gender" id="gender"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="na">N/A</option>
-                    </select>
-                    @error('personEditing.gender') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="nationality1" class="block text-sm font-medium leading-5 text-gray-700">Nationality
-                        1</label>
-                    <select wire:model="personEditing.nationality1" id="nationality1"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="belgian">Belgian</option>
-                        <option value="french">French</option>
-                        <option value="german">German</option>
-                    </select>
-                    @error('personEditing.nationality1') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="nationality2" class="block text-sm font-medium leading-5 text-gray-700">Nationality
-                        2</label>
-                    <select wire:model="personEditing.nationality2" id="nationality2"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="belgian">Belgian</option>
-                        <option value="french">French</option>
-                        <option value="german">German</option>
-                    </select>
-                    @error('personEditing.nationality2') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="country_of_residence" class="block text-sm font-medium leading-5 text-gray-700">Country
-                        of residence</label>
-                    <select wire:model="personEditing.country_of_residence" id="country_of_residence"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="be">Belgium</option>
-                        <option value="fr">France</option>
-                        <option value="de">Germany</option>
-                    </select>
-                    @error('personEditing.country_of_residence') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="flex justify-end items-center space-x-3">
-                    <x-button.primary type="submit">Save</x-button.primary>
-
-                    <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
-                </div>
-            </form>
-        </x-slot>
-
-        <x-slot name="footer">
-        </x-slot>
-    </x-modal.dialog>
-
-    <!-- Delete Person Modal -->
-    <form wire:submit.prevent="deletePerson">
-        <x-modal.confirmation wire:model.defer="showingDeleteModal">
-            <x-slot name="title">Delete person</x-slot>
-
-            <x-slot name="content">
-                <div class="py-8">Do you want to remove this person?</div>
-            </x-slot>
-
-            <x-slot name="footer">
-                <div class="flex justify-end items-center space-x-3">
-                    <x-button.primary type="submit">Delete</x-button>
-
-                    <x-button.secondary wire:click="$set('showingDeleteModal', false)">Cancel</x-button>
-                </div>
-            </x-slot>
-        </x-modal.confirmation>
     </form>
 
 </div>
