@@ -1,4 +1,4 @@
-<span x-data="{ open: false }">
+<span>
     <span @click="open = true">
         {{ $trigger }}
     </span>
