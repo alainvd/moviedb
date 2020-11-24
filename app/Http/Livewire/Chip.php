@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Chip extends Component
@@ -12,6 +13,7 @@ class Chip extends Component
 
     public function remove()
     {
+        Log::info($this->label);
         $this->emitUp('chipRemoved', $this->label);
     }
 
