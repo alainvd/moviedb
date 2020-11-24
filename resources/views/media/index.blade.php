@@ -6,4 +6,8 @@
         </li>
         @endforeach
     </ul>
+
+    <div class="w-1/3 p-2">
+        <livewire:chip-autocomplete />
+    </div>
 </x-layout>
