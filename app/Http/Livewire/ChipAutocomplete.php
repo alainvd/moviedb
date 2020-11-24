@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Language;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 /**
@@ -21,33 +22,34 @@ class ChipAutocomplete extends Component
     // public $options;
     public $search;
     public $selected;
-    public $visibleOptions;
+    public $options;
 
     public function mount()
     {
         $this->selected = collect([]);
+        $this->options = Language::where('name', 'like', "%{$this->search}%")
+            ->orWhere('code', 'like', "%{$this->search}%")
+            ->orderBy('code')
+            ->get()
+            ->map(fn ($lang) => $lang->label)
+            ->toArray();
     }
 
     public function addItem($item)
     {
+        Log::info("adding item" . $item);
         $this->selected->push($item);
     }
 
     public function removeItem($item)
     {
+        Log::info($this->selected);
         $this->selected = $this->selected
             ->reject(fn ($selected) => $item === $selected);
     }
 
     public function render()
     {
-        $options = Language::where('name', 'like', "%{$this->search}%")
-            ->orWhere('code', 'like', "%{$this->search}%")
-            ->orderBy('code')
-            ->get()
-            ->map(fn ($lang) => $lang->label)
-            ->toArray();
-
-        return view('livewire.chip-autocomplete', compact('options'));
+        return view('livewire.chip-autocomplete');
     }
 }
