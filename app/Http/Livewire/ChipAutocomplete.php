@@ -30,10 +30,11 @@ class ChipAutocomplete extends Component
 
     public function addItem($item)
     {
-        Log::info("addItem Called". $item);
+        Log::info("addItem Called" . $item);
         $this->selected->push($item);
 
-            $this->selected = $this->selected->unique()->values();
+        $this->selected = $this->selected->unique()->values();
+        $this->search = "";
     }
 
     public function removeItem($label)
@@ -44,7 +45,7 @@ class ChipAutocomplete extends Component
             return $value !== $label;
         })->values()->all();
 
-        Log::info($filtered );
+        Log::info($filtered);
 
 
         $this->selected = collect($filtered);
@@ -61,15 +62,16 @@ class ChipAutocomplete extends Component
         return view('livewire.chip-autocomplete');
     }
 
-    private function getData(){
+    private function getData()
+    {
         return Language::where(function ($query) {
             $query->where('name', 'like', "%{$this->search}%")
                 ->orWhere('code', 'like', "%{$this->search}%");
         })
             ->orderBy('code')
             ->get()
-            ->each(fn ($lang) => $lang->chipLabel = strtoupper($lang->code))
-            ->reject(fn ($lang) => $this->selected->contains($lang->label))
+            ->each(fn($lang) => $lang->chipLabel = strtoupper($lang->code))
+            ->reject(fn($lang) => $this->selected->contains($lang->label))
             ->values();
     }
 }
