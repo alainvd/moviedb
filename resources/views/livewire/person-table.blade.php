@@ -14,6 +14,7 @@
             <x-table.heading>Nationality 1</x-table.heading>
             <x-table.heading>Nationality 2</x-table.heading>
             <x-table.heading>Residence</x-table.heading>
+            @if ($backoffice)<x-table.heading>Scoring</x-table.heading>@endif
             <x-table.heading></x-table.heading>
         </x-slot>
 
@@ -26,6 +27,7 @@
                 <x-table.cell class="text-center">{{ $person['nationality1'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['nationality2'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['country_of_residence'] }}</x-table.cell>
+                @if ($backoffice)<x-table.heading>- 2 +</x-table.heading>@endif
                 <x-table.cell class="text-center space-x-2">
                     <a wire:click="showModalEdit('{{ $person['key'] }}')" class="cursor-pointer">Edit</a>
                     <a wire:click="showModalDelete('{{ $person['key'] }}')" class="cursor-pointer">Delete</a>
@@ -40,8 +42,6 @@
             Add
         </x-button.secondary>
     </div>
-
-    <hr class="mt-10 mb-10">
 
     <!-- Add/Edit Person Modal -->
     <form class="space-y-2">

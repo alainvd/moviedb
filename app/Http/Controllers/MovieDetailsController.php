@@ -11,16 +11,45 @@ class MovieDetailsController extends Controller
     /**
      * Show movie details edit form
      */
-    public function show(Movie $movie){
-        return view('movie-detail', ['movie_id' => $movie->id]);
+    public function showForApplicant(Movie $movie){
+        return view('movie-detail', [
+            'template' => 'movie-detail-form-applicant',
+            'movie_id' => $movie->id,
+            'backoffice' => false
+        ]);
+    }
+
+    /**
+     * Show movie details edit form
+     */
+    public function showForBackoffice(Movie $movie){
+        return view('movie-detail', [
+            'template' => 'movie-detail-form-backoffice',
+            'movie_id' => $movie->id,
+            'backoffice' => true
+        ]);
     }
 
     /**
      * Form for creating new movie
      */
-    public function create()
+    public function createForApplicant()
     {
-        return view('movie-detail');
+        return view('movie-detail', [
+            'template' => 'movie-detail-form-applicant',
+            'backoffice' => false
+        ]);
+    }
+
+    /**
+     * Form for creating new movie
+     */
+    public function createForBackoffice()
+    {
+        return view('movie-detail', [
+            'template' => 'movie-detail-form-backoffice',
+            'backoffice' => true
+        ]);
     }
 
 }

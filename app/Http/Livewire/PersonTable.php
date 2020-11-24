@@ -12,6 +12,8 @@ class PersonTable extends Component
 
     public $movie_id = null;
 
+    public $backoffice = false;
+
     // While editing people, we store a copy of all people in a local array.
     // We also convert each person in to array (there were issues otherwise).
     // TODO: or we could store people in People models, just not save them?
@@ -116,8 +118,9 @@ class PersonTable extends Component
         'personEditing.country_of_residence' => 'residence country',
     ];
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $backoffice = false)
     {
+        $this->backoffice = $backoffice;
         if ($movie_id) {
             $this->movie_id = $movie_id;
             // Make a copy of people in array (TODO: change to collection?)

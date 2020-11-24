@@ -19,8 +19,6 @@
                 <div
                     class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 bg-white p-4 sm:p-10">
 
-                    @livewire('person-table', ['movie_id' => $movie->id])
-
                     <div class="grid grid-cols-8 gap-6">
                         <div class="col-start-1 col-span-6">
                             <label for="original_title"
@@ -154,15 +152,7 @@
                         </div>
                     </div>
 
-                    <hr class="mt-10 mb-10">
-
-                    {{--<x-table-user :title="'Cast'" :users="$cast"></x-table-user>--}}
-
-                    <hr class="mt-10 mb-10">
-
-                    {{--<x-table-user :title="'Crew'" :users="$crew"></x-table-user>--}}
-
-                    <hr class="mt-10 mb-10">
+                    @livewire('person-table', ['movie_id' => $movie->id])
 
                     <div class="grid grid-cols-9 gap-6 my-12">
                         <div class="col-start-1 col-span-3">

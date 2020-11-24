@@ -14,6 +14,9 @@ class MovieDetailForm extends Component
     // Movie data for Livewire
     public Movie $movie;
 
+    // Allow special editing
+    public $backoffice = false;
+
     /**
      * Each wired fields needs to be here or it will be filtered
      */
@@ -32,8 +35,9 @@ class MovieDetailForm extends Component
         'movie.film_format' => 'string|max:255',
     ];
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $backoffice = false)
     {
+        $this->backoffice = $backoffice;
         if ($movie_id) {
             $this->movie = Movie::where('id', $movie_id)->first();
         } else {
@@ -44,6 +48,7 @@ class MovieDetailForm extends Component
     public function render()
     {
         return view('livewire.movie-detail-form', [
+            'backoffice'=>$this->backoffice,
             'languages'=>Media::LANGUAGES,
             'years'=>Media::YEARS(),
             'genres'=>Media::GENRES,
