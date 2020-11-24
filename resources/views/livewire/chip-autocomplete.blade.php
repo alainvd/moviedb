@@ -16,15 +16,24 @@
             <input type="text" wire:model="search" class="w-full inline p-2 border-none outline-none bg-white">
         </x-slot>
 
-        <ul class="w-full overflow-y-auto list-none bg-white rounded-lg absolute left-0 -bottom-2" style="max-height: 250px">
+        <ul class="w-full overflow-y-auto list-none bg-white rounded-lg absolute left-0 -bottom-2" style="max-height: 260px">
 
-            @foreach($options as $option)
+            @forelse($options as $key => $option)
 
-            <li wire:click="addItem('{{ $option }}')" class="p-4 text-md leading-tight font-normal hover:bg-gray-300 cursor-pointer">
-{{$loop->index}} - {{ $option }}
+            <li
+                wire:key="{{$key}}"
+                wire:click="addItem('{{ $option['chipLabel'] ?? $option['label'] }}')"
+                class="p-4 text-md leading-tight font-normal hover:bg-gray-300 cursor-pointer">
+                {{ $option['label'] }}
             </li>
 
-            @endforeach
+            @empty
+
+            <li class="p-4 text-md leading-tight font-normal hover:bg-gray-300 cursor-pointer">
+                No results found
+            </li>
+
+            @endforelse
         </ul>
     </x-input-dropdown>
 </div>

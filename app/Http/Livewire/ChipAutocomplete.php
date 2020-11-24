@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Language;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 /**
@@ -37,13 +36,11 @@ class ChipAutocomplete extends Component
 
     public function addItem($item)
     {
-        Log::info("adding item" . $item);
         $this->selected->push($item);
     }
 
     public function removeItem($item)
     {
-        Log::info($this->selected);
         $this->selected = $this->selected
             ->reject(fn ($selected) => $item === $selected);
     }

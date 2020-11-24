@@ -9,6 +9,7 @@ class Language extends Model
 {
     use HasFactory;
 
+    protected $appends = ['label'];
     protected $fillable = [
         'code',
         'name',
