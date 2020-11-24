@@ -11,15 +11,13 @@
         </div>
 
     @endif
-    <div>
+    <div x-data="{ open: false }">
 
-        <span>
+        <span @click="open = true">
                   <input type="text" wire:model="search" class="w-full inline p-2 border-none outline-none bg-white">
         </span>
 
-        <span>
-
-
+        <span x-show="open" @click="open = false" @click.away="open = false">
 
         <ul class="w-full overflow-y-auto list-none bg-white rounded-lg absolute left-0 -bottom-2"
             style="max-height: 260px">
