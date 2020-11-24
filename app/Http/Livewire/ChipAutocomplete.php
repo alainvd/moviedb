@@ -71,7 +71,7 @@ class ChipAutocomplete extends Component
             ->orderBy('code')
             ->get()
             ->each(fn($lang) => $lang->chipLabel = strtoupper($lang->code))
-            ->reject(fn($lang) => $this->selected->contains($lang->label))
+            ->reject(fn($lang) => $this->selected->contains($lang->chipLabel))
             ->values();
     }
 }
