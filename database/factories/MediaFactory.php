@@ -25,7 +25,7 @@ class MediaFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(4),
-            'audience_id' => Audience::factory(),
+            'audience_id' => Audience::all()->random()->id,
             'grantable_id' => $this->faker->numberBetween(1,5),
             'grantable_type' => $this->faker->randomElement(["App\Movie","App\Videogame"])
         ];
