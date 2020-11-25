@@ -31,6 +31,6 @@ class Audience extends Model
 
     public function media()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->hasMany(\App\Media::class);
     }
 }
