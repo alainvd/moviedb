@@ -13,7 +13,6 @@ class Chip extends Component
 
     public function remove()
     {
-        Log::info($this->label);
         $this->emitUp('chipRemoved', $this->label);
     }
 

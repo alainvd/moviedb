@@ -9,14 +9,22 @@ class Language extends Model
 {
     use HasFactory;
 
-    protected $appends = ['label'];
+    protected $appends = [
+        'label',
+        'chipLabel',
+    ];
     protected $fillable = [
         'code',
         'name',
     ];
 
-    public function getLabelAttribute($value): string
+    public function getLabelAttribute(): string
     {
         return ucfirst($this->name) . " " . "(" . strtoupper($this->code) . ")";
+    }
+
+    public function getChipLabelAttribute(): string
+    {
+        return strtoupper($this->code);
     }
 }

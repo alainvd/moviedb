@@ -1,9 +1,7 @@
 <div class="w-full p-2 bg-white border-b-2 border-gray-900 relative">
 
-
-
     @if(count($selected))
-{{$selected}}
+
         <div class="inline-block">
             @foreach($selected as $item)
                 <livewire:chip wire:key="{{$loop->index}}" :key="$item" :label="$item" :canRemove="true"/>
@@ -11,17 +9,12 @@
         </div>
 
     @endif
-    <div x-data="{ open: false }">
+    <x-input-dropdown>
+        <x-slot name="trigger">
+            <input type="text" wire:model="search" class="w-full inline p-2 border-none outline-none bg-white">
+        </x-slot>
 
-        <span @click="open = true">
-                  <input type="text" wire:model="search" class="w-full inline p-2 border-none outline-none bg-white">
-        </span>
-
-        <span x-show="open" @click="open = false" @click.away="open = false">
-
-        <ul class="w-full overflow-y-auto list-none bg-white rounded-lg absolute left-0 -bottom-2"
-            style="max-height: 260px">
-            {{sizeof($options)}}
+        <ul class="w-full overflow-y-auto list-none bg-white rounded-lg absolute left-0 -bottom-2" style="max-height: 260px">
 
             @forelse($options as $option)
 
@@ -40,8 +33,5 @@
 
             @endforelse
         </ul>
-    </span>
-
-
-    </div>
+    </x-input-dropdown>
 </div>

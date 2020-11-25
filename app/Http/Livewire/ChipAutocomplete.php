@@ -3,14 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Models\Language;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 /**
- * @todo sync list with input
- * @todo reset scroll on search
- * @todo maintain filter when text in input
- *
+ * @todo abstract this to be able to use it with any model
  */
 class ChipAutocomplete extends Component
 {
@@ -25,12 +21,10 @@ class ChipAutocomplete extends Component
     public function mount()
     {
         $this->selected = collect([]);
-
     }
 
     public function addItem($item)
     {
-        Log::info("addItem Called" . $item);
         $this->selected->push($item);
 
         $this->selected = $this->selected->unique()->values();
@@ -39,24 +33,13 @@ class ChipAutocomplete extends Component
 
     public function removeItem($label)
     {
-
-        $filtered = $this->selected->filter(function ($value, $key) use ($label) {
-            Log::info($value . " - " . $label);
-            return $value !== $label;
-        })->values()->all();
-
-        Log::info($filtered);
-
-
-        $this->selected = collect($filtered);
-
-//        $this->selected = $this->selected
-//            ->reject(fn ($selected) => $item === $selected);
+        $this->selected = $this->selected
+           ->reject(fn ($selected) => $label === $selected)
+           ->values();
     }
 
     public function render()
     {
-
         $this->options = $this->getData();
 
         return view('livewire.chip-autocomplete');
@@ -70,8 +53,7 @@ class ChipAutocomplete extends Component
         })
             ->orderBy('code')
             ->get()
-            ->each(fn($lang) => $lang->chipLabel = strtoupper($lang->code))
-            ->reject(fn($lang) => $this->selected->contains($lang->chipLabel))
+            ->reject(fn($lang) => $this->selected->contains($lang->chipLabel ?? $lang->label))
             ->values();
     }
 }
