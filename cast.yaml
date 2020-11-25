@@ -1,0 +1,41 @@
+models:
+
+  Title:
+    name: string
+    relationships:
+      hasMany: Crew
+
+  Person:
+    lastname: string
+    firstname: string
+    gender: string
+    nationality1: string
+    nationality2: string nullable
+    country_of_residence: string nullable
+    relationships:
+      hasMany: Crew
+
+  Crew:
+    points: integer
+    person_id: integer
+    title_id: integer
+    media_id: integer
+    relationships:
+      belongsTo: Title, Person, Media
+
+controllers:
+  Person:
+    index:
+      query: all
+      render: person.index with:persons
+  Title:
+    index:
+      query: all
+      render: title.index with:titles
+  Crew:
+    index:
+      query: all
+      render: crew.index with:crews
+
+
+seeders: Title, Person, Crew

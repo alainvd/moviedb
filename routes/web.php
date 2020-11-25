@@ -98,3 +98,12 @@ Route::resource('step', 'StepController')->only('index');
 Route::resource('step-definition', 'StepDefinitionController')->only('index');
 
 Route::resource('checklist', 'ChecklistController')->only('index');
+
+Route::resource('person', 'PersonController')->only('index');
+
+Route::resource('title', 'TitleController')->only('index');
+
+Route::resource('crew', 'CrewController')->only('index');
+
+
+Route::resource('audience', 'AudienceController')->only('index');

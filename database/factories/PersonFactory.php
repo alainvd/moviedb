@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Person;
 
 class PersonFactory extends Factory
 {
@@ -23,7 +23,12 @@ class PersonFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'lastname' => $this->faker->lastName,
+            'firstname' => $this->faker->firstName,
+            'gender' => $this->faker->word,
+            'nationality1' => $this->faker->word,
+            'nationality2' => $this->faker->word,
+            'country_of_residence' => $this->faker->word,
         ];
     }
 }

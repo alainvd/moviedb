@@ -2,19 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Audience;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Media;
+use App\Title;
 
-class MediaFactory extends Factory
+class TitleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Media::class;
+    protected $model = Title::class;
 
     /**
      * Define the model's default state.
@@ -24,10 +23,7 @@ class MediaFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence(4),
-            'audience_id' => Audience::factory(),
-            'grantable_id' => $this->faker->numberBetween(1,5),
-            'grantable_type' => $this->faker->randomElement(["App\Movie","App\Videogame"])
+            'name' => $this->faker->name,
         ];
     }
 }

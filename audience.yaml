@@ -1,0 +1,15 @@
+models:
+
+  Audience:
+    name: string
+    type: string
+    relationships:
+      belongsTo: Media
+
+controllers:
+  Audience:
+    index:
+      query: all
+      render: audience.index with:audiences
+
+seeders: Audience
