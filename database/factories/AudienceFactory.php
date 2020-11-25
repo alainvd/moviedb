@@ -22,8 +22,13 @@ class AudienceFactory extends Factory
      */
     public function definition()
     {
+
+        $audience_types = [
+            "Children", "Adults","PEGI OK", "PEGI 3", "PEGI 7", "PEGI 12", "PEGI 16", "PEGI 18"
+        ];
+
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->randomElement($audience_types),
             'type' => $this->faker->randomElement(["App\Movie","App\Videogame"])
         ];
     }
