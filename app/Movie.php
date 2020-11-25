@@ -36,7 +36,7 @@ class Movie extends Model implements Grantable
         return "I'm a movie ... bring some popcorn";
     }
 
-    public function audience(){
-        return $this->media()->audience();
-    }
+//    public function audience(){
+//        return $this->media()->audience();
+//    }
 }

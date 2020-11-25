@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Media extends Model
+class Genre extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,8 @@ class Media extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'grantable_id',
-        'grantable_type',
+        'name',
+        'type',
     ];
 
     /**
@@ -29,17 +28,9 @@ class Media extends Model
         'id' => 'integer',
     ];
 
-    public function genre(){
-        return $this->belongsTo('App\Genre');
-    }
 
-    public function audience(){
-        return $this->belongsTo('App\Audience');
-    }
-
-
-    public function grantable()
+    public function media()
     {
-        return $this->morphTo();
+        return $this->hasMany(\App\Media::class);
     }
 }
