@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Person;
+use App\Genre;
 use Illuminate\Http\Request;
 
-class PersonController extends Controller
+class GenreController extends Controller
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -13,8 +13,8 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        $persons = Person::all();
+        $genres = Genre::all();
 
-        return view('person.index', compact('persons'));
+        return view('genre.index', compact('genres'));
     }
 }

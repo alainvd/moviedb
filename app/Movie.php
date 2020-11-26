@@ -35,4 +35,8 @@ class Movie extends Model implements Grantable
     public function whoami(){
         return "I'm a movie ... bring some popcorn";
     }
+
+//    public function audience(){
+//        return $this->media()->audience();
+//    }
 }

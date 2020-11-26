@@ -29,6 +29,14 @@ class Media extends Model
         'id' => 'integer',
     ];
 
+    public function genre(){
+        return $this->belongsTo('App\Genre');
+    }
+
+    public function audience(){
+        return $this->belongsTo('App\Audience');
+    }
+
 
     public function grantable()
     {

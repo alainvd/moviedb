@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Person;
+use App\Crew;
 use Illuminate\Http\Request;
 
-class PersonController extends Controller
+class CrewController extends Controller
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -13,8 +13,8 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        $persons = Person::all();
+        $crews = Crew::all();
 
-        return view('person.index', compact('persons'));
+        return view('crew.index', compact('crews'));
     }
 }

@@ -1,4 +1,5 @@
 <x-layout>
+
     <ul>
         @foreach($medium as $media)
         <li>
@@ -10,4 +11,5 @@
     <div class="w-1/3 p-2">
         <livewire:chip-autocomplete />
     </div>
+
 </x-layout>

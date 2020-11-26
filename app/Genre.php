@@ -2,11 +2,10 @@
 
 namespace App;
 
-use App\Interfaces\Grantable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VideoGame extends Model implements Grantable
+class Genre extends Model
 {
     use HasFactory;
 
@@ -16,7 +15,8 @@ class VideoGame extends Model implements Grantable
      * @var array
      */
     protected $fillable = [
-        'vgdb',
+        'name',
+        'type',
     ];
 
     /**
@@ -28,18 +28,9 @@ class VideoGame extends Model implements Grantable
         'id' => 'integer',
     ];
 
-    protected $table = "videogames";
-
 
     public function media()
     {
-        return $this->morphOne(\App\Media::class, 'grantable');
+        return $this->hasMany(\App\Media::class);
     }
-
-    public function whoami()
-    {
-        return "I'm a video game ... BIIP BIP BIIIIIP";
-    }
-
-
 }
