@@ -15,9 +15,10 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
-        'key',
-        'title_id',
+        'id', // for PersonTable.php person editing
+        'key', // for PersonTable.php person editing
+        'title_id', // for PersonTable.php person editing
+        'points',  // for PersonTable.php person editing
         'lastname',
         'firstname',
         'gender',

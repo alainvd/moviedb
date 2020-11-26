@@ -81,6 +81,7 @@ class PersonTable extends Component
         return [
             'key' => Str::random(10),
             'title_id' => Title::first()->id,
+            'points' => 0,
             'firstname' => '',
             'lastname' => '',
             'gender' => 'male',
@@ -130,10 +131,11 @@ class PersonTable extends Component
             $this->movie_id = $movie_id;
             // Make a copy of people in array (TODO: change to collection?)
             $this->peopleOnForm = Movie::where('id', $this->movie_id)->first()->people->toArray();
-            // Add title value
+            // Add title value, add points
             $this->peopleOnForm = array_map(
                 function ($a) {
                     $a['title_id'] = Person::find($a['id'])->crew->title->id;
+                    $a['points'] = Person::find($a['id'])->crew->points;
                     return $a;
                 },
                 $this->peopleOnForm
@@ -224,6 +226,20 @@ class PersonTable extends Component
         $this->showingDeleteModal = false;
     }
 
+    public function pointsDec($key) {
+        $findPerson = $this->findPersonOnFormByKey($key);
+        if ($findPerson) {
+            $this->peopleOnForm[array_key_first($findPerson)]['points']--;
+        }
+    }
+
+    public function pointsInc($key) {
+        $findPerson = $this->findPersonOnFormByKey($key);
+        if ($findPerson) {
+            $this->peopleOnForm[array_key_first($findPerson)]['points']++;
+        }
+    }
+
     /**
      * Save people changes to database
      */
@@ -239,11 +255,12 @@ class PersonTable extends Component
                 unset($person_save['key']);
                 $title_id = $person_save['title_id'];
                 unset($person_save['title_id']);
-                // TODO: fix points
-                $points = 10;
+                $points = $person_save['points'];
+                unset($person_save['points']);
                 $person_saved = $movie->addPerson($person_save, $points, $title_id, $movie->id);
                 $person_saved_array = $person_saved->toArray();
                 $person_saved_array['key'] = $person_key;
+                $person_saved_array['title_id'] = $title_id;
                 $this->peopleOnForm[$index] = $person_saved_array;
             }
             // Update existing person
@@ -251,12 +268,14 @@ class PersonTable extends Component
                 $person_save  = $person;
                 unset($person_save['key']);
                 unset($person_save['title_id']);
+                unset($person_save['points']);
                 unset($person_save['laravel_through_key']);
                 unset($person_save['created_at']); // TODO
                 unset($person_save['updated_at']); // TODO
                 Person::where('id', $person_save['id'])->update($person_save);
                 $crew = Person::find($person_save['id'])->crew;
                 $crew->title_id = $person['title_id'];
+                $crew->points = $person['points'];
                 $crew->save();
             }
         }

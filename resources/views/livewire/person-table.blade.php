@@ -27,7 +27,13 @@
                 <x-table.cell class="text-center">{{ $person['nationality1'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['nationality2'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['country_of_residence'] }}</x-table.cell>
-                @if ($backoffice)<x-table.heading>- 2 +</x-table.heading>@endif
+                @if ($backoffice)
+                <x-table.cell x-data="{ points: {{ $person['points'] }}, person_key: '{{ $person['key'] }}' }" class="text-center">
+                    <span class="cursor-pointer" @click="$wire.pointsDec(person_key)">-</span>
+                    <span x-text="points"></span>
+                    <span class="cursor-pointer" @click="$wire.pointsInc(person_key)">+</span>
+                </x-table.cell>
+                @endif
                 <x-table.cell class="text-center space-x-2">
                     <a wire:click="showModalEdit('{{ $person['key'] }}')" class="cursor-pointer">Edit</a>
                     <a wire:click="showModalDelete('{{ $person['key'] }}')" class="cursor-pointer">Delete</a>
