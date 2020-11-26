@@ -16,7 +16,7 @@ use Tests\TestCase;
  */
 class ChipAutocompleteTest extends TestCase
 {
-    use DatabaseMigrations, RefreshDatabase, WithFaker;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function focusing_input_shows_dropdown_list()
