@@ -8,7 +8,7 @@
 
     <x-table>
         <x-slot name="head">
-            <!-- <x-table.heading>Role</x-table.heading> -->
+            <x-table.heading>Title</x-table.heading>
             <x-table.heading>Full name</x-table.heading>
             <x-table.heading>Gender</x-table.heading>
             <x-table.heading>Nationality 1</x-table.heading>
@@ -21,7 +21,7 @@
         <x-slot name="body">
             @foreach ($peopleOnForm as $person)
             <x-table.row wire:key="{{ $person['key'] }}">
-                <!-- <x-table.cell class="text-center">{{-- $person['role'] --}}</x-table.cell> -->
+                <x-table.cell class="text-center">{{ $titles[$person['title_id']] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['firstname'] }} {{ $person['lastname'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['gender'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['nationality1'] }}</x-table.cell>
@@ -51,17 +51,17 @@
             </x-slot>
 
             <x-slot name="content">
-                <!-- <div>
-                    <label for="role" class="block text-sm font-medium leading-5 text-gray-700">Role</label>
-                    <select wire:model="personEditing.role" id="role"
+                <div>
+                    <label for="title_id" class="block text-sm font-medium leading-5 text-gray-700">Title</label>
+                    <select wire:model="personEditing.title_id" id="title_id"
                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="actor">Actor</option>
-                        <option value="director">Director</option>
-                        <option value="scriptwrited">Scriptwriter</option>
+                        @foreach ($titles as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
                     </select>
-                    @error('personEditing.role') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @error('personEditing.title_id') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
-                </div> -->
+                </div>
 
                 <div>
                     <label for="firstname" class="block text-sm font-medium leading-5 text-gray-700">First name</label>

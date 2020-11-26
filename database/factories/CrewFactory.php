@@ -27,9 +27,9 @@ class CrewFactory extends Factory
     {
         return [
             'points' => $this->faker->numberBetween(0, 10),
-            'person_id' => Person::factory(),
-            'title_id' => Title::factory(),
-            'media_id' => Media::factory(),
+            'person_id' => Person::inRandomOrder()->first(),
+            'title_id' => Title::inRandomOrder()->first(),
+            'media_id' => Media::inRandomOrder()->first(),
         ];
     }
 }

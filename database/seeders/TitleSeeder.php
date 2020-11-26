@@ -14,6 +14,6 @@ class TitleSeeder extends Seeder
      */
     public function run()
     {
-        Title::factory()->count(5)->create();
+        Title::factory()->count(3)->create();
     }
 }

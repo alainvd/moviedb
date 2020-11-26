@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Movie;
 use App\Person;
 use App\Crew;
+use App\Title;
 use Illuminate\Support\Str;
 
 class PersonTable extends Component
@@ -19,6 +20,8 @@ class PersonTable extends Component
     // We also convert each person in to array (there were issues otherwise).
     // TODO: or we could store people in People models, just not save them?
     public $peopleOnForm = [];
+
+    public $titles;
 
     // When to show modal
     public $showingEditModal = false;
@@ -76,7 +79,8 @@ class PersonTable extends Component
     private function personDefaults()
     {
         return [
-            // 'role' => 'actor',
+            'key' => Str::random(10),
+            'title_id' => Title::first()->id,
             'firstname' => '',
             'lastname' => '',
             'gender' => 'male',
@@ -92,7 +96,7 @@ class PersonTable extends Component
     protected $rules = [
         'personEditing.id' => '',
         'personEditing.key' => '',
-        // 'personEditing.role' => 'required|string|max:255',
+        'personEditing.title_id' => 'required',
         'personEditing.firstname' => 'required|string|max:255|min:3',
         'personEditing.lastname' => 'required|string|max:255',
         'personEditing.gender' => 'required|string|max:255',
@@ -107,7 +111,7 @@ class PersonTable extends Component
     protected $validationAttributes = [
         'personEditing.id' => 'id',
         'personEditing.key' => 'key',
-        // 'personEditing.role' => 'role',
+        'personEditing.title_id' => 'title',
         'personEditing.firstname' => 'first name',
         'personEditing.lastname' => 'last name',
         'personEditing.gender' => 'gender',
@@ -118,11 +122,23 @@ class PersonTable extends Component
 
     public function mount($movie_id = null, $backoffice = false)
     {
+        foreach (Title::all() as $title) {
+            $this->titles[$title->id] = $title->name;
+        }
         $this->backoffice = $backoffice;
         if ($movie_id) {
             $this->movie_id = $movie_id;
             // Make a copy of people in array (TODO: change to collection?)
             $this->peopleOnForm = Movie::where('id', $this->movie_id)->first()->people->toArray();
+            // Add title value
+            $this->peopleOnForm = array_map(
+                function ($a) {
+                    $a['title_id'] = Person::find($a['id'])->crew->title->id;
+                    return $a;
+                },
+                $this->peopleOnForm
+            );
+            // Add unique key
             $this->peopleOnForm = array_map(
                 function ($a) {
                     $a['key'] = Str::random(10);
@@ -130,7 +146,6 @@ class PersonTable extends Component
                 },
                 $this->peopleOnForm
             );
-            // dd($this->peopleOnForm);
         } else {
             $this->peopleOnForm = [];
         };
@@ -138,7 +153,7 @@ class PersonTable extends Component
 
     public function render()
     {
-        return view('livewire.person-table', ['movie_id'=>$this->movie_id]);
+        return view('livewire.person-table');
     }
 
     /**
@@ -162,7 +177,6 @@ class PersonTable extends Component
     public function showModalAdd() {
         // Create a new empty person with unique key
         $this->personEditing = new Person($this->personDefaults());
-        $this->personEditing['key'] = Str::random(10);
 
         $this->resetValidation();
         $this->showingEditModal = true;
@@ -223,9 +237,10 @@ class PersonTable extends Component
                 $person_save  = $person;
                 $person_key = $person_save['key'];
                 unset($person_save['key']);
-                // TODO: fix points, fix title
+                $title_id = $person_save['title_id'];
+                unset($person_save['title_id']);
+                // TODO: fix points
                 $points = 10;
-                $title_id = 10;
                 $person_saved = $movie->addPerson($person_save, $points, $title_id, $movie->id);
                 $person_saved_array = $person_saved->toArray();
                 $person_saved_array['key'] = $person_key;
@@ -235,10 +250,14 @@ class PersonTable extends Component
             else {
                 $person_save  = $person;
                 unset($person_save['key']);
+                unset($person_save['title_id']);
                 unset($person_save['laravel_through_key']);
                 unset($person_save['created_at']); // TODO
                 unset($person_save['updated_at']); // TODO
                 Person::where('id', $person_save['id'])->update($person_save);
+                $crew = Person::find($person_save['id'])->crew;
+                $crew->title_id = $person['title_id'];
+                $crew->save();
             }
         }
 
