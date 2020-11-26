@@ -38,7 +38,7 @@ class Crew extends Model
 
     public function person()
     {
-        return $this->belongsTo(\App\Person::class);
+        return $this->hasOne(\App\Person::class, 'id', 'person_id');
     }
 
     public function media()

@@ -223,8 +223,10 @@ class PersonTable extends Component
                 $person_save  = $person;
                 $person_key = $person_save['key'];
                 unset($person_save['key']);
-                // TODO: create person here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                $person_saved = $movie->people()->create($person_save);
+                // TODO: fix points, fix title
+                $points = 10;
+                $title_id = 10;
+                $person_saved = $movie->addPerson($person_save, $points, $title_id, $movie->id);
                 $person_saved_array = $person_saved->toArray();
                 $person_saved_array['key'] = $person_key;
                 $this->peopleOnForm[$index] = $person_saved_array;
@@ -243,10 +245,8 @@ class PersonTable extends Component
         // Remove people that have been deleted in the form
         foreach ($movie->people()->get() as $person) {
             if (!$this->findPersonOnFormById($person['id'])) {
-                // TODO: improve relationship
                 Person::where('id', $person['id'])->delete();
-                // Person::where('id', $person['id'])->delete();
-                // Crew::where('person_id', $person['id'])->delete();
+                Crew::where('person_id', $person['id'])->delete();
             }
         }
     }
