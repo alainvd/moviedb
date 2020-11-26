@@ -8,7 +8,7 @@
 
     <x-table>
         <x-slot name="head">
-            <x-table.heading>Role</x-table.heading>
+            <!-- <x-table.heading>Role</x-table.heading> -->
             <x-table.heading>Full name</x-table.heading>
             <x-table.heading>Gender</x-table.heading>
             <x-table.heading>Nationality 1</x-table.heading>
@@ -21,8 +21,8 @@
         <x-slot name="body">
             @foreach ($peopleOnForm as $person)
             <x-table.row wire:key="{{ $person['key'] }}">
-                <x-table.cell class="text-center">{{ $person['role'] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $person['first_name'] }} {{ $person['last_name'] }}</x-table.cell>
+                <!-- <x-table.cell class="text-center">{{-- $person['role'] --}}</x-table.cell> -->
+                <x-table.cell class="text-center">{{ $person['firstname'] }} {{ $person['lastname'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['gender'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['nationality1'] }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $person['nationality2'] }}</x-table.cell>
@@ -51,18 +51,7 @@
             </x-slot>
 
             <x-slot name="content">
-                <div>
-                    <label for="type" class="block text-sm font-medium leading-5 text-gray-700">Type</label>
-                    <select wire:model="personEditing.type" id="type"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="crew">Crew</option>
-                        <option value="cast">Cast</option>
-                    </select>
-                    @error('personEditing.type') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
+                <!-- <div>
                     <label for="role" class="block text-sm font-medium leading-5 text-gray-700">Role</label>
                     <select wire:model="personEditing.role" id="role"
                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
@@ -72,21 +61,21 @@
                     </select>
                     @error('personEditing.role') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> -->
 
                 <div>
-                    <label for="first_name" class="block text-sm font-medium leading-5 text-gray-700">First name</label>
-                    <input wire:model="personEditing.first_name" id="first_name"
+                    <label for="firstname" class="block text-sm font-medium leading-5 text-gray-700">First name</label>
+                    <input wire:model="personEditing.firstname" id="firstname"
                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('personEditing.first_name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @error('personEditing.firstname') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="last_name" class="block text-sm font-medium leading-5 text-gray-700">Last name</label>
-                    <input wire:model="personEditing.last_name" id="last_name"
+                    <label for="lastname" class="block text-sm font-medium leading-5 text-gray-700">Last name</label>
+                    <input wire:model="personEditing.lastname" id="lastname"
                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('personEditing.last_name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @error('personEditing.lastname') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 

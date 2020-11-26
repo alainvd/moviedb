@@ -15,6 +15,8 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
+        'key',
         'lastname',
         'firstname',
         'gender',
@@ -33,8 +35,34 @@ class Person extends Model
     ];
 
 
-    public function crews()
+    // Intermediate table
+    public function crew()
     {
-        return $this->hasMany(\App\Crew::class);
+        return $this->hasOne(\App\Crew::class);
     }
+
+    // Through intermediate table
+    public function title()
+    {
+        return $this->hasOneThrough(\App\Title::class, \App\Crew::class, 'person_id', 'id', 'id', 'title_id');
+    }
+
+    // Through intermediate table
+    public function movie()
+    {
+        return $this->hasOneThrough(\App\Movie::class, \App\Crew::class, 'person_id', 'id', 'id', 'movie_id');
+    }
+
+    public function addPerson()
+    {
+        // create person
+        // create crew
+    }
+
+    public function deletePerson()
+    {
+        // delete person
+        // delete crew
+    }
+
 }

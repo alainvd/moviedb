@@ -4,7 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Movie;
-use App\Models\Person;
+use App\Person;
+use App\Crew;
 use Illuminate\Support\Str;
 
 class PersonTable extends Component
@@ -75,10 +76,9 @@ class PersonTable extends Component
     private function personDefaults()
     {
         return [
-            'type' => 'crew',
-            'role' => 'actor',
-            'first_name' => '',
-            'last_name' => '',
+            // 'role' => 'actor',
+            'firstname' => '',
+            'lastname' => '',
             'gender' => 'male',
             'nationality1' => 'belgian',
             'nationality2' => '',
@@ -92,10 +92,9 @@ class PersonTable extends Component
     protected $rules = [
         'personEditing.id' => '',
         'personEditing.key' => '',
-        'personEditing.type' => 'required|string|max:255',
-        'personEditing.role' => 'required|string|max:255',
-        'personEditing.first_name' => 'required|string|max:255|min:3',
-        'personEditing.last_name' => 'required|string|max:255',
+        // 'personEditing.role' => 'required|string|max:255',
+        'personEditing.firstname' => 'required|string|max:255|min:3',
+        'personEditing.lastname' => 'required|string|max:255',
         'personEditing.gender' => 'required|string|max:255',
         'personEditing.nationality1' => 'required|string|max:255',
         'personEditing.nationality2' => 'string|max:255',
@@ -108,10 +107,9 @@ class PersonTable extends Component
     protected $validationAttributes = [
         'personEditing.id' => 'id',
         'personEditing.key' => 'key',
-        'personEditing.type' => 'type',
-        'personEditing.role' => 'role',
-        'personEditing.first_name' => 'first name',
-        'personEditing.last_name' => 'last name',
+        // 'personEditing.role' => 'role',
+        'personEditing.firstname' => 'first name',
+        'personEditing.lastname' => 'last name',
         'personEditing.gender' => 'gender',
         'personEditing.nationality1' => 'nationality 1',
         'personEditing.nationality2' => 'nationality 2',
@@ -132,6 +130,7 @@ class PersonTable extends Component
                 },
                 $this->peopleOnForm
             );
+            // dd($this->peopleOnForm);
         } else {
             $this->peopleOnForm = [];
         };
@@ -140,42 +139,6 @@ class PersonTable extends Component
     public function render()
     {
         return view('livewire.person-table', ['movie_id'=>$this->movie_id]);
-    }
-
-    /**
-     * Save people changes to database
-     */
-    public function saveMoviePeople(Movie $movie)
-    {
-        // (Everything is an array at this point)
-        // TODO: somehow mark which need to be updated
-        foreach ($this->peopleOnForm as $index => $person) {
-            // Save new person
-            if (!isset($person['id'])) {
-                $person_save  = $person;
-                $person_key = $person_save['key'];
-                unset($person_save['key']);
-                $person_saved = $movie->people()->create($person_save);
-                $person_saved_array = $person_saved->toArray();
-                $person_saved_array['key'] = $person_key;
-                $this->peopleOnForm[$index] = $person_saved_array;
-            }
-            // Update existing person
-            else {
-                $person_save  = $person;
-                unset($person_save['key']);
-                unset($person_save['created_at']); // TODO
-                unset($person_save['updated_at']); // TODO
-                Person::where('id', $person_save['id'])->update($person_save);
-            }
-        }
-
-        // Remove people that have been deleted in the form
-        foreach ($movie->people()->get() as $person) {
-            if (!$this->findPersonOnFormById($person['id'])) {
-                $movie->people()->where('id', $person['id'])->delete();
-            }
-        }
     }
 
     /**
@@ -245,6 +208,47 @@ class PersonTable extends Component
             unset($this->peopleOnForm[array_key_first($findPerson)]);
         }
         $this->showingDeleteModal = false;
+    }
+
+    /**
+     * Save people changes to database
+     */
+    public function saveMoviePeople(Movie $movie)
+    {
+        // (Everything is an array at this point)
+        // TODO: somehow mark which need to be updated
+        foreach ($this->peopleOnForm as $index => $person) {
+            // Save new person
+            if (!isset($person['id'])) {
+                $person_save  = $person;
+                $person_key = $person_save['key'];
+                unset($person_save['key']);
+                // TODO: create person here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                $person_saved = $movie->people()->create($person_save);
+                $person_saved_array = $person_saved->toArray();
+                $person_saved_array['key'] = $person_key;
+                $this->peopleOnForm[$index] = $person_saved_array;
+            }
+            // Update existing person
+            else {
+                $person_save  = $person;
+                unset($person_save['key']);
+                unset($person_save['laravel_through_key']);
+                unset($person_save['created_at']); // TODO
+                unset($person_save['updated_at']); // TODO
+                Person::where('id', $person_save['id'])->update($person_save);
+            }
+        }
+
+        // Remove people that have been deleted in the form
+        foreach ($movie->people()->get() as $person) {
+            if (!$this->findPersonOnFormById($person['id'])) {
+                // TODO: improve relationship
+                Person::where('id', $person['id'])->delete();
+                // Person::where('id', $person['id'])->delete();
+                // Crew::where('person_id', $person['id'])->delete();
+            }
+        }
     }
 
 }

@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Movie;
 use App\Media;
-use App\Models\Person;
+use App\Person;
 use Illuminate\Support\Str;
 
 class MovieDetailFormApplicant extends MovieDetailForm

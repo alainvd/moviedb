@@ -31,19 +31,21 @@ class Movie extends Model implements Grantable
         return $this->morphOne(\App\Media::class, 'grantable');
     }
 
+    public function crew()
+    {
+        return $this->hasMany(\App\Crew::class, 'media_id', 'id');
+    }
+
     public function people()
     {
-        return $this->hasMany(\App\Models\Person::class, 'media_id', 'id');
-    }
-
-    public function getCast()
-    {
-        return $this->people()->where('type', 'cast')->get();
-    }
-
-    public function getCrew()
-    {
-        return $this->people()->where('type', 'crew')->get();
+        return $this->hasManyThrough(
+            \App\Person::class,
+            \App\Crew::class,
+            'media_id',
+            'id',
+            'id',
+            'person_id'
+        );
     }
 
     public function whoami(){

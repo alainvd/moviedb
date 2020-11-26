@@ -51,12 +51,7 @@
                                     <tr class="bg-gray-100">
                                         @endif
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-<<<<<<< HEAD
-                                            <a href="{{route('movie_detail', ['movie'=>$movie->id])}}">{{$movie->original_title}}</a>
-=======
                                             <a href="{{route('movie_detail_applicant', ['movie'=>$movie->id])}}">{{$movie->original_title}}</a>
-{{--                                            {{$movie->id}}--}}
->>>>>>> Routes update
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700 text-center">
                                             {{$movie->year_of_copyright}}
