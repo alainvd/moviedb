@@ -1,4 +1,4 @@
-<div class="hidden md:flex md:flex-shrink-0">
+<div class="hidden h-screen md:flex md:flex-shrink-0">
     <div class="flex flex-col justify-center bg-grey-lighter w-16 border-r border-gray-200 bg-white">
         <div class="text-grey-darker text-center bg-grey-light py-2">
             <a href="#" class="w-16 flex items-center px-2 py-2 text-sm leading-5 font-medium text-gray-900 hover:text-gray-900 hover:border-red-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150">
