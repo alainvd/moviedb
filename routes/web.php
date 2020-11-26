@@ -111,3 +111,6 @@ Route::resource('crew', 'CrewController')->only('index');
 
 
 Route::resource('audience', 'AudienceController')->only('index');
+
+
+Route::resource('genre', 'GenreController')->only('index');

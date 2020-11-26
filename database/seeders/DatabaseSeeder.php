@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(\Database\Seeders\AudienceSeeder::class);
+        $this->call(\Database\Seeders\GenreSeeder::class);
 
         $this->call(\Database\Seeders\ActionSeeder::class);
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\StepSeeder::class);
         $this->call(\Database\Seeders\StepDefinitionSeeder::class);
         $this->call(\Database\Seeders\ChecklistSeeder::class);
+        $this->call(\Database\Seeders\LanguageSeeder::class);
 
         $this->call(\Database\Seeders\TitleSeeder::class);
         $this->call(\Database\Seeders\PersonSeeder::class);

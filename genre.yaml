@@ -1,0 +1,15 @@
+models:
+
+  Genre:
+    name: string
+    type: string
+    relationships:
+      belongsTo: Media
+
+controllers:
+  Genre:
+    index:
+      query: all
+      render: genre.index with:genres
+
+seeders: Genre
