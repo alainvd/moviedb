@@ -29,7 +29,6 @@ class Media extends Model
         'id' => 'integer',
     ];
 
-<<<<<<< HEAD
     const LANGUAGES = [
         "fr" => "French",
         "bu" => "Bulgarian",
@@ -64,7 +63,7 @@ class Media extends Model
         "series" => "Series",
         "live_action_children_film" => "Live-action children film",
     ];
-=======
+
     public function genre(){
         return $this->belongsTo('App\Genre');
     }
@@ -72,8 +71,6 @@ class Media extends Model
     public function audience(){
         return $this->belongsTo('App\Audience');
     }
-
->>>>>>> 3687b4a04f2dd7436634d5725d886f9703491f96
 
     public function grantable()
     {
