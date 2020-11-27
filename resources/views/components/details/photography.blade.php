@@ -1,8 +1,8 @@
-<div class="grid grid-cols-9 gap-6 my-12">
-    <div class="col-start-1 col-span-3">
+<div class="grid grid-cols-3 gap-4">
+    <div class="col-span-2 md:col-span-1">
         <label for="start_photography"
             class="block text-sm font-medium leading-5 text-gray-800">Start Date of Principal
-            Photography (wired, todo)</label>
+            Photography</label>
         <input id="start_photography" wire:model="movie.shooting_start"
             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
             placeholder="dd/mm/yyyy"
@@ -11,9 +11,9 @@
         @enderror
     </div>
 
-    <div class="col-start-4 col-span-3">
+    <div class="col-span-2 md:col-span-1">
         <label for="end_photography" class="block text-sm font-medium leading-5 text-gray-800">End
-            Date of Principal Photography (wired, todo)</label>
+            Date of Principal Photography</label>
         <input id="end_photography" wire:model="movie.shooting_end"
             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
             placeholder="dd/mm/yyyy"
@@ -22,7 +22,7 @@
         @enderror
     </div>
 
-    <div class="col-start-7 col-span-3">
+    <div class="col-span-2 md:col-span-1">
         <label for="shooting_language"
             class="block text-sm font-medium leading-5 text-gray-700">Shooting Language</label>
         <select id="shooting_language"
@@ -33,18 +33,18 @@
         </select>
     </div>
 
-    <div class="col-start-1 col-span-3">
+    <div class="col-span-2 md:col-span-1">
         <label for="film_length" class="block text-sm font-medium leading-5 text-gray-800">Film
-            Length (in minutes) (wired)</label>
+            Length (in minutes)</label>
         <input id="film_length" wire:model="movie.film_length"
             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
         @error('movie.film_length') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
 
-    <div class="col-start-4 col-span-3">
+    <div class="col-span-2 md:col-span-1">
         <label for="film_format" class="block text-sm font-medium leading-5 text-gray-800">Film
-            Format (wired)</label>
+            Format</label>
         <select id="film_format" wire:model="movie.film_format"
             class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
             <option>35mm</option>

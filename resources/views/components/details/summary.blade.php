@@ -1,34 +1,42 @@
-<div class="grid grid-cols-9 gap-6 mt-16">
-    <div class="col-start-1 col-span-4">
-        <label for="imdb" class="block text-sm font-medium leading-5 text-gray-800">IMDB URL - <a
+<div class="grid grid-cols-3 gap-4">
+    <div class="col-span-3 md:col-span-1">
+        <x-form.input
+            :id="'imdb'"
+            :label="'IMDB URL'"
+            wire:model="$movie.imdb_url">
+
+            &nbsp;&nbsp;
+            <a
                 target="_blank" href="{{ $movie->imdb_url }}"
-                class="text-indigo-600 hover:text-indigo-900">Visit</a> (wired)</label>
-        <input id="imdb_url" wire:model="movie.imdb_url"
-            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-            value="{{ $movie->imdb_url }}">
-        @error('movie.imdb_url') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                class="tracking-tight text-indigo-600 hover:text-indigo-900">
+                    visit
+            </a>
+        </x-form.input>
+
+        @error('movie.imdb_url')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
 
-    <div class="col-start-5 col-span-4">
-        <label for="ID" class="block text-sm font-medium leading-5 text-gray-800">ID</label>
-        <input id="ID"
-            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+    <div class="col-span-3 md:col-span-1">
+        <x-form.input
+            :id="'ID'"
+            :label="'ID'"
+            wire:model="$movie.id">
+        </x-form.input>
     </div>
 
-    <div class="col-start-9 col-span-2 mt-6">
-        <span class="ml-5 rounded-md shadow-sm">
-            <button type="button"
-                class="mt-1 py-2 px-3 border border-gray-700 rounded-md text-xs leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
-                Manage codes
-            </button>
-        </span>
+    <div class="col-span-3 md:col-span-1 flex items-end">
+        <button type="button"
+            class="p-3 border border-gray-700 rounded-md shadow-sm text-xs font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+            Manage codes
+        </button>
     </div>
 
-    <div class="col-start-1 col-span-9">
+    <div class="col-span-3 lg:col-span-2">
         <label for="synopsis"
             class="block text-sm font-medium leading-5 text-gray-800">Synopsis</label>
-        <div class="mt-1 rounded-md shadow-sm">
+        <div class="rounded-md shadow-sm">
             <textarea id="about" rows="6"
                 class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
         </div>

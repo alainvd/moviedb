@@ -1,5 +1,5 @@
-<div class="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg">
-    <table class="min-w-full divide-y divide-cool-gray-200">
+<div class="align-middle min-w-full overflow-x-auto shadow overflow-hidden rounded-sm">
+    <table class="min-w-full divide-y divide-cool-gray-200 rounded-md">
         <thead>
             <tr>
                 {{ $head }}
