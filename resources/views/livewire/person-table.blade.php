@@ -4,47 +4,62 @@
         Cast and Crew
     </div>
 
-    <x-table>
-        <x-slot name="head">
-            <x-table.heading>Title</x-table.heading>
-            <x-table.heading>Full name</x-table.heading>
-            <x-table.heading>Gender</x-table.heading>
-            <x-table.heading>Nationality 1</x-table.heading>
-            <x-table.heading>Nationality 2</x-table.heading>
-            <x-table.heading>Residence</x-table.heading>
-            @if ($backoffice)<x-table.heading>Scoring</x-table.heading>@endif
-            <x-table.heading></x-table.heading>
-        </x-slot>
+    <div x-data="{ points_total: {{ $points_total }} }">
+        <x-table>
+            <x-slot name="head">
+                <x-table.heading>Title</x-table.heading>
+                <x-table.heading>Full name</x-table.heading>
+                <x-table.heading>Gender</x-table.heading>
+                <x-table.heading>Nationality 1</x-table.heading>
+                <x-table.heading>Nationality 2</x-table.heading>
+                <x-table.heading>Residence</x-table.heading>
+                @if ($backoffice)<x-table.heading>Scoring</x-table.heading>@endif
+                <x-table.heading></x-table.heading>
+            </x-slot>
 
-        <x-slot name="body">
-            @foreach ($peopleOnForm as $person)
-            <x-table.row wire:key="{{ $person['key'] }}">
-                <x-table.cell class="text-center">{{ $titles[$person['title_id']] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $person['firstname'] }} {{ $person['lastname'] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $person['gender'] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $person['nationality1'] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $person['nationality2'] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $person['country_of_residence'] }}</x-table.cell>
-                @if ($backoffice)
-                <x-table.cell x-data="{ points: {{ $person['points'] }}, person_key: '{{ $person['key'] }}' }" class="text-center">
-                    <span class="cursor-pointer" @click="$wire.pointsDec(person_key)">-</span>
-                    <span x-text="points"></span>
-                    <span class="cursor-pointer" @click="$wire.pointsInc(person_key)">+</span>
-                </x-table.cell>
-                @endif
-                <x-table.cell class="text-center space-x-2">
-                    <a wire:click="showModalEdit('{{ $person['key'] }}')" class="cursor-pointer">Edit</a>
-                    <a wire:click="showModalDelete('{{ $person['key'] }}')" class="cursor-pointer">Delete</a>
-                </x-table.cell>
-            </x-table.row>
-            @endforeach
-        </x-slot>
-    </x-table>
+            <x-slot name="body">
+                @foreach ($peopleOnForm as $person)
+                <x-table.row wire:key="{{ $person['key'] }}">
+                    <x-table.cell class="text-center">{{ $titles[$person['title_id']] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $person['firstname'] }} {{ $person['lastname'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $person['gender'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $person['nationality1'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $person['nationality2'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $person['country_of_residence'] }}</x-table.cell>
+                    @if ($backoffice)
+                    <x-table.cell x-data="{ points: {{ $person['points'] }}, person_key: '{{ $person['key'] }}' }" class="text-center">
+                        <span class="cursor-pointer" @click="$wire.pointsDec(person_key)">
+                            <svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        <span x-text="points"></span>
+                        <span class="cursor-pointer" @click="$wire.pointsInc(person_key)">
+                            <svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </x-table.cell>
+                    @endif
+                    <x-table.cell class="text-center space-x-2">
+                        <a wire:click="showModalEdit('{{ $person['key'] }}')" class="cursor-pointer">Edit</a>
+                        <a wire:click="showModalDelete('{{ $person['key'] }}')" class="cursor-pointer">Delete</a>
+                    </x-table.cell>
+                </x-table.row>
+                @endforeach
+            </x-slot>
+        </x-table>
 
-    <div class="mt-5 text-right">
-        <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
-            Add
-        </x-button.secondary>
+        <div class="mt-5 text-right"">
+            @if ($backoffice)
+            <span class="mr-4">
+                TOTAL SCORE: <span class="font-bold" x-text="points_total"></span>
+            </span>
+            @endif
+            <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
+                Add
+            </x-button.secondary>
+        </div>
     </div>
 
     <!-- Add/Edit Person Modal -->

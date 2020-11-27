@@ -21,7 +21,11 @@ class PersonTable extends Component
     // TODO: or we could store people in People models, just not save them?
     public $peopleOnForm = [];
 
-    public $titles;
+    // All titles
+    public $titles = [];
+
+    // Total points for all crew
+    public $points_total = 0;
 
     // When to show modal
     public $showingEditModal = false;
@@ -131,11 +135,12 @@ class PersonTable extends Component
             $this->movie_id = $movie_id;
             // Make a copy of people in array (TODO: change to collection?)
             $this->peopleOnForm = Movie::where('id', $this->movie_id)->first()->people->toArray();
-            // Add title value, add points
+            // Add title value, add points, count total points
             $this->peopleOnForm = array_map(
                 function ($a) {
                     $a['title_id'] = Person::find($a['id'])->crew->title->id;
                     $a['points'] = Person::find($a['id'])->crew->points;
+                    $this->points_total += Person::find($a['id'])->crew->points;
                     return $a;
                 },
                 $this->peopleOnForm
@@ -230,6 +235,7 @@ class PersonTable extends Component
         $findPerson = $this->findPersonOnFormByKey($key);
         if ($findPerson) {
             $this->peopleOnForm[array_key_first($findPerson)]['points']--;
+            $this->points_total--;
         }
     }
 
@@ -237,6 +243,7 @@ class PersonTable extends Component
         $findPerson = $this->findPersonOnFormByKey($key);
         if ($findPerson) {
             $this->peopleOnForm[array_key_first($findPerson)]['points']++;
+            $this->points_total++;
         }
     }
 
