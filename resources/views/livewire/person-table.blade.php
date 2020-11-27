@@ -1,9 +1,7 @@
 <div>
 
-    <div class="px-6 py-4">
-        <div class="text-lg">
-            Cast and Crew
-        </div>
+    <div class="text-lg mb-8">
+        Cast and Crew
     </div>
 
     <x-table>
