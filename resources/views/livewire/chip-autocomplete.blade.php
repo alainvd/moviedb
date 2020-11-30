@@ -21,7 +21,7 @@
 
             @forelse($options as $option)
 
-            <li wire:key="{{$loop->index}}" wire:click="addItem('{{ $option['chipLabel'] ?? $option['label'] }}')" class="p-4 text-md leading-tight font-normal hover:bg-gray-300 cursor-pointer">
+            <li wire:key="{{$loop->index}}" wire:click="$emit('addItem', '{{$option['chipLabel'] ?? $option['label']}}')" class="p-4 text-md leading-tight font-normal hover:bg-gray-300 cursor-pointer">
                 {{ $option['label'] }}
             </li>
 

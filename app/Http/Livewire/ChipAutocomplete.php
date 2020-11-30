@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Language;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 /**
@@ -12,6 +13,7 @@ class ChipAutocomplete extends Component
 {
     public $listeners = [
         'chipRemoved' => 'removeItem',
+        'addItem' => 'addItem',
     ];
 
     public $domId;
@@ -27,6 +29,7 @@ class ChipAutocomplete extends Component
 
     public function addItem($item)
     {
+        Log::info('Add item called with ' . $item);
         $this->selected->push($item);
 
         $this->selected = $this->selected->unique()->values();
