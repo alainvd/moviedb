@@ -12,10 +12,13 @@ class MovieDetailForm extends Component
 {
 
     // Fake field
-    public $form_update_unique = null;
+    public $form_update_unique = 0;
 
     // Movie data for Livewire
     public Movie $movie;
+
+    // Movie original
+    public $movie_original = [];
 
     // Allow special editing
     public $backoffice = false;
@@ -27,7 +30,7 @@ class MovieDetailForm extends Component
      */
     protected $rules = [
         'form_update_unique' => 'required',
-        'movie.original_title' => 'required|string|max:255|min:3',
+        'movie.original_title' => 'required|string|max:255',
         'movie.european_nationality_flag' => 'string|max:255',
         'movie.film_country_of_origin' => 'string|max:255',
         'movie.year_of_copyright' => 'integer',
@@ -43,23 +46,16 @@ class MovieDetailForm extends Component
 
     public function mount($movie_id = null, $backoffice = false)
     {
-        $this->backoffice = $backoffice;
         if ($movie_id) {
             $this->movie = Movie::where('id', $movie_id)->first();
         } else {
             $this->movie = new Movie;
         };
+        $this->movie_original = $this->movie->getOriginal();
     }
 
     public function render()
     {
-        return view('livewire.movie-detail-form', [
-            'backoffice'=>$this->backoffice,
-            'languages'=>Media::LANGUAGES,
-            'years'=>Media::YEARS(),
-            'genres'=>Media::GENRES,
-            'countries'=>Media::COUNTRIES,
-        ]);
     }
 
     public function formSubmitForce()
@@ -91,6 +87,7 @@ class MovieDetailForm extends Component
     private function saveMovieDetails()
     {
         $this->movie->save();
+        $this->movie_original = $this->movie->getOriginal();
         $this->emit('save-movie-details', $this->movie->id);
     }
 

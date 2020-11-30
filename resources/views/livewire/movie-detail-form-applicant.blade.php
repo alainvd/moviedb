@@ -1,6 +1,8 @@
 <div class="p-4 md:px-8 lg:px-16 mx-auto w-full sm:w-11/12 rounded-md shadow-md bg-white">
     <div class="text-xs leading-tight">Applicant form</div>
     <form wire:submit.prevent="save">
+        <!-- fake field to force form submit -->
+        <input wire:model="form_updated_unique" id="form_updated_unique" type="hidden"/>
         <!-- title -->
         <div class="my-8">
             <x-details.title :movie="$movie"></x-details.title>
@@ -19,7 +21,7 @@
 
         <!-- cast/crew -->
         <div class="my-8">
-            @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
+            @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $this->backoffice])
         </div>
 
         <!-- photography -->
@@ -43,11 +45,11 @@
         <div class="flex mt-12 justify-end items-center space-x-3">
             <span>
                 <span x-data="{ open: false }" x-init="
-                                        @this.on('notify-saved', () => {
-                                            setTimeout(() => { open = false }, 2500);
-                                            open = true;
-                                        })
-                                    " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-gray-600">
+                        @this.on('notify-saved', () => {
+                            setTimeout(() => { open = false }, 2500);
+                            open = true;
+                        })
+                    " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-gray-600">
                     Saved!
                 </span>
             </span>
