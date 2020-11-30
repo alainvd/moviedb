@@ -26,7 +26,7 @@ class TitleFactory extends Factory
         $title_types = ['Director', 'Screenwriter', 'Actor'];
 
         return [
-            'name' => $this->faker->unique()->randomElement($title_types),
+            'name' => $this->faker->randomElement($title_types),
         ];
     }
 }

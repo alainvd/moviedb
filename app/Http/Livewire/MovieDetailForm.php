@@ -11,16 +11,22 @@ use Illuminate\Support\Str;
 class MovieDetailForm extends Component
 {
 
+    // Fake field
+    public $form_update_unique = null;
+
     // Movie data for Livewire
     public Movie $movie;
 
     // Allow special editing
     public $backoffice = false;
 
+    protected $listeners = ['movie-details-force-submit' => 'formSubmitForce'];
+
     /**
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
+        'form_update_unique' => 'required',
         'movie.original_title' => 'required|string|max:255|min:3',
         'movie.european_nationality_flag' => 'string|max:255',
         'movie.film_country_of_origin' => 'string|max:255',
@@ -54,6 +60,11 @@ class MovieDetailForm extends Component
             'genres'=>Media::GENRES,
             'countries'=>Media::COUNTRIES,
         ]);
+    }
+
+    public function formSubmitForce()
+    {
+        $this->form_update_unique = rand(0, 9999);
     }
 
     public function save()

@@ -101,8 +101,9 @@ class PersonTable extends Component
     protected $rules = [
         'personEditing.id' => '',
         'personEditing.key' => '',
+        'personEditing.points' => '',
         'personEditing.title_id' => 'required',
-        'personEditing.firstname' => 'required|string|max:255|min:3',
+        'personEditing.firstname' => 'required|string|max:255',
         'personEditing.lastname' => 'required|string|max:255',
         'personEditing.gender' => 'required|string|max:255',
         'personEditing.nationality1' => 'required|string|max:255',
@@ -210,6 +211,8 @@ class PersonTable extends Component
         else {
             $this->peopleOnForm[] = $personEditing;
         }
+
+        $this->emit('movie-details-force-submit');
     }
 
     /**
@@ -229,6 +232,8 @@ class PersonTable extends Component
             unset($this->peopleOnForm[array_key_first($findPerson)]);
         }
         $this->showingDeleteModal = false;
+
+        $this->emit('movie-details-force-submit');
     }
 
     public function pointsDec($key) {
@@ -237,6 +242,8 @@ class PersonTable extends Component
             $this->peopleOnForm[array_key_first($findPerson)]['points']--;
             $this->points_total--;
         }
+
+        $this->emit('movie-details-force-submit');
     }
 
     public function pointsInc($key) {
@@ -245,6 +252,8 @@ class PersonTable extends Component
             $this->peopleOnForm[array_key_first($findPerson)]['points']++;
             $this->points_total++;
         }
+
+        $this->emit('movie-details-force-submit');
     }
 
     /**
