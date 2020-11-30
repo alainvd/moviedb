@@ -24,16 +24,11 @@
     </div>
 
     <div class="col-span-1">
-        <x-form.select
-            :id="'shooting_language'"
-            :label="'Shooting Language'"
-            wire:model="movie.shooting_language">
-
-            @foreach($languages as $lang)
-                <option>{{ $lang }}</option>
-            @endforeach
-
-        </x-form.select>
+        <livewire:chip-autocomplete
+            :domId="'shooting_languages'"
+            :key="1"
+            :label="'Shooting Languages'">
+        </livewire:chip-autocomplete>
     </div>
 
     <div class="col-span-1">
