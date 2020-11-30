@@ -229,6 +229,8 @@ class PersonTable extends Component
     public function deletePerson() {
         $findPerson = $this->findPersonOnFormByKey($this->deletePersonKey);
         if ($findPerson) {
+            $personFound = $this->peopleOnForm[array_key_first($findPerson)];
+            $this->points_total -= $personFound['points'];
             unset($this->peopleOnForm[array_key_first($findPerson)]);
         }
         $this->showingDeleteModal = false;
@@ -277,6 +279,7 @@ class PersonTable extends Component
                 $person_saved_array = $person_saved->toArray();
                 $person_saved_array['key'] = $person_key;
                 $person_saved_array['title_id'] = $title_id;
+                $person_saved_array['points'] = $points;
                 $this->peopleOnForm[$index] = $person_saved_array;
             }
             // Update existing person
