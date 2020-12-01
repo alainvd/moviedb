@@ -1,4 +1,4 @@
-<span class="p-2 m-1 inline-block rounded-full bg-gray-300 hover:bg-gray-500 text-gray-900 text-sm">
+<span class="px-2 py-1 mr-1 mb-1 inline-block rounded-full bg-gray-300 hover:bg-gray-500 text-gray-900 text-xs">
     {{ $label }}
 
     @if($canRemove)

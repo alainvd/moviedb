@@ -23,20 +23,14 @@
         @enderror
     </div>
 
-    <div class="col-span-1">
-        <x-form.select
-            :id="'shooting_language'"
-            :label="'Shooting Language'"
-            wire:model="movie.shooting_language">
-
-            @foreach($languages as $lang)
-                <option>{{ $lang }}</option>
-            @endforeach
-
-        </x-form.select>
+    <div class="col-span-3 sm:col-span-2">
+        <livewire:chip-autocomplete
+            :domId="'shooting_languages'"
+            :key="1"
+            :label="'Shooting Languages'">
     </div>
 
-    <div class="col-span-1">
+    <div class="col-span-1 col-start-1">
         <x-form.input
             :id="'film_length'"
             :label="'Film Length (in minutes)'"

@@ -14,6 +14,8 @@ class ChipAutocomplete extends Component
         'chipRemoved' => 'removeItem',
     ];
 
+    public $domId;
+    public $label;
     public $search;
     public $selected;
     public $options;
