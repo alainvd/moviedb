@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\PersonSeeder::class);
         $this->call(\Database\Seeders\CrewSeeder::class);
 
-
+        $this->call(\Database\Seeders\CountrySeeder::class);
 
     }
 }
