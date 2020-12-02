@@ -9,6 +9,16 @@
     <title>Movie DB</title>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
+
     @livewireStyles
 </head>
 
