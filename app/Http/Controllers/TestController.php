@@ -10,4 +10,10 @@ class TestController extends Controller
     {
         return view('test.cas');
     }
+
+    public function select()
+    {
+
+        return view('test.select');
+    }
 }
