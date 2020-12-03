@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDossiersTable extends Migration
+class CreateStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateDossiersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dossiers', function (Blueprint $table) {
-            $table->id();
-            $table->string('project_ref_id', 20);
-            $table->string('action', 20);
-            $table->unsignedSmallInteger('status_id');
-            $table->integer('year');
-            $table->integer('call_id');
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->unsignedSmallInteger('id')->autoIncrement();
+            $table->string('name');
+            $table->string('public_name')->nullable();
+            $table->boolean('public')->default(true);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateDossiersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dossiers');
+        Schema::dropIfExists('statuses');
     }
 }

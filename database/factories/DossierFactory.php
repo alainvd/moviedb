@@ -6,6 +6,7 @@ use App\Call;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Dossier;
+use App\Models\Status;
 
 class DossierFactory extends Factory
 {
@@ -27,7 +28,7 @@ class DossierFactory extends Factory
             'project_ref_id' => $this->faker->word,
             'action' => $this->faker->word,
             'year' => $this->faker->numberBetween(1990, 2020),
-            'status' => $this->faker->randomElement(["accepted","rejected"]),
+            'status_id' => Status::all()->random()->id,
             'call_id' => Call::factory(),
         ];
     }

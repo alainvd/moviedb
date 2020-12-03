@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\AudienceSeeder::class);
         $this->call(\Database\Seeders\GenreSeeder::class);
         $this->call(\Database\Seeders\CountrySeeder::class);
+        $this->call(\Database\Seeders\StatusSeeder::class);
 
         $this->call(\Database\Seeders\ActionSeeder::class);
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
