@@ -3,8 +3,6 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Producer;
-use App\Models\Country;
 use Illuminate\Support\Str;
 
 class TableEditBase extends Component
@@ -18,21 +16,27 @@ class TableEditBase extends Component
 
     public $deleteItemKey = null;
 
-    // public Producer $editing;
+    public $editing;
 
-    private function defaults()
+    protected function defaults()
     {
         return ['key' => Str::random(10)];
     }
 
-    protected $rules = [
-        'editing.id' => '',
-        'editing.key' => ''
-    ];
+    protected function rules()
+    {
+        return [
+            'editing.id' => '',
+            'editing.key' => ''
+        ];
+    }
 
-    protected $validationAttributes = [
+    protected function validationAttributes()
+    {
+        return [
         'editing.id' => 'id',
-    ];
+        ];
+    }
 
     protected function findItemByKey($key)
     {
@@ -62,33 +66,30 @@ class TableEditBase extends Component
         );
     }
 
-    public function render()
+    public function showModalEdit($key = null)
     {
-        return view('livewire.table-edit-example-memory');
+        if ($key) {
+            $this->editing = $this->getItemByKey($key);
+        } else {
+            $this->editing = $this->defaults();
+        }
+        $this->showingEditModal = true;
+        $this->resetValidation();
     }
 
-    // public function showModalEdit($key = null)
-    // {
-    //     if ($key) {
-    //         $this->editing = new Producer($this->getItemByKey($key));
-    //     } else {
-    //         $this->editing = new Producer($this->defaults());
-    //     }
-    //     $this->showingEditModal = true;
-    // }
-
-    // public function showModalAdd()
-    // {
-    //     $this->editing = new Producer($this->defaults());
-    //     $this->resetValidation();
-    //     $this->showingEditModal = true;
-    // }
+    public function showModalAdd()
+    {
+        $this->editing = $this->defaults();
+        $this->resetValidation();
+        $this->showingEditModal = true;
+    }
 
     public function saveItem()
     {
+        // $this->validate(); // Ok, it doesn't validate because it's not longer Producer !?
         $this->validate();
         $this->showingEditModal = false;
-        $editing = $this->editing->toArray();
+        $editing = $this->editing;
         $findItem = $this->findItemByKey($editing['key']);
         if (!empty($findItem)) {
             $itemKey = array_key_first($findItem);

@@ -15,8 +15,6 @@ class Producer extends Model
      * @var array
      */
     protected $fillable = [
-        'id', // for table editing livewire component
-        'key', // for table editing livewire component
         'media_id',
         'role',
         'name',

@@ -16,15 +16,17 @@ class TableEditMovieProducers extends TableEditBase
 
     public $producer_roles = [];
 
-    private function defaults()
+    protected function defaults()
     {
         return [
             'role' => 'producer',
             'country_id' => Country::first()->id,
-        ] + parent::producers();
+        ] + parent::defaults();
     }
 
-    protected $rules = [
+    protected function rules()
+    {
+        return [
             'editing.media_id' => '',
             'editing.role' => 'required',
             'editing.name' => 'required|string|max:255',
@@ -32,12 +34,12 @@ class TableEditMovieProducers extends TableEditBase
             'editing.country_id' => 'required',
             'editing.share' => 'required|integer',
             'editing.budget' => 'required|integer',
-        ] + [
-            'editing.id' => '',
-            'editing.key' => ''
-        ];
+        ] + parent::rules();
+    }
 
-    protected $validationAttributes = [
+    protected function validationAttributes()
+    {
+        return [
             'editing.media_id' => 'media_id',
             'editing.role' => 'role',
             'editing.name' => 'name',
@@ -45,9 +47,8 @@ class TableEditMovieProducers extends TableEditBase
             'editing.country_id' => 'country',
             'editing.share' => 'share',
             'editing.budget' => 'budget',
-        ] + [
-            'editing.id' => 'id',
-        ];
+        ] + parent::validationAttributes();
+    }
 
     private function load()
     {
@@ -68,23 +69,6 @@ class TableEditMovieProducers extends TableEditBase
     public function render()
     {
         return view('livewire.table-edit-movie-producers');
-    }
-
-    public function showModalEdit($key = null)
-    {
-        if ($key) {
-            $this->editing = new Producer($this->getItemByKey($key));
-        } else {
-            $this->editing = new Producer($this->defaults());
-        }
-        $this->showingEditModal = true;
-    }
-
-    public function showModalAdd()
-    {
-        $this->editing = new Producer($this->defaults());
-        $this->resetValidation();
-        $this->showingEditModal = true;
     }
 
     protected function sendItems()

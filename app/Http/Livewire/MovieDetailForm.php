@@ -115,8 +115,10 @@ class MovieDetailForm extends Component
         foreach($producers as $producer) {
             $missing = true;
             foreach($this->producers as $item) {
-                if ($producer->id == $item['id']) {
-                    $missing = false;
+                if (isset($item['id'])) {
+                    if ($producer->id == $item['id']) {
+                        $missing = false;
+                    }
                 }
             }
             if ($missing) {
