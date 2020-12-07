@@ -33,5 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\TitleSeeder::class);
         $this->call(\Database\Seeders\PersonSeeder::class);
         $this->call(\Database\Seeders\CrewSeeder::class);
+
+        $this->call(\Database\Seeders\ProducerSeeder::class);
+        $this->call(\Database\Seeders\SalesAgentSeeder::class);
     }
 }

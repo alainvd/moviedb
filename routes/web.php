@@ -109,8 +109,10 @@ Route::resource('title', 'TitleController')->only('index');
 
 Route::resource('crew', 'CrewController')->only('index');
 
-
 Route::resource('audience', 'AudienceController')->only('index');
 
-
 Route::resource('genre', 'GenreController')->only('index');
+
+Route::resource('producer', 'ProducerController')->only('index');
+
+Route::resource('sales-agent', 'SalesAgentController')->only('index');

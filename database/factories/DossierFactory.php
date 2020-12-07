@@ -24,11 +24,18 @@ class DossierFactory extends Factory
      */
     public function definition()
     {
+
+        if (Status::all()->count() > 0){
+            $status = Status::all()->random()->id;
+        } else {
+            $status = Status::factory();
+        }
+
         return [
             'project_ref_id' => $this->faker->word,
             'action' => $this->faker->word,
             'year' => $this->faker->numberBetween(1990, 2020),
-            'status_id' => Status::all()->random()->id,
+            'status_id' => $status,
             'call_id' => Call::factory(),
         ];
     }
