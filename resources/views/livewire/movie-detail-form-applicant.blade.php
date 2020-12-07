@@ -30,7 +30,9 @@
 
         <!-- producers -->
         <div class="my-8" id="producers">
-            @livewire('table-edit-example-memory', ['media_id' => $movie->id])
+            <!-- <x-table-producer></x-table-producer> -->
+            <!-- @livewire('table-edit-example-memory', ['media_id' => $movie->id]) -->
+            @livewire('table-edit-movie-producers', ['media_id' => $movie->id])
         </div>
 
         <!-- agents -->

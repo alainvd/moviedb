@@ -29,7 +29,7 @@ class MovieDetailForm extends Component
 
     protected $listeners = [
         'movie-details-force-submit' => 'formSubmitForce',
-        'update-producers' => 'updateProducers',
+        'update-movie-producers' => 'updateMovieProducers',
     ];
 
     /**
@@ -103,7 +103,7 @@ class MovieDetailForm extends Component
         $this->saveProducers();
     }
 
-    public function updateProducers($items)
+    public function updateMovieProducers($items)
     {
         $this->producers = $items;
     }
