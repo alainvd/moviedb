@@ -1,43 +1,40 @@
+
 <div class="p-4 md:px-8 lg:px-16 mx-auto w-full sm:w-11/12 rounded-md shadow-md bg-white">
-    <div class="text-xs leading-tight">Applicant form</div>
     <form wire:submit.prevent="save">
         <!-- fake field to force form submit -->
         <input wire:model="form_updated_unique" id="form_updated_unique" type="hidden"/>
         <!-- title -->
-        <div class="my-8">
+        <div class="my-8" id="part-title">
             <x-details.title :movie="$movie"></x-details.title>
         </div>
 
         <!-- basic -->
-        <div class="my-8">
-            <x-details.basic :movie="$movie" :countries="$countries" :years="$years" :genres="$genres">
-            </x-details.basic>
+        <div class="my-8" id="part-basic">
+            <x-details.basic :movie="$movie" :countries="$countries" :years="$years" :genres="$genres"></x-details.basic>
         </div>
 
         <!-- summary -->
-        <div class="my-8">
+        <div class="my-8" id="part-summary">
             <x-details.summary :movie="$movie"></x-details.summary>
         </div>
 
         <!-- cast/crew -->
-        <div class="my-8">
+        <div class="my-8" id="part-castcrew">
             @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $this->backoffice])
         </div>
 
         <!-- photography -->
-        <div class="my-8">
+        <div class="my-8" id="photography">
             <x-details.photography :movie="$movie" :languages="$languages"></x-details.photography>
         </div>
 
         <!-- producers -->
-        <div class="my-8">
-            <x-table-producer></x-table-producer>
+        <div class="my-8" id="producers">
+            @livewire('table-edit-example-memory', ['media_id' => $movie->id])
         </div>
 
-        <!-- <hr class="mt-10 mb-10"> -->
-
         <!-- agents -->
-        <div class="my-8">
+        <div class="my-8" id="agents">
             <x-table-sales></x-table-sales>
         </div>
 

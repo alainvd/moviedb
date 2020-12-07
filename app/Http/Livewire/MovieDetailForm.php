@@ -6,7 +6,9 @@ use Livewire\Component;
 use App\Movie;
 use App\Media;
 use App\Person;
+use App\Producer;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class MovieDetailForm extends Component
 {
@@ -23,7 +25,12 @@ class MovieDetailForm extends Component
     // Allow special editing
     public $backoffice = false;
 
-    protected $listeners = ['movie-details-force-submit' => 'formSubmitForce'];
+    public $producers = [];
+
+    protected $listeners = [
+        'movie-details-force-submit' => 'formSubmitForce',
+        'update-producers' => 'updateProducers',
+    ];
 
     /**
      * Each wired fields needs to be here or it will be filtered
@@ -47,7 +54,7 @@ class MovieDetailForm extends Component
     public function mount($movie_id = null, $backoffice = false)
     {
         if ($movie_id) {
-            $this->movie = Movie::where('id', $movie_id)->first();
+            $this->movie = Movie::find($movie_id)->first();
         } else {
             $this->movie = new Movie;
         };
@@ -67,6 +74,8 @@ class MovieDetailForm extends Component
     {
         // TODO: notify about validation errors (get stuff from Surge modal form)
         $this->validate();
+
+        // dd($this->movie);
         
         // Saving
         $_movie_create_form = !$this->movie->exists;
@@ -88,7 +97,44 @@ class MovieDetailForm extends Component
     {
         $this->movie->save();
         $this->movie_original = $this->movie->getOriginal();
+        // cast/crew (old approach)
         $this->emit('save-movie-details', $this->movie->id);
+        // producers (new approach)
+        $this->saveProducers();
+    }
+
+    public function updateProducers($items)
+    {
+        $this->producers = $items;
+    }
+
+    public function saveProducers()
+    {
+        // delete first
+        $producers = Producer::where('media_id', $this->movie->id)->get();
+        foreach($producers as $producer) {
+            $missing = true;
+            foreach($this->producers as $item) {
+                if ($producer->id == $item['id']) {
+                    $missing = false;
+                }
+            }
+            if ($missing) {
+                $producer->delete();
+            }
+        }
+        // create/update
+        foreach ($this->producers as $item) {
+            unset($item['key']);
+            unset($item['created_at']);
+            unset($item['updated_at']);
+            $item['media_id'] = $this->movie->id;
+            if (isset($item['id'])) {
+                Producer::find($item['id'])->update($item);
+            } else {
+                Producer::create($item);
+            }
+        }
     }
 
 }

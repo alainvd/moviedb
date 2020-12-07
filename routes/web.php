@@ -116,3 +116,5 @@ Route::resource('genre', 'GenreController')->only('index');
 Route::resource('producer', 'ProducerController')->only('index');
 
 Route::resource('sales-agent', 'SalesAgentController')->only('index');
+
+Route::get('table-edit-example', 'TableEditExamplesController@examples')->name('table_edit_examples');
