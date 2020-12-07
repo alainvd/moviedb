@@ -7,6 +7,7 @@ use App\Movie;
 use App\Media;
 use App\Person;
 use App\Producer;
+use App\SalesAgent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 
@@ -26,10 +27,12 @@ class MovieDetailForm extends Component
     public $backoffice = false;
 
     public $producers = [];
+    public $sales_agents = [];
 
     protected $listeners = [
         'movie-details-force-submit' => 'formSubmitForce',
         'update-movie-producers' => 'updateMovieProducers',
+        'update-movie-sales-agents' => 'updateMovieSalesAgents',
     ];
 
     /**
@@ -55,6 +58,8 @@ class MovieDetailForm extends Component
     {
         if ($movie_id) {
             $this->movie = Movie::find($movie_id)->first();
+            $this->producers = Producer::where('media_id', $this->movie->id)->get()->toArray();
+            $this->sales_agents = SalesAgent::where('media_id', $this->movie->id)->get()->toArray();
         } else {
             $this->movie = new Movie;
         };
@@ -100,7 +105,8 @@ class MovieDetailForm extends Component
         // cast/crew (old approach)
         $this->emit('save-movie-details', $this->movie->id);
         // producers (new approach)
-        $this->saveProducers();
+        $this->saveItems(Producer::where('media_id', $this->movie->id)->get(), $this->producers, Producer::class);
+        $this->saveItems(SalesAgent::where('media_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
     }
 
     public function updateMovieProducers($items)
@@ -108,33 +114,37 @@ class MovieDetailForm extends Component
         $this->producers = $items;
     }
 
-    public function saveProducers()
+    public function updateMovieSalesAgents($items)
+    {
+        $this->sales_agents = $items;
+    }
+
+    public function saveItems($existing_items, $saving_items, $saving_class)
     {
         // delete first
-        $producers = Producer::where('media_id', $this->movie->id)->get();
-        foreach($producers as $producer) {
+        foreach($existing_items as $existing_item) {
             $missing = true;
-            foreach($this->producers as $item) {
+            foreach($saving_items as $item) {
                 if (isset($item['id'])) {
-                    if ($producer->id == $item['id']) {
+                    if ($existing_item->id == $item['id']) {
                         $missing = false;
                     }
                 }
             }
             if ($missing) {
-                $producer->delete();
+                $existing_item->delete();
             }
         }
         // create/update
-        foreach ($this->producers as $item) {
+        foreach ($saving_items as $item) {
             unset($item['key']);
             unset($item['created_at']);
             unset($item['updated_at']);
             $item['media_id'] = $this->movie->id;
             if (isset($item['id'])) {
-                Producer::find($item['id'])->update($item);
+                $saving_class::find($item['id'])->update($item);
             } else {
-                Producer::create($item);
+                $saving_class::create($item);
             }
         }
     }

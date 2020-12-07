@@ -86,7 +86,6 @@ class TableEditBase extends Component
 
     public function saveItem()
     {
-        // $this->validate(); // Ok, it doesn't validate because it's not longer Producer !?
         $this->validate();
         $this->showingEditModal = false;
         $editing = $this->editing;

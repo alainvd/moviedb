@@ -37,7 +37,8 @@
 
         <!-- agents -->
         <div class="my-8" id="agents">
-            <x-table-sales></x-table-sales>
+            <!-- <x-table-sales></x-table-sales> -->
+            @livewire('table-edit-movie-sales-agents', ['media_id' => $movie->id])
         </div>
 
         <!-- buttons -->
