@@ -36,6 +36,11 @@ class Person extends Model
         'id' => 'integer',
     ];
 
+    const GENDERS = [
+        'male' => 'Male',
+        'female' => 'Female',
+        'na' => 'N/A',
+    ];
 
     // Intermediate table
     public function crew()
@@ -53,18 +58,6 @@ class Person extends Model
     public function media()
     {
         return $this->hasOneThrough(\App\Media::class, \App\Crew::class, 'person_id', 'id', 'id', 'media_id');
-    }
-
-    public function addPerson()
-    {
-        // create person
-        // create crew
-    }
-
-    public function deletePerson()
-    {
-        // delete person
-        // delete crew
     }
 
 }

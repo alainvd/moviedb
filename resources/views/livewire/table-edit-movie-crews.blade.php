@@ -4,7 +4,7 @@
         Cast and Crew
     </div>
 
-    <div>
+    <div x-data="{ points_total: {{ $points_total }} }">
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Title</x-table.heading>
@@ -22,12 +22,12 @@
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $titles[$item['title_id']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['person']['gender'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $genders[$item['person']['gender']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['nationality1'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['nationality2'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['person']['country_of_residence'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countries[$item['person']['country_of_residence']]['name'] }}</x-table.cell>
                     @if ($backoffice)
-                    <x-table.cell x-data="{ points: {{ $person['points'] }}, person_key: '{{ $person['key'] }}' }" class="text-center">
+                    <x-table.cell x-data="{ points: {{ $item['points'] }}, person_key: '{{ $item['key'] }}' }" class="text-center">
                         <span class="cursor-pointer" @click="$wire.pointsDec(person_key)">
                             <svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
@@ -101,9 +101,9 @@
                     <label for="gender" class="block text-sm font-medium leading-5 text-gray-700">Gender</label>
                     <select wire:model="editing.person.gender" id="gender"
                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="na">N/A</option>
+                        @foreach ($genders as $key => $name)
+                            <option value="{{ $key }}">{{ $name }}</option>
+                        @endforeach
                     </select>
                     @error('editing.person.gender') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
@@ -141,10 +141,13 @@
                         of residence</label>
                     <select wire:model="editing.person.country_of_residence" id="country_of_residence"
                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value=""></option>
+                        <!-- <option value=""></option>
                         <option value="be">Belgium</option>
                         <option value="fr" selected>France</option>
-                        <option value="de">Germany</option>
+                        <option value="de">Germany</option> -->
+                        @foreach ($countries as $country)
+                            <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                        @endforeach
                     </select>
                     @error('editing.person.country_of_residence') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
