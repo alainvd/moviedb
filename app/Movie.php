@@ -36,12 +36,6 @@ class Movie extends Model implements Grantable
         return $this->hasMany(\App\Crew::class, 'media_id', 'id');
     }
 
-    public function people()
-    {
-        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id'
-        );
-    }
-
     public function whoami()
     {
         return "I'm a movie ... bring some popcorn";
@@ -52,10 +46,11 @@ class Movie extends Model implements Grantable
         return $this->media()->audience();
     }
 
-    public function addPerson($person, $points, $title_id, $media_id)
+    public function addPerson($person, $points, $title_id, $movie_id)
     {
         $person = \App\Person::create($person);
-        $this->crews()->create([
+        $media_id = Movie::find($movie_id)->media->id;
+        $crew = Crew::create([
             'points' => $points,
             'person_id' => $person->id,
             'title_id' => $title_id,

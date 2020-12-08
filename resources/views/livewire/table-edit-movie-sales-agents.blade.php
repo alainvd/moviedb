@@ -31,11 +31,9 @@
         </x-table>
 
         <div class="mt-5 text-right">
-            @if ($media_id)
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
-            @endif
         </div>
     </div>
 

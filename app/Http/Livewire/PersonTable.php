@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class PersonTable extends Component
 {
 
-    public $movie_id = null;
+    public Movie $movie;
 
     public $backoffice = false;
 
@@ -134,8 +134,7 @@ class PersonTable extends Component
         $this->backoffice = $backoffice;
         if ($movie_id) {
             $this->movie_id = $movie_id;
-            // Make a copy of people in array (TODO: change to collection?)
-            $this->peopleOnForm = Movie::where('id', $this->movie_id)->first()->people->toArray();
+            $this->peopleOnForm = Movie::find($this->movie_id)->media->people->toArray();
             // Add title value, add points, count total points
             $this->peopleOnForm = array_map(
                 function ($a) {
@@ -300,7 +299,7 @@ class PersonTable extends Component
         }
 
         // Remove people that have been deleted in the form
-        foreach ($movie->people()->get() as $person) {
+        foreach ($movie->media->people as $person) {
             if (!$this->findPersonOnFormById($person['id'])) {
                 Person::where('id', $person['id'])->delete();
                 Crew::where('person_id', $person['id'])->delete();

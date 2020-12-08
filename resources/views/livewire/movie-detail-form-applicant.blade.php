@@ -20,7 +20,12 @@
 
         <!-- cast/crew -->
         <div class="my-8" id="part-castcrew">
-            @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $this->backoffice])
+            {{-- @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $this->backoffice]) --}}
+        </div>
+
+        <!-- cast/crew -->
+        <div class="my-8" id="part-castcrew-again">
+            @livewire('table-edit-movie-crews', ['movie_id' => $movie->id])
         </div>
 
         <!-- photography -->
@@ -32,13 +37,13 @@
         <div class="my-8" id="producers">
             <!-- <x-table-producer></x-table-producer> -->
             <!-- @livewire('table-edit-example-memory', ['media_id' => $movie->id]) -->
-            @livewire('table-edit-movie-producers', ['media_id' => $movie->id])
+            @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
         </div>
 
         <!-- agents -->
         <div class="my-8" id="agents">
             <!-- <x-table-sales></x-table-sales> -->
-            @livewire('table-edit-movie-sales-agents', ['media_id' => $movie->id])
+            @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
         </div>
 
         <!-- buttons -->

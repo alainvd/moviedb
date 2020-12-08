@@ -16,6 +16,8 @@ class Media extends Model
      */
     protected $fillable = [
         'title',
+        'audience_id',
+        'genre_id',
         'grantable_id',
         'grantable_type',
     ];
@@ -75,5 +77,11 @@ class Media extends Model
     public function grantable()
     {
         return $this->morphTo();
+    }
+
+    public function people()
+    {
+        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id'
+        );
     }
 }

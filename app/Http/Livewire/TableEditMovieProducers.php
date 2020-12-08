@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Movie;
 use App\Producer;
 use App\Models\Country;
 
 class TableEditMovieProducers extends TableEditBase
 {
 
-    public $media_id = null;
+    public Movie $movie;
 
     public $countries = [];
 
@@ -51,16 +51,16 @@ class TableEditMovieProducers extends TableEditBase
 
     private function load()
     {
-        $this->items = Producer::where('media_id', $this->media_id)->get()->toArray();
+        $this->items = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
         $this->addUniqueKeys();
     }
 
-    public function mount($media_id = null)
+    public function mount($movie_id = null)
     {
         $this->countries = Country::all()->keyBy('id')->toArray();
         $this->producer_roles = Producer::ROLES;
-        if ($media_id) {
-            $this->media_id = $media_id;
+        if ($movie_id) {
+            $this->movie = Movie::find($movie_id);
             $this->load();
         }
     }
