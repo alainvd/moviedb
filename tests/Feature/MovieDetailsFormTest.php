@@ -31,36 +31,17 @@ class MovieDetailsFormTest extends TestCase
     /** @test */
     public function an_applicant_can_create_a_new_fiche()
     {
-        $this->init();
-
-        Role::create(['name' => 'applicant']);
-
-        $user = User::factory()->create(
-            ['eu_login_username' => 'mediadb-applicant']
-        )->assignRole('applicant');
+        list(
+            $fiche,
+            $movie,
+            $media,
+            $user
+        ) = $this->init('applicant');
 
         $this->actingAs($user);
 
-        $movie = Movie::factory()->make([
-            'eidr' => null,
-            'shooting_start' => null,
-            'shooting_end' => null,
-            'european_nationality_flag' => null,
-        ]);
-        $media = Media::make([
-            'grantable_type' => 'App\Movie',
-            'title' => $movie->original_title,
-            'audience_id' => Audience::all()->random()->id,
-            'genre_id' => Genre::all()->random()->id,
-            'delivery_platform_id' => 1
-        ]);
-        $fiche = Fiche::make([
-            'created_by' => $user->id,
-            'status_id' => Status::all()->random()->id,
-        ]);
-        // $dossier = Dossier::factory()->make();
-
         Livewire::test(MovieDetailForm::class)
+            ->assertSet('isNew', true)
             ->set('movie.original_title', $movie->original_title)
             ->set('fiche.status_id', $fiche->status_id)
             ->set('movie.film_country_of_origin', $movie->film_country_of_origin)
@@ -90,17 +71,75 @@ class MovieDetailsFormTest extends TestCase
     // }
 
     // /** @test */
-    // public function an_editor_can_edit_a_fiche()
-    // {
-
-    // }
-
-    protected function init()
+    public function an_editor_can_edit_a_fiche()
     {
+        list(
+            $fiche,
+            $movie,
+            $media,
+            $user
+        ) = $this->init('applicant');
+
+        // Save the prepared entities from edit
+        $movie->save();
+        $media->grantable_id = $movie->id;
+        $media->grantable()->save($movie);
+        $media->save();
+        $fiche->media_id = $media->id;
+        $fiche->save();
+
+        // Edited fields
+        $movie->original_title = 'Some new title';
+        $fiche->status_id = Status::where('id', '!=', $fiche->status_id)->get()->random()->id;
+
+        $this->actingAs($user);
+
+        Livewire::test(MovieDetailForm::class, ['fiche' => $fiche])
+            ->assertSet('isNew', false)
+            ->set('movie.original_title', $movie->original_title)
+            ->set('fiche.status_id', $fiche->status_id)
+            ->call('submit');
+
+        // Remove media key for some reason
+        $fiche = $fiche->toArray();
+        unset($fiche['media']);
+
+        $this->assertDatabaseHas('fiches', $fiche)
+            ->assertDatabaseHas('movie', $movie->toArray());
+    }
+
+    protected function init(string $role): array
+    {
+        Role::create(['name' => 'applicant']);
+        Role::create(['name' => 'editor']);
         Audience::factory(10)->create();
         Country::factory(25)->create();
         Genre::factory(10)->create();
         Status::factory(10)->create();
         Media::factory()->create();
+
+        $user = User::factory()->create(
+            ['eu_login_username' => "mediadb-{$role}"]
+        )->assignRole($role);
+
+        $movie = Movie::factory()->make([
+            'eidr' => null,
+            'shooting_start' => null,
+            'shooting_end' => null,
+            'european_nationality_flag' => null,
+        ]);
+        $media = Media::make([
+            'grantable_type' => 'App\Movie',
+            'title' => $movie->original_title,
+            'audience_id' => Audience::all()->random()->id,
+            'genre_id' => Genre::all()->random()->id,
+            'delivery_platform_id' => 1
+        ]);
+        $fiche = Fiche::make([
+            'created_by' => $user->id,
+            'status_id' => Status::all()->random()->id,
+        ]);
+
+        return [$fiche, $movie, $media, $user];
     }
 }

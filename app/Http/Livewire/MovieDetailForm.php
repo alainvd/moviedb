@@ -56,7 +56,7 @@ class MovieDetailForm extends Component
     protected $rules = [
         // 'form_update_unique' => 'required',
         'movie.original_title' => 'required|string|max:255',
-        'fiche.status_id' => 'required|string|max:255',
+        'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'required|string|max:255',
         'movie.year_of_copyright' => 'required|integer',
         'movie.film_type' => 'required|string|max:255',
@@ -102,7 +102,7 @@ class MovieDetailForm extends Component
 
     public function submit()
     {
-        $this->validate();
+        // $this->validate();
 
         // When it's new
         if ($this->isNew) {
@@ -128,10 +128,10 @@ class MovieDetailForm extends Component
             ]);
             $dossier->media()->save($this->media);
         } else { // When editing
-            $this->movie->save();
-            $this->movie->media->save();
-            $this->media->fiche->save();
-            $this->media->dossier->save();
+            dd($this->fiche);
+            $this->fiche->media->grantable->save();
+            $this->fiche->media->save();
+            $this->fiche->save();
         }
 
         // Saving
