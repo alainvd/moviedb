@@ -74,10 +74,8 @@ class TableEditExampleMemory extends Component
         return array_shift($item);
     }
 
-    private function load()
+    private function addUniqueKeys()
     {
-        $this->items = Producer::where('media_id', $this->media_id)->get()->toArray();
-        // Add unique keys
         $this->items = array_map(
             function ($a) {
                 $a['key'] = Str::random(10);
@@ -85,6 +83,12 @@ class TableEditExampleMemory extends Component
             },
             $this->items
         );
+    }
+
+    private function load()
+    {
+        $this->items = Producer::where('media_id', $this->media_id)->get()->toArray();
+        $this->addUniqueKeys();
     }
 
     public function mount($media_id = null)
