@@ -128,7 +128,7 @@ class MovieDetailForm extends Component
             ]);
             $dossier->media()->save($this->media);
         } else { // When editing
-            dd($this->fiche);
+//            dd($this->fiche);
             $this->fiche->media->grantable->save();
             $this->fiche->media->save();
             $this->fiche->save();

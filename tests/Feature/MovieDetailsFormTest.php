@@ -101,11 +101,18 @@ class MovieDetailsFormTest extends TestCase
             ->call('submit');
 
         // Remove media key for some reason
-        $fiche = $fiche->toArray();
-        unset($fiche['media']);
+//        $fiche = $fiche->fresh()->toArray();
+//        unset($fiche['media']);
 
-        $this->assertDatabaseHas('fiches', $fiche)
-            ->assertDatabaseHas('movie', $movie->toArray());
+        $this
+            ->assertDatabaseHas('fiches', [
+                'media_id' => $fiche->media->id,
+                'status_id' => $fiche->status_id
+            ]);
+
+        $this->assertDatabaseHas('movies', [
+            'original_title' => 'Some new title'
+        ]);
     }
 
     protected function init(string $role): array
