@@ -3,10 +3,10 @@
         <x-form.datepicker
             :id="'start_photography'"
             :label="'Start Date of Principal Photography'"
-            wire:model="movie.shooting_start">
+            wire:model="movie.photography_start">
         </x-form.datepicker>
 
-        @error('movie.shooting_start')
+        @error('movie.photography_start')
             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
@@ -15,19 +15,16 @@
         <x-form.datepicker
             :id="'end_photography'"
             :label="'End Date of Principal Photography'"
-            wire:model="movie.end_photography">
+            wire:model="movie.photography_end">
         </x-form.datepicker>
 
-        @error('movie.shooting_end')
+        @error('movie.photography_end')
             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-span-3 sm:col-span-2">
-        <livewire:chip-autocomplete
-            :domId="'shooting_languages'"
-            :key="1"
-            :label="'Shooting Languages'">
+
     </div>
 
     <div class="col-span-1 col-start-1">
@@ -47,9 +44,11 @@
             :id="'film_format'"
             :label="'Film Format'"
             wire:model="movie.film_format">
-            <option>35mm</option>
-            <option>Digital</option>
-            <option>Other</option>
+
+            @foreach ($filmFormats as $format)
+                <option value="{{$format}}">{{$format}}</option>
+            @endforeach
+
         </x-form.select>
 
         @error('movie.film_format')

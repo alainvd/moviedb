@@ -8,7 +8,11 @@
         placeholder="dd/mm/yyyy"
         x-data
         x-ref="input"
-        x-init="new Pikaday({ field: $refs.input, theme: 'moviedb-theme', format: 'DD/MM/YYYY' })"
+        x-init="new Pikaday({
+            field: $refs.input,
+            theme: 'moviedb-theme',
+            format: 'DD/MM/YYYY',
+        })"
         {{ $attributes }}>
 
     <div class="absolute top-0 right-0 px-3 py-2">

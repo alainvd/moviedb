@@ -18,6 +18,8 @@ class Dossier extends Model
         'project_ref_id',
         'action',
         'year',
+        'status_id',
+        'call_id',
     ];
 
     /**

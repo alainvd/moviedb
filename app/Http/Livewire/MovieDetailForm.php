@@ -2,15 +2,20 @@
 
 namespace App\Http\Livewire;
 
+use App\Audience;
+use App\Crew;
+use App\Dossier;
+use App\Genre;
 use Livewire\Component;
 use App\Movie;
 use App\Media;
-use App\Audience;
-use App\Genre;
+use App\Models\Country;
+use App\Models\Fiche;
+use App\Models\Language;
 use App\Person;
-use App\Crew;
 use App\Producer;
 use App\SalesAgent;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 
@@ -18,10 +23,15 @@ class MovieDetailForm extends Component
 {
 
     // Fake field
-    public $form_update_unique = 0;
+    // public $form_update_unique = 0;
+
+    public $isNew = false;
+    public $isApplicant = false;
 
     // Movie data for Livewire
-    public Movie $movie;
+    public ?Fiche $fiche = null;
+    public ?Movie $movie = null;
+    public ?Media $media = null;
 
     // Movie original
     public $movie_original = [];
@@ -44,59 +54,97 @@ class MovieDetailForm extends Component
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
-        'form_update_unique' => 'required',
+        // 'form_update_unique' => 'required',
         'movie.original_title' => 'required|string|max:255',
-        'movie.european_nationality_flag' => 'string|max:255',
-        'movie.film_country_of_origin' => 'string|max:255',
-        'movie.year_of_copyright' => 'integer',
-        'movie.film_type' => 'string|max:255',
-        'movie.imdb_url' => 'string|max:255',
-        // 'movie.shooting_start' => 'date_format:d/m/Y',
-        'movie.shooting_start' => 'date',
-        // 'movie.shooting_end' => 'date_format:d/m/Y',
-        'movie.shooting_end' => 'date',
-        'movie.film_length' => 'string|max:255',
-        'movie.film_format' => 'string|max:255',
+        'fiche.status_id' => 'required|string|max:255',
+        'movie.film_country_of_origin' => 'required|string|max:255',
+        'movie.year_of_copyright' => 'required|integer',
+        'movie.film_type' => 'required|string|max:255',
+        'movie.imdb_url' => 'required|string|max:255',
+        // 'movie.shooting_start' => 'required|date',
+        // 'movie.shooting_end' => 'required|date',
+        'movie.film_length' => 'required|string|max:255',
+        'movie.film_format' => 'required|string|max:255',
+        'movie.isan' => 'required|string',
+        'movie.synopsis' => 'required|string',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'date',
+
+        'media.audience_id' => 'required',
+        'media.genre_id' => 'required',
+        'media.delivery_platform_id' => 'required|integer',
     ];
 
-    public function mount($movie_id = null, $backoffice = false)
+    public function mount()
     {
-        if ($movie_id) {
-            $this->movie = Movie::find($movie_id);
-            $this->producers = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
-            $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
-            $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
-        } else {
+        if (! $this->fiche) {
+            $this->isNew = true;
+            $this->fiche = new Fiche;
+            $this->media = new Media;
             $this->movie = new Movie;
-        };
-        $this->movie_original = $this->movie->getOriginal();
+        } else {
+            $this->media = $this->fiche->media;
+            $this->movie = $this->media->grantable;
+        }
+
+        // @TODO use role here after fixing hydration issue for masquerade user
+        if (Auth::user() === 'mediadb-applicant') {
+            $this->isApplicant = true;
+        }
+
+        // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
     }
 
-    public function render()
-    {
-    }
+    // public function formSubmitForce()
+    // {
+    //     $this->form_update_unique = rand(0, 9999);
+    // }
 
-    public function formSubmitForce()
+    public function submit()
     {
-        $this->form_update_unique = rand(0, 9999);
-    }
-
-    public function save()
-    {
-        // TODO: notify about validation errors (get stuff from Surge modal form)
         $this->validate();
 
-        // Saving
-        $_movie_create_form = !$this->movie->exists;
-        $this->saveMovieDetails();
-        $this->emitSelf('notify-saved');
-
-        if ($_movie_create_form) {
-            // Can't redirect while people are still being saved
-            //return redirect()->to('/movie/detail/' . $this->movie->id);
-            // TODO: tell browser to update the url
-            // window.history.pushState('page2', 'Title', '/page2.php');
+        // When it's new
+        if ($this->isNew) {
+            // Save movie
+            $this->movie->save();
+            // Save media
+            // @question is the title here really necessary + required?
+            $this->media->title = $this->movie->original_title;
+            $this->media->grantable_id = $this->movie->id;
+            $this->media->grantable_type = 'App\Movie';
+            $this->media->save();
+            // Save fiche
+            $this->fiche->media_id = $this->media->id;
+            $this->fiche->created_by = Auth::user()->id;
+            $this->fiche->save();
+            // Create dossier and assign
+            $dossier = Dossier::create([
+                'project_ref_id' => 'someref',
+                'action' => 'DIST',
+                'status_id' => $this->fiche->status_id,
+                'year' => date('Y'),
+                'call_id' => 1
+            ]);
+            $dossier->media()->save($this->media);
+        } else { // When editing
+            $this->movie->save();
+            $this->movie->media->save();
+            $this->media->fiche->save();
+            $this->media->dossier->save();
         }
+
+        // Saving
+        // $_movie_create_form = !$this->movie->exists;
+        // $this->saveMovieDetails();
+        // $this->emitSelf('notify-saved');
+
+        // if ($_movie_create_form) {
+        //     // Can't redirect while people are still being saved
+        //     //return redirect()->to('/movie/detail/' . $this->movie->id);
+        //     // TODO: tell browser to update the url
+        //     // window.history.pushState('page2', 'Title', '/page2.php');
+        // }
     }
 
     /**
@@ -187,6 +235,12 @@ class MovieDetailForm extends Component
                 }
             }
         }
+    }
+
+    public function render()
+    {
+        return view('livewire.movie-detail-form')
+            ->layout('components.layout');
     }
 
 }

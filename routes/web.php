@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDetailsController;
+use App\Http\Livewire\MovieDetailForm;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -118,3 +119,5 @@ Route::resource('producer', 'ProducerController')->only('index');
 Route::resource('sales-agent', 'SalesAgentController')->only('index');
 
 Route::get('table-edit-example', 'TableEditExamplesController@examples')->name('table_edit_examples');
+
+Route::get('/fiches/dist/{fiche?}', MovieDetailForm::class)->middleware('cas.auth');
