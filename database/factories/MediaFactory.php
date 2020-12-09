@@ -38,7 +38,8 @@ class MediaFactory extends Factory
             'audience_id' => $audience,
             'genre_id' => $genre,
             'grantable_id' => $this->faker->numberBetween(1,5),
-            'grantable_type' => $this->faker->randomElement(["App\Movie","App\Videogame"])
+            'grantable_type' => $this->faker->randomElement(["App\Movie","App\Videogame"]),
+            'delivery_platform_id' => $this->faker->numberBetween(0, 2),
         ];
     }
 }

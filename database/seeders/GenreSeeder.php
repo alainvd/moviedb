@@ -16,7 +16,7 @@ class GenreSeeder extends Seeder
     {
         $genres = [
             "App\Movie" => [
-                "Fiction", "Creative Documentary","Animation","Live-Action Children Film"
+                "Fiction", "Creative Documentary","Animation","Live-Action Children Film", "Action", "Comedy", "Animation", "Dark Comedy", "Drama", "Thriller", "Adventure", "Historical", "Fantasy", "Cyber Punk", "Romance"
             ],
 
             "App\Videogame" => [
@@ -24,7 +24,9 @@ class GenreSeeder extends Seeder
                 "Role-Playing Game",
                 "Action",
                 "Strategy",
-                "Simulation"
+                "Simulation",
+                "Shooter",
+                "MMORPG",
             ]
         ];
 

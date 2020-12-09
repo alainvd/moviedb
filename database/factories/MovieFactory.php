@@ -21,7 +21,7 @@ class MovieFactory extends Factory
      * Define the model's default state.
      *
      * @return array
-     */
+    */
     public function definition()
     {
 
@@ -47,6 +47,7 @@ class MovieFactory extends Factory
             'film_format' => $this->faker->randomElement(['35mm', 'Digital', 'Other']),
             'photography_start' => $this->faker->date(),
             'photography_end' => $this->faker->date(),
+            'synopsis' => $this->faker->paragraph(12, true),
         ];
     }
 }

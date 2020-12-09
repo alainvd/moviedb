@@ -17,10 +17,10 @@ class AudienceSeeder extends Seeder
     {
         $audiences = [
             "App\Movie" => [
-                "Children", "Adults", "Action", "Comedy", "Animation", "Dark Comedy", "Drama", "Thriller", "Adventure", "Historical", "Fantasy", "Cyber Punk", "Romance"
+                "Children", "Adults",
             ],
             "App\Videogame" => [
-                "PEGI OK", "PEGI 3", "PEGI 7", "PEGI 12", "PEGI 16", "PEGI 18", "Action", "Shooter", "RPG", "MMORPG", "Stratey", "Adventure"
+                "PEGI OK", "PEGI 3", "PEGI 7", "PEGI 12", "PEGI 16", "PEGI 18",
             ]
         ];
 

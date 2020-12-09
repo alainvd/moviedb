@@ -19,6 +19,7 @@ class CreateMediaTable extends Migration
             $table->unsignedInteger('audience_id');
             $table->unsignedInteger('genre_id');
             $table->unsignedBigInteger('grantable_id');
+            $table->unsignedSmallInteger('delivery_platform_id');
             $table->string('grantable_type');
             $table->timestamps();
         });

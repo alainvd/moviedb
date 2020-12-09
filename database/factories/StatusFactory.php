@@ -21,10 +21,13 @@ class StatusFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->randomElement(['New', 'Accepted', 'Rejected', 'Duplicated', 'Distinct', 'Missing information', 'Validated', 'OK', 'Not OK', 'Qualified AO']);
+
         return [
-            'name' => $this->faker->name,
-            'public_name' => $this->faker->name,
-            'public' => $this->faker->numberBetween(0, 1)
+            'name' => $name,
+            'public' => $this->faker->boolean(60),
+            'public_name' => $this->faker->randomElement([null, $name]),
+            'created_at' => $this->faker->date,
         ];
     }
 }
