@@ -1,25 +1,31 @@
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
-        <label for="original_title" class="block text-sm font-light leading-5 text-gray-800">Original Title (wired)</label>
-        <input id="original_title" wire:model="movie.original_title" class="mt-1 form-input block w-full md:w-10/12 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-        @error('movie.original_title') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        <x-form.input
+            :id="'original_title'"
+            :label="'Original Title'"
+            wire:model="movie.original_title">
+
+        </x-form.input>
+
+        @error('movie.original_title')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-span-1">
         <x-form.select
             :id="'status'"
-            :label="'European Flag Status (wired)'"
-            wire:model="movie.european_nationality_flag">
+            :label="'Status'"
+            :disabled="$isApplicant"
+            wire:model="fiche.status_id">
 
-            <option>OK</option>
-            <option>Under Processing</option>
-            <option>Not OK</option>
-            <option>Missing information</option>
+            @foreach ($statuses as $status)
+                <option value="{{ $status['id'] }}">{{ $status['name'] }}</option>
+            @endforeach
 
         </x-form.select>
 
-        @error('movie.european_nationality_flag')
+        @error('fiche.status_id')
         <div class="mt-1 text-red-500 text-sm">
             {{ $message }}
         </div>
@@ -32,8 +38,8 @@
             :label="'Country of Origin (wired)'"
             wire:model="movie.film_country_of_origin">
 
-            @foreach($countries as $country_code => $country_name)
-                <option value="{{ $country_code }}">{{ $country_name }}</option>
+            @foreach($countries as $country)
+                <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
             @endforeach
 
         </x-form.select>
@@ -50,13 +56,13 @@
             wire:model="movie.year_of_copyright">
 
             @foreach($years as $year)
-                <option>{{ $year }}</option>
+                <option value="{{$year}}">{{ $year }}</option>
             @endforeach
 
         </x-form.select>
 
         @error('movie.year_of_copyright')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
 
@@ -64,10 +70,10 @@
         <x-form.select
             :id="'film_genre'"
             :label="'Film Genre'"
-            wire:model="movie.film_genre">
+            wire:model="media.genre_id">
 
             @foreach($genres as $genre)
-                <option>{{ $genre }}</option>
+                <option value="{{ $genre['id'] }}">{{ $genre['name'] }}</option>
             @endforeach
 
         </x-form.select>
@@ -77,24 +83,25 @@
         <x-form.select
             :id="'delivery_platform'"
             :label="'Film Delivery Platform'"
-            wire:model="movie.delivery_platform">
+            wire:model="media.delivery_platform_id">
 
-            <option>Features / Cinema</option>
-            <option>TV</option>
-            <option>Digital</option>
+            @foreach($platforms as $key => $platform)
+                <option value="{{$key}}">{{$platform}}</option>
+            @endforeach
 
         </x-form.select>
     </div>
-
     <div class="col-span-1">
         <x-form.select
             :id="'audience'"
             :label="'Audience'"
-            wire:model="movie.audience">
+            wire:model="media.audience_id">
 
-            <option>All</option>
-            <option>Children</option>
-            <option selected>Adults</option>
+            @foreach ($audiences as $audience)
+                <option value="{{ $audience['id'] }}">
+                    {{ $audience['name'] }}
+                </option>
+            @endforeach
 
         </x-form.select>
     </div>
@@ -105,8 +112,9 @@
             :label="'Film Type'"
             wire:model="movie.film_type">
 
-            <option>One-off</option>
-            <option>Series</option>
+            @foreach ($filmTypes as $type)
+                <option value="{{$type}}">{{$type}}</option>
+            @endforeach
 
         </x-form.select>
 

@@ -3,7 +3,7 @@
         <x-form.input
             :id="'imdb'"
             :label="'IMDB URL'"
-            wire:model="$movie.imdb_url">
+            wire:model="movie.imdb_url">
 
             &nbsp;&nbsp;
             <a
@@ -22,8 +22,12 @@
         <x-form.input
             :id="'ID'"
             :label="'ID'"
-            wire:model="$movie.id">
+            wire:model="movie.isan">
         </x-form.input>
+
+        @error('movie.isan')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-span-3 md:col-span-1 flex items-end">
@@ -38,7 +42,9 @@
             class="block text-sm font-medium leading-5 text-gray-800">Synopsis</label>
         <div class="rounded-md shadow-sm">
             <textarea id="about" rows="6"
-                class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                wire:model="movie.synopsis">
+            </textarea>
         </div>
     </div>
 </div>

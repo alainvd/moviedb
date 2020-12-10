@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Audience;
+use App\Genre;
 use App\Media;
+use App\Models\Fiche;
 use App\Movie;
 use Illuminate\Database\Seeder;
 
@@ -15,13 +18,19 @@ class MovieSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()->count(10)->create();
+        Movie::factory()->count(50)->create();
 
         Movie::all()->each(function ($movie) {
-            Media::factory()->create([
+            $media = Media::factory()->create([
                 'title' => $movie->original_title,
                 'grantable_id' => $movie->id,
-                'grantable_type' => "App\Movie"
+                'grantable_type' => "App\Movie",
+                'audience_id' => Audience::where('type', 'App\Movie')->get()->random()->id,
+                'genre_id' => Genre::where('type', 'App\Movie')->get()->random()->id,
+            ]);
+
+            Fiche::factory()->create([
+                'media_id' => $media->id,
             ]);
         });
 
