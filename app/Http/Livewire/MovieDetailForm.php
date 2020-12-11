@@ -85,6 +85,9 @@ class MovieDetailForm extends Component
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
+            $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
+            $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
+            $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
         }
 
         // @TODO use role here after fixing hydration issue for masquerade user
@@ -102,7 +105,7 @@ class MovieDetailForm extends Component
 
     public function submit()
     {
-        // $this->validate();
+        $this->validate();
 
         // When it's new
         if ($this->isNew) {
@@ -128,16 +131,16 @@ class MovieDetailForm extends Component
             ]);
             $dossier->media()->save($this->media);
         } else { // When editing
-//            dd($this->fiche);
-            $this->fiche->media->grantable->save();
+            // $this->fiche->media->grantable->save();
+            $this->movie->save();
             $this->fiche->media->save();
             $this->fiche->save();
         }
 
-        // Saving
-        // $_movie_create_form = !$this->movie->exists;
-        // $this->saveMovieDetails();
-        // $this->emitSelf('notify-saved');
+        // crew, producers, sales agents
+        $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
+        $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
+        $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
         // if ($_movie_create_form) {
         //     // Can't redirect while people are still being saved
@@ -150,30 +153,30 @@ class MovieDetailForm extends Component
     /**
      * Save new or existing movie and people
      */
-    private function saveMovieDetails()
-    {
-        // create media, create movie
-        if (!$this->movie->exists) {
-            $this->movie->save();
-            $media = [
-                'title' => $this->movie->original_title,
-                'audience_id' => Audience::first()->id,
-                'genre_id' => Genre::first()->id,
-                'grantable_id' => $this->movie->id,
-                'grantable_type' => 'App\Movie'
-            ];
-            $media = Media::create($media);
-        } else {
-            $this->movie->save();
-        }
-        $this->movie_original = $this->movie->getOriginal();
-        // cast/crew (old approach)
-        $this->emit('save-movie-details', $this->movie->id);
-        // crew, producers, sales agents (new approach)
-        $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
-        $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
-        $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
-    }
+    // private function saveMovieDetails()
+    // {
+    //     // create media, create movie
+    //     if (!$this->movie->exists) {
+    //         $this->movie->save();
+    //         $media = [
+    //             'title' => $this->movie->original_title,
+    //             'audience_id' => Audience::first()->id,
+    //             'genre_id' => Genre::first()->id,
+    //             'grantable_id' => $this->movie->id,
+    //             'grantable_type' => 'App\Movie'
+    //         ];
+    //         $media = Media::create($media);
+    //     } else {
+    //         $this->movie->save();
+    //     }
+    //     $this->movie_original = $this->movie->getOriginal();
+    //     // cast/crew (old approach)
+    //     // $this->emit('save-movie-details', $this->movie->id);
+    //     // crew, producers, sales agents
+    //     $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
+    //     $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
+    //     $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
+    // }
 
     public function updateMovieCrews($items)
     {

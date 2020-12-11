@@ -16,7 +16,7 @@
                 @if ($backoffice)<x-table.heading>Scoring</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
-            
+
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
@@ -25,7 +25,7 @@
                     <x-table.cell class="text-center">{{ $genders[$item['person']['gender']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['nationality1'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['nationality2'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries[$item['person']['country_of_residence']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $item['person']['country_of_residence'] }}</x-table.cell>
                     @if ($backoffice)
                     <x-table.cell x-data="{ points: {{ $item['points'] }}, person_key: '{{ $item['key'] }}' }" class="text-center">
                         <span class="cursor-pointer" @click="$wire.pointsDec(person_key)">
@@ -114,9 +114,9 @@
                         1</label>
                     <select wire:model="editing.person.nationality1" id="nationality1"
                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value="belgian">Belgian</option>
-                        <option value="french">French</option>
-                        <option value="german">German</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                        @endforeach
                     </select>
                     @error('editing.person.nationality1') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
@@ -127,10 +127,9 @@
                         2</label>
                     <select wire:model="editing.person.nationality2" id="nationality2"
                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option value=""></option>
-                        <option value="belgian">Belgian</option>
-                        <option value="french">French</option>
-                        <option value="german">German</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                        @endforeach
                     </select>
                     @error('editing.person.nationality2') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
