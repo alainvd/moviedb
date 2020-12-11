@@ -11,6 +11,7 @@ class Fiche extends Model
 
     protected $fillable = [
         'media_id',
+        'dossier_id',
         'status_id',
         'created_by',
         'updated_by',

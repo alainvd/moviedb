@@ -58,15 +58,15 @@ class MovieDetailForm extends Component
         'movie.imdb_url' => 'required|string|max:255',
         // 'movie.shooting_start' => 'required|date',
         // 'movie.shooting_end' => 'required|date',
-        'movie.film_length' => 'required|string|max:255',
+        'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
         'movie.isan' => 'required|string',
         'movie.synopsis' => 'required|string',
         'movie.photography_start' => 'required|date',
         'movie.photography_end' => 'date',
 
-        'media.audience_id' => 'required',
-        'media.genre_id' => 'required',
+        'media.audience_id' => 'required|integer',
+        'media.genre_id' => 'required|integer',
         'media.delivery_platform_id' => 'required|integer',
     ];
 
@@ -99,18 +99,6 @@ class MovieDetailForm extends Component
 
         // When it's new
         if ($this->isNew) {
-            // Save movie
-            $this->movie->save();
-            // Save media
-            // @question is the title here really necessary + required?
-            $this->media->title = $this->movie->original_title;
-            $this->media->grantable_id = $this->movie->id;
-            $this->media->grantable_type = 'App\Movie';
-            $this->media->save();
-            // Save fiche
-            $this->fiche->media_id = $this->media->id;
-            $this->fiche->created_by = Auth::user()->id;
-            $this->fiche->save();
             // Create dossier and assign
             $dossier = Dossier::create([
                 'project_ref_id' => 'someref',
@@ -119,11 +107,27 @@ class MovieDetailForm extends Component
                 'year' => date('Y'),
                 'call_id' => 1
             ]);
-            $dossier->media()->save($this->media);
-        } else { // When editing
-            // $this->fiche->media->grantable->save();
+
+            // Save movie
             $this->movie->save();
-            $this->fiche->media->save();
+
+            // Save media
+            $this->media->fill([
+                'title' => $this->movie->original_title,
+                'grantable_id' => $this->movie->id,
+                'grantable_type' => 'App\Movie',
+            ])->save();
+
+            // Save fiche
+            $this->fiche->fill([
+                'media_id' => $this->media->id,
+                'dossier_id' => $dossier->id,
+                'created_by' => Auth::user()->id,
+            ])->save();
+        } else { // When editing
+            $this->movie->save();
+            $this->media->title = $this->movie->original_title;
+            $this->media->save();
             $this->fiche->save();
         }
 
