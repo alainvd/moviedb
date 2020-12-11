@@ -159,7 +159,6 @@ class MovieDetailsFormTest extends TestCase
 
         $crew = Crew::factory()->make();
 
-        // foreach ($crews as $crew) {
         Livewire::test(TableEditMovieCrews::class)
             ->set('editing.key', $this->faker->text(10))
             ->set('editing.title_id', $crew->title_id)
@@ -169,19 +168,8 @@ class MovieDetailsFormTest extends TestCase
             ->set('editing.person.nationality1', $crew->person->nationality1)
             ->set('editing.person.nationality2', $crew->person->nationality2)
             ->set('editing.person.country_of_residence', $crew->person->country_of_residence)
-            ->call('saveItem');
-
-        $formComponent->assertSee($crew->person->firstname . ' ' . $crew->person->lastname);
-
-        // 'editing.points' => '',
-        // 'editing.title_id' => 'required',
-        // 'editing.person.firstname' => 'required|string|max:255',
-        // 'editing.person.lastname' => 'required|string|max:255',
-        // 'editing.person.gender' => 'required|string|max:255',
-        // 'editing.person.nationality1' => 'required|string|max:255',
-        // 'editing.person.nationality2' => 'string|max:255',
-        // 'editing.person.country_of_residence' => 'string|max:255',
-        // }
+            ->call('saveItem')
+            ->assertSee($crew->person->firstname . ' ' . $crew->person->lastname);
 
     }
 

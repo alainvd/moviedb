@@ -22,10 +22,14 @@ class PersonFactory extends Factory
      */
     public function definition()
     {
+        $genders = [
+            'male', 'female', 'na',
+        ];
+
         return [
             'lastname' => $this->faker->lastName,
             'firstname' => $this->faker->firstName,
-            'gender' => $this->faker->word,
+            'gender' => $this->faker->randomElement($genders),
             'nationality1' => $this->faker->word,
             'nationality2' => $this->faker->word,
             'country_of_residence' => $this->faker->word,
