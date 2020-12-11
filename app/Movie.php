@@ -32,12 +32,17 @@ class Movie extends Model implements Grantable
      */
     protected $casts = [
         'id' => 'integer',
+        'photography_start' => 'date:d/m/Y',
+        'photography_end' => 'date:d/m/Y',
     ];
 
-    // protected $dates = [
-    //     'photography_start',
-    //     'photography_end',
-    // ];
+    public function setPhotographyStartAttribute( $value ) {
+        $this->attributes['photography_start'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+
+    public function setPhotographyEndAttribute( $value ) {
+        $this->attributes['photography_end'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
 
     public function media()
     {
@@ -58,16 +63,6 @@ class Movie extends Model implements Grantable
     {
         return $this->media()->audience();
     }
-
-    // public function getPhotographyStartAttribute($value)
-    // {
-    //     return Carbon::parse($value)->format('d/m/Y');
-    // }
-
-    // public function getPhotographyEndAttribute($value)
-    // {
-    //     return Carbon::parse($value)->format('d/m/Y');
-    // }
 
     public function addPerson($person, $points, $title_id, $media_id, $movie_id)
     {

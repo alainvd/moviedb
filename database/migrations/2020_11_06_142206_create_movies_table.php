@@ -40,8 +40,8 @@ class CreateMoviesTable extends Migration
             $table->date('audit_date')->nullable();
             $table->date('eu_net_change_date')->nullable();
             $table->date('eu_net_change_name')->nullable();
-            $table->dateTime('photography_start')->nullable();
-            $table->dateTime('photography_end')->nullable();
+            $table->date('photography_start')->nullable();
+            $table->date('photography_end')->nullable();
             $table->text('synopsis')->nullable();
             $table->timestamps();
         });

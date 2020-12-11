@@ -56,14 +56,12 @@ class MovieDetailForm extends Component
         'movie.year_of_copyright' => 'required|integer',
         'movie.film_type' => 'required|string|max:255',
         'movie.imdb_url' => 'required|string|max:255',
-        // 'movie.shooting_start' => 'required|date',
-        // 'movie.shooting_end' => 'required|date',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
         'movie.isan' => 'required|string',
         'movie.synopsis' => 'required|string',
-        'movie.photography_start' => 'required|date',
-        'movie.photography_end' => 'date',
 
         'media.audience_id' => 'required|integer',
         'media.genre_id' => 'required|integer',
@@ -95,6 +93,7 @@ class MovieDetailForm extends Component
 
     public function submit()
     {
+
         $this->validate();
 
         // When it's new

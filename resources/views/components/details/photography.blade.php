@@ -1,12 +1,12 @@
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
     <div class="col-span-1">
         <x-form.datepicker
-            :id="'start_photography'"
+            :id="'photography_start'"
             :label="'Start Date of Principal Photography'"
-            wire:model="movie.photography_start">
+            wire:model.lazy="movie.photography_start">
         </x-form.datepicker>
 
-        @error('movie.photography_start')
+        @error('photography_start')
             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
