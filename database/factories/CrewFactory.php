@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Crew;
 
-class CrewFactory extends Factory
+class CrewFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -28,7 +28,7 @@ class CrewFactory extends Factory
         return [
             'points' => $this->faker->numberBetween(0, 10),
             'person_id' => Person::factory(),
-            'title_id' => Title::factory(),
+            'title_id' => $this->getRelationId(Title::class),
             'media_id' => Media::factory(),
         ];
     }

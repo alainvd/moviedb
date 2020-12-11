@@ -169,7 +169,8 @@ class MovieDetailsFormTest extends TestCase
             ->set('editing.person.nationality2', $crew->person->nationality2)
             ->set('editing.person.country_of_residence', $crew->person->country_of_residence)
             ->call('saveItem')
-            ->assertSee($crew->person->firstname . ' ' . $crew->person->lastname);
+            ->assertSee($crew->person->firstname . ' ' . $crew->person->lastname)
+            ->assertSee($crew->title->name);
 
     }
 
