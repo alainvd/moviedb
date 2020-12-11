@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Fiche;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,5 +43,9 @@ class Dossier extends Model
         return $this->hasMany(\App\Checklist::class);
     }
 
+    public function fiches()
+    {
+        return $this->hasMany(Fiche::class);
+    }
 
 }

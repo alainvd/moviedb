@@ -20,4 +20,9 @@ class Fiche extends Model
     {
         return $this->belongsTo('App\Media');
     }
+
+    public function dossier()
+    {
+        return $this->belongsTo(Dossier::class);
+    }
 }
