@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Dossier;
 use App\Media;
 use App\Models\Fiche;
 use App\Models\Status;
 use App\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
-class FicheFactory extends Factory
+class FicheFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -25,10 +25,11 @@ class FicheFactory extends Factory
     public function definition()
     {
         return [
-            'media_id' => Media::all()->random()->id,
-            'status_id' => Status::all()->random()->id,
+            'media_id' => $this->getRelationId(Media::class),
+            'dossier_id' => $this->getRelationId(Dossier::class),
+            'status_id' => $this->getRelationId(Status::class),
             'created_at' => $this->faker->date(),
-            'created_by' => User::all()->random()->id,
+            'created_by' => $this->getRelationId(User::class),
         ];
     }
 }
