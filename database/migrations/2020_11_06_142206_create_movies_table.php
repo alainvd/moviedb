@@ -15,12 +15,14 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
+            $table->integer('legacy_id')->nullable();
             $table->string('original_title', 255);
             $table->string('imdb_url')->nullable();
             $table->string('isan', 255)->nullable();
             $table->string('eidr', 255)->nullable();
             $table->dateTime('shooting_start')->nullable();
             $table->dateTime('shooting_end')->nullable();
+
             $table->integer('year_of_copyright')->nullable();
             $table->integer('directors_film')->nullable();
             $table->string('european_nationality_flag',255)->nullable();
@@ -40,8 +42,9 @@ class CreateMoviesTable extends Migration
             $table->date('audit_date')->nullable();
             $table->date('eu_net_change_date')->nullable();
             $table->date('eu_net_change_name')->nullable();
-
-
+            $table->dateTime('photography_start')->nullable();
+            $table->dateTime('photography_end')->nullable();
+            $table->text('synopsis')->nullable();
             $table->timestamps();
         });
     }
