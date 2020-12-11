@@ -38,13 +38,15 @@
 
 
         </ul>
+        <br/>
 
-        <div class="mt-8">
-            {{ $medium->links() }}
-        </div>
+
+
 
 
     </div>
+
+    {{ $medium->links() }}
 
 
 </x-layout>
