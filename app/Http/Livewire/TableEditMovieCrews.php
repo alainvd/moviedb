@@ -32,9 +32,9 @@ class TableEditMovieCrews extends TableEditBase
                 'firstname' => '',
                 'lastname' => '',
                 'gender' => array_key_first($this->genders),
-                'nationality1' => 'belgian',
-                'nationality2' => '',
-                'country_of_residence' => '',
+                'nationality1' => $this->countries[0]['code'],
+                'nationality2' => $this->countries[0]['code'],
+                'country_of_residence' => $this->countries[0]['code'],
             ],
         ] + parent::defaults();
     }
@@ -57,15 +57,12 @@ class TableEditMovieCrews extends TableEditBase
     {
         return [
             'editing.title_id' => 'title',
-
             'editing.person.firstname' => 'first name',
             'editing.person.lastname' => 'last name',
             'editing.person.gender' => 'gender',
             'editing.person.nationality1' => 'nationality 1',
             'editing.person.nationality2' => 'nationality 2',
             'editing.person.country_of_residence' => 'residence country',
-
-            // 'editing.media_id' => 'media_id',
         ] + parent::validationAttributes();
     }
 
@@ -81,7 +78,13 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
         $this->genders = Person::GENDERS;
-        $this->countries = ['' => ['code' => '', 'name' => '']] + Country::all()->keyBy('code')->toArray();
+        // $this->countries = ['' => ['code' => '', 'name' => '']] + Country::all()->keyBy('code')->toArray();
+        // $this->countries = Country::where('active', true)->orderBy('code')->get()->keyBy('code')->take(17)->toArray();
+        // This is fine:
+        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
+        // This is broken:
+        // $this->countries = Country::where('active', true)->get()->keyBy('code')->toArray();
+        // dd($this->countries);
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->load();

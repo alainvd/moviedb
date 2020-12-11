@@ -3,14 +3,17 @@
 namespace Tests\Feature;
 
 use App\Audience;
+use App\Crew;
 use App\Dossier;
 use App\Genre;
 use App\Http\Livewire\MovieDetailForm;
+use App\Http\Livewire\TableEditMovieCrews;
 use App\Media;
 use App\Models\Country;
 use App\Models\Fiche;
 use App\Models\Status;
 use App\Movie;
+use App\Title;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -41,6 +44,7 @@ class MovieDetailsFormTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(MovieDetailForm::class)
+            // test if the form is new if no model provided
             ->assertSet('isNew', true)
             ->set('movie.original_title', $movie->original_title)
             ->set('fiche.status_id', $fiche->status_id)
@@ -85,34 +89,100 @@ class MovieDetailsFormTest extends TestCase
         $media->grantable_id = $movie->id;
         $media->grantable()->save($movie);
         $media->save();
-        $fiche->media_id = $media->id;
-        $fiche->save();
+        $dossier = Dossier::factory()->create();
+        $fiche->fill([
+            'media_id' => $media->id,
+            'dossier_id' => $dossier->id,
+        ])->save();
 
         // Edited fields
-        $movie->original_title = 'Some new title';
-        $fiche->status_id = Status::where('id', '!=', $fiche->status_id)->get()->random()->id;
+        $newTitle = 'Some new title';
+        $newStatus = Status::where('id', '!=', $fiche->status_id)
+            ->get()->random()->id;
 
         $this->actingAs($user);
 
         Livewire::test(MovieDetailForm::class, ['fiche' => $fiche])
+            // test if the form is not new if a model is provided
             ->assertSet('isNew', false)
-            ->set('movie.original_title', $movie->original_title)
-            ->set('fiche.status_id', $fiche->status_id)
+            ->set('movie.original_title', $newTitle)
+            ->set('fiche.status_id', $newStatus)
             ->call('submit');
 
-        // Remove media key for some reason
-//        $fiche = $fiche->fresh()->toArray();
-//        unset($fiche['media']);
-
-        $this
-            ->assertDatabaseHas('fiches', [
-                'media_id' => $fiche->media->id,
-                'status_id' => $fiche->status_id
-            ]);
-
-        $this->assertDatabaseHas('movies', [
-            'original_title' => 'Some new title'
+        $this->assertDatabaseHas('fiches', [
+            'id' => $fiche->id,
+            'media_id' => $fiche->media->id,
+            'dossier_id' => $dossier->id,
+            'status_id' => $newStatus
+        ])->assertDatabaseHas('movies', [
+            'id' => $movie->id,
+            'original_title' => $newTitle
+        ])->assertDatabaseHas('media', [
+            'id' => $media->id,
+            'title' => $newTitle,
+            'grantable_id' => $movie->id,
+            'grantable_type' => 'App\Movie',
         ]);
+    }
+
+    /** @test */
+    public function an_applicant_can_add_cast_and_crew()
+    {
+        list(
+            $fiche,
+            $movie,
+            $media,
+            $user
+        ) = $this->init('applicant');
+
+        $this->actingAs($user);
+
+        // Cast and crew init
+        Title::factory(10)->create();
+
+        $formComponent = Livewire::test(MovieDetailForm::class)
+            ->set('movie.original_title', $movie->original_title)
+            ->set('fiche.status_id', $fiche->status_id)
+            ->set('movie.film_country_of_origin', $movie->film_country_of_origin)
+            ->set('movie.year_of_copyright', $movie->year_of_copyright)
+            ->set('movie.film_type', $movie->film_type)
+            ->set('movie.imdb_url', $movie->imdb_url)
+            ->set('movie.film_length', $movie->film_length)
+            ->set('movie.film_format', $movie->film_format)
+            ->set('movie.isan', $movie->isan)
+            ->set('movie.synopsis', $movie->synopsis)
+            ->set('movie.photography_start', $movie->photography_start)
+            ->set('movie.photography_end', $movie->photography_end)
+            ->set('media.audience_id', $media->audience_id)
+            ->set('media.genre_id', $media->genre_id)
+            ->set('media.delivery_platform_id', $media->delivery_platform_id);
+
+        $crew = Crew::factory()->make();
+
+        // foreach ($crews as $crew) {
+        Livewire::test(TableEditMovieCrews::class)
+            ->set('editing.key', $this->faker->text(10))
+            ->set('editing.title_id', $crew->title_id)
+            ->set('editing.person.firstname', $crew->person->firstname)
+            ->set('editing.person.lastname', $crew->person->lastname)
+            ->set('editing.person.gender', $crew->person->gender)
+            ->set('editing.person.nationality1', $crew->person->nationality1)
+            ->set('editing.person.nationality2', $crew->person->nationality2)
+            ->set('editing.person.country_of_residence', $crew->person->country_of_residence)
+            ->call('saveItem');
+
+        $formComponent->assertSee($crew->person->firstname . ' ' . $crew->person->lastname);
+
+        // 'editing.points' => '',
+        // 'editing.title_id' => 'required',
+        // 'editing.person.firstname' => 'required|string|max:255',
+        // 'editing.person.lastname' => 'required|string|max:255',
+        // 'editing.person.gender' => 'required|string|max:255',
+        // 'editing.person.nationality1' => 'required|string|max:255',
+        // 'editing.person.nationality2' => 'string|max:255',
+        // 'editing.person.country_of_residence' => 'string|max:255',
+        // }
+
     }
 
     protected function init(string $role): array

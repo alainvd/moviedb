@@ -22,9 +22,6 @@ use Illuminate\Support\Facades\Log;
 class MovieDetailForm extends Component
 {
 
-    // Fake field
-    // public $form_update_unique = 0;
-
     public $isNew = false;
     public $isApplicant = false;
 
@@ -44,7 +41,6 @@ class MovieDetailForm extends Component
     public $sales_agents = [];
 
     protected $listeners = [
-        'movie-details-force-submit' => 'formSubmitForce',
         'update-movie-crews' => 'updateMovieCrews',
         'update-movie-producers' => 'updateMovieProducers',
         'update-movie-sales-agents' => 'updateMovieSalesAgents',
@@ -54,7 +50,6 @@ class MovieDetailForm extends Component
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
-        // 'form_update_unique' => 'required',
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'required|string|max:255',
@@ -63,15 +58,15 @@ class MovieDetailForm extends Component
         'movie.imdb_url' => 'required|string|max:255',
         // 'movie.shooting_start' => 'required|date',
         // 'movie.shooting_end' => 'required|date',
-        'movie.film_length' => 'required|string|max:255',
+        'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
         'movie.isan' => 'required|string',
         'movie.synopsis' => 'required|string',
         'movie.photography_start' => 'required|date',
         'movie.photography_end' => 'date',
 
-        'media.audience_id' => 'required',
-        'media.genre_id' => 'required',
+        'media.audience_id' => 'required|integer',
+        'media.genre_id' => 'required|integer',
         'media.delivery_platform_id' => 'required|integer',
     ];
 
@@ -85,6 +80,9 @@ class MovieDetailForm extends Component
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
+            $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
+            $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
+            $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
         }
 
         // @TODO use role here after fixing hydration issue for masquerade user
@@ -95,29 +93,12 @@ class MovieDetailForm extends Component
         // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
     }
 
-    // public function formSubmitForce()
-    // {
-    //     $this->form_update_unique = rand(0, 9999);
-    // }
-
     public function submit()
     {
-        // $this->validate();
+        $this->validate();
 
         // When it's new
         if ($this->isNew) {
-            // Save movie
-            $this->movie->save();
-            // Save media
-            // @question is the title here really necessary + required?
-            $this->media->title = $this->movie->original_title;
-            $this->media->grantable_id = $this->movie->id;
-            $this->media->grantable_type = 'App\Movie';
-            $this->media->save();
-            // Save fiche
-            $this->fiche->media_id = $this->media->id;
-            $this->fiche->created_by = Auth::user()->id;
-            $this->fiche->save();
             // Create dossier and assign
             $dossier = Dossier::create([
                 'project_ref_id' => 'someref',
@@ -126,18 +107,34 @@ class MovieDetailForm extends Component
                 'year' => date('Y'),
                 'call_id' => 1
             ]);
-            $dossier->media()->save($this->media);
+
+            // Save movie
+            $this->movie->save();
+
+            // Save media
+            $this->media->fill([
+                'title' => $this->movie->original_title,
+                'grantable_id' => $this->movie->id,
+                'grantable_type' => 'App\Movie',
+            ])->save();
+
+            // Save fiche
+            $this->fiche->fill([
+                'media_id' => $this->media->id,
+                'dossier_id' => $dossier->id,
+                'created_by' => Auth::user()->id,
+            ])->save();
         } else { // When editing
-//            dd($this->fiche);
-            $this->fiche->media->grantable->save();
-            $this->fiche->media->save();
+            $this->movie->save();
+            $this->media->title = $this->movie->original_title;
+            $this->media->save();
             $this->fiche->save();
         }
 
-        // Saving
-        // $_movie_create_form = !$this->movie->exists;
-        // $this->saveMovieDetails();
-        // $this->emitSelf('notify-saved');
+        // crew, producers, sales agents
+        $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
+        $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
+        $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
         // if ($_movie_create_form) {
         //     // Can't redirect while people are still being saved
@@ -145,34 +142,6 @@ class MovieDetailForm extends Component
         //     // TODO: tell browser to update the url
         //     // window.history.pushState('page2', 'Title', '/page2.php');
         // }
-    }
-
-    /**
-     * Save new or existing movie and people
-     */
-    private function saveMovieDetails()
-    {
-        // create media, create movie
-        if (!$this->movie->exists) {
-            $this->movie->save();
-            $media = [
-                'title' => $this->movie->original_title,
-                'audience_id' => Audience::first()->id,
-                'genre_id' => Genre::first()->id,
-                'grantable_id' => $this->movie->id,
-                'grantable_type' => 'App\Movie'
-            ];
-            $media = Media::create($media);
-        } else {
-            $this->movie->save();
-        }
-        $this->movie_original = $this->movie->getOriginal();
-        // cast/crew (old approach)
-        $this->emit('save-movie-details', $this->movie->id);
-        // crew, producers, sales agents (new approach)
-        $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
-        $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
-        $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
     }
 
     public function updateMovieCrews($items)

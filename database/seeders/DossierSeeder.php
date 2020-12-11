@@ -18,17 +18,15 @@ class DossierSeeder extends Seeder
      */
     public function run()
     {
+        Dossier::factory(10)->create();
+        // $count = Media::all()->count();
+        // Media::all()->each(function ($media) use ($count) {
+        //     $dossier = Dossier::factory()->create();
+        //     // $rand = rand(1,5);
+        //     // for($cpt=0;$cpt<$rand;$cpt++){
+        //     //     $dossier->media()->attach(rand(1, $count));
+        //     // }
 
-        $count = Media::all()->count();
-        Media::all()->each(function ($media) use ($count) {
-            $dossier = Dossier::factory()->create();
-            $rand = rand(1,5);
-            for($cpt=0;$cpt<$rand;$cpt++){
-                $dossier->media()->attach(rand(1, $count));
-            }
-
-        });
-
-
+        // });
     }
 }

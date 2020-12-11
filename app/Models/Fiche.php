@@ -11,6 +11,7 @@ class Fiche extends Model
 
     protected $fillable = [
         'media_id',
+        'dossier_id',
         'status_id',
         'created_by',
         'updated_by',
@@ -19,5 +20,10 @@ class Fiche extends Model
     public function media()
     {
         return $this->belongsTo('App\Media');
+    }
+
+    public function dossier()
+    {
+        return $this->belongsTo(Dossier::class);
     }
 }

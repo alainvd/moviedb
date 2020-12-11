@@ -30,8 +30,8 @@
             </div>
 
             <!-- cast/crew -->
-            <div class="my-8">
-                @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $this->backoffice])
+            <div class="my-8" id="table-crews">
+                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id])
             </div>
 
             <!-- photography -->
@@ -43,15 +43,13 @@
             </div>
 
             <!-- producers -->
-            <div class="my-8">
-                <x-table-producer></x-table-producer>
+            <div class="my-8" id="table-producers">
+                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
             </div>
 
-            <!-- <hr class="mt-10 mb-10"> -->
-
             <!-- agents -->
-            <div class="my-8">
-                <x-table-sales></x-table-sales>
+            <div class="my-8" id="table-agents">
+                @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
             </div>
 
             <!-- buttons -->

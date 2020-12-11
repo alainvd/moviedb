@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\VideoGameSeeder::class);
 
         $this->call(\Database\Seeders\DossierSeeder::class);
+        $this->call(\Database\Seeders\FicheSeeder::class);
         $this->call(\Database\Seeders\StepSeeder::class);
         $this->call(\Database\Seeders\StepDefinitionSeeder::class);
         $this->call(\Database\Seeders\ChecklistSeeder::class);
