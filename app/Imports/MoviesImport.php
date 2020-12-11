@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Media;
 use App\Movie;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -16,11 +17,13 @@ class MoviesImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
-        dd($row);
 
         return new Movie([
-            //
+            'id' => $row['id_code_film'],
+            'original_title' => $row['original_title'],
         ]);
+
+
     }
 
 }

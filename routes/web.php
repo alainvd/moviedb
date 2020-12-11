@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDetailsController;
+use App\Http\Livewire\MovieDetailForm;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -91,7 +92,7 @@ Route::get('dossiers_test', function () use ($dossiers) {
 })->name('dossiers_test');
 
 
-Route::resource('dossier', 'DossierController')->only('index');
+Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
 
 Route::view('/projects', 'coming-soon');
 Route::view('/reports', 'coming-soon');
@@ -123,6 +124,11 @@ Route::get('/fiches/dist/{fiche?}', MovieDetailForm::class)->middleware('cas.aut
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
+
+Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
+
+
 
 
 

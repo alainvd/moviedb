@@ -18,6 +18,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 
+    <style>
+        .choices{
+            max-width: 400px;
+        }
+    </style>
+
     @livewireStyles
 </head>
 
