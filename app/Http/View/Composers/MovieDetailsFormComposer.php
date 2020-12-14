@@ -24,6 +24,10 @@ class MovieDetailsFormComposer
         $genres = Genre::where('type', 'App\Movie')->get()->toArray();
         $languages = Language::where('active', true)
             ->get()
+            ->map(fn ($lang) => [
+                'value' => $lang->id,
+                'label' => $lang->name,
+            ])
             ->toArray();
         $platforms = [
             'Features / Cinema',

@@ -23,8 +23,13 @@
         @enderror
     </div>
 
-    <div class="col-span-3 sm:col-span-2">
-
+    <div class="col-span-3 sm:col-span-1">
+        @livewire('select-component', [
+            'domId' => 'shooting-languages',
+            'label' => 'Shooting languages',
+            'name' => 'shootingLanguages',
+            'options' => json_encode($languages),
+        ])
     </div>
 
     <div class="col-span-1 col-start-1">
