@@ -7,6 +7,7 @@ use App\Genre;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Status;
+use App\Producer;
 use Illuminate\View\View;
 
 class MovieDetailsFormComposer

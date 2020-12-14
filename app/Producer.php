@@ -21,7 +21,6 @@ class Producer extends Model
         'city',
         'country_id',
         'share',
-        'budget',
     ];
 
     /**

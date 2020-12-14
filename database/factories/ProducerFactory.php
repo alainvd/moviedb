@@ -29,7 +29,6 @@ class ProducerFactory extends BaseFactory
             'city' => $this->faker->city,
             'country_id' => $this->getRelationId(Country::class),
             'share' => $this->faker->numberBetween(0, 100),
-            'budget' => $this->faker->numberBetween(0, 10000),
         ];
     }
 }

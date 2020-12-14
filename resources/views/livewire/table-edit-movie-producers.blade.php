@@ -12,7 +12,6 @@
                 <x-table.heading>City</x-table.heading>
                 <x-table.heading>Country</x-table.heading>
                 <x-table.heading>Share</x-table.heading>
-                <x-table.heading>Budget</x-table.heading>
                 <x-table.heading></x-table.heading>
             </x-slot>
             
@@ -23,8 +22,7 @@
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $countries[$item['country_id']]['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['share'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['budget'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $item['share'] }}%</x-table.cell>
                     <x-table.cell class="text-center space-x-2">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
@@ -49,57 +47,71 @@
 
             <x-slot name="content">
                 <div>
-                    <label for="role" class="block text-sm font-medium leading-5 text-gray-700">Role</label>
-                    <select wire:model="editing.role" id="role"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                            <option value="producer">Producer</option>
-                            <option value="coproducer">Co-producer</option>
-                    </select>
-                    @error('editing.role') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <x-form.select
+                        :id="'role'"
+                        :label="'Role'"
+                        wire:model="editing.role">
+            
+                        @foreach($producer_roles as $key => $name)
+                            <option value="{{ $key }}">{{ $name }}</option>
+                        @endforeach
+                    </x-form.select>
+            
+                    @error('editing.role')
+                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="name" class="block text-sm font-medium leading-5 text-gray-700">Name</label>
-                    <input wire:model="editing.name" id="name"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <x-form.input
+                        :id="'name'"
+                        :label="'Name'"
+                        wire:model="editing.name">
+                    </x-form.input>
+
+                    @error('editing.name')
+                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="city" class="block text-sm font-medium leading-5 text-gray-700">City</label>
-                    <input wire:model="editing.city" id="city"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.city') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <x-form.input
+                        :id="'city'"
+                        :label="'City'"
+                        wire:model="editing.city">
+                    </x-form.input>
+
+                    @error('editing.city')
+                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="country_id" class="block text-sm font-medium leading-5 text-gray-700">Country</label>
-                    <select wire:model="editing.country_id" id="country_id"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    <x-form.select
+                        :id="'country_id'"
+                        :label="'Country'"
+                        wire:model="editing.country_id">
+            
                         @foreach ($countries as $country)
                             <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
                         @endforeach
-                    </select>
-                    @error('editing.country_id') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    </x-form.select>
+            
+                    @error('editing.country_id')
+                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="share" class="block text-sm font-medium leading-5 text-gray-700">Share</label>
-                    <input wire:model="editing.share" id="share"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.share') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="budget" class="block text-sm font-medium leading-5 text-gray-700">Budget</label>
-                    <input wire:model="editing.budget" id="budget"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.budget') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <x-form.input-trailing
+                        :id="'share'"
+                        :label="'Share'"
+                        :trailing="'%'"
+                        wire:model="editing.share"
+                    > 
+                    </x-form.input>
+                    @error('editing.share')
+                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
