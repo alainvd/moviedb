@@ -46,6 +46,6 @@ class Producer extends Model
 
     const ROLES = [
         'producer' => 'Producer',
-        'coproducer' => 'Co-producer',
+        'coproducer' => 'Coproducer',
     ];
 }

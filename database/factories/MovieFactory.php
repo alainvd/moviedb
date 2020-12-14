@@ -45,8 +45,8 @@ class MovieFactory extends Factory
             'film_type' => $this->faker->randomElement(['One-off', 'Series']),
             'film_length' => $this->faker->numberBetween(61, 134),
             'film_format' => $this->faker->randomElement(['35mm', 'Digital', 'Other']),
-            'photography_start' => $this->faker->date(),
-            'photography_end' => $this->faker->date(),
+            'photography_start' => $this->faker->date('d.m.Y'),
+            'photography_end' => $this->faker->date('d.m.Y'),
             'synopsis' => $this->faker->paragraph(12, true),
         ];
     }
