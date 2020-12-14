@@ -20,8 +20,8 @@ class CreateMoviesTable extends Migration
             $table->string('imdb_url')->nullable();
             $table->string('isan', 255)->nullable();
             $table->string('eidr', 255)->nullable();
-            $table->dateTime('shooting_start')->nullable();
-            $table->dateTime('shooting_end')->nullable();
+            $table->date('shooting_start')->nullable();
+            $table->date('shooting_end')->nullable();
 
             $table->integer('year_of_copyright')->nullable();
             $table->integer('directors_film')->nullable();
@@ -42,8 +42,6 @@ class CreateMoviesTable extends Migration
             $table->date('audit_date')->nullable();
             $table->date('eu_net_change_date')->nullable();
             $table->date('eu_net_change_name')->nullable();
-            $table->dateTime('photography_start')->nullable();
-            $table->dateTime('photography_end')->nullable();
             $table->text('synopsis')->nullable();
             $table->timestamps();
         });
