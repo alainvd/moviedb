@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'excel' => [
+            'driver' => 'local',
+            'root' => storage_path('excel'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
