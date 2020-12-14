@@ -45,9 +45,13 @@ class MovieFactory extends Factory
             'film_type' => $this->faker->randomElement(['One-off', 'Series']),
             'film_length' => $this->faker->numberBetween(61, 134),
             'film_format' => $this->faker->randomElement(['35mm', 'Digital', 'Other']),
-            'photography_start' => $this->faker->date('d.m.Y'),
-            'photography_end' => $this->faker->date('d.m.Y'),
+            'photography_start' => $this->faker->date(),
+            'photography_end' => $this->faker->date(),
             'synopsis' => $this->faker->paragraph(12, true),
+            'total_budget_currency_amount' => $this->faker->numberBetween(1000, 1000000),
+            'total_budget_currency_code' => $this->faker->randomElement(['USD', 'CHF', 'SEK']),
+            'total_budget_currency_rate' => $this->faker->randomFloat(2, 1, 2),
+            'total_budget_euro' => $this->faker->numberBetween(1000, 1000000),
         ];
     }
 }

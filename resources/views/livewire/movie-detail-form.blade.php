@@ -47,6 +47,13 @@
                 @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
             </div>
 
+            <!-- Total budget -->
+            <div class="my-8">
+                <x-details.budget
+                    :currencies="$currencies"
+                    ></x-details.budget>
+            </div>
+
             <!-- agents -->
             <div class="my-8" id="table-agents">
                 @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])

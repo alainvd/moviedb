@@ -40,6 +40,13 @@ class MovieDetailsFormComposer
         ];
         $statuses = Status::all()->toArray();
         $years = range(date('Y'), 1940);
+        $currencies = [
+            'USD' => 'US dollar',
+            'JPY' => 'Japanese yen',
+            'GBP' => 'Pound sterling',
+            'CHF' => 'Swiss franc',
+            'SEK' => 'Swedish krona',
+        ];
 
         $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());
         $view->with('countries', $countries);
@@ -50,5 +57,6 @@ class MovieDetailsFormComposer
         $view->with('platforms', $platforms);
         $view->with('statuses', $statuses);
         $view->with('years', $years);
+        $view->with('currencies', $currencies);
     }
 }

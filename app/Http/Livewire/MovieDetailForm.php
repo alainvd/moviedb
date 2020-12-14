@@ -62,6 +62,10 @@ class MovieDetailForm extends Component
         'movie.film_format' => 'required|string|max:255',
         'movie.isan' => 'required|string',
         'movie.synopsis' => 'required|string',
+        'movie.total_budget_currency_amount' => 'integer',
+        'movie.total_budget_currency_code' => 'string',
+        'movie.total_budget_currency_rate' => 'numeric',
+        'movie.total_budget_euro' => 'required|integer',
 
         'media.audience_id' => 'required|integer',
         'media.genre_id' => 'required|integer',
