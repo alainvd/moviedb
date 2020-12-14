@@ -22,6 +22,8 @@ class CreateMoviesTable extends Migration
             $table->string('eidr', 255)->nullable();
             $table->date('shooting_start')->nullable();
             $table->date('shooting_end')->nullable();
+            $table->string('film_length')->nullable();
+            $table->string('film_country_of_origin')->nullable();
 
             $table->integer('year_of_copyright')->nullable();
             $table->integer('directors_film')->nullable();
@@ -30,10 +32,10 @@ class CreateMoviesTable extends Migration
             $table->string('cost_currency')->nullable();
             $table->date('cost_currency_date')->nullable();
             $table->string('film_type')->nullable();
-            $table->string('film_length')->nullable();
+
             $table->string('film_format')->nullable();
             $table->string('film_decision_date')->nullable();
-            $table->string('film_country_of_origin')->nullable();
+
             $table->boolean('flag_video')->default(false); // ???
             $table->boolean('flag_2')->default(false); // ???
             $table->boolean('flag_not_use')->default(false); // ???

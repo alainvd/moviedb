@@ -27,10 +27,6 @@ class SelectForm extends Component
         $value = $item[1]['value'];
 
         $this->selected[$name][] = $value;
-//        Log::info($name);
-//        Log::info($value);
-//        Log::info($label);
-//        Log::info($this->selected);
     }
     public function removeItem($item)
     {

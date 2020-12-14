@@ -18,13 +18,14 @@ class GenresImport implements ToCollection, WithHeadingRow
     {
         foreach ($collection as $row) {
 
+
             if ($row["media_film_detailsfilm_genre"]) {
 
                 $media = Media::where(
                     [
                         "grantable_id" => $row["id_code_film"]
                     ]
-                )->first();
+                )->firstOrFail();
 
                 //Get the Genre
                 $genre = Genre::firstOrCreate(

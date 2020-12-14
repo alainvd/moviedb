@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\StepDefinitionSeeder::class);
         $this->call(\Database\Seeders\ChecklistSeeder::class);
 
-        $this->call(\Database\Seeders\TitleSeeder::class);
+        //$this->call(\Database\Seeders\TitleSeeder::class);
         $this->call(\Database\Seeders\PersonSeeder::class);
         $this->call(\Database\Seeders\CrewSeeder::class);
 
