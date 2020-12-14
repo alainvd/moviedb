@@ -13,7 +13,9 @@ class DossierController extends Controller
      */
     public function index(Request $request)
     {
+
         $dossiers = Dossier::all();
+
 
         return view('dossier.index', compact('dossiers'));
     }

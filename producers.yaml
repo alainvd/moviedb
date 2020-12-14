@@ -1,0 +1,22 @@
+models:
+
+  Producer:
+    media_id: integer
+    role: enum:producer,coproducer
+    name: string
+    city: string
+    country_id: integer
+    share: integer
+    budget: integer
+    relationships:
+      belongsTo: Country, Media
+
+controllers:
+
+  Producer:
+    index:
+      query: all
+      render: producer.index with producers
+
+
+seeders: Producer

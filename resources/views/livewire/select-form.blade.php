@@ -6,9 +6,9 @@
 
     @foreach($selected as $key => $item)
         {{$key}}
-    @foreach($item as $value)
-        {{$value}}
-    @endforeach
+        @foreach($item as $value)
+            {{$value}}
+        @endforeach
         <br/>
     @endforeach
 

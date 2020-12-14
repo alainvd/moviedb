@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Movie DB</title>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 
@@ -18,6 +17,12 @@
     />
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
+
+    <style>
+        .choices{
+            max-width: 400px;
+        }
+    </style>
 
     @livewireStyles
 </head>
@@ -45,6 +50,8 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
     @livewireScripts
     @yield('scripts')
 </body>

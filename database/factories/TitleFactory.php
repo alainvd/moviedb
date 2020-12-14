@@ -22,11 +22,8 @@ class TitleFactory extends Factory
      */
     public function definition()
     {
-
-        $title_types = ['Director', 'Screenwriter', 'Actor'];
-
         return [
-            'name' => $this->faker->randomElement($title_types),
+            'name' => $this->faker->name,
         ];
     }
 }

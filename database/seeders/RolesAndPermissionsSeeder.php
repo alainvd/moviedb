@@ -22,6 +22,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
 // create roles and assign created permissions
 
+        Role::create(['name' => 'applicant']);
+
 // this can be done as separate statements
         $role_editor = Role::create(['name' => 'editor']);
         $role_editor->givePermissionTo('access dashboard');

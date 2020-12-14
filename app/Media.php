@@ -16,8 +16,13 @@ class Media extends Model
      */
     protected $fillable = [
         'title',
+        'audience_id',
+        'genre_id',
         'grantable_id',
         'grantable_type',
+        'audience_id',
+        'genre_id',
+        'delivery_platform_id',
     ];
 
     /**
@@ -29,51 +34,29 @@ class Media extends Model
         'id' => 'integer',
     ];
 
-    const LANGUAGES = [
-        "fr" => "French",
-        "bu" => "Bulgarian",
-        "en" => "English",
-        "de" => "German",
-        "it" => "Italian",
-        "es" => "Spanish",
-        "ar" => "Arab",
-        "ba" => "Bambara",
-        "ta" => "Tamashek",
-        "dk" => "Danish"
-    ];
-
-    const COUNTRIES = [
-        "BE"=>"Belgium",
-        "FR"=>"France"
-    ];
-
-    static function YEARS()
+    public function genre()
     {
-        $yrs = [];
-        for ($year=2020; $year>1990; $year-- ){
-            $yrs[]=$year;
-        }
-        return $yrs;
-    }
-
-    const GENRES = [
-        "fiction" => "Fiction",
-        "creative_documentary" => "Creative Documentary",
-        "animation" => "Animation",
-        "series" => "Series",
-        "live_action_children_film" => "Live-action children film",
-    ];
-
-    public function genre(){
         return $this->belongsTo('App\Genre');
     }
 
-    public function audience(){
+    public function audience()
+    {
         return $this->belongsTo('App\Audience');
     }
 
     public function grantable()
     {
         return $this->morphTo();
+    }
+
+    public function fiche()
+    {
+        return $this->hasOne('App\Models\Fiche');
+    }
+
+    public function people()
+    {
+        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id'
+        );
     }
 }

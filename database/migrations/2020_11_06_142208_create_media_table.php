@@ -16,9 +16,10 @@ class CreateMediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('title', 400);
-            $table->unsignedInteger('audience_id');
-            $table->unsignedInteger('genre_id');
+            $table->unsignedInteger('audience_id')->nullable();
+            $table->unsignedInteger('genre_id')->nullable();
             $table->unsignedBigInteger('grantable_id');
+            $table->unsignedSmallInteger('delivery_platform_id');
             $table->string('grantable_type');
             $table->timestamps();
         });

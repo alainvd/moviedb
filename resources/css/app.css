@@ -4,6 +4,9 @@
 
 @tailwind utilities;
 
-/*.max-w-7xl {*/
-/*    max-width: 80rem;*/
-/*}*/
+@import '../../node_modules/pikaday/css/pikaday.css';
+@import './pikaday.css';
+
+[x-cloak] {
+    display: none;
+}

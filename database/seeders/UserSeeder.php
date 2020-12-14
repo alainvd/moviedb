@@ -20,6 +20,13 @@ class UserSeeder extends Seeder
     {
 
         User::factory()->create([
+            'name' => "Applicant",
+            'email' => 'applicant@media-database.eu',
+            'eu_login_username' => "mediadb-applicant",
+            'password' => Hash::make(Str::random(20)),
+        ])->assignRole('applicant');
+
+        User::factory()->create([
             'name' => "Editor",
             'email' => 'editor@media-database.eu',
             'eu_login_username' => "mediadb-editor",

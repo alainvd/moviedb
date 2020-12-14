@@ -11,5 +11,8 @@
     Applicant:<br />
     <a href="{{route('movie_create_applicant')}}">Create new</a><br />
     <a href="{{route('movie_detail_applicant', ['movie'=>1])}}">Movie detail</a><br />
+    <br />
+    <a href="{{route('table_edit_examples')}}">Table edit samples</a><br />
+    <br />
 
 </x-layout>

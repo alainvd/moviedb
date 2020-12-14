@@ -14,7 +14,6 @@ class MovieDetailFormBackoffice extends MovieDetailForm
     public function render()
     {
         return view('livewire.movie-detail-form-backoffice', [
-            'backoffice'=>$this->backoffice,
             'languages'=>Media::LANGUAGES,
             'years'=>Media::YEARS(),
             'genres'=>Media::GENRES,
