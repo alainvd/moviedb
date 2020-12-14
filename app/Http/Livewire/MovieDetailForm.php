@@ -52,9 +52,12 @@ class MovieDetailForm extends Component
     protected $rules = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'required|string|max:255',
+        'movie.film_country_of_origin' => 'required|string',
         'movie.year_of_copyright' => 'required|integer',
-        'movie.film_type' => 'required|string|max:255',
+        'media.genre_id' => 'required|integer',
+        'media.delivery_platform_id' => 'required|integer',
+        'media.audience_id' => 'required|integer',
+        'movie.film_type' => 'required|string|min:1|max:255',
         'movie.imdb_url' => 'required|string|max:255',
         'movie.photography_start' => 'required|date',
         'movie.photography_end' => 'required|date',
@@ -66,10 +69,6 @@ class MovieDetailForm extends Component
         'movie.total_budget_currency_code' => 'string',
         'movie.total_budget_currency_rate' => 'numeric',
         'movie.total_budget_euro' => 'required|integer',
-
-        'media.audience_id' => 'required|integer',
-        'media.genre_id' => 'required|integer',
-        'media.delivery_platform_id' => 'required|integer',
     ];
 
     public function mount()

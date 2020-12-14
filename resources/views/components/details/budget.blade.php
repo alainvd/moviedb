@@ -8,8 +8,7 @@
             :idCurrency="'total_budget_currency_code'"
             :labelCurrency="'Currency'"
             :modelCurrency="'movie.total_budget_currency_code'"
-            :currencies="$currencies"
-        >
+            :currencies="$currencies">
 
         </x-form.currency-amount>
     </div>
@@ -18,7 +17,8 @@
         <x-form.input
             :id="'total_budget_currency_rate'"
             :label="'Conversion rate'"
-            wire:model="movie.total_budget_currency_rate">
+            wire:model="movie.total_budget_currency_rate"
+            placeholder="0.00">
 
         </x-form.input>
     </div>
@@ -27,7 +27,8 @@
         <x-form.input
             :id="'total_budget_euro'"
             :label="'Total budget in EURO'"
-            wire:model="movie.total_budget_euro">
+            wire:model="movie.total_budget_euro"
+            placeholder="0">
 
         </x-form.input>
     </div>
