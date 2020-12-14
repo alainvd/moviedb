@@ -48,7 +48,7 @@
             <x-slot name="content">
                 <div>
                     <x-form.select
-                        :id="'role'"
+                        :id="'producer_role'"
                         :label="'Role'"
                         wire:model="editing.role">
             
@@ -64,7 +64,7 @@
 
                 <div>
                     <x-form.input
-                        :id="'name'"
+                        :id="'producer_name'"
                         :label="'Name'"
                         wire:model="editing.name">
                     </x-form.input>
@@ -76,7 +76,7 @@
 
                 <div>
                     <x-form.input
-                        :id="'city'"
+                        :id="'producer_city'"
                         :label="'City'"
                         wire:model="editing.city">
                     </x-form.input>
@@ -88,7 +88,7 @@
 
                 <div>
                     <x-form.select
-                        :id="'country_id'"
+                        :id="'producer_country_id'"
                         :label="'Country'"
                         wire:model="editing.country_id">
             
@@ -104,7 +104,7 @@
 
                 <div>
                     <x-form.input-trailing
-                        :id="'share'"
+                        :id="'producer_share'"
                         :label="'Share'"
                         :trailing="'%'"
                         wire:model="editing.share"

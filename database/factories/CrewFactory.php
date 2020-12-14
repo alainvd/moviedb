@@ -26,7 +26,7 @@ class CrewFactory extends BaseFactory
     public function definition()
     {
         return [
-            'points' => $this->faker->numberBetween(0, 10),
+            'points' => $this->faker->randomFloat(2, 0, 10),
             'person_id' => Person::factory(),
             'title_id' => $this->getRelationId(Title::class),
             'media_id' => Media::factory(),

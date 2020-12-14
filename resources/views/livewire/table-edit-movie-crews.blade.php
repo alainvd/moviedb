@@ -26,21 +26,7 @@
                     <x-table.cell class="text-center">{{ $item['person']['nationality1'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['nationality2'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['country_of_residence'] }}</x-table.cell>
-                    @if ($backoffice)
-                    <x-table.cell x-data="{ points: {{ $item['points'] }}, person_key: '{{ $item['key'] }}' }" class="text-center">
-                        <span class="cursor-pointer" @click="$wire.pointsDec(person_key)">
-                            <svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
-                            </svg>
-                        </span>
-                        <span x-text="points"></span>
-                        <span class="cursor-pointer" @click="$wire.pointsInc(person_key)">
-                            <svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                            </svg>
-                        </span>
-                    </x-table.cell>
-                    @endif
+                    <x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>
                     <x-table.cell class="text-center space-x-2">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
@@ -149,6 +135,14 @@
                         @endforeach
                     </select>
                     @error('editing.person.country_of_residence') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="points" class="block text-sm font-medium leading-5 text-gray-700">Points</label>
+                    <input wire:model="editing.points" id="points"
+                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    @error('editing.points') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 

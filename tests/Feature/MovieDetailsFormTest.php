@@ -185,10 +185,11 @@ class MovieDetailsFormTest extends TestCase
                 ->set('editing.person.nationality1', $crew->person->nationality1)
                 ->set('editing.person.nationality2', $crew->person->nationality2)
                 ->set('editing.person.country_of_residence', $crew->person->country_of_residence)
+                ->set('editing.points', 0)
                 ->call('saveItem')
                 ->assertSeeInOrder([
-                    $crew->person->firstname . ' ' . $crew->person->lastname,
                     $crew->title->name,
+                    $crew->person->firstname . ' ' . $crew->person->lastname,
                     $crew->person->gender,
                     // $crew->person->nationality1,
                     // $crew->person->nationality2,

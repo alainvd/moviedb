@@ -11,6 +11,13 @@
             :currencies="$currencies">
 
         </x-form.currency-amount>
+
+        @error('movie.total_budget_currency_amount')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
+        @error('movie.total_budget_currency_code')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-span-1">
@@ -21,6 +28,10 @@
             placeholder="0.00">
 
         </x-form.input>
+
+        @error('movie.total_budget_currency_rate')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-span-1">
@@ -31,6 +42,10 @@
             placeholder="0">
 
         </x-form.input>
+
+        @error('movie.total_budget_euro')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 
 </div>

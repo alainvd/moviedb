@@ -42,7 +42,7 @@ class TableEditMovieCrews extends TableEditBase
     protected function rules()
     {
         return [
-            'editing.points' => '',
+            'editing.points' => 'required|numeric',
             'editing.title_id' => 'required',
             'editing.person.firstname' => 'required|string|max:255',
             'editing.person.lastname' => 'required|string|max:255',
@@ -56,6 +56,7 @@ class TableEditMovieCrews extends TableEditBase
     protected function validationAttributes()
     {
         return [
+            'editing.points' => 'points',
             'editing.title_id' => 'title',
             'editing.person.firstname' => 'first name',
             'editing.person.lastname' => 'last name',
@@ -108,33 +109,23 @@ class TableEditMovieCrews extends TableEditBase
         $this->emitUp('update-movie-crews', $this->items);
     }
 
-    public function pointsDec($key) {
-        $findPerson = $this->findItemByKey($key);
-        if ($findPerson) {
-            $this->items[array_key_first($findPerson)]['points']--;
-            $this->points_total--;
+    protected function recalculatePoints()
+    {
+        $this->points_total = 0;
+        foreach ($this->items as $item) {
+            $this->points_total += $item['points'];
         }
-
-        $this->sendItems();
     }
 
-    public function pointsInc($key) {
-        $findPerson = $this->findItemByKey($key);
-        if ($findPerson) {
-            $this->items[array_key_first($findPerson)]['points']++;
-            $this->points_total++;
-        }
-
-        $this->sendItems();
+    public function saveItem()
+    {
+        parent::saveItem();
+        $this->recalculatePoints();
     }
 
     public function deleteItem() {
-        $findPerson = $this->findItemByKey($this->deleteItemKey);
-        if ($findPerson) {
-            $personFound = $this->items[array_key_first($findPerson)];
-            $this->points_total -= $personFound['points'];
-        }
         parent::deleteItem();
+        $this->recalculatePoints();
     }
 
 }

@@ -6,7 +6,7 @@
             wire:model.lazy="movie.photography_start">
         </x-form.datepicker>
 
-        @error('photography_start')
+        @error('movie.photography_start')
             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>

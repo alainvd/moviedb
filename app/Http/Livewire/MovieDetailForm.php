@@ -16,8 +16,7 @@ use App\Person;
 use App\Producer;
 use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
+
 
 class MovieDetailForm extends Component
 {
@@ -92,13 +91,13 @@ class MovieDetailForm extends Component
         }
 
         // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
+        $this->backoffice = true;
     }
 
     public function submit()
     {
-
-        $this->validate();
-
+       $this->validate();
+        
         // When it's new
         if ($this->isNew) {
             // Create dossier and assign
@@ -126,11 +125,14 @@ class MovieDetailForm extends Component
                 'dossier_id' => $dossier->id,
                 'created_by' => Auth::user()->id,
             ])->save();
+
+            $this->emit('notify-saved');
         } else { // When editing
             $this->movie->save();
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
+            $this->emit('notify-saved');
         }
 
         // crew, producers, sales agents
@@ -210,6 +212,10 @@ class MovieDetailForm extends Component
 
     public function render()
     {
+        if($this->getErrorBag()->any()){
+            $this->emit('validation-errors');
+        }
+
         return view('livewire.movie-detail-form')
             ->layout('components.layout');
     }

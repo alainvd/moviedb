@@ -31,7 +31,7 @@
 
             <!-- cast/crew -->
             <div class="my-8" id="table-crews">
-                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id])
+                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
             </div>
 
             <!-- photography -->
@@ -69,6 +69,14 @@
                             })
                         " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-gray-600">
                         Saved!
+                    </span>
+                    <span x-data="{ open: false }" x-init="
+                            @this.on('validation-errors', () => {
+                                setTimeout(() => { open = false }, 2500);
+                                open = true;
+                            })
+                        " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-red-600">
+                        Validation errors!
                     </span>
                 </span>
 

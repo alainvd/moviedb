@@ -26,10 +26,3 @@
         </div>
     </div>
 </div>                  
-
-@error('movie.total_budget_currency_amount')
-    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-@enderror
-@error('movie.total_budget_currency_code')
-    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-@enderror

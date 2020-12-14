@@ -32,8 +32,8 @@
 
     <div class="col-span-1">
         <x-form.select
-            :id="'nationality'"
-            :label="'Country of Origin (wired)'"
+            :id="'film_country_of_origin'"
+            :label="'Country of Origin'"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
