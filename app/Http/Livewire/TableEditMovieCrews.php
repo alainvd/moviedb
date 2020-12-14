@@ -20,6 +20,7 @@ class TableEditMovieCrews extends TableEditBase
     public $genders = [];
 
     public $countries = [];
+    public $countries_by_key = [];
 
     public $points_total = 0;
 
@@ -79,13 +80,8 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
         $this->genders = Person::GENDERS;
-        // $this->countries = ['' => ['code' => '', 'name' => '']] + Country::all()->keyBy('code')->toArray();
-        // $this->countries = Country::where('active', true)->orderBy('code')->get()->keyBy('code')->take(17)->toArray();
-        // This is fine:
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        // This is broken:
-        // $this->countries = Country::where('active', true)->get()->keyBy('code')->toArray();
-        // dd($this->countries);
+        $this->countries_by_key = Country::where('active', true)->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->load();

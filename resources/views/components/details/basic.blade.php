@@ -37,7 +37,7 @@
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
-                <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
             @endforeach
 
         </x-form.select>

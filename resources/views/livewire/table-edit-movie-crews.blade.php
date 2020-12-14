@@ -23,9 +23,9 @@
                     <x-table.cell class="text-center">{{ $titles[$item['title_id']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $genders[$item['person']['gender']] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['person']['nationality1'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['person']['nationality2'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['person']['country_of_residence'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countries_by_key[$item['person']['nationality1']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countries_by_key[$item['person']['nationality2']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countries_by_key[$item['person']['country_of_residence']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>
                     <x-table.cell class="text-center space-x-2">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
