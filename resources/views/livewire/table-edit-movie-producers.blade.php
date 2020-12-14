@@ -46,75 +46,79 @@
             </x-slot>
 
             <x-slot name="content">
-                <div>
-                    <x-form.select
-                        :id="'producer_role'"
-                        :label="'Role'"
-                        wire:model="editing.role">
-            
-                        @foreach($producer_roles as $key => $name)
-                            <option value="{{ $key }}">{{ $name }}</option>
-                        @endforeach
-                    </x-form.select>
-            
-                    @error('editing.role')
-                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
+                <div class="space-y-2">
+
+                    <div>
+                        <x-form.select
+                            :id="'producer_role'"
+                            :label="'Role'"
+                            wire:model="editing.role">
+                
+                            @foreach($producer_roles as $key => $name)
+                                <option value="{{ $key }}">{{ $name }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.role')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.input
+                            :id="'producer_name'"
+                            :label="'Name'"
+                            wire:model="editing.name">
+                        </x-form.input>
+
+                        @error('editing.name')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.input
+                            :id="'producer_city'"
+                            :label="'City'"
+                            wire:model="editing.city">
+                        </x-form.input>
+
+                        @error('editing.city')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.select
+                            :id="'producer_country_id'"
+                            :label="'Country'"
+                            wire:model="editing.country_id">
+                
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.country_id')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.input-trailing
+                            :id="'producer_share'"
+                            :label="'Share'"
+                            :trailing="'%'"
+                            wire:model="editing.share"
+                        > 
+                        </x-form.input>
+                        @error('editing.share')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                 </div>
-
-                <div>
-                    <x-form.input
-                        :id="'producer_name'"
-                        :label="'Name'"
-                        wire:model="editing.name">
-                    </x-form.input>
-
-                    @error('editing.name')
-                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <x-form.input
-                        :id="'producer_city'"
-                        :label="'City'"
-                        wire:model="editing.city">
-                    </x-form.input>
-
-                    @error('editing.city')
-                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <x-form.select
-                        :id="'producer_country_id'"
-                        :label="'Country'"
-                        wire:model="editing.country_id">
-            
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
-                        @endforeach
-                    </x-form.select>
-            
-                    @error('editing.country_id')
-                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div>
-                    <x-form.input-trailing
-                        :id="'producer_share'"
-                        :label="'Share'"
-                        :trailing="'%'"
-                        wire:model="editing.share"
-                    > 
-                    </x-form.input>
-                    @error('editing.share')
-                        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
-
+                
                 <div class="flex justify-end items-center space-x-3 mt-4">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 

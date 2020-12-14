@@ -55,97 +55,126 @@
             </x-slot>
 
             <x-slot name="content">
-                <div>
-                    <label for="title_id" class="block text-sm font-medium leading-5 text-gray-700">Title</label>
-                    <select wire:model="editing.title_id" id="title_id"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        @foreach ($titles as $id => $title)
-                            <option value="{{ $id }}">{{ $title['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.title_id') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                <div class="space-y-2">
 
-                <div>
-                    <label for="firstname" class="block text-sm font-medium leading-5 text-gray-700">First name</label>
-                    <input wire:model="editing.person.firstname" id="firstname"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.person.firstname') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.select
+                            :id="'crews_title_id'"
+                            :label="'Title'"
+                            wire:model="editing.title_id">
+                
+                            @foreach ($titles as $id => $title)
+                                <option value="{{ $id }}">{{ $title['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.title_id')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="lastname" class="block text-sm font-medium leading-5 text-gray-700">Last name</label>
-                    <input wire:model="editing.person.lastname" id="lastname"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.person.lastname') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.input
+                            :id="'crews_firstname'"
+                            :label="'First name'"
+                            wire:model="editing.person.firstname">
+                        </x-form.input>
 
-                <div>
-                    <label for="gender" class="block text-sm font-medium leading-5 text-gray-700">Gender</label>
-                    <select wire:model="editing.person.gender" id="gender"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        @foreach ($genders as $key => $name)
-                            <option value="{{ $key }}">{{ $name }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.person.gender') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                        @error('editing.person.firstname')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="nationality1" class="block text-sm font-medium leading-5 text-gray-700">Nationality
-                        1</label>
-                    <select wire:model="editing.person.nationality1" id="nationality1"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.person.nationality1') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.input
+                            :id="'crews_lastname'"
+                            :label="'Last name'"
+                            wire:model="editing.person.lastname">
+                        </x-form.input>
 
-                <div>
-                    <label for="nationality2" class="block text-sm font-medium leading-5 text-gray-700">Nationality
-                        2</label>
-                    <select wire:model="editing.person.nationality2" id="nationality2"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.person.nationality2') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                        @error('editing.person.lastname')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="country_of_residence" class="block text-sm font-medium leading-5 text-gray-700">Country
-                        of residence</label>
-                    <select wire:model="editing.person.country_of_residence" id="country_of_residence"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <!-- <option value=""></option>
-                        <option value="be">Belgium</option>
-                        <option value="fr" selected>France</option>
-                        <option value="de">Germany</option> -->
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.person.country_of_residence') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.select
+                            :id="'crews_gender'"
+                            :label="'Gender'"
+                            wire:model="editing.person.gender">
+                
+                            @foreach ($genders as $key => $name)
+                                <option value="{{ $key }}">{{ $name }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.person.gender')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="points" class="block text-sm font-medium leading-5 text-gray-700">Points</label>
-                    <input wire:model="editing.points" id="points"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.points') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.select
+                            :id="'crews_nationality1'"
+                            :label="'Nationality 1'"
+                            wire:model="editing.person.nationality1">
+                
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.person.nationality1')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
+                    <div>
+                        <x-form.select
+                            :id="'crews_nationality2'"
+                            :label="'Nationality 2'"
+                            wire:model="editing.person.nationality2">
+                
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.person.nationality2')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.select
+                            :id="'crews_country_of_residence'"
+                            :label="'Country of residence'"
+                            wire:model="editing.person.country_of_residence">
+                
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.person.country_of_residence')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.input
+                            :id="'crews_points'"
+                            :label="'Points'"
+                            wire:model="editing.points">
+                        </x-form.input>
+
+                        @error('editing.points')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                </div>
+                
                 <div class="flex justify-end items-center space-x-3 mt-4">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
