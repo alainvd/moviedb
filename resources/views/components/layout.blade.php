@@ -8,6 +8,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Movie DB</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
+
+    <style>
+        .choices{
+            max-width: 400px;
+        }
+    </style>
+
     @livewireStyles
 </head>
 

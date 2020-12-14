@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\MovieCreated;
 use App\Interfaces\Grantable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model implements Grantable
 {
     use HasFactory;
+
+    //Event to create a media when we create a movie
+    protected $dispatchesEvents = [
+        'created' => MovieCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
