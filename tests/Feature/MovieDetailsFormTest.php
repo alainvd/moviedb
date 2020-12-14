@@ -24,6 +24,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use Illuminate\Support\Carbon;
 
 class MovieDetailsFormTest extends TestCase
 {
@@ -60,14 +61,17 @@ class MovieDetailsFormTest extends TestCase
             ->set('movie.film_format', $movie->film_format)
             ->set('movie.isan', $movie->isan)
             ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start)
-            ->set('movie.photography_end', $movie->photography_end)
+            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
+            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
             ->set('media.audience_id', $media->audience_id)
             ->set('media.genre_id', $media->genre_id)
             ->set('media.delivery_platform_id', $media->delivery_platform_id)
             ->call('submit');
 
-        $this->assertDatabaseHas('movies', $movie->toArray())
+        $movie_array = $movie->toArray();
+        $movie_array['photography_start'] = Carbon::createFromFormat('d.m.Y', $movie_array['photography_start'])->format('Y-m-d');
+        $movie_array['photography_end'] = Carbon::createFromFormat('d.m.Y', $movie_array['photography_end'])->format('Y-m-d');
+        $this->assertDatabaseHas('movies', $movie_array)
             ->assertDatabaseHas('media', $media->toArray())
             ->assertDatabaseHas('fiches', $fiche->toArray());
     }
@@ -155,8 +159,8 @@ class MovieDetailsFormTest extends TestCase
             ->set('movie.film_format', $movie->film_format)
             ->set('movie.isan', $movie->isan)
             ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start)
-            ->set('movie.photography_end', $movie->photography_end)
+            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
+            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
             ->set('media.audience_id', $media->audience_id)
             ->set('media.genre_id', $media->genre_id)
             ->set('media.delivery_platform_id', $media->delivery_platform_id);
@@ -209,8 +213,8 @@ class MovieDetailsFormTest extends TestCase
             ->set('movie.film_format', $movie->film_format)
             ->set('movie.isan', $movie->isan)
             ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start)
-            ->set('movie.photography_end', $movie->photography_end)
+            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
+            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
             ->set('media.audience_id', $media->audience_id)
             ->set('media.genre_id', $media->genre_id)
             ->set('media.delivery_platform_id', $media->delivery_platform_id);
@@ -260,8 +264,8 @@ class MovieDetailsFormTest extends TestCase
             ->set('movie.film_format', $movie->film_format)
             ->set('movie.isan', $movie->isan)
             ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start)
-            ->set('movie.photography_end', $movie->photography_end)
+            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
+            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
             ->set('media.audience_id', $media->audience_id)
             ->set('media.genre_id', $media->genre_id)
             ->set('media.delivery_platform_id', $media->delivery_platform_id);

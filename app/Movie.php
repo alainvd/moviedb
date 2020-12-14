@@ -36,6 +36,18 @@ class Movie extends Model implements Grantable
         'photography_end' => 'date:d.m.Y',
     ];
 
+    public function setPhotographyStartAttribute( $value ) {
+        if ($value) {
+            $this->attributes['photography_start'] = Carbon::createFromFormat('d.m.Y', $value)->format('Y-m-d');
+        }
+    }
+
+    public function setPhotographyEndAttribute( $value ) {
+        if ($value) {
+            $this->attributes['photography_end'] = Carbon::createFromFormat('d.m.Y', $value)->format('Y-m-d');
+        }
+    }
+
     public function media()
     {
         return $this->morphOne(\App\Media::class, 'grantable');
