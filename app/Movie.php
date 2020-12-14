@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\MovieCreated;
 use App\Interfaces\Grantable;
+use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -72,6 +73,11 @@ class Movie extends Model implements Grantable
     public function audience()
     {
         return $this->media()->audience();
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class, 'movie_language');
     }
 
     public function addPerson($person, $points, $title_id, $media_id, $movie_id)

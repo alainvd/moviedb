@@ -9,6 +9,8 @@ use Livewire\Component;
 class SelectComponent extends Component
 {
 
+    public $domId;
+    public $label;
     public $options;
     public $name;
 

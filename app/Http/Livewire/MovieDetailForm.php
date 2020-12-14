@@ -36,6 +36,8 @@ class MovieDetailForm extends Component
     // Allow special editing
     public $backoffice = false;
 
+    public $shootingLanguages;
+
     public $crews = [];
     public $producers = [];
     public $sales_agents = [];
@@ -44,6 +46,8 @@ class MovieDetailForm extends Component
         'update-movie-crews' => 'updateMovieCrews',
         'update-movie-producers' => 'updateMovieProducers',
         'update-movie-sales-agents' => 'updateMovieSalesAgents',
+        'addItem' => 'addShootingLanguage',
+        'removeItem' => 'removeShootingLanguage'
     ];
 
     /**
@@ -73,6 +77,8 @@ class MovieDetailForm extends Component
 
     public function mount()
     {
+        $this->shootingLanguages = collect([]);
+
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
@@ -94,9 +100,21 @@ class MovieDetailForm extends Component
         // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
     }
 
+    public function addShootingLanguage($lang)
+    {
+        // @todo build listener names using select name
+        $this->shootingLanguages->push($lang[1]);
+    }
+
+    public function removeShootingLanguage($lang)
+    {
+        $this->shootingLanguages = $this->shootingLanguages->reject(
+            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+        );
+    }
+
     public function submit()
     {
-
         $this->validate();
 
         // When it's new
@@ -112,6 +130,11 @@ class MovieDetailForm extends Component
 
             // Save movie
             $this->movie->save();
+            $this->movie->languages()->attach(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
 
             // Save media
             $this->media->fill([
@@ -128,6 +151,11 @@ class MovieDetailForm extends Component
             ])->save();
         } else { // When editing
             $this->movie->save();
+            $this->movie->languages()->attach(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
