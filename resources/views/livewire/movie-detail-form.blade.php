@@ -34,6 +34,13 @@
                 @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
             </div>
 
+            <!-- points -->
+            <div class="my-8">
+                <x-details.points
+                    :movie="$movie"
+                    :countries="$countries"></x-details.summary>
+            </div>
+
             <!-- photography -->
             <div class="my-8">
                 <x-details.photography

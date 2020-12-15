@@ -40,6 +40,7 @@ class MovieFactory extends Factory
             'year_of_copyright' => $this->faker->numberBetween(2000, 2020),
             'european_nationality_flag' => $this->faker->randomElement(['OK', 'Not OK', 'Under processing', 'Missing information']),
             'film_country_of_origin' => $country_code,
+            'country_of_origin_points' => $this->faker->randomFloat(2, 1, 2),
             'isan' => 'isan-' . $this->faker->unique()->numberBetween(10000, 99999),
             'eidr' => 'eidr-' . $this->faker->unique()->numberBetween(10000, 99999),
             'film_type' => $this->faker->randomElement(['One-off', 'Series']),

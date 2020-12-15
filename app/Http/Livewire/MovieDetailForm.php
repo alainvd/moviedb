@@ -56,6 +56,7 @@ class MovieDetailForm extends Component
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'required|string',
+        'movie.country_of_origin_points' => 'required|numeric',
         'movie.year_of_copyright' => 'required|integer',
         'media.genre_id' => 'required|integer',
         'media.delivery_platform_id' => 'required|integer',
