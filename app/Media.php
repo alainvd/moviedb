@@ -54,6 +54,7 @@ class Media extends Model
         return $this->hasOne('App\Models\Fiche');
     }
 
+
     public function people()
     {
         return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id'
