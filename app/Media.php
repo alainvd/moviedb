@@ -21,7 +21,7 @@ class Media extends Model
         'grantable_id',
         'grantable_type',
         'audience_id',
-        'genre_id',
+        'media_id',
         'delivery_platform_id',
     ];
 
@@ -52,6 +52,10 @@ class Media extends Model
     public function fiche()
     {
         return $this->hasOne('App\Models\Fiche');
+    }
+
+    public function crew(){
+        return $this->hasMany(Crew::class);
     }
 
 
