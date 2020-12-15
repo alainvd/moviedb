@@ -21,6 +21,7 @@ class Person extends Model
         'points',  // for PersonTable.php person editing
         'lastname',
         'firstname',
+        'fullname',
         'gender',
         'nationality1',
         'nationality2',

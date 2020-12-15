@@ -16,6 +16,12 @@
                             @if($media->audience)
                                 <p class="mt-1 text-gray-500 text-sm truncate">Audience: {{$media->audience->name}}</p>
                             @endif
+                            @foreach($media->people as $people)
+                                <p>
+                                    {{$people->fullname}}
+                                </p>
+                            @endforeach
+
 
                         </div>
 
@@ -39,9 +45,6 @@
 
         </ul>
         <br/>
-
-
-
 
 
     </div>
