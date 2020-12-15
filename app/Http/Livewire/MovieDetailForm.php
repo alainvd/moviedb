@@ -62,8 +62,8 @@ class MovieDetailForm extends Component
         'media.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string|min:1|max:255',
         'movie.imdb_url' => 'required|string|max:255',
-        'movie.photography_start' => 'required|date',
-        'movie.photography_end' => 'required|date',
+        'movie.photography_start' => 'required|date:d.m.Y',
+        'movie.photography_end' => 'required|date:d.m.Y',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
         'movie.isan' => 'required|string',
@@ -103,7 +103,7 @@ class MovieDetailForm extends Component
     public function addShootingLanguage($lang)
     {
        $this->validate();
-        
+
         // @todo build listener names using select name
         $this->shootingLanguages->push($lang[1]);
     }

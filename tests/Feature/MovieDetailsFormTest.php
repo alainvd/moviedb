@@ -30,6 +30,11 @@ class MovieDetailsFormTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
+    public Fiche $fiche;
+    public Media $media;
+    public Movie $movie;
+    public User $user;
+
     /** @test */
     public function form_is_visible()
     {
@@ -39,45 +44,16 @@ class MovieDetailsFormTest extends TestCase
     /** @test */
     public function an_applicant_can_create_a_new_fiche()
     {
-        list(
-            $fiche,
-            $movie,
-            $media,
-            $user
-        ) = $this->init('applicant');
+        $this->init('applicant');
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
-        Livewire::test(MovieDetailForm::class)
-            // test if the form is new if no model provided
-            ->assertSet('isNew', true)
-            ->set('movie.original_title', $movie->original_title)
-            ->set('fiche.status_id', $fiche->status_id)
-            ->set('movie.film_country_of_origin', $movie->film_country_of_origin)
-            ->set('movie.year_of_copyright', $movie->year_of_copyright)
-            ->set('movie.film_type', $movie->film_type)
-            ->set('movie.imdb_url', $movie->imdb_url)
-            ->set('movie.film_length', $movie->film_length)
-            ->set('movie.film_format', $movie->film_format)
-            ->set('movie.isan', $movie->isan)
-            ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
-            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
-            ->set('movie.total_budget_currency_amount', $movie->total_budget_currency_amount)
-            ->set('movie.total_budget_currency_code', $movie->total_budget_currency_code)
-            ->set('movie.total_budget_currency_rate', $movie->total_budget_currency_rate)
-            ->set('movie.total_budget_euro', $movie->total_budget_euro)
-            ->set('media.audience_id', $media->audience_id)
-            ->set('media.genre_id', $media->genre_id)
-            ->set('media.delivery_platform_id', $media->delivery_platform_id)
+        $this->fillMovieForm()
             ->call('submit');
 
-        $movie_array = $movie->toArray();
-        $movie_array['photography_start'] = Carbon::createFromFormat('d.m.Y', $movie_array['photography_start'])->format('Y-m-d');
-        $movie_array['photography_end'] = Carbon::createFromFormat('d.m.Y', $movie_array['photography_end'])->format('Y-m-d');
-        $this->assertDatabaseHas('movies', $movie_array)
-            ->assertDatabaseHas('media', $media->toArray())
-            ->assertDatabaseHas('fiches', $fiche->toArray());
+        $this->assertDatabaseHas('movies', $this->movie->toArray())
+            ->assertDatabaseHas('media', $this->media->toArray())
+            ->assertDatabaseHas('fiches', $this->fiche->toArray());
     }
 
     /** @test */
@@ -89,32 +65,27 @@ class MovieDetailsFormTest extends TestCase
     // /** @test */
     public function an_editor_can_edit_a_fiche()
     {
-        list(
-            $fiche,
-            $movie,
-            $media,
-            $user
-        ) = $this->init('applicant');
+        $this->init('editor');
 
         // Save the prepared entities from edit
-        $movie->save();
-        $media->grantable_id = $movie->id;
-        $media->grantable()->save($movie);
-        $media->save();
+        $this->movie->save();
+        $this->media->grantable_id = $this->movie->id;
+        $this->media->grantable()->save($this->movie);
+        $this->media->save();
         $dossier = Dossier::factory()->create();
-        $fiche->fill([
-            'media_id' => $media->id,
+        $this->fiche->fill([
+            'media_id' => $this->media->id,
             'dossier_id' => $dossier->id,
         ])->save();
 
         // Edited fields
         $newTitle = 'Some new title';
-        $newStatus = Status::where('id', '!=', $fiche->status_id)
+        $newStatus = Status::where('id', '!=', $this->fiche->status_id)
             ->get()->random()->id;
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
-        Livewire::test(MovieDetailForm::class, ['fiche' => $fiche])
+        Livewire::test(MovieDetailForm::class, ['fiche' => $this->fiche])
             // test if the form is not new if a model is provided
             ->assertSet('isNew', false)
             ->set('movie.original_title', $newTitle)
@@ -122,79 +93,38 @@ class MovieDetailsFormTest extends TestCase
             ->call('submit');
 
         $this->assertDatabaseHas('fiches', [
-            'id' => $fiche->id,
-            'media_id' => $fiche->media->id,
+            'id' => $this->fiche->id,
+            'media_id' => $this->fiche->media->id,
             'dossier_id' => $dossier->id,
             'status_id' => $newStatus
         ])->assertDatabaseHas('movies', [
-            'id' => $movie->id,
+            'id' => $this->movie->id,
             'original_title' => $newTitle
         ])->assertDatabaseHas('media', [
-            'id' => $media->id,
+            'id' => $this->media->id,
             'title' => $newTitle,
-            'grantable_id' => $movie->id,
+            'grantable_id' => $this->movie->id,
             'grantable_type' => 'App\Movie',
         ]);
     }
 
     /** @test */
-    public function an_applicant_can_add_cast_and_crew()
+    public function adding_cast_and_crew_displays_them_in_table()
     {
-        list(
-            $fiche,
-            $movie,
-            $media,
-            $user
-        ) = $this->init('applicant');
+        $this->init('applicant');
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
         // Cast and crew init
         Title::factory(100)->create();
 
-        Livewire::test(MovieDetailForm::class)
-            ->set('movie.original_title', $movie->original_title)
-            ->set('fiche.status_id', $fiche->status_id)
-            ->set('movie.film_country_of_origin', $movie->film_country_of_origin)
-            ->set('movie.year_of_copyright', $movie->year_of_copyright)
-            ->set('movie.film_type', $movie->film_type)
-            ->set('movie.imdb_url', $movie->imdb_url)
-            ->set('movie.film_length', $movie->film_length)
-            ->set('movie.film_format', $movie->film_format)
-            ->set('movie.isan', $movie->isan)
-            ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
-            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
-            ->set('movie.total_budget_currency_amount', $movie->total_budget_currency_amount)
-            ->set('movie.total_budget_currency_code', $movie->total_budget_currency_code)
-            ->set('movie.total_budget_currency_rate', $movie->total_budget_currency_rate)
-            ->set('movie.total_budget_euro', $movie->total_budget_euro)
-            ->set('media.audience_id', $media->audience_id)
-            ->set('media.genre_id', $media->genre_id)
-            ->set('media.delivery_platform_id', $media->delivery_platform_id);
+        $this->fillMovieForm();
 
-        $crews = Crew::factory(5)->make();
+        $crews = Crew::factory(3)->make();
 
         foreach ($crews as $crew) {
-            Livewire::test(TableEditMovieCrews::class)
-                ->set('editing.key', $this->faker->text(10))
-                ->set('editing.title_id', $crew->title_id)
-                ->set('editing.person.firstname', $crew->person->firstname)
-                ->set('editing.person.lastname', $crew->person->lastname)
-                ->set('editing.person.gender', $crew->person->gender)
-                ->set('editing.person.nationality1', $crew->person->nationality1)
-                ->set('editing.person.nationality2', $crew->person->nationality2)
-                ->set('editing.person.country_of_residence', $crew->person->country_of_residence)
-                ->set('editing.points', 0)
-                ->call('saveItem')
-                ->assertSeeInOrder([
-                    $crew->title->name,
-                    $crew->person->firstname . ' ' . $crew->person->lastname,
-                    $crew->person->gender,
-                    // $crew->person->nationality1,
-                    // $crew->person->nationality2,
-                    // $crew->person->country_of_residence,
-                ]);
+            $this->addCrew($crew)
+                ->assertSee($crew->person->firstname . ' ' . $crew->person->lastname);
         }
 
     }
@@ -202,35 +132,11 @@ class MovieDetailsFormTest extends TestCase
     /** @test */
     public function an_applicant_can_add_producers()
     {
-        list(
-            $fiche,
-            $movie,
-            $media,
-            $user
-        ) = $this->init('applicant');
+        $this->init('applicant');
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
-        Livewire::test(MovieDetailForm::class)
-            ->set('movie.original_title', $movie->original_title)
-            ->set('fiche.status_id', $fiche->status_id)
-            ->set('movie.film_country_of_origin', $movie->film_country_of_origin)
-            ->set('movie.year_of_copyright', $movie->year_of_copyright)
-            ->set('movie.film_type', $movie->film_type)
-            ->set('movie.imdb_url', $movie->imdb_url)
-            ->set('movie.film_length', $movie->film_length)
-            ->set('movie.film_format', $movie->film_format)
-            ->set('movie.isan', $movie->isan)
-            ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
-            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
-            ->set('movie.total_budget_currency_amount', $movie->total_budget_currency_amount)
-            ->set('movie.total_budget_currency_code', $movie->total_budget_currency_code)
-            ->set('movie.total_budget_currency_rate', $movie->total_budget_currency_rate)
-            ->set('movie.total_budget_euro', $movie->total_budget_euro)
-            ->set('media.audience_id', $media->audience_id)
-            ->set('media.genre_id', $media->genre_id)
-            ->set('media.delivery_platform_id', $media->delivery_platform_id);
+        $this->fillMovieForm();
 
         $producers = Producer::factory(5)->make();
 
@@ -256,31 +162,11 @@ class MovieDetailsFormTest extends TestCase
     /** @test */
     public function an_applicant_can_add_sales_agents()
     {
-        list(
-            $fiche,
-            $movie,
-            $media,
-            $user
-        ) = $this->init('applicant');
+        $this->init('applicant');
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
-        Livewire::test(MovieDetailForm::class)
-            ->set('movie.original_title', $movie->original_title)
-            ->set('fiche.status_id', $fiche->status_id)
-            ->set('movie.film_country_of_origin', $movie->film_country_of_origin)
-            ->set('movie.year_of_copyright', $movie->year_of_copyright)
-            ->set('movie.film_type', $movie->film_type)
-            ->set('movie.imdb_url', $movie->imdb_url)
-            ->set('movie.film_length', $movie->film_length)
-            ->set('movie.film_format', $movie->film_format)
-            ->set('movie.isan', $movie->isan)
-            ->set('movie.synopsis', $movie->synopsis)
-            ->set('movie.photography_start', $movie->photography_start->format('d.m.Y'))
-            ->set('movie.photography_end', $movie->photography_end->format('d.m.Y'))
-            ->set('media.audience_id', $media->audience_id)
-            ->set('media.genre_id', $media->genre_id)
-            ->set('media.delivery_platform_id', $media->delivery_platform_id);
+        $this->fillMovieForm();
 
         $agents = SalesAgent::factory(5)->make();
 
@@ -303,7 +189,7 @@ class MovieDetailsFormTest extends TestCase
         }
     }
 
-    protected function init(string $role): array
+    protected function init(string $role): void
     {
         Role::create(['name' => 'applicant']);
         Role::create(['name' => 'editor']);
@@ -313,28 +199,65 @@ class MovieDetailsFormTest extends TestCase
         Status::factory(10)->create();
         Media::factory()->create();
 
-        $user = User::factory()->create(
+        $this->user = User::factory()->create(
             ['eu_login_username' => "mediadb-{$role}"]
         )->assignRole($role);
 
-        $movie = Movie::factory()->make([
+        $this->movie = Movie::factory()->make([
             'eidr' => null,
             'shooting_start' => null,
             'shooting_end' => null,
             'european_nationality_flag' => null,
         ]);
-        $media = Media::make([
+        $this->media = Media::make([
             'grantable_type' => 'App\Movie',
-            'title' => $movie->original_title,
+            'title' => $this->movie->original_title,
             'audience_id' => Audience::all()->random()->id,
             'genre_id' => Genre::all()->random()->id,
             'delivery_platform_id' => 1
         ]);
-        $fiche = Fiche::make([
-            'created_by' => $user->id,
+        $this->fiche = Fiche::make([
+            'created_by' => $this->user->id,
             'status_id' => Status::all()->random()->id,
         ]);
+    }
 
-        return [$fiche, $movie, $media, $user];
+    protected function fillMovieForm()
+    {
+        return Livewire::test(MovieDetailForm::class)
+            ->set('movie.original_title', $this->movie->original_title)
+            ->set('fiche.status_id', $this->fiche->status_id)
+            ->set('movie.film_country_of_origin', $this->movie->film_country_of_origin)
+            ->set('movie.year_of_copyright', $this->movie->year_of_copyright)
+            ->set('movie.film_type', $this->movie->film_type)
+            ->set('movie.imdb_url', $this->movie->imdb_url)
+            ->set('movie.film_length', $this->movie->film_length)
+            ->set('movie.film_format', $this->movie->film_format)
+            ->set('movie.isan', $this->movie->isan)
+            ->set('movie.synopsis', $this->movie->synopsis)
+            ->set('movie.photography_start', $this->movie->photography_start->toDateString())
+            ->set('movie.photography_end', $this->movie->photography_end)
+            ->set('media.audience_id', $this->media->audience_id)
+            ->set('media.genre_id', $this->media->genre_id)
+            ->set('media.delivery_platform_id', $this->media->delivery_platform_id)
+            ->set('movie.total_budget_currency_amount', $this->movie->total_budget_currency_amount)
+            ->set('movie.total_budget_currency_code', $this->movie->total_budget_currency_code)
+            ->set('movie.total_budget_currency_rate', $this->movie->total_budget_currency_rate)
+            ->set('movie.total_budget_euro', $this->movie->total_budget_euro);
+    }
+
+    protected function addCrew($crew)
+    {
+        return Livewire::test(TableEditMovieCrews::class)
+            ->set('editing.key', $this->faker->text(10))
+            ->set('editing.title_id', $crew->title_id)
+            ->set('editing.person.firstname', $crew->person->firstname)
+            ->set('editing.person.lastname', $crew->person->lastname)
+            ->set('editing.person.gender', $crew->person->gender)
+            ->set('editing.person.nationality1', $crew->person->nationality1)
+            ->set('editing.person.nationality2', $crew->person->nationality2)
+            ->set('editing.person.country_of_residence', $crew->person->country_of_residence)
+            ->set('editing.points', 0)
+            ->call('saveItem');
     }
 }
