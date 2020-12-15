@@ -46,6 +46,7 @@ class MovieDetailsFormComposer
         $statuses = Status::all()->toArray();
         $years = range(date('Y'), 1940);
         $currencies = [
+            'EUR' => 'Euro',
             'USD' => 'US dollar',
             'JPY' => 'Japanese yen',
             'GBP' => 'Pound sterling',
