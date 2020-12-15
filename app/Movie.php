@@ -32,6 +32,11 @@ class Movie extends Model implements Grantable
         // 'european_nationality_flag' => 'New',
     ];
 
+    protected $dates = [
+        'photography_start',
+        'photography_end',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
