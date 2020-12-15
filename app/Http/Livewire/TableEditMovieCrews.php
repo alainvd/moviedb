@@ -87,12 +87,7 @@ class TableEditMovieCrews extends TableEditBase
             $this->load();
         }
         $this->backoffice = $backoffice;
-        array_map(
-            function ($a) {
-                $this->points_total += $a['points'];
-            },
-            $this->items
-        );
+        $this->recalculatePoints();
     }
 
     public function render()
