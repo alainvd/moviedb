@@ -13,11 +13,12 @@ class CreateVideogamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('videogames', function (Blueprint $table) {
+        Schema::create('video_games', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 400);
-            $table->string('vgdb', 400);
+            $table->string('original_title', 400)->nullable();
+            $table->string('logline', 4000)->nullable();
             $table->timestamps();
+            
         });
     }
 
@@ -28,6 +29,6 @@ class CreateVideogamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('videogames');
+        Schema::dropIfExists('video_games');
     }
 }
