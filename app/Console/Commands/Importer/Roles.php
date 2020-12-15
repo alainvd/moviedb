@@ -2,23 +2,26 @@
 
 namespace App\Console\Commands\Importer;
 
+use App\Imports\MoviesImport;
+use App\Imports\RolesImport;
 use Illuminate\Console\Command;
+use Maatwebsite\Excel\Facades\Excel;
 
-class All extends Command
+class Roles extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:all';
+    protected $signature = 'import:roles';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import all';
+    protected $description = 'Import Roles';
 
     /**
      * Create a new command instance.
@@ -37,9 +40,6 @@ class All extends Command
      */
     public function handle()
     {
-        $this->call('import:movies');
-        $this->call('import:genres');
-        $this->call('import:audiences');
-        $this->call('import:roles');
+        Excel::import(new RolesImport, 'Dist_Film_Roles.xlsx','excel');
     }
 }

@@ -39,7 +39,11 @@ class TitleSeeder extends Seeder
     public function run()
     {
         foreach ($this->titles as $title) {
-            Title::create(['name' => $title]);
+            Title::create([
+                'name' => $title,
+                'code' => $title,
+
+            ]);
         }
     }
 }
