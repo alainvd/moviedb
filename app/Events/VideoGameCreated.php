@@ -34,10 +34,10 @@ class VideoGameCreated
         Media::create([
                 "title" => $videoGame->original_title,
                 "grantable_id" => $videoGame->id,
-                "grantable_type" => "App\VideoGame",
+                "grantable_type" => "App\Videogame",
                 "delivery_platform_id" => 0,
-                
-                
+
+
 
             ]
         );
