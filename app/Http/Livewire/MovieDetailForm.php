@@ -73,6 +73,7 @@ class MovieDetailForm extends Component
         'movie.total_budget_currency_code' => 'required|string',
         'movie.total_budget_currency_rate' => 'required|numeric',
         'movie.total_budget_euro' => 'required|integer',
+        'fiche.comments' => 'required',
     ];
 
     public function mount()
@@ -93,7 +94,7 @@ class MovieDetailForm extends Component
         }
 
         // @TODO use role here after fixing hydration issue for masquerade user
-        if (Auth::user() === 'mediadb-applicant') {
+        if (Auth::user()->eu_login_username === 'mediadb-applicant') {
             $this->isApplicant = true;
         }
 
@@ -103,8 +104,6 @@ class MovieDetailForm extends Component
 
     public function addShootingLanguage($lang)
     {
-       $this->validate();
-
         // @todo build listener names using select name
         $this->shootingLanguages->push($lang[1]);
     }
@@ -114,6 +113,18 @@ class MovieDetailForm extends Component
         $this->shootingLanguages = $this->shootingLanguages->reject(
             fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
         );
+    }
+
+    public function callValidate()
+    {
+        $this->validate();
+    }
+
+    public function reject()
+    {
+        $this->fiche = new Fiche;
+        $this->media = new Media;
+        $this->movie = new Movie;
     }
 
     public function submit()
@@ -150,7 +161,7 @@ class MovieDetailForm extends Component
             $this->fiche->fill([
                 'media_id' => $this->media->id,
                 'dossier_id' => $dossier->id,
-                'created_by' => Auth::user()->id,
+                'created_by' => 1,
             ])->save();
 
             $this->emit('notify-saved');

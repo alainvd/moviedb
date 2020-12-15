@@ -66,6 +66,19 @@
                 @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
             </div>
 
+            <div class="my-8">
+                <x-form.textarea
+                    :id="'comments'"
+                    :label="'EACEA Comments'"
+                    :hasError="$errors->has('fiche.comments')"
+                    wire:model="fiche.comments">
+                </x-form.textarea>
+
+                @error('fiche.comments')
+                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+
             <!-- buttons -->
             <div class="flex mt-12 justify-end items-center space-x-3">
                 <span>
@@ -88,9 +101,9 @@
                 </span>
 
                 <div x-data class="flex justify-end items-center space-x-3">
+                    <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
                     <x-button.primary type="submit">Save</x-button.primary>
-
-                    <!-- <x-button.secondary @click="location.reload();">Discard</x-button.secondary> -->
+                    <x-button.secondary wire:click="reject()">Reject</x-button.secondary>
                 </div>
             </div>
         </div>
