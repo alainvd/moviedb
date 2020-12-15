@@ -11,9 +11,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class StaffImport implements ToCollection, WithHeadingRow
+class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
 {
 
     /**
@@ -106,5 +107,10 @@ class StaffImport implements ToCollection, WithHeadingRow
         ]);
         $person->save();
         return $person;
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }
