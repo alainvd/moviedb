@@ -1,4 +1,4 @@
-<x-layout>
+<x-landing-layout>
 
     <ul>
         @foreach($medium as $media)
@@ -8,4 +8,4 @@
         @endforeach
     </ul>
 
-</x-layout>
+</x-landing-layout>

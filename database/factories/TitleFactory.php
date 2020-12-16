@@ -23,7 +23,8 @@ class TitleFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->jobTitle,
+            'name' => $this->faker->name,
+            'code' => $this->faker->name,
         ];
     }
 }

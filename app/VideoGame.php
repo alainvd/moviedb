@@ -2,6 +2,8 @@
 
 namespace App;
 
+
+use App\Events\VideoGameCreated;
 use App\Interfaces\Grantable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,14 +12,17 @@ class VideoGame extends Model implements Grantable
 {
     use HasFactory;
 
+     //Event to create a media when we create a video game
+     protected $dispatchesEvents = [
+        'created' => VideoGameCreated::class,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'vgdb',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -28,7 +33,7 @@ class VideoGame extends Model implements Grantable
         'id' => 'integer',
     ];
 
-    protected $table = "videogames";
+    //protected $table = "videogames";
 
 
     public function media()

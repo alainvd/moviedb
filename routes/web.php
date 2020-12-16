@@ -1,8 +1,10 @@
 <?php
 
+use App\Call;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDetailsController;
 use App\Http\Livewire\MovieDetailForm;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,19 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/alpine', function () {
-    return view('alpine');
-});
-
-Route::get('/livewire', function () {
-    return view('livewire');
-});
-
-Route::get('/tailwind', function () {
-    return view('tailwind');
-});
+})->name('welcome');
 
 Route::get('movies', [MovieController::class,'index'])->name('movies');
 Route::get('/movie/detail/eacea/{movie}', [MovieDetailsController::class, 'showForBackoffice'])->name('movie_detail_eacea');
@@ -58,7 +48,10 @@ Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->mid
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 
 Route::get('homepage', function () {
-    return view('homepage');
+    $calls = Call::where('status', 'open')
+        ->whereIn('action', ['DEVSLATE'])
+        ->get();
+    return view('homepage', compact('calls'));
 })->name('homepage');
 
 $dossiers = [
@@ -87,14 +80,14 @@ $dossiers = [
         'closed' => true,
     ],
 ];
-Route::get('dossiers_test', function () use ($dossiers) {
+Route::get('dossiers', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers_test');
+})->name('dossiers');
 
 
 Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
 
-Route::view('/projects', 'coming-soon');
+Route::resource('/projects', ProjectController::class)->middleware('cas.auth');
 Route::view('/reports', 'coming-soon');
 
 
@@ -127,6 +120,7 @@ Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
 
 Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
+Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
 
 
 
