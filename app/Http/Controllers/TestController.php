@@ -21,7 +21,7 @@ class TestController extends Controller
 
     public function movies()
     {
-        $medium = Media::where('grantable_type','App\Movie')->paginate(18);
+        $medium = Media::where('grantable_type','App\Movie')->simplePaginate(30);
 
 
         return view('test.browse.movies', compact('medium'));
