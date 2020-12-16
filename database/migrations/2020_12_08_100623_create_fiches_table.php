@@ -20,6 +20,7 @@ class CreateFichesTable extends Migration
             $table->unsignedSmallInteger('status_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->text('comments')->nullable();
             $table->timestamps();
 
             $table->foreign('media_id')->references('id')->on('media');

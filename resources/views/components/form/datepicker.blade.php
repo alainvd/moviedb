@@ -1,19 +1,23 @@
 <label for="{{ $id }}" class="block text-sm font-light leading-5 text-gray-800">
     {{ $label }}
 </label>
-<div class="relative">
+<div
+    x-data=""
+    x-init="new Pikaday({
+        field: $refs.input,
+        theme: 'moviedb-theme',
+        format: 'DD.MM.YYYY',
+        firstDay: 1
+    })"
+    @change="$dispatch('input', $event.target.value)"
+    class="relative"
+>
     <input
-        id="{{ $id }}"
-        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-        placeholder="dd/mm/yyyy"
-        x-data
+        {{ $attributes }}
         x-ref="input"
-        x-init="new Pikaday({
-            field: $refs.input,
-            theme: 'moviedb-theme',
-            format: 'DD/MM/YYYY',
-        })"
-        {{ $attributes }}>
+        placeholder="DD.MM.YYYY"
+        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+    />
 
     <div class="absolute top-0 right-0 px-3 py-2">
         <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

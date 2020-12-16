@@ -17,7 +17,19 @@ class MovieSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()->count(50)->create();
+        Movie::factory()
+            ->has(Language::factory()->count(2))
+            ->count(50)->create();
+
+        Movie::all()->each(function ($movie) {
+            Media::factory()->create([
+               'title' => $movie->original_title,
+               'grantable_id' => $movie->id,
+               'grantable_type' => "App\Movie",
+               'audience_id' => Audience::where('type', 'App\Movie')->get()->random()->id,
+               'genre_id' => Genre::where('type', 'App\Movie')->get()->random()->id,
+            ]);
+        });
 
     }
 }

@@ -46,5 +46,9 @@
                 wire:model="movie.synopsis">
             </textarea>
         </div>
+
+        @error('movie.synopsis')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 </div>

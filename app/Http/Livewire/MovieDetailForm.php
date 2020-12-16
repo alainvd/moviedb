@@ -16,8 +16,7 @@ use App\Person;
 use App\Producer;
 use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
+
 
 class MovieDetailForm extends Component
 {
@@ -36,6 +35,8 @@ class MovieDetailForm extends Component
     // Allow special editing
     public $backoffice = false;
 
+    public $shootingLanguages;
+
     public $crews = [];
     public $producers = [];
     public $sales_agents = [];
@@ -44,6 +45,8 @@ class MovieDetailForm extends Component
         'update-movie-crews' => 'updateMovieCrews',
         'update-movie-producers' => 'updateMovieProducers',
         'update-movie-sales-agents' => 'updateMovieSalesAgents',
+        'addItem' => 'addShootingLanguage',
+        'removeItem' => 'removeShootingLanguage'
     ];
 
     /**
@@ -52,26 +55,31 @@ class MovieDetailForm extends Component
     protected $rules = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'required|string|max:255',
+        'movie.film_country_of_origin' => 'required|string',
+        'movie.country_of_origin_points' => 'required|numeric',
         'movie.year_of_copyright' => 'required|integer',
-        'movie.film_type' => 'required|string|max:255',
+        'media.genre_id' => 'required|integer',
+        'media.delivery_platform_id' => 'required|integer',
+        'media.audience_id' => 'required|integer',
+        'movie.film_type' => 'required|string|min:1|max:255',
         'movie.imdb_url' => 'required|string|max:255',
-        // 'movie.shooting_start' => 'required|date',
-        // 'movie.shooting_end' => 'required|date',
+        'movie.photography_start' => 'required|date:d.m.Y',
+        'movie.photography_end' => 'required|date:d.m.Y',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
         'movie.isan' => 'required|string',
         'movie.synopsis' => 'required|string',
-        'movie.photography_start' => 'required|date',
-        'movie.photography_end' => 'date',
-
-        'media.audience_id' => 'required|integer',
-        'media.genre_id' => 'required|integer',
-        'media.delivery_platform_id' => 'required|integer',
+        'movie.total_budget_currency_amount' => 'required|integer',
+        'movie.total_budget_currency_code' => 'required|string',
+        'movie.total_budget_currency_rate' => 'required|numeric',
+        'movie.total_budget_euro' => 'required|integer',
+        'fiche.comments' => 'required',
     ];
 
     public function mount()
     {
+        $this->shootingLanguages = collect([]);
+
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
@@ -86,11 +94,37 @@ class MovieDetailForm extends Component
         }
 
         // @TODO use role here after fixing hydration issue for masquerade user
-        if (Auth::user() === 'mediadb-applicant') {
+        if (Auth::user()->eu_login_username === 'mediadb-applicant') {
             $this->isApplicant = true;
         }
 
         // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
+        $this->backoffice = true;
+    }
+
+    public function addShootingLanguage($lang)
+    {
+        // @todo build listener names using select name
+        $this->shootingLanguages->push($lang[1]);
+    }
+
+    public function removeShootingLanguage($lang)
+    {
+        $this->shootingLanguages = $this->shootingLanguages->reject(
+            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+        );
+    }
+
+    public function callValidate()
+    {
+        $this->validate();
+    }
+
+    public function reject()
+    {
+        $this->fiche = new Fiche;
+        $this->media = new Media;
+        $this->movie = new Movie;
     }
 
     public function submit()
@@ -110,6 +144,11 @@ class MovieDetailForm extends Component
 
             // Save movie
             $this->movie->save();
+            $this->movie->languages()->attach(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
 
             // Save media
             $this->media->fill([
@@ -122,13 +161,21 @@ class MovieDetailForm extends Component
             $this->fiche->fill([
                 'media_id' => $this->media->id,
                 'dossier_id' => $dossier->id,
-                'created_by' => Auth::user()->id,
+                'created_by' => 1,
             ])->save();
+
+            $this->emit('notify-saved');
         } else { // When editing
             $this->movie->save();
+            $this->movie->languages()->attach(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
+            $this->emit('notify-saved');
         }
 
         // crew, producers, sales agents
@@ -208,6 +255,10 @@ class MovieDetailForm extends Component
 
     public function render()
     {
+        if($this->getErrorBag()->any()){
+            $this->emit('validation-errors');
+        }
+
         return view('livewire.movie-detail-form')
             ->layout('components.layout');
     }

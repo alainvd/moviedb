@@ -1,9 +1,9 @@
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
     <div class="col-span-1">
         <x-form.datepicker
-            :id="'start_photography'"
+            :id="'photography_start'"
             :label="'Start Date of Principal Photography'"
-            wire:model="movie.photography_start">
+            wire:model.lazy="movie.photography_start">
         </x-form.datepicker>
 
         @error('movie.photography_start')
@@ -23,8 +23,13 @@
         @enderror
     </div>
 
-    <div class="col-span-3 sm:col-span-2">
-
+    <div class="col-span-3 sm:col-span-1">
+        @livewire('select-component', [
+            'domId' => 'shooting-languages',
+            'label' => 'Shooting languages',
+            'name' => 'shootingLanguages',
+            'options' => json_encode($languages),
+        ])
     </div>
 
     <div class="col-span-1 col-start-1">

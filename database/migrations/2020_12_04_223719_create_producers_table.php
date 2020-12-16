@@ -21,7 +21,6 @@ class CreateProducersTable extends Migration
             $table->string('city');
             $table->integer('country_id');
             $table->integer('share');
-            $table->integer('budget');
             $table->timestamps();
         });
     }

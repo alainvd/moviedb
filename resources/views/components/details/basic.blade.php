@@ -26,20 +26,18 @@
         </x-form.select>
 
         @error('fiche.status_id')
-        <div class="mt-1 text-red-500 text-sm">
-            {{ $message }}
-        </div>
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-span-1">
         <x-form.select
-            :id="'nationality'"
-            :label="'Country of Origin (wired)'"
+            :id="'film_country_of_origin'"
+            :label="'Country of Origin'"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
-                <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
             @endforeach
 
         </x-form.select>
@@ -77,6 +75,10 @@
             @endforeach
 
         </x-form.select>
+
+        @error('media.genre_id')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-span-1">
@@ -90,7 +92,12 @@
             @endforeach
 
         </x-form.select>
+
+        @error('media.delivery_platform_id')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
+
     <div class="col-span-1">
         <x-form.select
             :id="'audience'"
@@ -104,6 +111,10 @@
             @endforeach
 
         </x-form.select>
+
+        @error('media.audience_id')
+            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-span-1">

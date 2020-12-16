@@ -7,6 +7,7 @@ use App\Genre;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Status;
+use App\Producer;
 use Illuminate\View\View;
 
 class MovieDetailsFormComposer
@@ -23,6 +24,10 @@ class MovieDetailsFormComposer
         $genres = Genre::where('type', 'App\Movie')->get()->toArray();
         $languages = Language::where('active', true)
             ->get()
+            ->map(fn ($lang) => [
+                'value' => $lang->id,
+                'label' => $lang->name,
+            ])
             ->toArray();
         $platforms = [
             'Features / Cinema',
@@ -40,6 +45,14 @@ class MovieDetailsFormComposer
         ];
         $statuses = Status::all()->toArray();
         $years = range(date('Y'), 1940);
+        $currencies = [
+            'EUR' => 'Euro',
+            'USD' => 'US dollar',
+            'JPY' => 'Japanese yen',
+            'GBP' => 'Pound sterling',
+            'CHF' => 'Swiss franc',
+            'SEK' => 'Swedish krona',
+        ];
 
         $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());
         $view->with('countries', $countries);
@@ -50,5 +63,6 @@ class MovieDetailsFormComposer
         $view->with('platforms', $platforms);
         $view->with('statuses', $statuses);
         $view->with('years', $years);
+        $view->with('currencies', $currencies);
     }
 }
