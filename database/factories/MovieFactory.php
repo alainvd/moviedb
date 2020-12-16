@@ -43,7 +43,7 @@ class MovieFactory extends Factory
             'country_of_origin_points' => $this->faker->randomFloat(2, 1, 2),
             'isan' => 'isan-' . $this->faker->unique()->numberBetween(10000, 99999),
             'eidr' => 'eidr-' . $this->faker->unique()->numberBetween(10000, 99999),
-            'production_costs_currency_date' => $this->tostring()->faker->date(),
+            'production_costs_currency_date' => $this->faker->date(),
             'production_costs_currency' => $this->faker->randomElement(['EUR', 'USD','GBP','SEK','RON','CZK','PLN','DKK','HUF','HRK','BGN']),
             'production_costs' => $this->faker->unique()->numberBetween(100000, 100000000),
             'production_costs_in_euro' => $this->faker->unique()->numberBetween(100000, 100000000),
