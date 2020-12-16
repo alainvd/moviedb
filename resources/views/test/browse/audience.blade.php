@@ -1,4 +1,4 @@
-<x-layout>
+<x-landing-layout>
     <div class="m-10">
 
 
@@ -34,4 +34,4 @@ Read the documentation to get started: https://tailwindui.com/documentation
     </div>
 
 
-</x-layout>
+</x-landing-layout>

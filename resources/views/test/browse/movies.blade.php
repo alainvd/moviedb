@@ -1,4 +1,4 @@
-<x-layout>
+<x-landing-layout>
     <div class="m-10">
 
         <!-- This example requires Tailwind CSS v2.0+ -->
@@ -57,7 +57,7 @@
 
 
 
-</x-layout>
+</x-landing-layout>
 
 
 
