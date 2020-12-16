@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Audience;
 use App\Genre;
 use App\Media;
+use App\Models\Language;
 use App\Movie;
 use Illuminate\Database\Seeder;
 
