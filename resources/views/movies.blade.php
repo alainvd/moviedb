@@ -87,6 +87,9 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-4">
+                {{$movies->links()}}
+            </div>
 
         </div>
     </div>
