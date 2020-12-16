@@ -11,7 +11,7 @@
                 <a class="no-underline hover:underline focus:underline" href="#">
                     EACEA
                 </a> &gt;
-                <a class="no-underline hover:underline focus:underline" href="#">
+                <a class="no-underline hover:underline focus:underline" href="{{route('welcome')}}">
                     MediaDB
                 </a>
             </div>

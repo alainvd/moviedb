@@ -21,7 +21,9 @@
 
 @include('partials.landing.footer')
 
+<script src="{{ asset('js/app.js') }}" defer></script>
 @livewireScripts
+@yield('scripts')
 </body>
 
 </html>
