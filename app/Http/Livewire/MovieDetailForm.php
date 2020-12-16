@@ -35,7 +35,8 @@ class MovieDetailForm extends Component
     // Allow special editing
     public $backoffice = false;
 
-    public $shootingLanguages;
+    // public $shootingLanguages;
+    public $shootingLanguage = '';
 
     public $crews = [];
     public $producers = [];
@@ -53,6 +54,7 @@ class MovieDetailForm extends Component
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
+        'shootingLanguage' => 'required|integer',
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'required|string',
@@ -73,12 +75,12 @@ class MovieDetailForm extends Component
         'movie.total_budget_currency_code' => 'required|string',
         'movie.total_budget_currency_rate' => 'required|numeric',
         'movie.total_budget_euro' => 'required|integer',
-        'fiche.comments' => 'required',
+        'fiche.comments' => 'required|string',
     ];
 
     public function mount()
     {
-        $this->shootingLanguages = collect([]);
+        // $this->shootingLanguages = collect([]);
 
         if (! $this->fiche) {
             $this->isNew = true;
@@ -88,6 +90,11 @@ class MovieDetailForm extends Component
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
+            // Fill selected languages
+            // $this->shootingLanguages = $this->movie->languages->map(
+            //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
+            // );
+
             $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
@@ -102,18 +109,18 @@ class MovieDetailForm extends Component
         $this->backoffice = true;
     }
 
-    public function addShootingLanguage($lang)
-    {
-        // @todo build listener names using select name
-        $this->shootingLanguages->push($lang[1]);
-    }
+    // public function addShootingLanguage($lang)
+    // {
+    //     // @todo build listener names using select name
+    //     $this->shootingLanguages->push($lang[1]);
+    // }
 
-    public function removeShootingLanguage($lang)
-    {
-        $this->shootingLanguages = $this->shootingLanguages->reject(
-            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-        );
-    }
+    // public function removeShootingLanguage($lang)
+    // {
+    //     $this->shootingLanguages = $this->shootingLanguages->reject(
+    //         fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+    //     );
+    // }
 
     public function callValidate()
     {
@@ -145,9 +152,7 @@ class MovieDetailForm extends Component
             // Save movie
             $this->movie->save();
             $this->movie->languages()->attach(
-                $this->shootingLanguages->map(
-                    fn ($lang) => $lang['value']
-                )
+                $this->shootingLanguage
             );
 
             // Save media
@@ -168,9 +173,10 @@ class MovieDetailForm extends Component
         } else { // When editing
             $this->movie->save();
             $this->movie->languages()->attach(
-                $this->shootingLanguages->map(
-                    fn ($lang) => $lang['value']
-                )
+                // $this->shootingLanguages->map(
+                //     fn ($lang) => $lang['value']
+                // )
+                $this->shootingLanguage
             );
             $this->media->title = $this->movie->original_title;
             $this->media->save();

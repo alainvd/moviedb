@@ -3,6 +3,7 @@
         <x-form.input
             :id="'imdb'"
             :label="'IMDB URL'"
+            :hasError="$errors->has('movie.imdb_url')"
             wire:model="movie.imdb_url">
 
             &nbsp;&nbsp;
@@ -22,6 +23,7 @@
         <x-form.input
             :id="'ID'"
             :label="'ID'"
+            :hasError="$errors->has('movie.isan')"
             wire:model="movie.isan">
         </x-form.input>
 
@@ -38,14 +40,12 @@
     </div>
 
     <div class="col-span-3 lg:col-span-2">
-        <label for="synopsis"
-            class="block text-sm font-medium leading-5 text-gray-800">Synopsis</label>
-        <div class="rounded-md shadow-sm">
-            <textarea id="about" rows="6"
-                class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                wire:model="movie.synopsis">
-            </textarea>
-        </div>
+        <x-form.textarea
+            :id="'synopsis'"
+            :label="'Synopsis'"
+            :hasError="$errors->has('movie.synopsis')"
+            wire:model="movie.synopsis">
+        </x-form.textarea>
 
         @error('movie.synopsis')
             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>

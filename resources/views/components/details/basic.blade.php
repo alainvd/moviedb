@@ -3,6 +3,7 @@
         <x-form.input
             :id="'original_title'"
             :label="'Original Title'"
+            :hasError="$errors->has('movie.original_title')"
             wire:model="movie.original_title">
 
         </x-form.input>
@@ -17,6 +18,7 @@
             :id="'status'"
             :label="'Status'"
             :disabled="$isApplicant"
+            :hasError="$errors->has('fiche.status_id')"
             wire:model="fiche.status_id">
 
             @foreach ($statuses as $status)
@@ -34,6 +36,7 @@
         <x-form.select
             :id="'film_country_of_origin'"
             :label="'Country of Origin'"
+            :hasError="$errors->has('movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
@@ -51,6 +54,7 @@
         <x-form.select
             :id="'copyright'"
             :label="'Copyright'"
+            :hasError="$errors->has('movie.year_of_copyright')"
             wire:model="movie.year_of_copyright">
 
             @foreach($years as $year)
@@ -68,6 +72,7 @@
         <x-form.select
             :id="'film_genre'"
             :label="'Film Genre'"
+            :hasError="$errors->has('media.genre_id')"
             wire:model="media.genre_id">
 
             @foreach($genres as $genre)
@@ -85,6 +90,7 @@
         <x-form.select
             :id="'delivery_platform'"
             :label="'Film Delivery Platform'"
+            :hasError="$errors->has('media.delivery_platform_id')"
             wire:model="media.delivery_platform_id">
 
             @foreach($platforms as $key => $platform)
@@ -102,6 +108,7 @@
         <x-form.select
             :id="'audience'"
             :label="'Audience'"
+            :hasError="$errors->has('media.audience_id')"
             wire:model="media.audience_id">
 
             @foreach ($audiences as $audience)
@@ -121,6 +128,7 @@
         <x-form.select
             :id="'film_type'"
             :label="'Film Type'"
+            :hasError="$errors->has('movie.film_type')"
             wire:model="movie.film_type">
 
             @foreach ($filmTypes as $type)
