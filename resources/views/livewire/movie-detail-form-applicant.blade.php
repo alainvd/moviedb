@@ -19,11 +19,6 @@
         </div>
 
         <!-- cast/crew -->
-        <div class="my-8" id="part-castcrew">
-            {{-- @livewire('person-table', ['movie_id' => $movie->id, 'backoffice' => $this->backoffice]) --}}
-        </div>
-
-        <!-- cast/crew -->
         <div class="my-8" id="part-castcrew-again">
             @livewire('table-edit-movie-crews', ['movie_id' => $movie->id])
         </div>

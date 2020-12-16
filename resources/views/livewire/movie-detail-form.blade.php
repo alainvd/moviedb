@@ -31,7 +31,14 @@
 
             <!-- cast/crew -->
             <div class="my-8" id="table-crews">
-                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id])
+                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
+            </div>
+
+            <!-- points -->
+            <div class="my-8">
+                <x-details.points
+                    :movie="$movie"
+                    :countries="$countries"></x-details.summary>
             </div>
 
             <!-- photography -->
@@ -47,9 +54,29 @@
                 @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
             </div>
 
+            <!-- Total budget -->
+            <div class="my-8">
+                <x-details.budget
+                    :currencies="$currencies"
+                    ></x-details.budget>
+            </div>
+
             <!-- agents -->
             <div class="my-8" id="table-agents">
                 @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
+            </div>
+
+            <div class="my-8">
+                <x-form.textarea
+                    :id="'comments'"
+                    :label="'EACEA Comments'"
+                    :hasError="$errors->has('fiche.comments')"
+                    wire:model="fiche.comments">
+                </x-form.textarea>
+
+                @error('fiche.comments')
+                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- buttons -->
@@ -63,12 +90,20 @@
                         " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-gray-600">
                         Saved!
                     </span>
+                    <span x-data="{ open: false }" x-init="
+                            @this.on('validation-errors', () => {
+                                setTimeout(() => { open = false }, 2500);
+                                open = true;
+                            })
+                        " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-red-600">
+                        Validation errors!
+                    </span>
                 </span>
 
                 <div x-data class="flex justify-end items-center space-x-3">
+                    <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
                     <x-button.primary type="submit">Save</x-button.primary>
-
-                    <!-- <x-button.secondary @click="location.reload();">Discard</x-button.secondary> -->
+                    <x-button.secondary wire:click="reject()">Reject</x-button.secondary>
                 </div>
             </div>
         </div>

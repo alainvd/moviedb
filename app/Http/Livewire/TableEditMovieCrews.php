@@ -20,6 +20,7 @@ class TableEditMovieCrews extends TableEditBase
     public $genders = [];
 
     public $countries = [];
+    public $countries_by_key = [];
 
     public $points_total = 0;
 
@@ -42,7 +43,7 @@ class TableEditMovieCrews extends TableEditBase
     protected function rules()
     {
         return [
-            'editing.points' => '',
+            'editing.points' => 'required|numeric',
             'editing.title_id' => 'required',
             'editing.person.firstname' => 'required|string|max:255',
             'editing.person.lastname' => 'required|string|max:255',
@@ -56,6 +57,7 @@ class TableEditMovieCrews extends TableEditBase
     protected function validationAttributes()
     {
         return [
+            'editing.points' => 'points',
             'editing.title_id' => 'title',
             'editing.person.firstname' => 'first name',
             'editing.person.lastname' => 'last name',
@@ -78,24 +80,14 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
         $this->genders = Person::GENDERS;
-        // $this->countries = ['' => ['code' => '', 'name' => '']] + Country::all()->keyBy('code')->toArray();
-        // $this->countries = Country::where('active', true)->orderBy('code')->get()->keyBy('code')->take(17)->toArray();
-        // This is fine:
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        // This is broken:
-        // $this->countries = Country::where('active', true)->get()->keyBy('code')->toArray();
-        // dd($this->countries);
+        $this->countries_by_key = Country::where('active', true)->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->load();
         }
         $this->backoffice = $backoffice;
-        array_map(
-            function ($a) {
-                $this->points_total += $a['points'];
-            },
-            $this->items
-        );
+        $this->recalculatePoints();
     }
 
     public function render()
@@ -108,33 +100,23 @@ class TableEditMovieCrews extends TableEditBase
         $this->emitUp('update-movie-crews', $this->items);
     }
 
-    public function pointsDec($key) {
-        $findPerson = $this->findItemByKey($key);
-        if ($findPerson) {
-            $this->items[array_key_first($findPerson)]['points']--;
-            $this->points_total--;
+    protected function recalculatePoints()
+    {
+        $this->points_total = 0;
+        foreach ($this->items as $item) {
+            $this->points_total += $item['points'];
         }
-
-        $this->sendItems();
     }
 
-    public function pointsInc($key) {
-        $findPerson = $this->findItemByKey($key);
-        if ($findPerson) {
-            $this->items[array_key_first($findPerson)]['points']++;
-            $this->points_total++;
-        }
-
-        $this->sendItems();
+    public function saveItem()
+    {
+        parent::saveItem();
+        $this->recalculatePoints();
     }
 
     public function deleteItem() {
-        $findPerson = $this->findItemByKey($this->deleteItemKey);
-        if ($findPerson) {
-            $personFound = $this->items[array_key_first($findPerson)];
-            $this->points_total -= $personFound['points'];
-        }
         parent::deleteItem();
+        $this->recalculatePoints();
     }
 
 }

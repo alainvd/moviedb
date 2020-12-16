@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,11 +35,11 @@ class SalesAgent extends Model
 
     public function country()
     {
-        return $this->belongsTo(\App\Country::class);
+        return $this->belongsTo(Country::class);
     }
 
     public function media()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(Media::class);
     }
 }

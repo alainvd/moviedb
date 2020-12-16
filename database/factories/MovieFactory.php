@@ -26,10 +26,10 @@ class MovieFactory extends Factory
     {
 
         if(Country::all()->count() > 0){
-            $country_name = Country::all()->random()->name;
+            $country_code = Country::all()->random()->code;
         } else {
             $country = Country::factory()->make();
-            $country_name = $country->name;
+            $country_code = $country->code;
         }
 
         return [
@@ -39,13 +39,18 @@ class MovieFactory extends Factory
             'shooting_end' => $this->faker->date(),
             'year_of_copyright' => $this->faker->numberBetween(2000, 2020),
             'european_nationality_flag' => $this->faker->randomElement(['OK', 'Not OK', 'Under processing', 'Missing information']),
-            'film_country_of_origin' => $country_name,
+            'film_country_of_origin' => $country_code,
+            'country_of_origin_points' => $this->faker->randomFloat(2, 1, 2),
             'isan' => 'isan-' . $this->faker->unique()->numberBetween(10000, 99999),
             'eidr' => 'eidr-' . $this->faker->unique()->numberBetween(10000, 99999),
             'film_type' => $this->faker->randomElement(['One-off', 'Series']),
             'film_length' => $this->faker->numberBetween(61, 134),
             'film_format' => $this->faker->randomElement(['35mm', 'Digital', 'Other']),
             'synopsis' => $this->faker->paragraph(12, true),
+            'total_budget_currency_amount' => $this->faker->numberBetween(1000, 1000000),
+            'total_budget_currency_code' => $this->faker->randomElement(['USD', 'CHF', 'SEK']),
+            'total_budget_currency_rate' => $this->faker->randomFloat(2, 1, 2),
+            'total_budget_euro' => $this->faker->numberBetween(1000, 1000000),
         ];
     }
 }

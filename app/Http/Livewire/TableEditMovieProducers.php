@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Movie;
 use App\Producer;
 use App\Models\Country;
+use Illuminate\Validation\Rule;
 
 class TableEditMovieProducers extends TableEditBase
 {
@@ -27,12 +28,14 @@ class TableEditMovieProducers extends TableEditBase
     {
         return [
             'editing.media_id' => '',
-            'editing.role' => 'required',
+            'editing.role' => [
+                'required',
+                Rule::in(array_keys($this->producer_roles))
+            ],
             'editing.name' => 'required|string|max:255',
             'editing.city' => 'required|string|max:255',
             'editing.country_id' => 'required',
-            'editing.share' => 'required|integer',
-            'editing.budget' => 'required|integer',
+            'editing.share' => 'required|integer|min:1|max:100',
         ] + parent::rules();
     }
 
@@ -45,7 +48,6 @@ class TableEditMovieProducers extends TableEditBase
             'editing.city' => 'city',
             'editing.country_id' => 'country',
             'editing.share' => 'share',
-            'editing.budget' => 'budget',
         ] + parent::validationAttributes();
     }
 

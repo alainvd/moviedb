@@ -44,42 +44,61 @@
             </x-slot>
 
             <x-slot name="content">
-                <div>
-                    <label for="name" class="block text-sm font-medium leading-5 text-gray-700">Name</label>
-                    <input wire:model="editing.name" id="name"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                <div class="space-y-2">
 
-                <div>
-                    <label for="country_id" class="block text-sm font-medium leading-5 text-gray-700">Country</label>
-                    <select wire:model="editing.country_id" id="country_id"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.country_id') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.input
+                            :id="'agents_name'"
+                            :label="'Name'"
+                            wire:model="editing.name">
+                        </x-form.input>
 
-                <div>
-                    <label for="contact_person" class="block text-sm font-medium leading-5 text-gray-700">Contact person</label>
-                    <input wire:model="editing.contact_person" id="contact_person"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.contact_person') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                        @error('editing.name')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Email</label>
-                    <input wire:model="editing.email" id="email"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.email') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.select
+                            :id="'agents_country_id'"
+                            :label="'Country'"
+                            wire:model="editing.country_id">
+                
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.country_id')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
 
+                    <div>
+                        <x-form.input
+                            :id="'agents_contact_person'"
+                            :label="'Contact person'"
+                            wire:model="editing.contact_person">
+                        </x-form.input>
+
+                        @error('editing.contact_person')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.input
+                            :id="'agents_email'"
+                            :label="'Email'"
+                            wire:model="editing.email">
+                        </x-form.input>
+
+                        @error('editing.email')
+                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                </div>
                 <div class="flex justify-end items-center space-x-3 mt-4">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
