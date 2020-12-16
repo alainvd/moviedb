@@ -23,7 +23,8 @@ class CallFactory extends Factory
      */
     public function definition()
     {
-        $actions = ["DEVSLATE",
+        $actions = [
+            "DEVSLATE",
             "DEVSPANI",
             "DEVSPDOC",
             "DEVSPFIC",
@@ -36,10 +37,25 @@ class CallFactory extends Factory
             "DISTSAR1",
             "DISTSAR2",
             "DISTSEL",
-            "TV"];
+            "TV"
+        ];
+
+        // Call name in the format: 'H2020-LC-GD-2020-3';
+        $name = sprintf(
+            '%s%d-%s-%s-%d-%d',
+            strtoupper($this->faker->randomLetter),
+            date('Y'),
+            strtoupper($this->faker->lexify('??')),
+            strtoupper($this->faker->lexify('??')),
+            date('Y'),
+            $this->faker->randomDigitNotNull()
+        );
+
         return [
-            'name' => $this->faker->company,
-            'action' => $this->faker->randomElement($actions),
+            // H2020-LC-GD-2020-3
+            'name' => $name,
+            // 'action' => $this->faker->randomElement($actions),
+            'action' => 'DEVSLATE',
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(["open","closed"]),

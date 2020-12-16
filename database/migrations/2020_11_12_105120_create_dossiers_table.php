@@ -20,6 +20,8 @@ class CreateDossiersTable extends Migration
             $table->unsignedSmallInteger('status_id');
             $table->integer('year');
             $table->integer('call_id');
+            $table->string('contact_person');
+            $table->string('company')->nullable();
             $table->timestamps();
         });
     }

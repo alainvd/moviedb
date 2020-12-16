@@ -1,8 +1,10 @@
 <?php
 
+use App\Call;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDetailsController;
 use App\Http\Livewire\MovieDetailForm;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +48,10 @@ Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->mid
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 
 Route::get('homepage', function () {
-    return view('homepage');
+    $calls = Call::where('status', 'open')
+        ->whereIn('action', ['DEVSLATE'])
+        ->get();
+    return view('homepage', compact('calls'));
 })->name('homepage');
 
 $dossiers = [
@@ -82,7 +87,7 @@ Route::get('dossiers', function () use ($dossiers) {
 
 Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
 
-Route::view('/projects', 'coming-soon');
+Route::resource('/projects', ProjectController::class)->middleware('cas.auth');
 Route::view('/reports', 'coming-soon');
 
 
