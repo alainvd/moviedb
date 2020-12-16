@@ -1,4 +1,4 @@
-<x-layout>
+<x-landing-layout>
     <div class="m-10">
 
 
@@ -31,4 +31,4 @@
     </div>
 
 
-</x-layout>
+</x-landing-layout>

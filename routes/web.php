@@ -20,18 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/alpine', function () {
-    return view('alpine');
-});
-
-Route::get('/livewire', function () {
-    return view('livewire');
-});
-
-Route::get('/tailwind', function () {
-    return view('tailwind');
-});
-
 Route::get('movies', [MovieController::class,'index'])->name('movies');
 Route::get('/movie/detail/eacea/{movie}', [MovieDetailsController::class, 'showForBackoffice'])->name('movie_detail_eacea');
 Route::get('/movie/eacea/create', [MovieDetailsController::class, 'createForBackoffice'])->name('movie_create_eacea');
@@ -87,9 +75,9 @@ $dossiers = [
         'closed' => true,
     ],
 ];
-Route::get('dossiers_test', function () use ($dossiers) {
+Route::get('dossiers', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers_test');
+})->name('dossiers');
 
 
 Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
