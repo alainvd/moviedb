@@ -25,6 +25,7 @@ class MovieDetailForm extends Component
     public $isApplicant = false;
 
     // Movie data for Livewire
+    public Dossier $dossier;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
     public ?Media $media = null;
@@ -144,15 +145,6 @@ class MovieDetailForm extends Component
 
         // When it's new
         if ($this->isNew) {
-            // Create dossier and assign
-            $dossier = Dossier::create([
-                'project_ref_id' => 'someref',
-                'action' => 'DIST',
-                'status_id' => $this->fiche->status_id,
-                'year' => date('Y'),
-                'call_id' => 1
-            ]);
-
             // Save movie
             $this->movie->save();
             $this->movie->languages()->attach(
@@ -169,7 +161,7 @@ class MovieDetailForm extends Component
             // Save fiche
             $this->fiche->fill([
                 'media_id' => $this->media->id,
-                'dossier_id' => $dossier->id,
+                'dossier_id' => $this->dossier->id,
                 'created_by' => 1,
             ])->save();
 

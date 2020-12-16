@@ -62,7 +62,7 @@
                 </x-slot>
             </x-table>
             <div class="mt-5 text-right">
-                <x-anchors.secondary :url="url('fiches/dist')">
+                <x-anchors.secondary :url="url(sprintf('dossiers/%s/fiches/dist',$dossier->id))">
                     Add
                 </x-anchors.secondary>
             </div>

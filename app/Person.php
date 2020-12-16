@@ -21,7 +21,6 @@ class Person extends Model
         'points',  // for PersonTable.php person editing
         'lastname',
         'firstname',
-        'fullname',
         'gender',
         'nationality1',
         'nationality2',
@@ -42,6 +41,11 @@ class Person extends Model
         'female' => 'Female',
         'na' => 'N/A',
     ];
+
+    public function getFullnameAttribute()
+    {
+        return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
+    }
 
     // Intermediate table
     public function crew()

@@ -47,7 +47,6 @@ class PersonFactory extends Factory
         return [
             'lastname' => $this->faker->lastName,
             'firstname' => $this->faker->firstName,
-            'fullname' => $firstname . " " . $lastname,
             'gender' => $this->faker->word,
             'nationality1' => $this->faker->word,
             'nationality2' => $this->faker->word,

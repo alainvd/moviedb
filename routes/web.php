@@ -113,7 +113,7 @@ Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->onl
 
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 
-Route::get('/fiches/dist/{fiche?}', MovieDetailForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/fiches/dist/{fiche?}', MovieDetailForm::class)->middleware('cas.auth');
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
