@@ -24,6 +24,7 @@
         <x-form.input
             :id="'total_budget_currency_rate'"
             :label="'Conversion rate'"
+            :hasError="$errors->has('movie.total_budget_currency_rate')"
             wire:model="movie.total_budget_currency_rate"
             placeholder="0.00">
 
@@ -38,6 +39,7 @@
         <x-form.input
             :id="'total_budget_euro'"
             :label="'Total budget in EURO'"
+            :hasError="$errors->has('movie.total_budget_euro')"
             wire:model="movie.total_budget_euro"
             placeholder="0">
 
