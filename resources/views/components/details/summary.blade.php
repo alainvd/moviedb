@@ -32,9 +32,9 @@
         @enderror
     </div>
 
-    <div class="col-span-3 md:col-span-1 flex items-end">
+    <div class="col-span-3 md:col-span-1">
         <button type="button"
-            class="p-3 border border-gray-700 rounded-md shadow-sm text-xs font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+            class="p-3 mt-6 border border-gray-700 rounded-md shadow-sm text-xs font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
             Manage codes
         </button>
     </div>
