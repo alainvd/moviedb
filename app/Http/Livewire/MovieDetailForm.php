@@ -105,6 +105,10 @@ class MovieDetailForm extends Component
             $this->isApplicant = true;
         }
 
+        if ($this->isApplicant && $this->isNew) {
+            $this->fiche->status_id = 1;
+        }
+
         // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
         $this->backoffice = true;
     }
