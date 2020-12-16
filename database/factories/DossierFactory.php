@@ -22,12 +22,16 @@ class DossierFactory extends BaseFactory
      */
     public function definition()
     {
+        $ref = sprintf('SEP-%d', $this->faker->randomNumber(9));
+
         return [
-            'project_ref_id' => $this->faker->word,
+            'project_ref_id' => $ref,
             'action' => $this->faker->word,
             'year' => $this->faker->numberBetween(1990, 2020),
             'status_id' => $this->getRelationId(Status::class),
             'call_id' => $this->getRelationId(Call::class),
+            'contact_person' => $this->faker->safeEmail,
+            'company' => $this->faker->company,
         ];
     }
 }

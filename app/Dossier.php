@@ -21,6 +21,8 @@ class Dossier extends Model
         'year',
         'status_id',
         'call_id',
+        'contact_person',
+        'company',
     ];
 
     /**
@@ -32,6 +34,10 @@ class Dossier extends Model
         'id' => 'integer',
     ];
 
+    public function call()
+    {
+        return $this->belongsTo(Call::class);
+    }
 
     public function media()
     {
