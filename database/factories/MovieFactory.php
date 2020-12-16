@@ -42,9 +42,14 @@ class MovieFactory extends Factory
             'film_country_of_origin' => $country_name,
             'isan' => 'isan-' . $this->faker->unique()->numberBetween(10000, 99999),
             'eidr' => 'eidr-' . $this->faker->unique()->numberBetween(10000, 99999),
+            'production_costs_currency_date' => $this->tostring()->faker->date(),
+            'production_costs_currency' => $this->faker->randomElement(['EUR', 'USD','GBP','SEK','RON','CZK','PLN','DKK','HUF','HRK','BGN']),
+            'production_costs' => $this->faker->unique()->numberBetween(100000, 100000000),
+            'production_costs_in_euro' => $this->faker->unique()->numberBetween(100000, 100000000),
             'film_type' => $this->faker->randomElement(['One-off', 'Series']),
             'film_length' => $this->faker->numberBetween(61, 134),
             'film_format' => $this->faker->randomElement(['35mm', 'Digital', 'Other']),
+            'film_score' => $this->faker->numberBetween(1, 20),
             'synopsis' => $this->faker->paragraph(12, true),
         ];
     }

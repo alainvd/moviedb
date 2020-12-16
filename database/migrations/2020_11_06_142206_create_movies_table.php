@@ -24,26 +24,21 @@ class CreateMoviesTable extends Migration
             $table->date('shooting_end')->nullable();
             $table->string('film_length')->nullable();
             $table->string('film_country_of_origin')->nullable();
-
             $table->integer('year_of_copyright')->nullable();
             $table->integer('directors_film')->nullable();
             $table->string('european_nationality_flag',255)->nullable();
             $table->longText('european_nationality_basis')->nullable();
-            $table->string('cost_currency')->nullable();
-            $table->date('cost_currency_date')->nullable();
+            $table->string('production_costs_currency_date')->nullable();
+            $table->string('production_costs_currency')->nullable();
+            $table->bigInteger('production_costs')->nullable();
+            $table->bigInteger('production_costs_in_euro')->nullable();
             $table->string('film_type')->nullable();
-
             $table->string('film_format')->nullable();
-            $table->string('film_decision_date')->nullable();
-
-            $table->boolean('flag_video')->default(false); // ???
-            $table->boolean('flag_2')->default(false); // ???
-            $table->boolean('flag_not_use')->default(false); // ???
-            $table->integer('source_film_id')->default(false); // ???
-            $table->string('username')->nullable();
-            $table->date('audit_date')->nullable();
-            $table->date('eu_net_change_date')->nullable();
-            $table->date('eu_net_change_name')->nullable();
+            $table->decimal('film_score')->nullable();
+            //$table->string('username')->nullable();
+            //$table->date('audit_date')->nullable();
+            //$table->date('eu_net_change_date')->nullable();
+            //$table->date('eu_net_change_name')->nullable();
             $table->text('synopsis')->nullable();
             $table->timestamps();
         });

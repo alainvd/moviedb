@@ -43,7 +43,19 @@ class MoviesImport implements ToModel, WithHeadingRow
             'shooting_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,
             'year_of_copyright' => $row['year_of_copyright'],
             'film_length' => $row['film_length'],
-            'film_country_of_origin' => $row['film_country_of_origin_code'],
+            'film_format' => $row['film_format'],
+            'film_type' => $row['film_type'],
+            'film_country_of_origin' => $row['film_country_of_origin'],
+            'film_score' => $row['film_score'],
+            'european_nationality_flag' => $row['european_nationality_flag'],
+            'production_costs_currency_date' => $row['production_costs_currency_date'],
+            'production_costs_currency' => $row['production_costs_currency'],
+            'production_costs' => $row['production_costs'],
+            'production_costs_in_euro' => $row['production_costs_in_euro'],
+            
+            //'production_budget_local_currency' => $row['production_budget_local_currency'],
+
+
         ]);
 
 
