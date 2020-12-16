@@ -36,7 +36,7 @@ class CreateMoviesTable extends Migration
             $table->string('film_format')->nullable();
             $table->string('film_decision_date')->nullable();
 
-            $table->string('film_country_of_origin')->nullable();
+
             $table->decimal('country_of_origin_points')->nullable();
             $table->integer('total_budget_currency_amount')->nullable();
             $table->string('total_budget_currency_code')->nullable();

@@ -51,6 +51,8 @@ class MovieFactory extends Factory
             'total_budget_currency_code' => $this->faker->randomElement(['USD', 'CHF', 'SEK']),
             'total_budget_currency_rate' => $this->faker->randomFloat(2, 1, 2),
             'total_budget_euro' => $this->faker->numberBetween(1000, 1000000),
+            'photography_start' => $this->faker->date(),
+            'photography_end' => $this->faker->date(),
         ];
     }
 }
