@@ -41,6 +41,6 @@ class All extends Command
         $this->call('import:genres');
         $this->call('import:audiences');
         $this->call('import:roles');
-        $this->call('import:staff');
+        //$this->call('import:staff');
     }
 }

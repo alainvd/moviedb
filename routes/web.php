@@ -122,6 +122,8 @@ Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movie
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
 
+Route::view('/demo', 'demo');
+
 
 
 
