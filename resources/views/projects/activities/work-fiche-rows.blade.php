@@ -1,5 +1,6 @@
 @foreach ($fiches as $fiche)
 
+<x-table.row>
     <x-table.cell class="text-center font-md tracking-tight">
         {{ $fiche->media->title }}
     </x-table.cell>
@@ -21,5 +22,6 @@
         </a>
         <a class="ml-8 cursor-pointer text-red-600">Delete</a>
     </x-table.cell>
+</x-table.row>
 
 @endforeach
