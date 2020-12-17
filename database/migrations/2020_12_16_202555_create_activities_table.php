@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActionsTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,20 @@ class CreateActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('actions', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20)->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }
+
+    /**
+     * fiecare action are activities
+     * fiecare call are un action
+     * fiecare dossier are un call
+     * fiecare fiche are...un dossier_id si un activity
+     *
+     */
 
     /**
      * Reverse the migrations.
@@ -27,6 +35,6 @@ class CreateActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('activities');
     }
 }

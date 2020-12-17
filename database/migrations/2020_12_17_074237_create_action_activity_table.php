@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActionsTable extends Migration
+class CreateActionActivityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('actions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 20)->unique();
-            $table->timestamps();
+        Schema::create('action_activity', function (Blueprint $table) {
+            $table->unsignedBigInteger('activity_id');
+            $table->unsignedBigInteger('action_id');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('action_activity');
     }
 }

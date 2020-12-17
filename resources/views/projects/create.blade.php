@@ -40,61 +40,19 @@
             </div>
         </x-layout.section>
 
+        <!-- Activities: linked to action -->
         <!-- Development section -->
         <x-layout.section
             :title="'Development'">
-
-            <!-- Previous works table -->
-            <h3 class="text-lg leading-tight font-normal my-4">
-                Audiovisual Work - Development - Recent work / previous experience
-            </h3>
-            <x-table>
-                <x-slot name="head">
-                    <x-table.heading>TITLE</x-table.heading>
-                    <x-table.heading>GENRE</x-table.heading>
-                    <x-table.heading>PRODUCTION YEAR</x-table.heading>
-                    <x-table.heading>FILM ID</x-table.heading>
-                    <x-table.heading>&nbsp;</x-table.heading>
-                </x-slot>
-
-                <x-slot name="body">
-
-                </x-slot>
-            </x-table>
-            <div class="mt-5 text-right">
-                <x-anchors.secondary :url="url(sprintf('dossiers/%s/fiches/dist',$dossier->id))">
-                    Add
-                </x-anchors.secondary>
-            </div>
-
-            <!-- Previous works table -->
-            <h3 class="text-lg leading-tight font-normal my-4">
-                Audiovisual Work - Development - For grant request
-            </h3>
-            <x-table>
-                <x-slot name="head">
-                    <x-table.heading>TITLE</x-table.heading>
-                    <x-table.heading>GENRE</x-table.heading>
-                    <x-table.heading>PRODUCTION YEAR</x-table.heading>
-                    <x-table.heading>FILM ID</x-table.heading>
-                    <x-table.heading>&nbsp;</x-table.heading>
-                </x-slot>
-
-                <x-slot name="body">
-
-                </x-slot>
-            </x-table>
-            <div class="mt-5 text-right">
-                <x-anchors.secondary :url="url('fiches/dist')">
-                    Add
-                </x-anchors.secondary>
-            </div>
+            @foreach ($dossier->action->activities as $activity)
+                @include(
+                    "projects.activities.$activity->name",
+                    [
+                        'activity' => $activity,
+                        'dossier' => $dossier,
+                    ]
+                )
+            @endforeach
         </x-layout.section>
     </div>
-    <!--
-    <form>
-        <div class="p-4 md:px-8 lg:px-16 mx-auto w-full sm:w-11/12 rounded-md shadow-md bg-white">
-
-        </div>
-    </form> -->
 </x-landing-layout>

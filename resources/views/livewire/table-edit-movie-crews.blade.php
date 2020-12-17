@@ -11,7 +11,7 @@
                 <x-table.heading>Full name</x-table.heading>
                 <x-table.heading>Gender</x-table.heading>
                 <x-table.heading>Nationality 1</x-table.heading>
-                <x-table.heading>Nationality 2</x-table.heading>
+                <x-table.heading>Nationalifty 2</x-table.heading>
                 <x-table.heading>Residence</x-table.heading>
                 @if ($backoffice)<x-table.heading>Scoring</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
@@ -62,12 +62,12 @@
                             :id="'crews_title_id'"
                             :label="'Title'"
                             wire:model="editing.title_id">
-                
+
                             @foreach ($titles as $id => $title)
                                 <option value="{{ $id }}">{{ $title['name'] }}</option>
                             @endforeach
                         </x-form.select>
-                
+
                         @error('editing.title_id')
                             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                         @enderror
@@ -102,12 +102,12 @@
                             :id="'crews_gender'"
                             :label="'Gender'"
                             wire:model="editing.person.gender">
-                
+
                             @foreach ($genders as $key => $name)
                                 <option value="{{ $key }}">{{ $name }}</option>
                             @endforeach
                         </x-form.select>
-                
+
                         @error('editing.person.gender')
                             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                         @enderror
@@ -118,12 +118,12 @@
                             :id="'crews_nationality1'"
                             :label="'Nationality 1'"
                             wire:model="editing.person.nationality1">
-                
+
                             @foreach ($countries as $country)
                                 <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                             @endforeach
                         </x-form.select>
-                
+
                         @error('editing.person.nationality1')
                             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                         @enderror
@@ -134,12 +134,12 @@
                             :id="'crews_nationality2'"
                             :label="'Nationality 2'"
                             wire:model="editing.person.nationality2">
-                
+
                             @foreach ($countries as $country)
                                 <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                             @endforeach
                         </x-form.select>
-                
+
                         @error('editing.person.nationality2')
                             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                         @enderror
@@ -150,12 +150,12 @@
                             :id="'crews_country_of_residence'"
                             :label="'Country of residence'"
                             wire:model="editing.person.country_of_residence">
-                
+
                             @foreach ($countries as $country)
                                 <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                             @endforeach
                         </x-form.select>
-                
+
                         @error('editing.person.country_of_residence')
                             <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                         @enderror
@@ -174,7 +174,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="flex justify-end items-center space-x-3 mt-4">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 

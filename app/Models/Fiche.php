@@ -15,6 +15,7 @@ class Fiche extends Model
         'status_id',
         'created_by',
         'updated_by',
+        'activity_id'
     ];
 
     public function media()
@@ -25,5 +26,10 @@ class Fiche extends Model
     public function dossier()
     {
         return $this->belongsTo(Dossier::class);
+    }
+
+    public function scopeForActivity($query, $activityId)
+    {
+        return $query->where('activity_id', $activityId);
     }
 }

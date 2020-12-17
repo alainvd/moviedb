@@ -10,4 +10,9 @@ class Action extends Model
     use HasFactory;
 
     protected $fillable=["code"];
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class);
+    }
 }

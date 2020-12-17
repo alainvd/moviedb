@@ -9,6 +9,7 @@ use App\Genre;
 use Livewire\Component;
 use App\Movie;
 use App\Media;
+use App\Models\Activity;
 use App\Models\Country;
 use App\Models\Fiche;
 use App\Models\Language;
@@ -26,6 +27,7 @@ class MovieDetailForm extends Component
 
     // Movie data for Livewire
     public Dossier $dossier;
+    public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
     public ?Media $media = null;
@@ -82,7 +84,6 @@ class MovieDetailForm extends Component
     public function mount()
     {
         // $this->shootingLanguages = collect([]);
-
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
@@ -162,6 +163,7 @@ class MovieDetailForm extends Component
             $this->fiche->fill([
                 'media_id' => $this->media->id,
                 'dossier_id' => $this->dossier->id,
+                'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
 

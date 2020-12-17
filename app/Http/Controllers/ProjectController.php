@@ -44,7 +44,7 @@ class ProjectController extends Controller
         $dossier = Dossier::firstOrCreate([
             'call_id' => $params['call_id'],
             'project_ref_id' => $params['project_ref_id'],
-            'action' => $call->action,
+            'action_id' => $call->action_id,
             'status_id' => 1,
             'year' => date('Y'),
             'contact_person' => Auth::user()->email,

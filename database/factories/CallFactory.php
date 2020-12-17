@@ -55,7 +55,7 @@ class CallFactory extends Factory
             // H2020-LC-GD-2020-3
             'name' => $name,
             // 'action' => $this->faker->randomElement($actions),
-            'action' => 'DEVSLATE',
+            'action_id' => Action::where('name', 'DEVSLATE')->first()->id,
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(["open","closed"]),
