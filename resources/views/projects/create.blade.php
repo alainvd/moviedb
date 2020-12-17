@@ -45,7 +45,13 @@
         <x-layout.section
             :title="'Development'">
             @foreach ($dossier->action->activities as $activity)
-                @include("projects.activities.$activity->name", ['dossier' => $dossier])
+                @include(
+                    "projects.activities.$activity->name",
+                    [
+                        'activity' => $activity,
+                        'dossier' => $dossier,
+                    ]
+                )
             @endforeach
         </x-layout.section>
     </div>

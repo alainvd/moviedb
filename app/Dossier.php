@@ -60,5 +60,4 @@ class Dossier extends Model
     {
         return $this->hasMany(Fiche::class);
     }
-
 }

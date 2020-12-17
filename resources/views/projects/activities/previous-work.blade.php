@@ -11,11 +11,25 @@
     </x-slot>
 
     <x-slot name="body">
+        <x-table.row>
 
+        @if ($dossier->fiches()->forActivity($activity->id)->count())
+
+            @include('projects.activities.work-fiche-rows', [
+                'fiches' => $dossier->fiches()->forActivity($activity->id)->get(),
+                'dossier' => $dossier,
+                'activity' => $activity,
+            ])
+
+        @else
+            <x-table.cell class="text-center" colspan="5">No movies yet</x-table.cell>
+        @endif
+
+        </x-table.row>
     </x-slot>
 </x-table>
 <div class="mt-5 text-right">
-    <x-anchors.secondary :url="url(sprintf('dossiers/%s/fiches/dist',$dossier->id))">
+    <x-anchors.secondary :url="url(sprintf('dossiers/%s/activities/%s/fiches/dist',$dossier->id, $activity->id))">
         Add
     </x-anchors.secondary>
 </div>
