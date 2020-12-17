@@ -95,7 +95,15 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'company' => 'required|string|min:3'
+        ]);
+
+        $dossier = Dossier::findOrFail($id);
+        $dossier->company = $request->input('company');
+        $dossier->save();
+
+        return redirect()->back();
     }
 
     /**

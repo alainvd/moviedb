@@ -12,23 +12,23 @@
      </x-slot>
 
      <x-slot name="body">
-         <x-table.row>
 
-             @if ($dossier->fiches()->forActivity($activity->id)->count())
+        @if ($dossier->fiches()->forActivity($activity->id)->count())
 
-                @include('projects.activities.work-fiche-rows', [
-                    'fiches' => $dossier->fiches()->forActivity($activity->id)->get(),
-                    'dossier' => $dossier,
-                    'activity' => $activity,
-                ])
+            @include('projects.activities.work-fiche-rows', [
+                'fiches' => $dossier->fiches()->forActivity($activity->id)->get(),
+                'dossier' => $dossier,
+                'activity' => $activity,
+            ])
 
-            @else
+        @else
 
+        <x-table.row>
             <x-table.cell class="text-center" colspan="5">No movies yet</x-table.cell>
+        </x-table.row>
 
-            @endif
+        @endif
 
-         </x-table.row>
      </x-slot>
  </x-table>
  <div class="mt-5 text-right">
