@@ -187,12 +187,9 @@ class MovieDetailForm extends Component
         $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        // if ($_movie_create_form) {
-        //     // Can't redirect while people are still being saved
-        //     //return redirect()->to('/movie/detail/' . $this->movie->id);
-        //     // TODO: tell browser to update the url
-        //     // window.history.pushState('page2', 'Title', '/page2.php');
-        // }
+        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+            return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
+        }
     }
 
     public function updateMovieCrews($items)
