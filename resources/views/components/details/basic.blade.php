@@ -34,7 +34,7 @@
 
     <div class="col-span-1">
         <x-form.select
-            :id="'film_country_of_origin'"
+            :id="'basic-film_country_of_origin'"
             :label="'Country of Origin'"
             :hasError="$errors->has('movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">

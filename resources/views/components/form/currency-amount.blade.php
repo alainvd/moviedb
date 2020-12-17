@@ -7,7 +7,7 @@
             type="text"
             name="{{ $idAmount }}"
             id="{{ $idAmount }}"
-            class="block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+            class="block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasErrorAmount||$hasErrorCurrency ?? false ? 'border-red-500': '' }}"
             placeholder="0"
             wire:model="{{ $modelAmount }}"
         >
