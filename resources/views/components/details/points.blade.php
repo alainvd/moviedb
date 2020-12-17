@@ -3,6 +3,7 @@
         <x-form.select
             :id="'film_country_of_origin'"
             :label="'Country of Origin'"
+            :hasError="$errors->has('movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
@@ -18,8 +19,9 @@
 
     <div class="col-span-1">
         <x-form.input
-            :id="'country_of_origin_points'"
+            :id="'points-country_of_origin_points'"
             :label="'Points for Country of Origin'"
+            :hasError="$errors->has('movie.country_of_origin_points')"
             wire:model="movie.country_of_origin_points"
             placeholder="0.00">
 

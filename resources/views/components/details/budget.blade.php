@@ -4,9 +4,11 @@
         <x-form.currency-amount
             :idAmount="'total_budget_currency_amount'"
             :labelAmount="'Total Budget'"
+            :hasErrorAmount="$errors->has('movie.total_budget_currency_amount')"
             :modelAmount="'movie.total_budget_currency_amount'"
             :idCurrency="'total_budget_currency_code'"
             :labelCurrency="'Currency'"
+            :hasErrorCurrency="$errors->has('movie.total_budget_currency_code')"
             :modelCurrency="'movie.total_budget_currency_code'"
             :currencies="$currencies">
 
