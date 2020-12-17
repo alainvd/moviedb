@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Call;
 use App\Dossier;
+use App\Models\Action;
 use App\Models\Status;
 
 class DossierFactory extends BaseFactory
@@ -26,7 +27,7 @@ class DossierFactory extends BaseFactory
 
         return [
             'project_ref_id' => $ref,
-            'action' => $this->faker->word,
+            'action_id' => $this->getRelationId(Action::class),
             'year' => $this->faker->numberBetween(1990, 2020),
             'status_id' => $this->getRelationId(Status::class),
             'call_id' => $this->getRelationId(Call::class),

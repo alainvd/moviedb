@@ -33,7 +33,7 @@ class ActionSeeder extends Seeder
 
         foreach ($codes as $code) {
             Action::create([
-                'id' => $code
+                'name' => $code
             ]);
 
         }
