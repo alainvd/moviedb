@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 require('laravel-mix-tailwind');
-require('laravel-mix-purgecss')
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,14 +14,14 @@ require('laravel-mix-purgecss')
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .postCss('resources/css/app.css', 'public/css')
-   .tailwind('./tailwind.config.js')
-   .purgeCss();
+  .postCss('resources/css/app.css', 'public/css', [
+    require('tailwindcss'),
+  ])
+  .purgeCss();
 
 if (mix.inProduction()) {
   mix.version();
 }
-
 
 if (!mix.inProduction()) {
     mix.browserSync({
@@ -29,5 +29,3 @@ if (!mix.inProduction()) {
         notify: false
     });
 }
-
-
