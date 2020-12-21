@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="grid grid-cols-2 gap-4 md:grid-cols-3">
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
         <x-form.input
             :id="'original_title'"
@@ -9,7 +9,7 @@
         </x-form.input>
 
         @error('movie.original_title')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -28,7 +28,7 @@
         </x-form.select>
 
         @error('fiche.status_id')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -46,7 +46,7 @@
         </x-form.select>
 
         @error('movie.film_country_of_origin')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -64,7 +64,7 @@
         </x-form.select>
 
         @error('movie.year_of_copyright')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -82,7 +82,7 @@
         </x-form.select>
 
         @error('media.genre_id')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -100,7 +100,7 @@
         </x-form.select>
 
         @error('media.delivery_platform_id')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -120,7 +120,7 @@
         </x-form.select>
 
         @error('media.audience_id')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -138,7 +138,7 @@
         </x-form.select>
 
         @error('movie.film_type')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 </div>
