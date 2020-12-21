@@ -16,7 +16,7 @@ class ActivitySeeder extends Seeder
     public function run()
     {
         $activities =[
-            'description' => ['DISTSEL', 'DISTSAG'],
+            'description' => ['DISTSEL', 'DISTSAG', 'TV'],
             'previous-work' => ['DEVSLATE'],
             'current-work' => ['DEVSLATE'],
             'distributors' => ['DISTSEL'],

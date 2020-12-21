@@ -15,18 +15,19 @@ class ActionSeeder extends Seeder
      */
     public function run()
     {
-        $codes = ["DEVSLATE",
-            "DEVSPANI",
-            "DEVSPDOC",
-            "DEVSPFIC",
-            "DEVVG",
-            "DISTAUTOG",
-            "DISTAUTOR1",
-            "DISTAUTOR2",
-            "DISTAUTOR3",
+        $codes = [
+            "DEVSLATE",
+            // "DEVSPANI",
+            // "DEVSPDOC",
+            // "DEVSPFIC",
+            // "DEVVG",
+            // "DISTAUTOG",
+            // "DISTAUTOR1",
+            // "DISTAUTOR2",
+            // "DISTAUTOR3",
             "DISTSAG",
-            "DISTSAR1",
-            "DISTSAR2",
+            // "DISTSAR1",
+            // "DISTSAR2",
             "DISTSEL",
             "TV"];
 
