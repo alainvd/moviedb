@@ -17,10 +17,13 @@ class ActionSeeder extends Seeder
     {
         $codes = [
             "DEVSLATE",
+            "DEVSLATEEU",
+            "DEVSLATEEUMINI",
+            "EUCODEV",
             // "DEVSPANI",
             // "DEVSPDOC",
             // "DEVSPFIC",
-            // "DEVVG",
+            "DEVVG",
             // "DISTAUTOG",
             // "DISTAUTOR1",
             // "DISTAUTOR2",
@@ -29,7 +32,8 @@ class ActionSeeder extends Seeder
             // "DISTSAR1",
             // "DISTSAR2",
             "DISTSEL",
-            "TV"];
+            "TV"
+        ];
 
 
         foreach ($codes as $code) {
