@@ -62,7 +62,7 @@
                 @endforeach
             </x-layout.section>
 
-             <div x-data class="flex justify-end items-center space-x-3">
+             <div x-data class="mt-32 flex justify-end items-center space-x-3">
                 <x-button.primary type="submit">Save</x-button.primary>
              </div>
         </form>
