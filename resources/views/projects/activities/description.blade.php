@@ -7,14 +7,21 @@
             <x-form.input
                 :id="'film-id'"
                 :label="'Film ID'"
+                :hasError="$errors->has('film_id')"
+                name="film_id"
                 placeholder="'Enter film ID'"
             ></x-form.input>
+
+            @error('film_id')
+                <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            @enderror
         </div>
         <div class="col-span-1">
             <x-form.input
                 :id="'film-title'"
                 :label="'Film Title'"
                 :disabled="true"
+                name="film_title"
                 placeholder="'Film Title'"
             ></x-form.input>
         </div>

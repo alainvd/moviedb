@@ -52,6 +52,11 @@
             <x-layout.section
                 :title="'Development'">
                 @foreach ($dossier->action->activities as $activity)
+
+                    @foreach($activity->pivot->rules as $ruleName => $rule)
+                        <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
+                    @endforeach
+
                     @include(
                         "projects.activities.$activity->name",
                         [

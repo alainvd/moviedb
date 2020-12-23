@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+
+    protected $dossierRules = [
+        'company' => 'required|string|min:3'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -95,9 +99,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'company' => 'required|string|min:3'
-        ]);
+        $this->validate($request, $this->buildValidator($request));
 
         $dossier = Dossier::findOrFail($id);
         $dossier->company = $request->input('company');
@@ -115,5 +117,58 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Build validator array based on dossier activities and
+     * activity rules
+     *
+     * @return array
+     */
+    protected function buildValidator(Request $request)
+    {
+        $rules = $this->dossierRules;
+
+        if ($request->has('previous_works')) {
+            $rules['previous_works'] = $this->getMinMaxRule('previous_works');
+        }
+
+        if ($request->has('current_works')) {
+            $rules['current_works'] = $this->getMinMaxRule('current_works');
+        }
+
+        if ($request->has('film_id')) {
+            $rules['film_id'] = 'required|integer';
+        }
+
+        if ($request->has('coordinator_count')) {
+            $minCoordinators = $request->input('min_coordinators');
+            $rules['coordinator_count'] = "integer|min:{$minCoordinators}";
+        }
+
+        if ($request->has('participant_count')) {
+            $minParticipants = $request->input('min_participants');
+            $rules['participant_count'] = "integer|min:{$minParticipants}";
+        }
+
+        return $rules;
+    }
+
+    protected function getMinMaxRule($field)
+    {
+        $min = request()->input("min_{$field}");
+        $max = request()->input("max_{$field}");
+
+        if (!$min && !$max) {
+            return '';
+        } elseif (!$min) {
+            return "integer|max:{$max}";
+        } elseif (!$max) {
+            return "integer|min:{$min}";
+        } elseif ($min === $max) {
+            return "integer|size:{$min}";
+        } else {
+            return "integer|between:{$min},{$max}";
+        }
     }
 }

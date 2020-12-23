@@ -63,7 +63,7 @@ class ActivitySeeder extends Seeder
             'DISTSEL' => [
                 'movie_count' => 1,
                 'min_coordinators' => 1,
-                'min_participants' => 1,
+                'min_participants' => 7,
                 'distinct_distribution_countries' => true,
             ],
             'DISTSAG' => [

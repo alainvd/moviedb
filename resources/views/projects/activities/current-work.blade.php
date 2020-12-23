@@ -1,8 +1,9 @@
 <div class="my-8">
+    <input type="hidden" name="current_works" value="{{ $dossier->fiches()->forActivity($activity->id)->count() }}">
     <h3 class="text-lg leading-tight font-normal my-4">
         Audiovisual Work - Development - For grant request
     </h3>
-    <x-table>
+    <x-table class="{{ $errors->has('current_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">
             <x-table.heading>TITLE</x-table.heading>
             <x-table.heading>GENRE</x-table.heading>
@@ -16,9 +17,9 @@
             @if ($dossier->fiches()->forActivity($activity->id)->count())
 
             @include('projects.activities.work-fiche-rows', [
-            'fiches' => $dossier->fiches()->forActivity($activity->id)->get(),
-            'dossier' => $dossier,
-            'activity' => $activity,
+                'fiches' => $dossier->fiches()->forActivity($activity->id)->get(),
+                'dossier' => $dossier,
+                'activity' => $activity,
             ])
 
             @else
@@ -31,6 +32,11 @@
 
         </x-slot>
     </x-table>
+
+    @error('current_works')
+        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+    @enderror
+
     <div class="mt-5 text-right">
         <x-anchors.secondary :url="url(sprintf('dossiers/%s/activities/%s/fiches/dist',$dossier->id, $activity->id))">
             Add
