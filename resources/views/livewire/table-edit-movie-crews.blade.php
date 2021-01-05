@@ -1,6 +1,6 @@
 <div>
 
-    <div class="text-lg mb-8">
+    <div class="mb-8 text-lg">
         Cast and Crew
     </div>
 
@@ -11,7 +11,7 @@
                 <x-table.heading>Full name</x-table.heading>
                 <x-table.heading>Gender</x-table.heading>
                 <x-table.heading>Nationality 1</x-table.heading>
-                <x-table.heading>Nationalifty 2</x-table.heading>
+                <x-table.heading>Nationality 2</x-table.heading>
                 <x-table.heading>Residence</x-table.heading>
                 @if ($backoffice)<x-table.heading>Scoring</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
@@ -23,11 +23,11 @@
                     <x-table.cell class="text-center">{{ $titles[$item['title_id']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $genders[$item['person']['gender']] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries_by_key[$item['person']['nationality1']]['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries_by_key[$item['person']['nationality2']]['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries_by_key[$item['person']['country_of_residence']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_key[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countries_by_key[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countries_by_key[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>
-                    <x-table.cell class="text-center space-x-2">
+                    <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
                     </x-table.cell>
@@ -61,6 +61,7 @@
                         <x-form.select
                             :id="'crews_title_id'"
                             :label="'Title'"
+                            :hasError="$errors->has('editing.title_id')"
                             wire:model="editing.title_id">
 
                             @foreach ($titles as $id => $title)
@@ -69,7 +70,7 @@
                         </x-form.select>
 
                         @error('editing.title_id')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -77,11 +78,12 @@
                         <x-form.input
                             :id="'crews_firstname'"
                             :label="'First name'"
+                            :hasError="$errors->has('editing.person.firstname')"
                             wire:model="editing.person.firstname">
                         </x-form.input>
 
                         @error('editing.person.firstname')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -89,11 +91,12 @@
                         <x-form.input
                             :id="'crews_lastname'"
                             :label="'Last name'"
+                            :hasError="$errors->has('editing.person.lastname')"
                             wire:model="editing.person.lastname">
                         </x-form.input>
 
                         @error('editing.person.lastname')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -101,6 +104,7 @@
                         <x-form.select
                             :id="'crews_gender'"
                             :label="'Gender'"
+                            :hasError="$errors->has('editing.person.gender')"
                             wire:model="editing.person.gender">
 
                             @foreach ($genders as $key => $name)
@@ -109,7 +113,7 @@
                         </x-form.select>
 
                         @error('editing.person.gender')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -117,6 +121,7 @@
                         <x-form.select
                             :id="'crews_nationality1'"
                             :label="'Nationality 1'"
+                            :hasError="$errors->has('editing.person.nationality1')"
                             wire:model="editing.person.nationality1">
 
                             @foreach ($countries as $country)
@@ -125,7 +130,7 @@
                         </x-form.select>
 
                         @error('editing.person.nationality1')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -133,6 +138,7 @@
                         <x-form.select
                             :id="'crews_nationality2'"
                             :label="'Nationality 2'"
+                            :hasError="$errors->has('editing.person.nationality2')"
                             wire:model="editing.person.nationality2">
 
                             @foreach ($countries as $country)
@@ -141,7 +147,7 @@
                         </x-form.select>
 
                         @error('editing.person.nationality2')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -149,6 +155,7 @@
                         <x-form.select
                             :id="'crews_country_of_residence'"
                             :label="'Country of residence'"
+                            :hasError="$errors->has('editing.person.country_of_residence')"
                             wire:model="editing.person.country_of_residence">
 
                             @foreach ($countries as $country)
@@ -157,7 +164,7 @@
                         </x-form.select>
 
                         @error('editing.person.country_of_residence')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -165,17 +172,19 @@
                         <x-form.input
                             :id="'crews_points'"
                             :label="'Points'"
-                            wire:model="editing.points">
+                            :hasError="$errors->has('editing.points')"
+                            wire:model="editing.points"
+                            placeholder="0.00">
                         </x-form.input>
 
                         @error('editing.points')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
                 </div>
 
-                <div class="flex justify-end items-center space-x-3 mt-4">
+                <div class="flex items-center justify-end mt-4 space-x-3">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
@@ -196,7 +205,7 @@
             </x-slot>
 
             <x-slot name="footer">
-                <div class="flex justify-end items-center space-x-3">
+                <div class="flex items-center justify-end space-x-3">
                     <x-button.primary type="submit">Delete</x-button>
 
                     <x-button.secondary wire:click="$set('showingDeleteModal', false)">Cancel</x-button>

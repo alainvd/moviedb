@@ -18,10 +18,7 @@ class TableEditMovieProducers extends TableEditBase
 
     protected function defaults()
     {
-        return [
-            'role' => 'producer',
-            'country_id' => Country::first()->id,
-        ] + parent::defaults();
+        return parent::defaults();
     }
 
     protected function rules()

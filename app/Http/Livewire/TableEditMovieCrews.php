@@ -26,18 +26,7 @@ class TableEditMovieCrews extends TableEditBase
 
     protected function defaults()
     {
-        return [
-            'points' => 0,
-            'title_id' => Title::first()->id,
-            'person' => [
-                'firstname' => '',
-                'lastname' => '',
-                'gender' => array_key_first($this->genders),
-                'nationality1' => $this->countries[0]['code'],
-                'nationality2' => $this->countries[0]['code'],
-                'country_of_residence' => $this->countries[0]['code'],
-            ],
-        ] + parent::defaults();
+        return parent::defaults();
     }
 
     protected function rules()

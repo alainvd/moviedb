@@ -1,6 +1,6 @@
 <div>
     
-    <div class="text-lg mb-8">
+    <div class="mb-8 text-lg">
         Sales Agents
     </div>
 
@@ -18,10 +18,10 @@
                 @foreach ($items as $item)
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries[$item['country_id']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>
-                    <x-table.cell class="text-center space-x-2">
+                    <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
                     </x-table.cell>
@@ -50,11 +50,12 @@
                         <x-form.input
                             :id="'agents_name'"
                             :label="'Name'"
+                            :hasError="$errors->has('editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
                         @error('editing.name')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -62,6 +63,7 @@
                         <x-form.select
                             :id="'agents_country_id'"
                             :label="'Country'"
+                            :hasError="$errors->has('editing.country_id')"
                             wire:model="editing.country_id">
                 
                             @foreach ($countries as $country)
@@ -70,7 +72,7 @@
                         </x-form.select>
                 
                         @error('editing.country_id')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -78,11 +80,12 @@
                         <x-form.input
                             :id="'agents_contact_person'"
                             :label="'Contact person'"
+                            :hasError="$errors->has('editing.contact_person')"
                             wire:model="editing.contact_person">
                         </x-form.input>
 
                         @error('editing.contact_person')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -90,16 +93,17 @@
                         <x-form.input
                             :id="'agents_email'"
                             :label="'Email'"
+                            :hasError="$errors->has('editing.email')"
                             wire:model="editing.email">
                         </x-form.input>
 
                         @error('editing.email')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
                 </div>
-                <div class="flex justify-end items-center space-x-3 mt-4">
+                <div class="flex items-center justify-end mt-4 space-x-3">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
@@ -120,7 +124,7 @@
             </x-slot>
 
             <x-slot name="footer">
-                <div class="flex justify-end items-center space-x-3">
+                <div class="flex items-center justify-end space-x-3">
                     <x-button.primary type="submit">Delete</x-button>
 
                     <x-button.secondary wire:click="$set('showingDeleteModal', false)">Cancel</x-button>

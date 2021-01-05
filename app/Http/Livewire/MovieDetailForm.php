@@ -57,34 +57,38 @@ class MovieDetailForm extends Component
      * Each wired fields needs to be here or it will be filtered
      */
     protected $rules = [
-        'shootingLanguage' => 'required|integer',
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'string',
-        'movie.country_of_origin_points' => 'numeric',
-        'movie.year_of_copyright' => 'required|integer',
+        'movie.film_country_of_origin' => 'string|max:255',
+        'movie.year_of_copyright' => 'integer',
         'media.genre_id' => 'required|integer',
         'media.delivery_platform_id' => 'required|integer',
         'media.audience_id' => 'required|integer',
-        'movie.film_type' => 'required|string|min:1|max:255',
+        'movie.film_type' => 'required|string',
+
         'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
+        // 'shootingLanguage' => 'required|integer',
+        'shootingLanguage' => 'integer',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
-        'movie.isan' => 'string',
-        'movie.synopsis' => 'required|string',
+
         'movie.total_budget_currency_amount' => 'required|integer',
-        'movie.total_budget_currency_code' => 'required|string',
-        'movie.total_budget_currency_rate' => 'numeric',
-        'movie.total_budget_euro' => 'integer',
+        'movie.total_budget_currency_code' => 'required|string|max:255',
+        'movie.total_budget_currency_rate' => 'required|numeric',
+        'movie.total_budget_euro' => 'required|integer',
+
         'fiche.comments' => 'string',
     ];
 
     protected function movieDefaults() {
         return [
             'total_budget_currency_code' => 'EUR',
-            'country_of_origin_points' => 0,
         ];
     }
 
@@ -150,14 +154,16 @@ class MovieDetailForm extends Component
     public function submit()
     {
         $this->validate();
+    
+        if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
 
         // When it's new
         if ($this->isNew) {
             // Save movie
             $this->movie->save();
-            $this->movie->languages()->attach(
-                $this->shootingLanguage
-            );
+            // $this->movie->languages()->attach(
+            //     $this->shootingLanguage
+            // );
 
             // Save media
             $this->media->fill([
@@ -177,12 +183,12 @@ class MovieDetailForm extends Component
             $this->emit('notify-saved');
         } else { // When editing
             $this->movie->save();
-            $this->movie->languages()->attach(
-                // $this->shootingLanguages->map(
-                //     fn ($lang) => $lang['value']
-                // )
-                $this->shootingLanguage
-            );
+            // $this->movie->languages()->attach(
+            //     // $this->shootingLanguages->map(
+            //     //     fn ($lang) => $lang['value']
+            //     // )
+            //     $this->shootingLanguage
+            // );
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
