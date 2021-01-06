@@ -17,17 +17,21 @@ class CreateMoviesTable extends Migration
             $table->id();
             $table->integer('legacy_id')->nullable();
             $table->string('original_title', 255);
+            $table->string('logline', 4000)->nullable();
             $table->string('imdb_url')->nullable();
             $table->string('isan', 255)->nullable();
             $table->string('eidr', 255)->nullable();
             $table->date('shooting_start')->nullable();
             $table->date('shooting_end')->nullable();
             $table->string('film_length')->nullable();
+            $table->integer('number_of_episodes')->nullable();
+            $table->integer('length_of_episodes')->nullable();
             $table->string('film_country_of_origin')->nullable();
             $table->integer('year_of_copyright')->nullable();
             $table->integer('directors_film')->nullable();
             $table->string('european_nationality_flag',255)->nullable();
             $table->longText('european_nationality_basis')->nullable();
+            $table->bigInteger('development_costs_in_euro')->nullable();
             $table->string('production_costs_currency_date')->nullable();
             $table->string('production_costs_currency')->nullable();
             $table->bigInteger('production_costs')->nullable();
@@ -50,6 +54,7 @@ class CreateMoviesTable extends Migration
      * @return void
      */
     public function down()
+    
     {
         Schema::dropIfExists('movies');
     }

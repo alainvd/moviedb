@@ -34,6 +34,7 @@ class MovieCreated
         Media::create([
                 "title" => $movie->original_title,
                 "grantable_id" => $movie->id,
+                "logline" => $movie->logline,
                 "grantable_type" => "App\Movie",
                 "audience_id" => null,
                 "genre_id" => null,
