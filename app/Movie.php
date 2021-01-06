@@ -45,7 +45,7 @@ class Movie extends Model implements Grantable
     protected $casts = [
         'id' => 'integer',
         'photography_start' => 'date:d.m.Y',
-        'photography_end' => 'date:d.m.Y',
+        'photography_end' => 'date:d.m.Y'
     ];
 
     public function media()

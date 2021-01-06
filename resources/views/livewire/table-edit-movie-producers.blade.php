@@ -1,6 +1,6 @@
 <div>
     
-    <div class="text-lg mb-8">
+    <div class="mb-8 text-lg">
         Producers
     </div>
 
@@ -21,9 +21,9 @@
                     <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries[$item['country_id']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['share'] }}%</x-table.cell>
-                    <x-table.cell class="text-center space-x-2">
+                    <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
                     </x-table.cell>
@@ -52,6 +52,7 @@
                         <x-form.select
                             :id="'producer_role'"
                             :label="'Role'"
+                            :hasError="$errors->has('editing.role')"
                             wire:model="editing.role">
                 
                             @foreach($producer_roles as $key => $name)
@@ -60,7 +61,7 @@
                         </x-form.select>
                 
                         @error('editing.role')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -68,11 +69,12 @@
                         <x-form.input
                             :id="'producer_name'"
                             :label="'Name'"
+                            :hasError="$errors->has('editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
                         @error('editing.name')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -80,11 +82,12 @@
                         <x-form.input
                             :id="'producer_city'"
                             :label="'City'"
+                            :hasError="$errors->has('editing.city')"
                             wire:model="editing.city">
                         </x-form.input>
 
                         @error('editing.city')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -92,6 +95,7 @@
                         <x-form.select
                             :id="'producer_country_id'"
                             :label="'Country'"
+                            :hasError="$errors->has('editing.country_id')"
                             wire:model="editing.country_id">
                 
                             @foreach ($countries as $country)
@@ -100,7 +104,7 @@
                         </x-form.select>
                 
                         @error('editing.country_id')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -109,17 +113,18 @@
                             :id="'producer_share'"
                             :label="'Share'"
                             :trailing="'%'"
+                            :hasError="$errors->has('editing.share')"
                             wire:model="editing.share"
                         > 
                         </x-form.input>
                         @error('editing.share')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
 
                 </div>
                 
-                <div class="flex justify-end items-center space-x-3 mt-4">
+                <div class="flex items-center justify-end mt-4 space-x-3">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
@@ -140,7 +145,7 @@
             </x-slot>
 
             <x-slot name="footer">
-                <div class="flex justify-end items-center space-x-3">
+                <div class="flex items-center justify-end space-x-3">
                     <x-button.primary type="submit">Delete</x-button>
 
                     <x-button.secondary wire:click="$set('showingDeleteModal', false)">Cancel</x-button>
