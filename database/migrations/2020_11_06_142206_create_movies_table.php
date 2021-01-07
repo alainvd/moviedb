@@ -44,6 +44,10 @@ class CreateMoviesTable extends Migration
             //$table->date('eu_net_change_date')->nullable();
             //$table->date('eu_net_change_name')->nullable();
             $table->text('synopsis')->nullable();
+            $table->text('link_applicant_work')->nullable();
+            $table->text('link_applicant_work_person_name')->nullable();
+            $table->text('link_applicant_work_person_position')->nullable();
+            $table->text('link_applicant_work_person_credit')->nullable();
             $table->timestamps();
         });
     }
@@ -52,9 +56,10 @@ class CreateMoviesTable extends Migration
      * Reverse the migrations.
      *
      * @return void
+     * 
      */
     public function down()
-    
+
     {
         Schema::dropIfExists('movies');
     }

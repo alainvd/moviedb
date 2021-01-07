@@ -54,9 +54,12 @@ class MoviesImportDevSP implements ToModel, WithHeadingRow
             //'production_costs_currency_date' => $row['production_costs_currency_date'],
             //'production_costs_currency' => $row['production_costs_currency'],
             //'production_costs' => $row['production_costs'],
-            'development_costs_in_euro' => $row['production_costs_in_euro'],
+            'development_costs_in_euro' => $row['development_costs_in_euro'],
             'production_costs_in_euro' => $row['production_costs_in_euro'],
-            
+            'link_applicant_work' => $row['link_applicant_work'],
+            'link_applicant_work_person_name' => $row['link_applicant_work_person_name'],
+            'link_applicant_work_person_position' => $row['link_applicant_work_person_position'],
+            'link_applicant_work_person_credit' => $row['link_applicant_work_person_credit'],            
             //'production_budget_local_currency' => $row['production_budget_local_currency'],
 
 
