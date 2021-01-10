@@ -29,7 +29,7 @@ class TableEditMovieCrews extends TableEditBase
         return parent::defaults();
     }
 
-    protected function rules()
+    static function rules()
     {
         return [
             'editing.points' => 'required|numeric',
@@ -40,7 +40,7 @@ class TableEditMovieCrews extends TableEditBase
             'editing.person.nationality1' => 'required|string|max:255',
             'editing.person.nationality2' => 'string|max:255',
             'editing.person.country_of_residence' => 'string|max:255',
-        ] + parent::rules();
+        ] + TableEditBase::rules();
     }
 
     protected function validationAttributes()
@@ -54,7 +54,7 @@ class TableEditMovieCrews extends TableEditBase
             'editing.person.nationality1' => 'nationality 1',
             'editing.person.nationality2' => 'nationality 2',
             'editing.person.country_of_residence' => 'residence country',
-        ] + parent::validationAttributes();
+        ];
     }
 
     private function load()

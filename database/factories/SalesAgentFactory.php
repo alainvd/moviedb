@@ -28,6 +28,7 @@ class SalesAgentFactory extends BaseFactory
             'country_id' => $this->getRelationId(Country::class),
             'contact_person' => $this->faker->name,
             'email' => $this->faker->safeEmail,
+            'distribution_date' => $this->faker->date,
         ];
     }
 }

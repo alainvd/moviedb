@@ -1,17 +1,26 @@
 <div>
     
     <div class="mb-8 text-lg">
-        Producers
+        @if($fiche=='dist')
+        Production Structure
+        @endif
+        @if($fiche=='devPrev')
+        Production Structure
+        @endif
+        @if($fiche=='devCurrent')
+        Estimated Production Structure
+        @endif
     </div>
 
-    <div>
+    <div x-data="{ budget_total: {{ $budget_total }} }">
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Role</x-table.heading>
                 <x-table.heading>Name</x-table.heading>
-                <x-table.heading>City</x-table.heading>
+                @if($fiche == 'dist')<x-table.heading>City</x-table.heading>@endif
                 <x-table.heading>Country</x-table.heading>
                 <x-table.heading>Share</x-table.heading>
+                @if($fiche == 'devPrev')<x-table.heading>Budget</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
             
@@ -20,9 +29,10 @@
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
+                    @if($fiche == 'dist')<x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>@endif
                     <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['share'] }}%</x-table.cell>
+                    @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ $item['budget'] }}€</x-table.cell>@endif
                     <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
@@ -33,6 +43,11 @@
         </x-table>
 
         <div class="mt-5 text-right">
+            @if($fiche == 'devPrev')
+            <span class="mr-4">
+                TOTAL BUDGET: <span class="font-bold" x-text="budget_total"></span>€
+            </span>
+            @endif
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
@@ -78,6 +93,7 @@
                         @enderror
                     </div>
 
+                    @if($fiche == 'dist')
                     <div>
                         <x-form.input
                             :id="'producer_city'"
@@ -90,6 +106,7 @@
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
 
                     <div>
                         <x-form.select
@@ -121,6 +138,22 @@
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    @if($fiche == 'devPrev')
+                    <div>
+                        <x-form.input-trailing
+                            :id="'producer_budget'"
+                            :label="'Budget'"
+                            :trailing="'€'"
+                            :hasError="$errors->has('editing.budget')"
+                            wire:model="editing.budget"
+                        > 
+                        </x-form.input>
+                        @error('editing.budget')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
 
                 </div>
                 

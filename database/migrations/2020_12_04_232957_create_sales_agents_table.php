@@ -20,6 +20,7 @@ class CreateSalesAgentsTable extends Migration
             $table->integer('country_id');
             $table->string('contact_person');
             $table->string('email');
+            $table->date('distribution_date');
             $table->timestamps();
         });
     }

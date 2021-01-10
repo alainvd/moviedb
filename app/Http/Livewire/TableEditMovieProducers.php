@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Movie;
 use App\Producer;
 use App\Models\Country;
-use Illuminate\Validation\Rule;
 
 class TableEditMovieProducers extends TableEditBase
 {
@@ -16,24 +15,27 @@ class TableEditMovieProducers extends TableEditBase
 
     public $producer_roles = [];
 
+    public $budget_total = 0;
+
     protected function defaults()
     {
-        return parent::defaults();
+        return [
+            'city' => '',
+            'budget' => null,
+        ] + parent::defaults();
     }
 
-    protected function rules()
+    static function rules()
     {
         return [
             'editing.media_id' => '',
-            'editing.role' => [
-                'required',
-                Rule::in(array_keys($this->producer_roles))
-            ],
+            'editing.role' => ['required'],
             'editing.name' => 'required|string|max:255',
             'editing.city' => 'required|string|max:255',
             'editing.country_id' => 'required',
             'editing.share' => 'required|integer|min:1|max:100',
-        ] + parent::rules();
+            'editing.budget' => '',
+        ] + TableEditBase::rules();
     }
 
     protected function validationAttributes()
@@ -45,7 +47,8 @@ class TableEditMovieProducers extends TableEditBase
             'editing.city' => 'city',
             'editing.country_id' => 'country',
             'editing.share' => 'share',
-        ] + parent::validationAttributes();
+            'editing.budget' => 'budget',
+        ];
     }
 
     private function load()
@@ -66,7 +69,7 @@ class TableEditMovieProducers extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-producers');
+        return view('livewire.table-edit-movie-producers', ['fiche' => 'dist']);
     }
 
     protected function sendItems()

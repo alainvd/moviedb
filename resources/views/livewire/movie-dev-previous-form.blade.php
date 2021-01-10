@@ -10,10 +10,9 @@
 
             <!-- basic -->
             <div class="my-8">
-                <x-details.basic
+                <x-details.basic-dev-prev
                     :movie="$movie"
                     :isApplicant="$isApplicant"
-                    :audiences="$audiences"
                     :countries="$countries"
                     :filmTypes="$filmTypes"
                     :genres="$genres"
@@ -28,40 +27,54 @@
             </div>
 
             <!-- cast/crew -->
+            <!--
             <div class="my-8" id="table-crews">
                 @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
             </div>
+            -->
 
             <!-- points -->
+            <!--
             <div class="my-8">
                 <x-details.points
                     :movie="$movie"
                     :countries="$countries"></x-details.summary>
             </div>
+            -->
 
             <!-- photography -->
             <div class="my-8">
-                <x-details.photography
+                <x-details.photography-dev-prev
                     :movie="$movie"
                     :filmFormats="$filmFormats"
-                    :languages="$languages"></x-details.photography>
+                    :languages="$languages"
+                    :audiences="$audiences"></x-details.photography>
+            </div>
+
+            <!-- link applicant work-->
+            <div class="my-8">
+                <x-details.link-applicant-work
+                    :movie="$movie"
+                    :linkApplicantWork="$linkApplicantWork"></x-details>
             </div>
 
             <!-- producers -->
             <div class="my-8" id="table-producers">
-                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
+                @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, $backoffice => false])
             </div>
 
             <!-- Total budget -->
+            <!--
             <div class="my-8">
                 <x-details.budget
                     :currencies="$currencies"
                     ></x-details.budget>
             </div>
+            -->
 
             <!-- agents -->
             <div class="my-8" id="table-agents">
-                @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
+                @livewire('table-edit-movie-sales-agents-dev-previous', ['movie_id' => $movie->id])
             </div>
 
             <div class="my-8">

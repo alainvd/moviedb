@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="grid grid-cols-2 gap-4 md:grid-cols-3">
     <div class="col-span-1">
         <x-form.datepicker
             :id="'photography_start'"
@@ -8,20 +8,20 @@
         </x-form.datepicker>
 
         @error('movie.photography_start')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-span-1">
         <x-form.datepicker
-            :id="'end_photography'"
+            :id="'photography_end'"
             :label="'End Date of Principal Photography'"
             :hasError="$errors->has('movie.photography_end')"
             wire:model="movie.photography_end">
         </x-form.datepicker>
 
         @error('movie.photography_end')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -39,7 +39,7 @@
         </x-form.select>
 
         @error('shootingLanguage')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -52,7 +52,7 @@
         </x-form.input>
 
         @error('movie.film_length')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -70,7 +70,7 @@
         </x-form.select>
 
         @error('movie.film_format')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 </div>
