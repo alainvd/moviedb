@@ -2,8 +2,8 @@
 
 use App\Call;
 use App\Http\Controllers\MovieController;
-use App\Http\Controllers\MovieDetailsController;
-use App\Http\Livewire\MovieDetailForm;
+use App\Http\Livewire\MovieDistForm;
+use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,10 +23,6 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('movies', [MovieController::class,'index'])->name('movies');
-Route::get('/movie/detail/eacea/{movie}', [MovieDetailsController::class, 'showForBackoffice'])->name('movie_detail_eacea');
-Route::get('/movie/eacea/create', [MovieDetailsController::class, 'createForBackoffice'])->name('movie_create_eacea');
-Route::get('/movie/detail/applicant/{movie}', [MovieDetailsController::class, 'showForApplicant'])->name('movie_detail_applicant');
-Route::get('/movie/applicant/create', [MovieDetailsController::class, 'createForApplicant'])->name('movie_create_applicant');
 
 Route::resource('call', '\App\Http\Controllers\CallController')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->only('index');
@@ -113,7 +109,9 @@ Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->onl
 
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDetailForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);

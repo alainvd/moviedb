@@ -19,7 +19,7 @@ use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
 
 
-class MovieDetailForm extends Component
+class MovieDistForm extends Component
 {
 
     public $isNew = false;
@@ -273,7 +273,7 @@ class MovieDetailForm extends Component
             $this->emit('validation-errors');
         }
 
-        return view('livewire.movie-detail-form')
+        return view('livewire.movie-dist-form')
             ->layout('components.layout');
     }
 

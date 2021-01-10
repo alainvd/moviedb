@@ -30,8 +30,8 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'livewire.movie-detail-form',
-            'App\Http\View\Composers\MovieDetailsFormComposer',
+            'livewire.movie-dist-form',
+            'App\Http\View\Composers\MovieDistFormComposer',
         );
         View::composer(
             'livewire.movie-dev-previous-form',

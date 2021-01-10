@@ -10,7 +10,7 @@ use App\Models\Status;
 use App\Producer;
 use Illuminate\View\View;
 
-class MovieDetailsFormComposer
+class MovieDistFormComposer
 {
     /**
      * Bind data to the view
