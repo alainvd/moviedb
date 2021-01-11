@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-budget">
 
     <div class="col-span-1">
         <x-form.currency-amount
@@ -15,10 +15,10 @@
         </x-form.currency-amount>
 
         @error('movie.total_budget_currency_amount')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
         @error('movie.total_budget_currency_code')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -33,7 +33,7 @@
         </x-form.input>
 
         @error('movie.total_budget_currency_rate')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
@@ -48,7 +48,7 @@
         </x-form.input>
 
         @error('movie.total_budget_euro')
-            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 

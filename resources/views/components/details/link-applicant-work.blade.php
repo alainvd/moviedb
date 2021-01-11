@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1">
+<div class="grid grid-cols-1 fiche-details-component" id="fdc-link-applicant-work">
 
     <div class="col-span-1">
         <x-form.select

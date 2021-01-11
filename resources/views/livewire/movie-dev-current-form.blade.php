@@ -10,7 +10,7 @@
 
             <!-- basic -->
             <div class="my-8">
-                <x-details.basic
+                <x-details.basic-dev-current
                     :movie="$movie"
                     :isApplicant="$isApplicant"
                     :audiences="$audiences"
@@ -18,6 +18,7 @@
                     :filmTypes="$filmTypes"
                     :genres="$genres"
                     :platforms="$platforms"
+                    :userExperiences="$userExperiences"
                     :statuses="$statuses"
                     :years="$years"></x-details.basic>
             </div>
@@ -25,6 +26,14 @@
             <!-- summary -->
             <div class="my-8">
                 <x-details.summary :movie="$movie"></x-details.summary>
+            </div>
+
+            <!-- photography -->
+            <div class="my-8">
+                <x-details.photography-dev-current
+                    :movie="$movie"
+                    :filmFormats="$filmFormats"
+                    :languages="$languages"></x-details.photography>
             </div>
 
             <!-- cast/crew -->

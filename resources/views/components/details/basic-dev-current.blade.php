@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic-dev-prev">
+<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic-dev-current">
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
         <x-form.input
             :id="'original_title'"
@@ -52,18 +52,20 @@
 
     <div class="col-span-1">
         <x-form.select
-            :id="'copyright'"
-            :label="'Copyright'"
-            :hasError="$errors->has('movie.year_of_copyright')"
-            wire:model="movie.year_of_copyright">
+            :id="'audience'"
+            :label="'Target audience'"
+            :hasError="$errors->has('media.audience_id')"
+            wire:model="media.audience_id">
 
-            @foreach($years as $year)
-                <option value="{{$year}}">{{ $year }}</option>
+            @foreach ($audiences as $audience)
+                <option value="{{ $audience['id'] }}">
+                    {{ $audience['name'] }}
+                </option>
             @endforeach
 
         </x-form.select>
 
-        @error('movie.year_of_copyright')
+        @error('media.audience_id')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
@@ -82,6 +84,60 @@
         </x-form.select>
 
         @error('media.genre_id')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-span-1">
+        <x-form.select
+            :id="'delivery_platform'"
+            :label="'Film Delivery Platform'"
+            :hasError="$errors->has('media.delivery_platform_id')"
+            wire:model="media.delivery_platform_id">
+
+            @foreach($platforms as $key => $platform)
+                <option value="{{$key}}">{{$platform}}</option>
+            @endforeach
+
+        </x-form.select>
+
+        @error('media.delivery_platform_id')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-span-1">
+        <x-form.select
+            :id="'user_experience'"
+            :label="'User Experience'"
+            :hasError="$errors->has('movie.user_experience')"
+            wire:model="movie.user_experience">
+
+            @foreach($userExperiences as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
+            @endforeach
+
+        </x-form.select>
+
+        @error('movie.user_experience')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-span-1">
+        <x-form.select
+            :id="'film_type'"
+            :label="'Film Type'"
+            :hasError="$errors->has('movie.film_type')"
+            wire:model="movie.film_type">
+
+            @foreach ($filmTypes as $type)
+                <option value="{{$type}}">{{$type}}</option>
+            @endforeach
+
+        </x-form.select>
+
+        @error('movie.film_type')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>

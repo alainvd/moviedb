@@ -10,7 +10,7 @@ use App\Models\Status;
 use App\Producer;
 use Illuminate\View\View;
 
-class MovieDistFormComposer
+class MovieFicheFormComposer
 {
     /**
      * Bind data to the view
@@ -53,6 +53,14 @@ class MovieDistFormComposer
             'CHF' => 'Swiss franc',
             'SEK' => 'Swedish krona',
         ];
+        $linkApplicantWork = [
+            'WRKPRODAP' => 'Work Produced by the Applicant Company',
+            'WRKPERS' => 'Work where Personnal Credit is Eligible'
+        ];
+        $userExperiences = [
+            'LINEAR' => 'Linear',
+            'INTERACTIVE' => 'Interactive, non-linear (VR)'
+        ];
 
         $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());
         $view->with('countries', $countries);
@@ -64,5 +72,7 @@ class MovieDistFormComposer
         $view->with('statuses', $statuses);
         $view->with('years', $years);
         $view->with('currencies', $currencies);
+        $view->with('linkApplicantWork', $linkApplicantWork);
+        $view->with('userExperiences', $userExperiences);
     }
 }

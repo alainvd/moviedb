@@ -62,6 +62,7 @@ class MovieFactory extends Factory
             'total_budget_euro' => $this->faker->numberBetween(1000, 1000000),
             'photography_start' => $this->faker->date(),
             'photography_end' => $this->faker->date(),
+            'user_experience' => $this->faker->randomElement(['LINEAR', 'INTERACTIVE']),
         ];
     }
 }

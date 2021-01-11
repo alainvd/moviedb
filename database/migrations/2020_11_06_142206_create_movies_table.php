@@ -60,6 +60,7 @@ class CreateMoviesTable extends Migration
             //$table->date('eu_net_change_date')->nullable();
             //$table->date('eu_net_change_name')->nullable();
             $table->text('synopsis')->nullable();
+            $table->string('user_experience')->nullable();
             $table->timestamps();
         });
     }
