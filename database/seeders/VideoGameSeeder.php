@@ -18,12 +18,12 @@ class VideoGameSeeder extends Seeder
     {
         // VideoGame::factory()->count(10)->create();
 
-        // VideoGame::all()->each(function ($videogame) {
-        //     Media::factory()->create([
-        //         'title' => $videogame->name,
-        //         'grantable_id' => $videogame->id,
-        //         'grantable_type' => "App\Videogame"
-        //     ]);
-        // });
+        //VideoGame::all()->each(function ($videogame) {
+        //    Media::factory()->create([
+        //        'title' => $videogame->name,
+        //        'grantable_id' => $videogame->id,
+        //        'grantable_type' => "App\Videogame"
+        //    ]);
+        //});
     }
 }

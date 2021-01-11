@@ -34,6 +34,7 @@ class VideoGameCreated
         Media::create([
                 "title" => $videoGame->original_title,
                 "grantable_id" => $videoGame->id,
+                "logline" => $videoGame->logline,
                 "grantable_type" => "App\Videogame",
                 "delivery_platform_id" => 0,
 

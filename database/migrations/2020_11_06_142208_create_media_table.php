@@ -16,6 +16,7 @@ class CreateMediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('title', 400);
+            $table->string('logline', 4000)->nullable();
             $table->unsignedInteger('audience_id')->nullable();
             $table->unsignedInteger('genre_id')->nullable();
             $table->unsignedBigInteger('grantable_id');
