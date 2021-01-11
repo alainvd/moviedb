@@ -39,15 +39,24 @@ class CreateMoviesTable extends Migration
             $table->string('film_type')->nullable();
             $table->string('film_format')->nullable();
             $table->decimal('film_score')->nullable();
-            //$table->string('username')->nullable();
-            //$table->date('audit_date')->nullable();
-            //$table->date('eu_net_change_date')->nullable();
-            //$table->date('eu_net_change_name')->nullable();
             $table->text('synopsis')->nullable();
+            //DEV Previous work link to the applicant
             $table->text('link_applicant_work')->nullable();
             $table->text('link_applicant_work_person_name')->nullable();
             $table->text('link_applicant_work_person_position')->nullable();
             $table->text('link_applicant_work_person_credit')->nullable();
+            //DEV Current work ownership of rights
+            $table->text('rights_origin_of_work')->nullable();
+            $table->text('rights_contract_type')->nullable();
+            $table->date('rights_contract_start_date')->nullable();
+            $table->date('rights_contract_end_date')->nullable();
+            $table->date('rights_contract_signature_date')->nullable();
+            $table->text('rights_adapt_author_name')->nullable();
+            $table->text('rights_adapt_original_title')->nullable();
+            $table->text('rights_adapt_contract_type')->nullable();
+            $table->date('rights_adapt_contract_start_date')->nullable();
+            $table->date('rights_adapt_contract_end_date')->nullable();
+            $table->date('rights_adapt_contract_signature_date')->nullable();
             $table->timestamps();
         });
     }

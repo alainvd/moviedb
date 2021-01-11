@@ -12,9 +12,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class StaffImport implements ToCollection, WithHeadingRow
+class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
 {
+
+    public function chunkSize(): int
+	{
+		return 1000;
+	}
 
     /**
      * @param Collection $collection
@@ -102,7 +108,7 @@ class StaffImport implements ToCollection, WithHeadingRow
             "firstname" => $firstName,
             "lastname" => $lastName,
             "nationality1" => $actor["film_staff_nationality_1_code"],
-            "country_of_residence" => $actor["film_staff_residence_country"]
+            "country_of_residence" => $actor["film_staff_residence_country"],
         ]);
         $person->save();
         return $person;
