@@ -16,6 +16,7 @@ class Media extends Model
      */
     protected $fillable = [
         'title',
+        'logline',
         'audience_id',
         'genre_id',
         'grantable_id',
