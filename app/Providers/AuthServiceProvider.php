@@ -32,7 +32,6 @@ class AuthServiceProvider extends ServiceProvider
             if (session()->get('cas_user')) {
                 return User::firstOrCreateByAttributes(cas()->getAttributes());
             } else return null;
-
         });
     }
 }
