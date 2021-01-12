@@ -26,22 +26,6 @@
                 <x-details.summary :movie="$movie"></x-details.summary>
             </div>
 
-            <!-- cast/crew -->
-            <!--
-            <div class="my-8" id="table-crews">
-                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
-            </div>
-            -->
-
-            <!-- points -->
-            <!--
-            <div class="my-8">
-                <x-details.points
-                    :movie="$movie"
-                    :countries="$countries"></x-details.summary>
-            </div>
-            -->
-
             <!-- photography -->
             <div class="my-8">
                 <x-details.photography-dev-prev
@@ -62,15 +46,6 @@
             <div class="my-8" id="table-producers">
                 @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, $backoffice => false])
             </div>
-
-            <!-- Total budget -->
-            <!--
-            <div class="my-8">
-                <x-details.budget
-                    :currencies="$currencies"
-                    ></x-details.budget>
-            </div>
-            -->
 
             <!-- agents -->
             <div class="my-8" id="table-agents">

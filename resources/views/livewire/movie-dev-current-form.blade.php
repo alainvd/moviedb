@@ -38,39 +38,16 @@
 
             <!-- cast/crew -->
             <div class="my-8" id="table-crews">
-                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
+                @livewire('table-edit-movie-crews-dev-current', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
             </div>
 
-            <!-- points -->
-            <div class="my-8">
-                <x-details.points
-                    :movie="$movie"
-                    :countries="$countries"></x-details.summary>
-            </div>
-
-            <!-- photography -->
-            <div class="my-8">
-                <x-details.photography
-                    :movie="$movie"
-                    :filmFormats="$filmFormats"
-                    :languages="$languages"></x-details.photography>
-            </div>
-
-            <!-- producers -->
-            <div class="my-8" id="table-producers">
-                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
-            </div>
+            <!-- Ownership -->
 
             <!-- Total budget -->
             <div class="my-8">
                 <x-details.budget
                     :currencies="$currencies"
                     ></x-details.budget>
-            </div>
-
-            <!-- agents -->
-            <div class="my-8" id="table-agents">
-                @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
             </div>
 
             <div class="my-8">

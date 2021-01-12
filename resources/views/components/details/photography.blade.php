@@ -63,8 +63,8 @@
             :hasError="$errors->has('movie.film_format')"
             wire:model="movie.film_format">
 
-            @foreach ($filmFormats as $format)
-                <option value="{{$format}}">{{$format}}</option>
+            @foreach ($filmFormats as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
             @endforeach
 
         </x-form.select>

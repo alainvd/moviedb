@@ -26,7 +26,11 @@ class TableEditMovieCrews extends TableEditBase
 
     protected function defaults()
     {
-        return parent::defaults();
+        return [
+            'editing.points' => null,
+            'editing.person.nationality2' => null,
+            'editing.person.country_of_residence' => null,
+        ] + parent::defaults();
     }
 
     static function rules()
@@ -81,7 +85,7 @@ class TableEditMovieCrews extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-crews');
+        return view('livewire.table-edit-movie-crews', ['fiche' => 'dist']);
     }
 
     protected function sendItems()
@@ -93,7 +97,9 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->points_total = 0;
         foreach ($this->items as $item) {
-            $this->points_total += $item['points'];
+            if (isset($item['points'])) {
+                $this->points_total += $item['points'];
+            }
         }
     }
 

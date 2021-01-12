@@ -93,8 +93,8 @@
             :hasError="$errors->has('media.delivery_platform_id')"
             wire:model="media.delivery_platform_id">
 
-            @foreach($platforms as $key => $platform)
-                <option value="{{$key}}">{{$platform}}</option>
+            @foreach($platforms as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
             @endforeach
 
         </x-form.select>
@@ -131,8 +131,8 @@
             :hasError="$errors->has('movie.film_type')"
             wire:model="movie.film_type">
 
-            @foreach ($filmTypes as $type)
-                <option value="{{$type}}">{{$type}}</option>
+            @foreach ($filmTypes as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
             @endforeach
 
         </x-form.select>

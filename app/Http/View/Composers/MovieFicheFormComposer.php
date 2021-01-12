@@ -30,18 +30,18 @@ class MovieFicheFormComposer
             ])
             ->toArray();
         $platforms = [
-            'Features / Cinema',
-            'TV',
-            'Digital',
+            1 => 'Features / Cinema',
+            2 => 'TV',
+            3 => 'Digital',
         ];
         $filmFormats = [
-            '35mm',
-            'Digital',
-            'Other',
+            '35MM' => '35mm',
+            'DIGITAL' => 'Digital',
+            'OTHER' => 'Other',
         ];
         $filmTypes = [
-            'One-off',
-            'Series',
+            'ONEOFF' => 'One-off',
+            'SERIES' => 'Series',
         ];
         $statuses = Status::all()->toArray();
         $years = range(date('Y'), 1940);

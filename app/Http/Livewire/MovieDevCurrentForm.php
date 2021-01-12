@@ -72,11 +72,12 @@ class MovieDevCurrentForm extends Component
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
         // 'shootingLanguage' => 'required|integer',
         'shootingLanguage' => 'integer',
+        'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer',
-        'movie.film_format' => 'required|string|max:255',
+        'movie.number_of_episodes' => 'integer',
+        'movie.length_of_episodes' => 'integer',
 
         'movie.total_budget_currency_amount' => 'required|integer',
         'movie.total_budget_currency_code' => 'required|string|max:255',
