@@ -61,6 +61,14 @@ class MovieFicheFormComposer
             'LINEAR' => 'Linear',
             'INTERACTIVE' => 'Interactive, non-linear (VR)'
         ];
+        $workOrigins = [
+            'ORIGINAL' => 'Original Work',
+            'ADAPTATION' => 'Adaptation'
+        ];
+        $workContractTypes = [
+            'ONE' => 'One',
+            'TWO' => 'Two',
+        ];
 
         $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());
         $view->with('countries', $countries);
@@ -74,5 +82,7 @@ class MovieFicheFormComposer
         $view->with('currencies', $currencies);
         $view->with('linkApplicantWork', $linkApplicantWork);
         $view->with('userExperiences', $userExperiences);
+        $view->with('workOrigins', $workOrigins);
+        $view->with('workContractTypes', $workContractTypes);
     }
 }

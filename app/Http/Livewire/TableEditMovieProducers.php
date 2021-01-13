@@ -13,6 +13,8 @@ class TableEditMovieProducers extends TableEditBase
 
     public $countries = [];
 
+    public $languages = [];
+
     public $producer_roles = [];
 
     public $budget_total = 0;
@@ -21,7 +23,9 @@ class TableEditMovieProducers extends TableEditBase
     {
         return [
             'city' => '',
+            'language_id' => null,
             'budget' => null,
+            'share' => null,
         ] + parent::defaults();
     }
 
@@ -46,6 +50,7 @@ class TableEditMovieProducers extends TableEditBase
             'editing.name' => 'name',
             'editing.city' => 'city',
             'editing.country_id' => 'country',
+            'editing.language_id' => 'language',
             'editing.share' => 'share',
             'editing.budget' => 'budget',
         ];

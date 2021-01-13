@@ -42,12 +42,21 @@
             </div>
 
             <!-- Ownership -->
-
-            <!-- Total budget -->
             <div class="my-8">
-                <x-details.budget
-                    :currencies="$currencies"
-                    ></x-details.budget>
+                <x-details.ownership
+                    :workOrigins="$workOrigins"
+                    :workContractTypes="$workContractTypes"
+                    :movie="$movie"></x-details.photography>
+            </div>
+
+            <!-- producers-dev-current -->
+            <div class="my-8" id="table-producers">
+                @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, $backoffice => false])
+            </div>
+
+            <!-- budget-dev-current -->
+            <div class="my-8">
+                <x-details.budget-dev-current></x-details.budget>
             </div>
 
             <div class="my-8">

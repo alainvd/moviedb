@@ -42,12 +42,12 @@
                     :linkApplicantWork="$linkApplicantWork"></x-details>
             </div>
 
-            <!-- producers -->
+            <!-- producers-dev-previous -->
             <div class="my-8" id="table-producers">
                 @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, $backoffice => false])
             </div>
 
-            <!-- agents -->
+            <!-- agents-dev-previous -->
             <div class="my-8" id="table-agents">
                 @livewire('table-edit-movie-sales-agents-dev-previous', ['movie_id' => $movie->id])
             </div>

@@ -5,8 +5,6 @@ namespace App\Http\Livewire;
 class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
 {
 
-    public $budget_total = 0;
-
     static function rules()
     {
         return [

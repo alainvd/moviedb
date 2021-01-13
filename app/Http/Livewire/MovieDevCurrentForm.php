@@ -70,7 +70,6 @@ class MovieDevCurrentForm extends Component
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string',
 
-        'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         // 'shootingLanguage' => 'required|integer',
         'shootingLanguage' => 'integer',
@@ -79,9 +78,19 @@ class MovieDevCurrentForm extends Component
         'movie.number_of_episodes' => 'integer',
         'movie.length_of_episodes' => 'integer',
 
-        'movie.total_budget_currency_amount' => 'required|integer',
-        'movie.total_budget_currency_code' => 'required|string|max:255',
-        'movie.total_budget_currency_rate' => 'required|numeric',
+        'movie.rights_origin_of_work' => 'required|string',
+        'movie.rights_contract_type' => 'required|string',
+        'movie.rights_contract_start_date' => 'required|date:d.m.Y',
+        'movie.rights_contract_end_date' => 'required|date:d.m.Y',
+        'movie.rights_contract_signature_date' => 'required|date:d.m.Y',
+        // dependant fields
+        'movie.rights_adapt_author_name' => 'string',
+        'movie.rights_adapt_original_title' => 'string',
+        'movie.rights_adapt_contract_type' => 'string',
+        'movie.rights_adapt_contract_start_date' => 'date:d.m.Y',
+        'movie.rights_adapt_contract_end_date' => 'date:d.m.Y',
+        'movie.rights_adapt_contract_signature_date' => 'date:d.m.Y',
+
         'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
