@@ -23,18 +23,11 @@ class TableEditBase extends Component
         return ['key' => Str::random(10)];
     }
 
-    protected function rules()
+    static function rules()
     {
         return [
             'editing.id' => '',
             'editing.key' => ''
-        ];
-    }
-
-    protected function validationAttributes()
-    {
-        return [
-        'editing.id' => 'id',
         ];
     }
 

@@ -20,7 +20,9 @@ class Producer extends Model
         'name',
         'city',
         'country_id',
+        'language_id',
         'share',
+        'budget',
     ];
 
     /**

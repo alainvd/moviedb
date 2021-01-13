@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-points">
     <div class="col-span-1">
         <x-form.select
             :id="'film_country_of_origin'"

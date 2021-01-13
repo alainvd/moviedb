@@ -21,6 +21,11 @@ class SalesAgent extends Model
         'country_id',
         'contact_person',
         'email',
+        'distribution_date',
+    ];
+
+    protected $dates = [
+        'distribution_date',
     ];
 
     /**
@@ -30,8 +35,8 @@ class SalesAgent extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'distribution_date' => 'date:d.m.Y'
     ];
-
 
     public function country()
     {

@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic">
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
         <x-form.input
             :id="'original_title'"
@@ -93,8 +93,8 @@
             :hasError="$errors->has('media.delivery_platform_id')"
             wire:model="media.delivery_platform_id">
 
-            @foreach($platforms as $key => $platform)
-                <option value="{{$key}}">{{$platform}}</option>
+            @foreach($platforms as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
             @endforeach
 
         </x-form.select>
@@ -131,8 +131,8 @@
             :hasError="$errors->has('movie.film_type')"
             wire:model="movie.film_type">
 
-            @foreach ($filmTypes as $type)
-                <option value="{{$type}}">{{$type}}</option>
+            @foreach ($filmTypes as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
             @endforeach
 
         </x-form.select>

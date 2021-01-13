@@ -26,10 +26,14 @@ class TableEditMovieCrews extends TableEditBase
 
     protected function defaults()
     {
-        return parent::defaults();
+        return [
+            'editing.points' => null,
+            'editing.person.nationality2' => null,
+            'editing.person.country_of_residence' => null,
+        ] + parent::defaults();
     }
 
-    protected function rules()
+    static function rules()
     {
         return [
             'editing.points' => 'required|numeric',
@@ -40,7 +44,7 @@ class TableEditMovieCrews extends TableEditBase
             'editing.person.nationality1' => 'required|string|max:255',
             'editing.person.nationality2' => 'string|max:255',
             'editing.person.country_of_residence' => 'string|max:255',
-        ] + parent::rules();
+        ] + TableEditBase::rules();
     }
 
     protected function validationAttributes()
@@ -54,7 +58,7 @@ class TableEditMovieCrews extends TableEditBase
             'editing.person.nationality1' => 'nationality 1',
             'editing.person.nationality2' => 'nationality 2',
             'editing.person.country_of_residence' => 'residence country',
-        ] + parent::validationAttributes();
+        ];
     }
 
     private function load()
@@ -81,7 +85,7 @@ class TableEditMovieCrews extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-crews');
+        return view('livewire.table-edit-movie-crews', ['fiche' => 'dist']);
     }
 
     protected function sendItems()
@@ -93,7 +97,9 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->points_total = 0;
         foreach ($this->items as $item) {
-            $this->points_total += $item['points'];
+            if (isset($item['points'])) {
+                $this->points_total += $item['points'];
+            }
         }
     }
 

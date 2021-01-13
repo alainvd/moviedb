@@ -1,7 +1,12 @@
 <div>
     
     <div class="mb-8 text-lg">
+        @if($fiche == 'dist')
         Sales Agents
+        @endif
+        @if($fiche == 'devPrev')
+        Distribution
+        @endif
     </div>
 
     <div>
@@ -9,8 +14,9 @@
             <x-slot name="head">
                 <x-table.heading>Name</x-table.heading>
                 <x-table.heading>Country</x-table.heading>
-                <x-table.heading>Contact Person</x-table.heading>
-                <x-table.heading>Email</x-table.heading>
+                @if($fiche=='dist')<x-table.heading>Contact Person</x-table.heading>@endif
+                @if($fiche=='dist')<x-table.heading>Email</x-table.heading>@endif
+                @if($fiche=='devPrev')<x-table.heading>Date</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
             
@@ -19,8 +25,9 @@
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>@endif
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>@endif
+                    @if($fiche=='devPrev')<x-table.cell class="text-center">{{ $item['distribution_date'] }}</x-table.cell>@endif
                     <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
@@ -40,7 +47,12 @@
     <form class="space-y-2">
         <x-modal.dialog wire:model="showingEditModal">
             <x-slot name="title">
+                @if($fiche == 'dist')
                 Add/Edit sales agent
+                @endif
+                @if($fiche == 'devPrev')
+                Add/Edit distribution
+                @endif
             </x-slot>
 
             <x-slot name="content">
@@ -76,6 +88,7 @@
                         @enderror
                     </div>
 
+                    @if($fiche == 'dist')
                     <div>
                         <x-form.input
                             :id="'agents_contact_person'"
@@ -88,7 +101,9 @@
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
 
+                    @if($fiche == 'dist')
                     <div>
                         <x-form.input
                             :id="'agents_email'"
@@ -101,6 +116,22 @@
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
+
+                    @if($fiche == 'devPrev')
+                    <div class="col-span-1">
+                        <x-form.datepicker
+                            :id="'agents_distribution_date'"
+                            :label="'Date'"
+                            :hasError="$errors->has('editing.distribution_date')"
+                            wire:model.lazy="editing.distribution_date">
+                        </x-form.datepicker>
+                
+                        @error('editing.distribution_date')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
 
                 </div>
                 <div class="flex items-center justify-end mt-4 space-x-3">

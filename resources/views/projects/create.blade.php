@@ -1,15 +1,15 @@
 <x-landing-layout>
 
-    <div class="my-8 py-8 px-4 md:px-8 lg:px-16 bg-white">
+    <div class="px-4 py-8 my-8 bg-white md:px-8 lg:px-16">
         <!-- Title -->
-        <h1 class="text-2xl leading-tight font-light">European Slate Development</h1>
+        <h1 class="text-2xl font-light leading-tight">European Slate Development</h1>
 
         <form action="{{ route('projects.update', $dossier->id) }}" method="POST">
             @csrf
             {{ method_field('PATCH') }}
             <!-- Dossier details section -->
             <x-layout.section :title="'Application Information'">
-                <div class="my-4 grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 my-4">
                     <div class="col-span-1">
                         <x-form.input
                             :id="'call-reference'"
@@ -35,7 +35,7 @@
                             value="{{$dossier->company}}"></x-form.input>
 
                         @error('company')
-                            <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="col-span-1">
@@ -67,7 +67,7 @@
                 @endforeach
             </x-layout.section>
 
-             <div x-data class="mt-32 flex justify-end items-center space-x-3">
+             <div x-data class="flex items-center justify-end mt-32 space-x-3">
                 <x-button.primary type="submit">Save</x-button.primary>
              </div>
         </form>

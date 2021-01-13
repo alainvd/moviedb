@@ -35,13 +35,17 @@ class EULoginAuth
             session()->put('cas_user', $this->cas->user());
 
             if (cas()->isMasquerading()) {
+                $user = User::where('eu_login_username', $this->cas->user())
+                    ->first();
+
+                if (! $user) {
+                    $user = User::factory()->make([
+                        'eu_login_username' => $this->cas->user(),
+                    ])->assignRole('applicant');
+                }
+
                 cas()->setAttributes(
-                    [
-                        "email" => $this->cas->user() . "@fake.eu",
-                        "firstName" => "Masquerade",
-                        "lastName" => "User",
-                        "uid" => $this->cas->user()
-                    ]
+                    $user->toArray()
                 );
             }
 

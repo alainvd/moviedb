@@ -43,16 +43,14 @@ class User extends Authenticatable
 
     public static function firstOrCreateByAttributes($attributes)
     {
-        $password = Str::random(16);
+        $attributes['password'] = Str::random(16);
 
         // Check if there is a user associated with this email
         return User::firstOrCreate(
-            ['eu_login_username' => $attributes['uid']],
             [
-                'name' => $attributes['firstName'] . ' ' . $attributes['lastName'],
-                'email' => $attributes['email'],
-                'password' => $password,
-            ]
+                'eu_login_username' => $attributes['eu_login_username']
+            ],
+            $attributes
         );
     }
 }

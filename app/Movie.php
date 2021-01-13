@@ -35,6 +35,12 @@ class Movie extends Model implements Grantable
     protected $dates = [
         'photography_start',
         'photography_end',
+        'rights_contract_start_date',
+        'rights_contract_end_date',
+        'rights_contract_signature_date',
+        'rights_adapt_contract_start_date',
+        'rights_adapt_contract_end_date',
+        'rights_adapt_contract_signature_date',
     ];
 
     /**
@@ -45,7 +51,13 @@ class Movie extends Model implements Grantable
     protected $casts = [
         'id' => 'integer',
         'photography_start' => 'date:d.m.Y',
-        'photography_end' => 'date:d.m.Y'
+        'photography_end' => 'date:d.m.Y',
+        'rights_contract_start_date' => 'date:d.m.Y',
+        'rights_contract_end_date' => 'date:d.m.Y',
+        'rights_contract_signature_date' => 'date:d.m.Y',
+        'rights_adapt_contract_start_date' => 'date:d.m.Y',
+        'rights_adapt_contract_end_date' => 'date:d.m.Y',
+        'rights_adapt_contract_signature_date' => 'date:d.m.Y',
     ];
 
     public function media()

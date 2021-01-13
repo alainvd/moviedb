@@ -1,4 +1,4 @@
-<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-3 gap-4 fiche-details-component" id="fdc-summary">
     <div class="col-span-3 md:col-span-1">
         <x-form.input
             :id="'imdb'"
