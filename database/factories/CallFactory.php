@@ -3,11 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Action;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Call;
 
-class CallFactory extends Factory
+class CallFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -51,11 +49,14 @@ class CallFactory extends Factory
             $this->faker->randomDigitNotNull()
         );
 
+        $action = Action::all()->random();
+
+        // @TODO refactor
         return [
             // H2020-LC-GD-2020-3
-            'name' => $name,
-            // 'action' => $this->faker->randomElement($actions),
-            'action_id' => Action::where('name', 'DEVSLATE')->first()->id,
+            'name' => $name . '-' . $action->name,
+            // 'action_id' => $this->getRelationId(Action::class),
+            'action_id' => $action->id,
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(["open","closed"]),

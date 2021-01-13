@@ -5,6 +5,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDetailsController;
 use App\Http\Livewire\MovieDetailForm;
 use App\Http\Controllers\ProjectController;
+use App\Models\Action;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +50,6 @@ Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index
 
 Route::get('homepage', function () {
     $calls = Call::where('status', 'open')
-        ->whereIn('action', ['DEVSLATE'])
         ->get();
     return view('homepage', compact('calls'));
 })->name('homepage');

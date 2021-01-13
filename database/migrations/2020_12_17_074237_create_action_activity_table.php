@@ -16,6 +16,7 @@ class CreateActionActivityTable extends Migration
         Schema::create('action_activity', function (Blueprint $table) {
             $table->unsignedBigInteger('activity_id');
             $table->unsignedBigInteger('action_id');
+            $table->string('rules', 4095)->nullable();
         });
     }
 
