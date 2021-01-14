@@ -13,7 +13,8 @@ class TableEditMovieCrews extends TableEditBase
 
     public Movie $movie;
 
-    public $backoffice = false;
+    public $isApplicant = false;
+    public $isEditor = false;
 
     public $titles = [];
 
@@ -69,7 +70,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null, $backoffice = false)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
         $this->genders = Person::GENDERS;
@@ -79,7 +80,8 @@ class TableEditMovieCrews extends TableEditBase
             $this->movie = Movie::find($movie_id);
             $this->load();
         }
-        $this->backoffice = $backoffice;
+        $this->isApplicant = $isApplicant;
+        $this->isEditor = $isEditor;
         $this->recalculatePoints();
     }
 

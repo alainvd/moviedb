@@ -17,6 +17,7 @@ use App\Person;
 use App\Producer;
 use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class MovieDevCurrentForm extends Component
@@ -24,6 +25,7 @@ class MovieDevCurrentForm extends Component
 
     public $isNew = false;
     public $isApplicant = false;
+    public $isEditor = false;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -99,7 +101,7 @@ class MovieDevCurrentForm extends Component
         ];
     }
 
-    public function mount()
+    public function mount(Request $request)
     {
         // $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
@@ -118,6 +120,18 @@ class MovieDevCurrentForm extends Component
             $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
+        }
+
+        if (Auth::user()->hasRole('applicant')) {
+            $this->isApplicant = true;
+        }
+        if (Auth::user()->hasRole('editor')) {
+            $this->isEditor = true;
+        }
+
+        if($request->input('editor')) {
+            $this->isApplicant = false;
+            $this->isEditor = true;
         }
 
         // @TODO use role here after fixing hydration issue for masquerade user

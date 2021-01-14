@@ -13,7 +13,7 @@
                 <x-table.heading>Nationality 1</x-table.heading>
                 @if($fiche=='dist')<x-table.heading>Nationality 2</x-table.heading>@endif
                 @if($fiche=='dist')<x-table.heading>Residence</x-table.heading>@endif
-                @if ($backoffice && $fiche=='dist')<x-table.heading>Scoring</x-table.heading>@endif
+                @if ($isEditor && $fiche=='dist')<x-table.heading>Scoring</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
 
@@ -26,7 +26,7 @@
                     <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_key[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countries_by_key[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countries_by_key[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
-                    @if ($backoffice && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
+                    @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
@@ -37,7 +37,7 @@
         </x-table>
 
         <div class="mt-5 text-right">
-            @if ($backoffice && $fiche=='dist')
+            @if ($isEditor && $fiche=='dist')
             <span class="mr-4">
                 TOTAL SCORE: <span class="font-bold" x-text="points_total"></span>
             </span>
@@ -172,7 +172,7 @@
                     </div>
                     @endif
 
-                    @if($backoffice && $fiche=='dist')
+                    @if($isEditor && $fiche=='dist')
                     <div>
                         <x-form.input
                             :id="'crews_points'"

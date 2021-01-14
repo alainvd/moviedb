@@ -29,7 +29,7 @@
 
             <!-- cast/crew -->
             <div class="my-8" id="table-crews">
-                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'backoffice' => $backoffice])
+                @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
             <!-- points -->
@@ -49,7 +49,7 @@
 
             <!-- producers -->
             <div class="my-8" id="table-producers">
-                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, $backoffice => false])
+                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
             <!-- Total budget -->

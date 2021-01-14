@@ -17,6 +17,7 @@ use App\Person;
 use App\Producer;
 use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class MovieDevPreviousForm extends Component
@@ -24,6 +25,7 @@ class MovieDevPreviousForm extends Component
 
     public $isNew = false;
     public $isApplicant = false;
+    public $isEditor = false;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -83,7 +85,7 @@ class MovieDevPreviousForm extends Component
         ];
     }
 
-    public function mount()
+    public function mount(Request $request)
     {
         // $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
@@ -105,9 +107,16 @@ class MovieDevPreviousForm extends Component
             // dd($this->producers);
         }
 
-        // @TODO use role here after fixing hydration issue for masquerade user
-        if (Auth::user()->eu_login_username === 'mediadb-applicant') {
+        if (Auth::user()->hasRole('applicant')) {
             $this->isApplicant = true;
+        }
+        if (Auth::user()->hasRole('editor')) {
+            $this->isEditor = true;
+        }
+
+        if($request->input('editor')) {
+            $this->isApplicant = false;
+            $this->isEditor = true;
         }
 
         if ($this->isApplicant && $this->isNew) {

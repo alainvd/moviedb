@@ -44,7 +44,7 @@
 
             <!-- producers-dev-previous -->
             <div class="my-8" id="table-producers">
-                @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, $backoffice => false])
+                @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
             <!-- agents-dev-previous -->
