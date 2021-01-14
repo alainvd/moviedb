@@ -52,10 +52,37 @@ class MovieDistForm extends Component
         'removeItem' => 'removeShootingLanguage'
     ];
 
-    /**
-     * Each wired fields needs to be here or it will be filtered
-     */
-    protected $rules = [
+    protected $rulesApplicant = [
+        'movie.original_title' => 'required|string|max:255',
+        'fiche.status_id' => 'required|integer',
+        'movie.film_country_of_origin' => 'string|max:255',
+        'movie.year_of_copyright' => 'integer',
+        'media.genre_id' => 'required|integer',
+        'media.delivery_platform_id' => 'required|integer',
+        'media.audience_id' => 'required|integer',
+        'movie.film_type' => 'required|string',
+
+        'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        // 'movie.country_of_origin_points' => 'numeric',
+        'movie.photography_start' => 'required|date:d.m.Y',
+        'movie.photography_end' => 'required|date:d.m.Y',
+        // 'shootingLanguage' => 'required|integer',
+        'shootingLanguage' => 'integer',
+        'movie.film_length' => 'required|integer',
+        'movie.film_format' => 'required|string|max:255',
+
+        'movie.total_budget_currency_amount' => 'required|integer',
+        'movie.total_budget_currency_code' => 'required|string|max:255',
+        // 'movie.total_budget_currency_rate' => 'required|numeric',
+        // 'movie.total_budget_euro' => 'required|integer',
+
+        // 'fiche.comments' => 'string',
+    ];
+
+    protected $rulesEditor = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string|max:255',
@@ -85,6 +112,14 @@ class MovieDistForm extends Component
         'fiche.comments' => 'string',
     ];
 
+    protected function rules() {
+        if ($this->isEditor) {
+            return $this->rulesEditor;
+        } else {
+            return $this->rulesApplicant;
+        }
+    }
+
     protected function movieDefaults() {
         return [
             'total_budget_currency_code' => 'EUR',
@@ -107,7 +142,7 @@ class MovieDistForm extends Component
             // $this->shootingLanguages = $this->movie->languages->map(
             //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
             // );
-            $this->shootingLanguage = $this->movie->languages->first()->id;
+            // $this->shootingLanguage = $this->movie->languages->first()->id;
 
             $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
@@ -125,6 +160,7 @@ class MovieDistForm extends Component
             $this->isApplicant = false;
             $this->isEditor = true;
         }
+        // dd($this->isEditor);
 
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;

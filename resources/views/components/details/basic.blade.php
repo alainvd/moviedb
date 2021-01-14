@@ -1,4 +1,11 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic">
+
+    @if($isEditor)
+    <div class="col-span-2 mb-4 text-lg">
+        General information
+    </div>
+    @endif
+
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
         <x-form.input
             :id="'original_title'"
@@ -36,6 +43,7 @@
         <x-form.select
             :id="'basic-film_country_of_origin'"
             :label="'Country of Origin'"
+            :disabled="$isApplicant"
             :hasError="$errors->has('movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
 

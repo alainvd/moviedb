@@ -1,8 +1,6 @@
 <form wire:submit.prevent="submit">
     <div class="md:py-6">
         <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
-        <!-- @todo display "Viewing as: Applicant / ECEA -->
-        <!-- <div class="text-xs leading-tight">Applicant form</div> -->
             <!-- title -->
             <div class="my-8">
                 <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>
@@ -13,6 +11,7 @@
                 <x-details.basic
                     :movie="$movie"
                     :isApplicant="$isApplicant"
+                    :isEditor="$isEditor"
                     :audiences="$audiences"
                     :countries="$countries"
                     :filmTypes="$filmTypes"
@@ -33,17 +32,21 @@
             </div>
 
             <!-- points -->
+            @if($isEditor)
             <div class="my-8">
                 <x-details.points
                     :movie="$movie"
                     :countries="$countries"></x-details.summary>
             </div>
+            @endif
 
             <!-- photography -->
             <div class="my-8">
                 <x-details.photography
                     :movie="$movie"
                     :filmFormats="$filmFormats"
+                    :isApplicant="$isApplicant"
+                    :isEditor="$isEditor"
                     :languages="$languages"></x-details.photography>
             </div>
 
@@ -56,6 +59,8 @@
             <div class="my-8">
                 <x-details.budget
                     :currencies="$currencies"
+                    :isApplicant="$isApplicant"
+                    :isEditor="$isEditor"
                     ></x-details.budget>
             </div>
 
@@ -64,6 +69,7 @@
                 @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
             </div>
 
+            @if($isEditor)
             <div class="my-8">
                 <x-form.textarea
                     :id="'comments'"
@@ -76,6 +82,7 @@
                     <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
+            @endif
 
             <!-- buttons -->
             <div class="flex items-center justify-end mt-12 space-x-3">

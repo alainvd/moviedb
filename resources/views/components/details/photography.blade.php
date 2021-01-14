@@ -1,5 +1,12 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-photography">
-    <div class="col-span-1">
+
+    @if($isEditor)
+    <div class="col-span-2 mb-4 text-lg">
+        Technical information
+    </div>
+    @endif
+
+    <div class="col-span-1 col-start-1">
         <x-form.datepicker
             :id="'photography_start'"
             :label="'Start Date of Principal Photography'"
@@ -12,7 +19,7 @@
         @enderror
     </div>
 
-    <div class="col-span-1">
+    <div class="col-span-1 col-start-2">
         <x-form.datepicker
             :id="'photography_end'"
             :label="'End Date of Principal Photography'"
@@ -25,7 +32,7 @@
         @enderror
     </div>
 
-    <div class="col-span-3 sm:col-span-1">
+    <div class="col-span-1 col-start-3 sm:col-span-1">
         <x-form.select
             :id="'shooting-language'"
             :label="'Shooting Language'"

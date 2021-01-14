@@ -2,7 +2,7 @@
     <div class="col-span-3 md:col-span-1">
         <x-form.input
             :id="'imdb'"
-            :label="'IMDB URL'"
+            :label="'IMDB link'"
             :hasError="$errors->has('movie.imdb_url')"
             wire:model="movie.imdb_url">
 
@@ -21,8 +21,8 @@
 
     <div class="col-span-3 md:col-span-1">
         <x-form.input
-            :id="'ID'"
-            :label="'ID'"
+            :id="'isan'"
+            :label="'ISAN'"
             :hasError="$errors->has('movie.isan')"
             wire:model="movie.isan">
         </x-form.input>
@@ -30,13 +30,6 @@
         @error('movie.isan')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
-    </div>
-
-    <div class="col-span-3 md:col-span-1">
-        <button type="button"
-            class="p-3 mt-6 text-xs font-medium text-gray-700 transition duration-150 ease-in-out border border-gray-700 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
-            Manage codes
-        </button>
     </div>
 
     <div class="col-span-3 lg:col-span-2">

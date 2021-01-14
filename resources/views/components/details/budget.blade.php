@@ -22,6 +22,7 @@
         @enderror
     </div>
 
+    @if($isEditor)
     <div class="col-span-1">
         <x-form.input
             :id="'total_budget_currency_rate'"
@@ -36,7 +37,9 @@
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
+    @endif
 
+    @if($isEditor)
     <div class="col-span-1">
         <x-form.input
             :id="'total_budget_euro'"
@@ -51,5 +54,6 @@
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
+    @endif
 
 </div>
