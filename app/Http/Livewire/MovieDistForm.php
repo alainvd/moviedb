@@ -203,6 +203,7 @@ class MovieDistForm extends Component
         if ($this->isNew) {
             // Save movie
             $this->movie->save();
+            $this->media = $this->movie->media;
             // $this->movie->languages()->attach(
             //     $this->shootingLanguage
             // );
@@ -210,7 +211,10 @@ class MovieDistForm extends Component
             // Save media
             $this->media->fill([
                 'title' => $this->movie->original_title,
+                'audience_id' => $this->media->audience_id,
+                'genre_id' => $this->media->genre_id,
                 'grantable_id' => $this->movie->id,
+                'delivery_platform_id' => $this->media->delivery_platform_id,
                 'grantable_type' => 'App\Movie',
             ])->save();
 
