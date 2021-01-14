@@ -52,6 +52,11 @@
             <x-layout.section
                 :title="'Development'">
                 @foreach ($dossier->action->activities as $activity)
+
+                    @foreach($activity->pivot->rules as $ruleName => $rule)
+                        <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
+                    @endforeach
+
                     @include(
                         "projects.activities.$activity->name",
                         [
@@ -62,7 +67,7 @@
                 @endforeach
             </x-layout.section>
 
-             <div x-data class="flex items-center justify-end space-x-3">
+             <div x-data class="flex items-center justify-end mt-32 space-x-3">
                 <x-button.primary type="submit">Save</x-button.primary>
              </div>
         </form>

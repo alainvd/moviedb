@@ -107,6 +107,7 @@ class MovieDistForm extends Component
             // $this->shootingLanguages = $this->movie->languages->map(
             //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
             // );
+            $this->shootingLanguage = $this->movie->languages->first()->id;
 
             $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();

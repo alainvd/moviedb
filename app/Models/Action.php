@@ -9,10 +9,14 @@ class Action extends Model
 {
     use HasFactory;
 
-    protected $fillable=["code"];
+    protected $fillable = [
+        "name",
+    ];
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class);
+        return $this->belongsToMany(Activity::class)
+            ->withPivot('rules')
+            ->using(ActionActivity::class);
     }
 }
