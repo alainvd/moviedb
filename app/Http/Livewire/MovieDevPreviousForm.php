@@ -35,9 +35,6 @@ class MovieDevPreviousForm extends Component
     // Movie original
     public $movie_original = [];
 
-    // Allow special editing
-    public $backoffice = false;
-
     // public $shootingLanguages;
     public $shootingLanguage = '';
 
@@ -117,8 +114,6 @@ class MovieDevPreviousForm extends Component
             $this->fiche->status_id = 1;
         }
 
-        // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
-        $this->backoffice = true;
     }
 
     // public function addShootingLanguage($lang)

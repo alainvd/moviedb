@@ -17,6 +17,7 @@ use App\Person;
 use App\Producer;
 use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class MovieDistForm extends Component
@@ -24,6 +25,7 @@ class MovieDistForm extends Component
 
     public $isNew = false;
     public $isApplicant = false;
+    public $isEditor = false;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -34,9 +36,6 @@ class MovieDistForm extends Component
 
     // Movie original
     public $movie_original = [];
-
-    // Allow special editing
-    public $backoffice = false;
 
     // public $shootingLanguages;
     public $shootingLanguage = '';
@@ -92,8 +91,9 @@ class MovieDistForm extends Component
         ];
     }
 
-    public function mount()
+    public function mount(Request $request)
     {
+
         // $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
             $this->isNew = true;
@@ -113,17 +113,22 @@ class MovieDistForm extends Component
             $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
         }
 
-        // @TODO use role here after fixing hydration issue for masquerade user
-        if (Auth::user()->eu_login_username === 'mediadb-applicant') {
+        if (Auth::user()->hasRole('applicant')) {
             $this->isApplicant = true;
+        }
+        if (Auth::user()->hasRole('editor')) {
+            $this->isEditor = true;
+        }
+
+        if($request->input('editor')) {
+            $this->isApplicant = false;
+            $this->isEditor = true;
         }
 
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }
 
-        // $this->backoffice = Auth::user()->eu_login_username === 'mediadb-editor';
-        $this->backoffice = true;
     }
 
     // public function addShootingLanguage($lang)

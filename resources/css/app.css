@@ -10,3 +10,48 @@
 [x-cloak] {
     display: none;
 }
+
+.fiche-details-component {
+    border: 1px solid green;
+}
+.fiche-details-component:before {
+    margin-top: -20px;
+    position: absolute;
+}
+
+#fdc-basic-dev-current:before {
+    content: "basic-dev-current";
+}
+#fdc-basic-dev-prev:before {
+    content: "basic-dev-prev";
+}
+#fdc-basic:before {
+    content: "basic";
+}
+#fdc-budget:before {
+    content: "budget";
+}
+#fdc-budget-dev-current:before {
+    content: "budget-dev-current";
+}
+#fdc-link-applicant-work:before {
+    content: "link-applicant-work";
+}
+#fdc-photography-dev-current:before {
+    content: "photography-dev-current";
+}
+#fdc-photography-dev-prev:before {
+    content: "photography-dev-prev";
+}
+#fdc-photography:before {
+    content: "photography";
+}
+#fdc-points:before {
+    content: "points";
+}
+#fdc-summary:before {
+    content: "summary";
+}
+#fdc-ownership:before {
+    content: "ownership";
+}
