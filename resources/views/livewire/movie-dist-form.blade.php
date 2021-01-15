@@ -1,6 +1,6 @@
 <form wire:submit.prevent="submit">
     <div class="md:py-6">
-        <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
+        <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16">
             <!-- title -->
             <div class="my-8">
                 <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>

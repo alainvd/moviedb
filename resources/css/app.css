@@ -11,10 +11,16 @@
     display: none;
 }
 
+main {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 100%;
+    width: 1140px;
+}
+
 .ecl-footer-harmonised svg {
     display: inline;
-    margin: 0;
-    padding: 0;
 }
 
 /*

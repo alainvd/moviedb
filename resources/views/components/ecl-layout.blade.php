@@ -33,7 +33,7 @@
 <body>
 
 @include('partials.ecl.header')
-<main class="relative z-0 flex-1 px-12 py-6 overflow-y-auto focus:outline-none" tabindex="0">
+<main class="relative z-0 flex-1 px-1 py-6 overflow-y-auto focus:outline-none" tabindex="0">
     {{ $slot }}
 </main>
 
