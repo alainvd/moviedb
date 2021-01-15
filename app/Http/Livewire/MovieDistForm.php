@@ -319,8 +319,14 @@ class MovieDistForm extends Component
             $this->emit('validation-errors');
         }
 
-        return view('livewire.movie-dist-form')
-            ->layout('components.layout');
+        if ($this->isApplicant) {
+            return view('livewire.movie-dist-form')
+                // ->layout('components.landing-layout');
+                ->layout('components.ecl-layout');
+        } else {
+            return view('livewire.movie-dist-form')
+                ->layout('components.layout');
+        }
     }
 
 }
