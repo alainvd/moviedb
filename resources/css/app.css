@@ -11,6 +11,12 @@
     display: none;
 }
 
+.ecl-footer-harmonised svg {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
 /*
 .fiche-details-component {
     border: 1px solid green;
