@@ -15,7 +15,7 @@ class Distributors extends Component
     public $showAddModal = false;
     public $showDeleteModal = false;
 
-    public $editingIndex = null;
+    public $editIndex = null;
     public $deleteIndex = null;
 
     // The authenticated user
@@ -43,10 +43,10 @@ class Distributors extends Component
     public function showAdd($index = null)
     {
         if (is_int($index)) {
-            $this->editingIndex = $index;
+            $this->editIndex = $index;
             $this->currentDistributor = Distributor::make($this->distributors[$index]);
         } else {
-            $this->editingIndex = null;
+            $this->editIndex = null;
         }
 
         $this->showAddModal = true;
@@ -71,12 +71,19 @@ class Distributors extends Component
         $country = $this->currentDistributor->country;
 
         // Replace at index if editing, else push
-        if (is_int($this->editingIndex)) {
-            $this->distributors[$this->editingIndex] = $this->currentDistributor->toArray();
+        if (is_int($this->editIndex)) {
+            $this->distributors[$this->editIndex] = $this->currentDistributor->toArray();
         } else $this->distributors[] = $this->currentDistributor->toArray();
 
         $this->currentDistributor = new Distributor();
         $this->showAddModal = false;
+    }
+
+    public function deleteDistributor()
+    {
+        unset($this->distributors[$this->deleteIndex]);
+        $this->deleteIndex = null;
+        $this->showDeleteModal = false;
     }
 
     public function render()

@@ -52,7 +52,7 @@
                         Edit
                     </a>
                     <a
-                        wire:click="showDelete"
+                        wire:click="showDelete({{ $index }})"
                         class="cursor-pointer text-red-600 hover:text-red-900">
                         Delete
                     </a>
@@ -175,4 +175,25 @@
             </div>
         </x-slot>
     </x-modal.dialog>
+
+    <!-- Delete Distributor Modal -->
+    <form wire:submit.prevent="deleteDistributor">
+        <x-modal.confirmation wire:model.defer="showDeleteModal">
+            <x-slot name="title">Delete Distributor</x-slot>
+
+            <x-slot name="content">
+                <div class="py-8 text-xl">
+                    Are you sure you want to delete this distributor?
+                </div>
+            </x-slot>
+
+            <x-slot name="footer">
+                <div class="flex justify-end items-center space-x-3">
+                    <x-button.primary type="submit">Yes</x-button>
+
+                    <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
+                </div>
+            </x-slot>
+        </x-modal.confirmation>
+    </form>
 </div>
