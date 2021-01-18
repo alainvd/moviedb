@@ -16,11 +16,10 @@
 
             @if ($dossier->fiches()->forActivity($activity->id)->count())
 
-            @include('projects.activities.work-fiche-rows', [
-                'fiches' => $dossier->fiches()->forActivity($activity->id)->get(),
-                'dossier' => $dossier,
-                'activity' => $activity,
-            ])
+                <x-dossiers.work-fiche-rows
+                    :fiches="$dossier->fiches()->forActivity($activity->id)->get()"
+                    :dossier="$dossier"
+                    :activity="$activity"></x-dossiers.work-fiche-rows>
 
             @else
 
@@ -34,7 +33,7 @@
     </x-table>
 
     @error('current_works')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
     @enderror
 
     <div class="mt-5 text-right">

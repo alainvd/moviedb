@@ -57,8 +57,8 @@
                         <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
                     @endforeach
 
-                    @include(
-                        "projects.activities.$activity->name",
+                    @livewire(
+                        "activities.$activity->name",
                         [
                             'activity' => $activity,
                             'dossier' => $dossier,
