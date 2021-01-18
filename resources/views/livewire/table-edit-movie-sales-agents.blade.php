@@ -1,7 +1,12 @@
 <div>
     
-    <div class="text-lg mb-8">
+    <div class="mb-8 text-lg">
+        @if($fiche == 'dist')
         Sales Agents
+        @endif
+        @if($fiche == 'devPrev')
+        Distribution
+        @endif
     </div>
 
     <div>
@@ -9,8 +14,9 @@
             <x-slot name="head">
                 <x-table.heading>Name</x-table.heading>
                 <x-table.heading>Country</x-table.heading>
-                <x-table.heading>Contact Person</x-table.heading>
-                <x-table.heading>Email</x-table.heading>
+                @if($fiche=='dist')<x-table.heading>Contact Person</x-table.heading>@endif
+                @if($fiche=='dist')<x-table.heading>Email</x-table.heading>@endif
+                @if($fiche=='devPrev')<x-table.heading>Date</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
             
@@ -18,10 +24,11 @@
                 @foreach ($items as $item)
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries[$item['country_id']]['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>
-                    <x-table.cell class="text-center space-x-2">
+                    <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>@endif
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>@endif
+                    @if($fiche=='devPrev')<x-table.cell class="text-center">{{ $item['distribution_date'] }}</x-table.cell>@endif
+                    <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
                     </x-table.cell>
@@ -40,47 +47,94 @@
     <form class="space-y-2">
         <x-modal.dialog wire:model="showingEditModal">
             <x-slot name="title">
+                @if($fiche == 'dist')
                 Add/Edit sales agent
+                @endif
+                @if($fiche == 'devPrev')
+                Add/Edit distribution
+                @endif
             </x-slot>
 
             <x-slot name="content">
-                <div>
-                    <label for="name" class="block text-sm font-medium leading-5 text-gray-700">Name</label>
-                    <input wire:model="editing.name" id="name"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.name') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                <div class="space-y-2">
 
-                <div>
-                    <label for="country_id" class="block text-sm font-medium leading-5 text-gray-700">Country</label>
-                    <select wire:model="editing.country_id" id="country_id"
-                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('editing.country_id') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.input
+                            :id="'agents_name'"
+                            :label="'Name'"
+                            :hasError="$errors->has('editing.name')"
+                            wire:model="editing.name">
+                        </x-form.input>
 
-                <div>
-                    <label for="contact_person" class="block text-sm font-medium leading-5 text-gray-700">Contact person</label>
-                    <input wire:model="editing.contact_person" id="contact_person"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.contact_person') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                        @error('editing.name')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Email</label>
-                    <input wire:model="editing.email" id="email"
-                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    @error('editing.email') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div>
+                        <x-form.select
+                            :id="'agents_country_id'"
+                            :label="'Country'"
+                            :hasError="$errors->has('editing.country_id')"
+                            wire:model="editing.country_id">
+                
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.country_id')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="flex justify-end items-center space-x-3 mt-4">
+                    @if($fiche == 'dist')
+                    <div>
+                        <x-form.input
+                            :id="'agents_contact_person'"
+                            :label="'Contact person'"
+                            :hasError="$errors->has('editing.contact_person')"
+                            wire:model="editing.contact_person">
+                        </x-form.input>
+
+                        @error('editing.contact_person')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
+
+                    @if($fiche == 'dist')
+                    <div>
+                        <x-form.input
+                            :id="'agents_email'"
+                            :label="'Email'"
+                            :hasError="$errors->has('editing.email')"
+                            wire:model="editing.email">
+                        </x-form.input>
+
+                        @error('editing.email')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
+
+                    @if($fiche == 'devPrev')
+                    <div class="col-span-1">
+                        <x-form.datepicker
+                            :id="'agents_distribution_date'"
+                            :label="'Date'"
+                            :hasError="$errors->has('editing.distribution_date')"
+                            wire:model.lazy="editing.distribution_date">
+                        </x-form.datepicker>
+                
+                        @error('editing.distribution_date')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
+
+                </div>
+                <div class="flex items-center justify-end mt-4 space-x-3">
                     <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
@@ -101,7 +155,7 @@
             </x-slot>
 
             <x-slot name="footer">
-                <div class="flex justify-end items-center space-x-3">
+                <div class="flex items-center justify-end space-x-3">
                     <x-button.primary type="submit">Delete</x-button>
 
                     <x-button.secondary wire:click="$set('showingDeleteModal', false)">Cancel</x-button>

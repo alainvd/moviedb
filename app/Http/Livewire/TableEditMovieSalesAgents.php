@@ -16,18 +16,20 @@ class TableEditMovieSalesAgents extends TableEditBase
     protected function defaults()
     {
         return [
-            'country_id' => Country::first()->id,
+            'contact_person' => '',
+            'email' => '',
         ] + parent::defaults();
     }
 
-    protected function rules()
+    static function rules()
     {
         return [
             'editing.name' => 'required|string|max:255',
             'editing.country_id' => 'required',
             'editing.contact_person' => 'required|string|max:255',
             'editing.email' => 'required|string|max:255',
-        ] + parent::rules();
+            'editing.distribution_date' => '',
+        ] + TableEditBase::rules();
     }
 
     protected function validationAttributes()
@@ -37,7 +39,8 @@ class TableEditMovieSalesAgents extends TableEditBase
             'editing.country_id' => 'country',
             'editing.contact_person' => 'contact person',
             'editing.email' => 'email',
-        ] + parent::validationAttributes();
+            'editing.distribution_date' => 'date',
+        ];
     }
 
     private function load()
@@ -57,7 +60,7 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-sales-agents');
+        return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'dist']);
     }
 
     protected function sendItems()

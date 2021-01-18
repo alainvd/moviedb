@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
@@ -99,7 +100,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         $fullName = (Str::of(Str::title($actor["film_staff_name"]))->trim());
         $firstName = $this->getFirstName($fullName);
         $lastName = $this->getLastName($fullName, $firstName);
-//        echo($fullName . "\n");
+        echo($fullName . "\n");
 //        echo($this->getFirstName($fullName) . "\n");
 //        echo($lastName . "\n");
 //        echo("================================================\n");
@@ -112,5 +113,10 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         ]);
         $person->save();
         return $person;
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }

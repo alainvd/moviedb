@@ -14,7 +14,8 @@ class CreateActionsTable extends Migration
     public function up()
     {
         Schema::create('actions', function (Blueprint $table) {
-            $table->string('id', 20)->unique()->primary();
+            $table->id();
+            $table->string('name', 20)->unique();
             $table->timestamps();
         });
     }

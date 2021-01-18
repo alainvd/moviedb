@@ -2,13 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Producer;
 use App\Media;
 use App\Models\Country;
 
-class ProducerFactory extends Factory
+class ProducerFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -25,13 +23,13 @@ class ProducerFactory extends Factory
     public function definition()
     {
         return [
-            'media_id' => Media::factory(),
-            'role' => $this->faker->randomElement(["producer","coproducer"]),
+            'media_id' => $this->getRelationId(Media::class),
+            'role' => $this->faker->randomElement(["producer", "coproducer"]),
             'name' => $this->faker->name,
             'city' => $this->faker->city,
-            'country_id' => Country::factory(),
+            'country_id' => $this->getRelationId(Country::class),
             'share' => $this->faker->numberBetween(0, 100),
-            'budget' => $this->faker->numberBetween(0, 10000),
+            'budget' => $this->faker->numberBetween(1, 100000),
         ];
     }
 }

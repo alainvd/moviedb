@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\UserSeeder::class);
 
         $this->call(\Database\Seeders\ActionSeeder::class);
+        $this->call(\Database\Seeders\ActivitySeeder::class);
         $this->call(\Database\Seeders\CallSeeder::class);
-//        $this->call(\Database\Seeders\MovieSeeder::class);
+        $this->call(\Database\Seeders\MovieSeeder::class);
         $this->call(\Database\Seeders\VideoGameSeeder::class);
 
         $this->call(\Database\Seeders\DossierSeeder::class);

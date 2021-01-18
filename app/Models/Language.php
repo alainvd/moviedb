@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Movie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,11 @@ class Language extends Model
         'code',
         'name',
     ];
+
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class, 'movie_language');
+    }
 
     public function getLabelAttribute(): string
     {

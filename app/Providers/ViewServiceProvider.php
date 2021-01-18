@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Audience;
 use App\Genre;
+use App\Http\View\Composers\DistributorsComposer;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Status;
@@ -30,8 +31,21 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'livewire.movie-detail-form',
-            'App\Http\View\Composers\MovieDetailsFormComposer'
+            'livewire.movie-dist-form',
+            'App\Http\View\Composers\MovieFicheFormComposer',
+        );
+        View::composer(
+            'livewire.movie-dev-previous-form',
+            'App\Http\View\Composers\MovieFicheFormComposer',
+        );
+        View::composer(
+            'livewire.movie-dev-current-form',
+            'App\Http\View\Composers\MovieFicheFormComposer',
+        );
+
+        View::composer(
+            'livewire.activities.distributors',
+            DistributorsComposer::class
         );
     }
 }

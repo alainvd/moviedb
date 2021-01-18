@@ -17,11 +17,12 @@ class CreateProducersTable extends Migration
             $table->id();
             $table->integer('media_id');
             $table->enum('role', ["producer","coproducer"]);
-            $table->string('name');
-            $table->string('city');
-            $table->integer('country_id');
-            $table->integer('share');
-            $table->integer('budget');
+            $table->string('name')->nullable();
+            $table->string('city')->nullable();
+            $table->integer('country_id')->nullable();
+            $table->unsignedBigInteger('language_id')->nullable();
+            $table->integer('share')->nullable();
+            $table->integer('budget')->nullable();
             $table->timestamps();
         });
     }

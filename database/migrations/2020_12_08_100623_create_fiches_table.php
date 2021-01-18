@@ -17,9 +17,12 @@ class CreateFichesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('media_id');
             $table->unsignedBigInteger('dossier_id');
+            // @todo refactor without nullable for activity
+            $table->unsignedBigInteger('activity_id')->nullable();
             $table->unsignedSmallInteger('status_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->text('comments')->nullable();
             $table->timestamps();
 
             $table->foreign('media_id')->references('id')->on('media');

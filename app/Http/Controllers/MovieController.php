@@ -14,7 +14,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::simplePaginate(30);
 
         return view('movies', compact(['movies']));
     }

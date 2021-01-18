@@ -2,13 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\SalesAgent;
 use App\Media;
 use App\Models\Country;
 
-class SalesAgentFactory extends Factory
+class SalesAgentFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -25,11 +23,12 @@ class SalesAgentFactory extends Factory
     public function definition()
     {
         return [
-            'media_id' => Media::factory(),
+            'media_id' => $this->getRelationId(Media::class),
             'name' => $this->faker->name,
-            'country_id' => Country::factory(),
-            'contact_person' => $this->faker->word,
+            'country_id' => $this->getRelationId(Country::class),
+            'contact_person' => $this->faker->name,
             'email' => $this->faker->safeEmail,
+            'distribution_date' => $this->faker->date,
         ];
     }
 }

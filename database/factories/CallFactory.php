@@ -3,11 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Action;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Call;
 
-class CallFactory extends Factory
+class CallFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -23,7 +21,8 @@ class CallFactory extends Factory
      */
     public function definition()
     {
-        $actions = ["DEVSLATE",
+        $actions = [
+            "DEVSLATE",
             "DEVSPANI",
             "DEVSPDOC",
             "DEVSPFIC",
@@ -36,10 +35,28 @@ class CallFactory extends Factory
             "DISTSAR1",
             "DISTSAR2",
             "DISTSEL",
-            "TV"];
+            "TV"
+        ];
+
+        // Call name in the format: 'H2020-LC-GD-2020-3';
+        $name = sprintf(
+            '%s%d-%s-%s-%d-%d',
+            strtoupper($this->faker->randomLetter),
+            date('Y'),
+            strtoupper($this->faker->lexify('??')),
+            strtoupper($this->faker->lexify('??')),
+            date('Y'),
+            $this->faker->randomDigitNotNull()
+        );
+
+        $action = Action::all()->random();
+
+        // @TODO refactor
         return [
-            'name' => $this->faker->company,
-            'action' => $this->faker->randomElement($actions),
+            // H2020-LC-GD-2020-3
+            'name' => $name . '-' . $action->name,
+            // 'action_id' => $this->getRelationId(Action::class),
+            'action_id' => $action->id,
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
             'status' => $this->faker->randomElement(["open","closed"]),

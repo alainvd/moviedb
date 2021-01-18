@@ -13,27 +13,33 @@ class TableEditMovieProducers extends TableEditBase
 
     public $countries = [];
 
+    public $languages = [];
+
     public $producer_roles = [];
+
+    public $budget_total = 0;
 
     protected function defaults()
     {
         return [
-            'role' => 'producer',
-            'country_id' => Country::first()->id,
+            'city' => '',
+            'language_id' => null,
+            'budget' => null,
+            'share' => null,
         ] + parent::defaults();
     }
 
-    protected function rules()
+    static function rules()
     {
         return [
             'editing.media_id' => '',
-            'editing.role' => 'required',
+            'editing.role' => ['required'],
             'editing.name' => 'required|string|max:255',
             'editing.city' => 'required|string|max:255',
             'editing.country_id' => 'required',
-            'editing.share' => 'required|integer',
-            'editing.budget' => 'required|integer',
-        ] + parent::rules();
+            'editing.share' => 'required|integer|min:1|max:100',
+            'editing.budget' => '',
+        ] + TableEditBase::rules();
     }
 
     protected function validationAttributes()
@@ -44,9 +50,10 @@ class TableEditMovieProducers extends TableEditBase
             'editing.name' => 'name',
             'editing.city' => 'city',
             'editing.country_id' => 'country',
+            'editing.language_id' => 'language',
             'editing.share' => 'share',
             'editing.budget' => 'budget',
-        ] + parent::validationAttributes();
+        ];
     }
 
     private function load()
@@ -67,7 +74,7 @@ class TableEditMovieProducers extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-producers');
+        return view('livewire.table-edit-movie-producers', ['fiche' => 'dist']);
     }
 
     protected function sendItems()

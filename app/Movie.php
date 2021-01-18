@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\MovieCreated;
 use App\Interfaces\Grantable;
+use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,17 @@ class Movie extends Model implements Grantable
         // 'european_nationality_flag' => 'New',
     ];
 
+    protected $dates = [
+        'photography_start',
+        'photography_end',
+        'rights_contract_start_date',
+        'rights_contract_end_date',
+        'rights_contract_signature_date',
+        'rights_adapt_contract_start_date',
+        'rights_adapt_contract_end_date',
+        'rights_adapt_contract_signature_date',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -38,12 +50,15 @@ class Movie extends Model implements Grantable
      */
     protected $casts = [
         'id' => 'integer',
+        'photography_start' => 'date:d.m.Y',
+        'photography_end' => 'date:d.m.Y',
+        'rights_contract_start_date' => 'date:d.m.Y',
+        'rights_contract_end_date' => 'date:d.m.Y',
+        'rights_contract_signature_date' => 'date:d.m.Y',
+        'rights_adapt_contract_start_date' => 'date:d.m.Y',
+        'rights_adapt_contract_end_date' => 'date:d.m.Y',
+        'rights_adapt_contract_signature_date' => 'date:d.m.Y',
     ];
-
-    // protected $dates = [
-    //     'photography_start',
-    //     'photography_end',
-    // ];
 
     public function media()
     {
@@ -65,15 +80,10 @@ class Movie extends Model implements Grantable
         return $this->media()->audience();
     }
 
-    // public function getPhotographyStartAttribute($value)
-    // {
-    //     return Carbon::parse($value)->format('d/m/Y');
-    // }
-
-    // public function getPhotographyEndAttribute($value)
-    // {
-    //     return Carbon::parse($value)->format('d/m/Y');
-    // }
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class, 'movie_language');
+    }
 
     public function addPerson($person, $points, $title_id, $media_id, $movie_id)
     {

@@ -28,8 +28,8 @@ class FicheFactory extends BaseFactory
             'media_id' => $this->getRelationId(Media::class),
             'dossier_id' => $this->getRelationId(Dossier::class),
             'status_id' => $this->getRelationId(Status::class),
-            'created_at' => $this->faker->date(),
             'created_by' => $this->getRelationId(User::class),
+            'comments' => $this->faker->text(),
         ];
     }
 }

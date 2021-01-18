@@ -46,6 +46,6 @@ class Call extends Model
     }
 
     public function action(){
-        return $this->hasOne(\App\Models\Action::class);
+        return $this->belongsTo(\App\Models\Action::class);
     }
 }

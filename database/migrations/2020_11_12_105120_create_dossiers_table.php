@@ -16,10 +16,12 @@ class CreateDossiersTable extends Migration
         Schema::create('dossiers', function (Blueprint $table) {
             $table->id();
             $table->string('project_ref_id', 20);
-            $table->string('action', 20);
+            $table->unsignedBigInteger('action_id');
             $table->unsignedSmallInteger('status_id');
             $table->integer('year');
             $table->integer('call_id');
+            $table->string('contact_person');
+            $table->string('company')->nullable();
             $table->timestamps();
         });
     }

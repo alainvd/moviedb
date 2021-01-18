@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,11 @@ class SalesAgent extends Model
         'country_id',
         'contact_person',
         'email',
+        'distribution_date',
+    ];
+
+    protected $dates = [
+        'distribution_date',
     ];
 
     /**
@@ -29,16 +35,16 @@ class SalesAgent extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'distribution_date' => 'date:d.m.Y'
     ];
-
 
     public function country()
     {
-        return $this->belongsTo(\App\Country::class);
+        return $this->belongsTo(Country::class);
     }
 
     public function media()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(Media::class);
     }
 }

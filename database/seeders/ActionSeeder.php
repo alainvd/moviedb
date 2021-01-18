@@ -15,25 +15,30 @@ class ActionSeeder extends Seeder
      */
     public function run()
     {
-        $codes = ["DEVSLATE",
-            "DEVSPANI",
-            "DEVSPDOC",
-            "DEVSPFIC",
+        $codes = [
+            "DEVSLATE",
+            "DEVSLATEEU",
+            "DEVSLATEEUMINI",
+            "EUCODEV",
+            // "DEVSPANI",
+            // "DEVSPDOC",
+            // "DEVSPFIC",
             "DEVVG",
-            "DISTAUTOG",
-            "DISTAUTOR1",
-            "DISTAUTOR2",
-            "DISTAUTOR3",
+            // "DISTAUTOG",
+            // "DISTAUTOR1",
+            // "DISTAUTOR2",
+            // "DISTAUTOR3",
             "DISTSAG",
-            "DISTSAR1",
-            "DISTSAR2",
+            // "DISTSAR1",
+            // "DISTSAR2",
             "DISTSEL",
-            "TV"];
+            "TV"
+        ];
 
 
         foreach ($codes as $code) {
             Action::create([
-                'id' => $code
+                'name' => $code
             ]);
 
         }

@@ -16,7 +16,7 @@ class VideoGameSeeder extends Seeder
      */
     public function run()
     {
-        VideoGame::factory()->count(10)->create();
+        // VideoGame::factory()->count(10)->create();
 
         //VideoGame::all()->each(function ($videogame) {
         //    Media::factory()->create([

@@ -1,8 +1,12 @@
 <?php
 
+use App\Call;
 use App\Http\Controllers\MovieController;
-use App\Http\Controllers\MovieDetailsController;
-use App\Http\Livewire\MovieDetailForm;
+use App\Http\Livewire\MovieDistForm;
+use App\Http\Livewire\MovieDevPreviousForm;
+use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Controllers\ProjectController;
+use App\Models\Action;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,25 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/alpine', function () {
-    return view('alpine');
-});
-
-Route::get('/livewire', function () {
-    return view('livewire');
-});
-
-Route::get('/tailwind', function () {
-    return view('tailwind');
-});
+})->name('welcome');
 
 Route::get('movies', [MovieController::class,'index'])->name('movies');
-Route::get('/movie/detail/eacea/{movie}', [MovieDetailsController::class, 'showForBackoffice'])->name('movie_detail_eacea');
-Route::get('/movie/eacea/create', [MovieDetailsController::class, 'createForBackoffice'])->name('movie_create_eacea');
-Route::get('/movie/detail/applicant/{movie}', [MovieDetailsController::class, 'showForApplicant'])->name('movie_detail_applicant');
-Route::get('/movie/applicant/create', [MovieDetailsController::class, 'createForApplicant'])->name('movie_create_applicant');
 
 Route::resource('call', '\App\Http\Controllers\CallController')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->only('index');
@@ -58,7 +46,9 @@ Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->mid
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 
 Route::get('homepage', function () {
-    return view('homepage');
+    $calls = Call::where('status', 'open')
+        ->get();
+    return view('homepage', compact('calls'));
 })->name('homepage');
 
 $dossiers = [
@@ -87,14 +77,14 @@ $dossiers = [
         'closed' => true,
     ],
 ];
-Route::get('dossiers_test', function () use ($dossiers) {
+Route::get('dossiers', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers_test');
+})->name('dossiers');
 
 
 Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
 
-Route::view('/projects', 'coming-soon');
+Route::resource('/projects', ProjectController::class)->middleware('cas.auth');
 Route::view('/reports', 'coming-soon');
 
 
@@ -120,13 +110,18 @@ Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->onl
 
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 
-Route::get('/fiches/dist/{fiche?}', MovieDetailForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
 
 Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
+Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
+
+Route::view('/demo', 'demo');
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Action;
 use App\Models\Fiche;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,10 +18,12 @@ class Dossier extends Model
      */
     protected $fillable = [
         'project_ref_id',
-        'action',
+        'action_id',
         'year',
         'status_id',
         'call_id',
+        'contact_person',
+        'company',
     ];
 
     /**
@@ -32,6 +35,16 @@ class Dossier extends Model
         'id' => 'integer',
     ];
 
+    // @todo remove action_id as we already have the call on the dossier
+    public function action()
+    {
+        return $this->belongsTo(Action::class);
+    }
+
+    public function call()
+    {
+        return $this->belongsTo(Call::class);
+    }
 
     public function media()
     {
@@ -47,5 +60,4 @@ class Dossier extends Model
     {
         return $this->hasMany(Fiche::class);
     }
-
 }

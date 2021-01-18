@@ -1,4 +1,4 @@
-<x-layout>
+<x-landing-layout>
 
     <div class="md:flex">
         <div class="m-4 p-4 md:w-1/2">
@@ -62,4 +62,4 @@
         </div>
     </div>
 
-</x-layout>
+</x-landing-layout>

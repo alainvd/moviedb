@@ -38,8 +38,24 @@ class CreateMoviesTable extends Migration
             $table->bigInteger('production_costs_in_euro')->nullable();
             $table->string('film_type')->nullable();
             $table->string('film_format')->nullable();
+            $table->integer('total_budget_currency_amount')->nullable();
+            $table->string('total_budget_currency_code')->nullable();
+            $table->decimal('total_budget_currency_rate')->nullable();
+            $table->integer('total_budget_euro')->nullable();
+            $table->boolean('flag_video')->default(false); // ???
+            $table->boolean('flag_2')->default(false); // ???
+            $table->boolean('flag_not_use')->default(false); // ???
+            $table->integer('source_film_id')->default(false); // ???
+            $table->string('username')->nullable();
+            $table->date('audit_date')->nullable();
+            $table->date('eu_net_change_date')->nullable();
+            $table->date('eu_net_change_name')->nullable();
+            $table->date('photography_start')->nullable();
+            $table->date('photography_end')->nullable();
             $table->decimal('film_score')->nullable();
+            $table->decimal('country_of_origin_points')->nullable();
             $table->text('synopsis')->nullable();
+            $table->string('user_experience')->nullable();
             //DEV Previous work link to the applicant
             $table->text('link_applicant_work')->nullable();
             $table->text('link_applicant_work_person_name')->nullable();

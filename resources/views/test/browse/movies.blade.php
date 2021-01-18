@@ -1,4 +1,4 @@
-<x-layout>
+<x-landing-layout>
     <div class="m-10">
 
         <!-- This example requires Tailwind CSS v2.0+ -->
@@ -6,7 +6,7 @@
             @foreach($medium as $media)
                 <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
                     <div class="w-full flex items-center justify-between p-6 space-x-6">
-                        <div class="flex-1 truncate">
+                        <div class="flex-1">
                             <div class="flex items-center space-x-3">
                                 <h3 class="text-gray-900 text-sm font-medium">{{$media->title}}</h3>
                             </div>
@@ -16,12 +16,17 @@
                             @if($media->audience)
                                 <p class="mt-1 text-gray-500 text-sm truncate">Audience: {{$media->audience->name}}</p>
                             @endif
-                            @foreach($media->people as $people)
-                                <p>
-                                    {{$people->fullname}}
-                                </p>
+                            @foreach($media->crew as $crew)
+                                @if($crew->person)
+                                    <div class="text-sm leading-5 text-gray-700"> {{$crew->title->name}}
+                                        : {{$crew->person->fullname}}
+{{--                                        @if($crew->points)--}}
+                                            <span
+                                                class="text-sm leading-5 text-gray-600"> ({{$crew->points}} points)</span>
+{{--                                        @endif--}}
+                                    </div>
+                                @endif
                             @endforeach
-
 
                         </div>
 
@@ -46,13 +51,13 @@
         </ul>
         <br/>
 
-
+        {{ $medium->links() }}
     </div>
 
-    {{ $medium->links() }}
 
 
-</x-layout>
+
+</x-landing-layout>
 
 
 
