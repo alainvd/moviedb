@@ -11,11 +11,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
+class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
 {
 
     public function chunkSize(): int
@@ -28,10 +27,10 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
      */
     public function collection(Collection $collection)
     {
-        foreach ($this->getActors($collection) as $row) {
+        foreach ($collection as $row) {
 
             //Get Person
-            $actor = $this->getPerson($row);
+            $person = $this->getPerson($row);
 
             //Get Media
             $media = $this->getMedia($row);
@@ -41,8 +40,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
 
             //Create the crew entry
             $crew = new Crew([
-                "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
-                "person_id" => $actor->id,
+                "person_id" => $person->id,
                 "title_id" => $title->id,
                 "media_id" => $media->id
             ]);
@@ -55,7 +53,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
     private function getTitle($row)
     {
 
-        return Title::firstWhere("name", "=", $row["film_role_name"]);
+        return Title::firstWhere("name", "=", $row["role_name"]);
     }
 
     private function getMedia($row)
@@ -80,24 +78,13 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
     }
 
 
-    /**
-     * @param Collection $collection
-     * @return Collection
-     */
-    public function getActors(Collection $collection): Collection
-    {
-        $actors = $collection->filter(function ($row, $key) {
-            return (strpos($row["film_role_name"], 'Actor') !== false);
-        });
-        return $actors;
-    }
-
+   
     /**
      * @param $actor
      */
-    public function getPerson($actor): Person
+    public function getPerson($row): Person
     {
-        $fullName = (Str::of(Str::title($actor["film_staff_name"]))->trim());
+        $fullName = (Str::of(Str::title($row["name"]))->trim());
         $firstName = $this->getFirstName($fullName);
         $lastName = $this->getLastName($fullName, $firstName);
         echo($fullName . "\n");
@@ -108,15 +95,9 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             "fullname" => $fullName,
             "firstname" => $firstName,
             "lastname" => $lastName,
-            "nationality1" => $actor["film_staff_nationality_1_code"],
-            "country_of_residence" => $actor["film_staff_residence_country"],
+            "nationality1" => $row["nationality_code"],
         ]);
         $person->save();
         return $person;
-    }
-
-    public function chunkSize(): int
-    {
-        return 1000;
     }
 }
