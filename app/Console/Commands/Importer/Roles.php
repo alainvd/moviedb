@@ -40,6 +40,6 @@ class Roles extends Command
      */
     public function handle()
     {
-        Excel::import(new RolesImport, 'Dist_Film_Roles.xlsx','excel');
+        Excel::import(new RolesImport, 'Staff_Roles.xlsx','excel');
     }
 }
