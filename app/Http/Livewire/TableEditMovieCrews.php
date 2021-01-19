@@ -14,6 +14,7 @@ class TableEditMovieCrews extends TableEditBase
     public Movie $movie;
 
     public $isApplicant = false;
+
     public $isEditor = false;
 
     public $titles = [];
@@ -21,31 +22,55 @@ class TableEditMovieCrews extends TableEditBase
     public $genders = [];
 
     public $countries = [];
-    public $countries_by_key = [];
+
+    public $countries_by_code = [];
 
     public $points_total = 0;
 
     protected function defaults()
     {
         return [
-            'editing.points' => null,
-            'editing.person.nationality2' => null,
-            'editing.person.country_of_residence' => null,
+            'points' => null,
+            'person' => [
+                'firstname' => '',
+                'lastname' => '',
+                'gender' => '',
+                'nationality1' => '',
+                'nationality2' => '',
+                'country_of_residence' => '',
+            ],
+            'title_id' => null,
         ] + parent::defaults();
     }
 
-    static function rules()
-    {
-        return [
-            'editing.points' => 'required|numeric',
-            'editing.title_id' => 'required',
-            'editing.person.firstname' => 'required|string|max:255',
-            'editing.person.lastname' => 'required|string|max:255',
-            'editing.person.gender' => 'required|string|max:255',
-            'editing.person.nationality1' => 'required|string|max:255',
-            'editing.person.nationality2' => 'string|max:255',
-            'editing.person.country_of_residence' => 'string|max:255',
-        ] + TableEditBase::rules();
+    protected $rulesApplicant = [
+        'editing.points' => '',
+        'editing.person.firstname' => 'required|string|max:255',
+        'editing.person.lastname' => 'required|string|max:255',
+        'editing.person.gender' => 'required|string',
+        'editing.person.nationality1' => 'required|string',
+        'editing.person.nationality2' => 'string',
+        'editing.person.country_of_residence' => 'string',
+        'editing.title_id' => 'required|integer',
+    ];
+
+    protected $rulesEditor = [
+        'editing.points' => 'required|numeric',
+        'editing.person.firstname' => 'required|string|max:255',
+        'editing.person.lastname' => 'required|string|max:255',
+        'editing.person.gender' => 'required|string',
+        'editing.person.nationality1' => 'required|string',
+        'editing.person.nationality2' => 'string',
+        'editing.person.country_of_residence' => 'string',
+        'editing.title_id' => 'required|integer',
+    ];
+
+    protected function rules() {
+        if ($this->isEditor) {
+            return $this->rulesEditor + TableEditBase::rules();
+        } else {
+            return $this->rulesApplicant + TableEditBase::rules();
+        }
     }
 
     protected function validationAttributes()
@@ -75,7 +100,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->titles = Title::all()->keyBy('id')->toArray();
         $this->genders = Person::GENDERS;
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_key = Country::where('active', true)->get()->keyBy('code')->toArray();
+        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->load();

@@ -5,14 +5,14 @@ namespace App\Http\Livewire;
 class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
 {
 
-    static function rules()
+    protected function rules()
     {
         return [
-            'editing.media_id' => '',
-            'editing.role' => ['required'],
+            'editing.role' => 'required|string',
             'editing.name' => 'required|string|max:255',
-            'editing.city' => '',
-            'editing.country_id' => 'required',
+            'editing.city' => 'string',
+            'editing.country' => 'required|string',
+            'editing.language' => 'string',
             'editing.share' => 'required|integer|min:1|max:100',
             'editing.budget' => 'required|integer',
         ] + TableEditBase::rules();

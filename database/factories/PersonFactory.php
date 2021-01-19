@@ -28,7 +28,7 @@ class PersonFactory extends Factory
         $firstname = $this->faker->firstName;
 
         $genders = [
-            'male', 'female', 'na',
+            'MALE', 'FEMALE', 'NA',
         ];
 
         if(Country::all()->count() > 0){
@@ -45,12 +45,12 @@ class PersonFactory extends Factory
         }
 
         return [
-            'lastname' => $this->faker->lastName,
-            'firstname' => $this->faker->firstName,
-            'gender' => $this->faker->randomElement(['MALE', 'FEMALE', 'NA']),
-            'nationality1' => $this->faker->randomElement(['BE', 'LV', 'RO']),
-            'nationality2' => $this->faker->randomElement(['BE', 'LV', 'RO']),
-            'country_of_residence' => $this->faker->randomElement(['BE', 'LV', 'RO']),
+            'lastname' => $lastname,
+            'firstname' => $firstname,
+            'gender' => $this->faker->randomElement($genders),
+            'nationality1' => $country_code1,
+            'nationality2' => $country_code2,
+            'country_of_residence' => $country_code3,
         ];
     }
 }

@@ -19,7 +19,6 @@ use App\SalesAgent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-
 class MovieDistForm extends Component
 {
 
@@ -160,7 +159,6 @@ class MovieDistForm extends Component
             $this->isApplicant = false;
             $this->isEditor = true;
         }
-        // dd($this->isEditor);
 
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
@@ -203,18 +201,19 @@ class MovieDistForm extends Component
         if ($this->isNew) {
             // Save movie
             $this->movie->save();
-            $this->media = $this->movie->media;
             // $this->movie->languages()->attach(
             //     $this->shootingLanguage
             // );
 
-            // Save media
+            // Load and save media
+            $media_store = $this->media;
+            $this->media = $this->movie->media;
             $this->media->fill([
                 'title' => $this->movie->original_title,
-                'audience_id' => $this->media->audience_id,
-                'genre_id' => $this->media->genre_id,
+                'audience_id' => $media_store->audience_id,
+                'genre_id' => $media_store->genre_id,
                 'grantable_id' => $this->movie->id,
-                'delivery_platform_id' => $this->media->delivery_platform_id,
+                'delivery_platform_id' => $media_store->delivery_platform_id,
                 'grantable_type' => 'App\Movie',
             ])->save();
 
@@ -246,9 +245,9 @@ class MovieDistForm extends Component
         $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        }
+        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
+        // }
     }
 
     public function updateMovieCrews($items)
