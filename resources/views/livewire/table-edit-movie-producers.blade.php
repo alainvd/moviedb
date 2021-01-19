@@ -31,8 +31,8 @@
                     <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     @if($fiche == 'dist')<x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>@endif
-                    <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
-                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language_id']) ? Arr::first($languages, function($value)use($item){return $value['value']==$item['language_id'];})['label'] : '' }}</x-table.cell>@endif
+                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
+                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages, function($value)use($item){return $value['value']==$item['language'];})['label'] : '' }}</x-table.cell>@endif
                     @if(in_array($fiche, ['dist', 'devPrev']))<x-table.cell class="text-center">{{ !empty($item['share']) ? $item['share'].'%' : '' }}</x-table.cell>@endif
                     @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ isset($item['budget']) ? $item['budget'].'€' : '' }}</x-table.cell>@endif
                     <x-table.cell class="space-x-2 text-center">
@@ -112,17 +112,17 @@
 
                     <div>
                         <x-form.select
-                            :id="'producer_country_id'"
+                            :id="'producer_country'"
                             :label="'Country'"
-                            :hasError="$errors->has('editing.country_id')"
-                            wire:model="editing.country_id">
+                            :hasError="$errors->has('editing.country')"
+                            wire:model="editing.country">
                 
                             @foreach ($countries as $country)
-                                <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
+                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                             @endforeach
                         </x-form.select>
                 
-                        @error('editing.country_id')
+                        @error('editing.country')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
@@ -130,10 +130,10 @@
                     @if($fiche == 'devCurrent')
                     <div class="col-span-3 sm:col-span-1">
                         <x-form.select
-                            :id="'language_id'"
+                            :id="'language'"
                             :label="'Language'"
-                            :hasError="$errors->has('editing.language_id')"
-                            wire:model="editing.language_id">
+                            :hasError="$errors->has('editing.language')"
+                            wire:model="editing.language">
                 
                             @foreach ($languages as $language)
                                 <option value="{{ $language['value'] }}">{{$language['label']}}</option>
@@ -141,7 +141,7 @@
                 
                         </x-form.select>
                 
-                        @error('editing.language_id')
+                        @error('editing.language')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>

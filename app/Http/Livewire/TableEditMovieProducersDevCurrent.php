@@ -7,15 +7,14 @@ use Illuminate\Support\Arr;
 class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevious
 {
 
-    static function rules()
+    protected function rules()
     {
         return [
-            'editing.media_id' => '',
-            'editing.role' => ['required'],
+            'editing.role' => 'required|string',
             'editing.name' => 'required|string|max:255',
-            'editing.city' => '',
-            'editing.country_id' => 'required',
-            'editing.language_id' => '',
+            'editing.city' => 'string',
+            'editing.country' => 'required|string',
+            'editing.language' => 'string',
             'editing.share' => '',
             'editing.budget' => '',
         ] + TableEditBase::rules();

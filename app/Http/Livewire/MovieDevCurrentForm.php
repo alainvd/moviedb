@@ -219,9 +219,9 @@ class MovieDevCurrentForm extends Component
         $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        }
+        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
+        // }
     }
 
     public function updateMovieCrews($items)

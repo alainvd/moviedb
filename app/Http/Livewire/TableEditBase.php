@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class TableEditBase extends Component
 {
@@ -18,12 +19,28 @@ class TableEditBase extends Component
 
     public $editing;
 
+    /**
+     * Livewire works better if form fields have a value set.
+     * Create default values for all fields:
+     *  - For string fields - empty string.
+     *  - For numberic/integer fields - null.
+     *  - For date fields - null.
+     * Key field is a unique key to identify item in the table.
+     */
     protected function defaults()
     {
         return ['key' => Str::random(10)];
     }
 
-    static function rules()
+    /**
+     * Give validation rules for all fields.
+     * Can create rules for applicant or editor.
+     * If field is not used on the particular form:
+     *  - Numberic field validation set to ''
+     *  - String field validation set to '' or 'string'
+     *  - Date field validation set to ''
+     */
+    protected function rules()
     {
         return [
             'editing.id' => '',
@@ -79,6 +96,12 @@ class TableEditBase extends Component
 
     public function saveItem()
     {
+        // try{
+        //     $validatedData = $this->validate();
+        // }
+        // catch (ValidationException $e){
+        //     dd($e->validator->getMessageBag());
+        // }
         $this->validate();
         $this->showingEditModal = false;
         $editing = $this->editing;
@@ -89,7 +112,6 @@ class TableEditBase extends Component
         } else {
             $this->items[] = $editing;
         }
-
         $this->sendItems();
     }
 
@@ -107,7 +129,6 @@ class TableEditBase extends Component
             $itemKey = array_key_first($findItem);
             unset($this->items[$itemKey]);
         }
-
         $this->sendItems();
     }
 
