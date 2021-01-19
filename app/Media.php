@@ -59,10 +59,15 @@ class Media extends Model
         return $this->hasMany(Crew::class);
     }
 
-
     public function people()
     {
         return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id'
         );
     }
+
+    public function filmFinancingPlans()
+    {
+        return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
+    }
+
 }
