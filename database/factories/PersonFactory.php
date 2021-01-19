@@ -47,10 +47,10 @@ class PersonFactory extends Factory
         return [
             'lastname' => $this->faker->lastName,
             'firstname' => $this->faker->firstName,
-            'gender' => $this->faker->word,
-            'nationality1' => $this->faker->word,
-            'nationality2' => $this->faker->word,
-            'country_of_residence' => $this->faker->word,
+            'gender' => $this->faker->randomElement(['MALE', 'FEMALE', 'NA']),
+            'nationality1' => $this->faker->randomElement(['BE', 'LV', 'RO']),
+            'nationality2' => $this->faker->randomElement(['BE', 'LV', 'RO']),
+            'country_of_residence' => $this->faker->randomElement(['BE', 'LV', 'RO']),
         ];
     }
 }

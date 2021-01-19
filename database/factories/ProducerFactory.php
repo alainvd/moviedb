@@ -27,7 +27,7 @@ class ProducerFactory extends BaseFactory
             'role' => $this->faker->randomElement(["producer", "coproducer"]),
             'name' => $this->faker->name,
             'city' => $this->faker->city,
-            'country_id' => $this->getRelationId(Country::class),
+            'country' => $this->faker->randomElement(['BE', 'LV', 'RO']),
             'share' => $this->faker->numberBetween(0, 100),
             'budget' => $this->faker->numberBetween(1, 100000),
         ];
