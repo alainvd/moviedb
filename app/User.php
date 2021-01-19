@@ -46,11 +46,13 @@ class User extends Authenticatable
         $attributes['password'] = Str::random(16);
 
         // Check if there is a user associated with this email
-        return User::firstOrCreate(
-            [
-                'eu_login_username' => $attributes['eu_login_username']
-            ],
-            $attributes
-        );
+        if (isset($attributes['eu_login_username'])) {
+            return User::firstOrCreate(
+                [
+                    'eu_login_username' => $attributes['eu_login_username']
+                ],
+                $attributes
+            );
+        }
     }
 }

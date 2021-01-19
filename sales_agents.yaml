@@ -14,7 +14,7 @@ controllers:
   SalesAgent:
     index:
       query: all
-      render: sales_agent.index with sales_agents
+      render: sales_agent.index with salesAgents
 
 
 seeders: SalesAgent

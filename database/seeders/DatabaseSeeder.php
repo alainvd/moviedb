@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(\Database\Seeders\ProducerSeeder::class);
         $this->call(\Database\Seeders\SalesAgentSeeder::class);
+        $this->call(\Database\Seeders\FilmFinancingPlanSeeder::class);
     }
 }

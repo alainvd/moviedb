@@ -57,6 +57,7 @@
                 <x-details.budget-dev-current></x-details.budget>
             </div>
 
+            <!-- comments -->
             <div class="my-8">
                 <x-form.textarea
                     :id="'comments'"

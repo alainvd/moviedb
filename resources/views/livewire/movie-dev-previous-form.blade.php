@@ -1,8 +1,6 @@
 <form wire:submit.prevent="submit">
     <div class="md:py-6">
         <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
-        <!-- @todo display "Viewing as: Applicant / ECEA -->
-        <!-- <div class="text-xs leading-tight">Applicant form</div> -->
             <!-- title -->
             <div class="my-8">
                 <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>
@@ -52,6 +50,7 @@
                 @livewire('table-edit-movie-sales-agents-dev-previous', ['movie_id' => $movie->id])
             </div>
 
+            <!-- comments -->
             <div class="my-8">
                 <x-form.textarea
                     :id="'comments'"
