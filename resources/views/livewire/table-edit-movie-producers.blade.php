@@ -32,7 +32,7 @@
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     @if($fiche == 'dist')<x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>@endif
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
-                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages, function($value)use($item){return $value['value']==$item['language'];})['label'] : '' }}</x-table.cell>@endif
+                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages, function($lang)use($item){return $lang['code']==$item['language'];})['name'] : '' }}</x-table.cell>@endif
                     @if(in_array($fiche, ['dist', 'devPrev']))<x-table.cell class="text-center">{{ !empty($item['share']) ? $item['share'].'%' : '' }}</x-table.cell>@endif
                     @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ isset($item['budget']) ? $item['budget'].'€' : '' }}</x-table.cell>@endif
                     <x-table.cell class="space-x-2 text-center">
@@ -136,7 +136,7 @@
                             wire:model="editing.language">
                 
                             @foreach ($languages as $language)
-                                <option value="{{ $language['value'] }}">{{$language['label']}}</option>
+                                <option value="{{ $language['code'] }}">{{$language['name']}}</option>
                             @endforeach
                 
                         </x-form.select>

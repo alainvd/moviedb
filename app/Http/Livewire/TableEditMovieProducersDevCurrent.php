@@ -23,12 +23,12 @@ class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevio
     public function mount($movie_id = null)
     {
         parent::mount($movie_id);
-        // TODO: dublication with MovieFicheFormComposer
+        // TODO: somewhat dublication with MovieFicheFormComposer
         $this->languages = Language::where('active', true)
             ->get()
             ->map(fn ($lang) => [
-                'value' => $lang->id,
-                'label' => $lang->name,
+                'code' => $lang->code,
+                'name' => $lang->name,
             ])
             ->toArray();
     }
