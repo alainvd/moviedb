@@ -109,6 +109,7 @@ Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('in
 Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
 
 Route::resource('film-financing-plan', 'App\Http\Controllers\FilmFinancingPlanController')->only('index');
+Route::get('film-financing-plan-download', [App\Http\Livewire\TableEditMovieFinancingPlan::class, 'download'])->middleware('cas.auth')->name('film-financing-plan-download');
 
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 

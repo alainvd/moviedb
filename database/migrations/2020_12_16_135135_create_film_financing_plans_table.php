@@ -18,6 +18,7 @@ class CreateFilmFinancingPlansTable extends Migration
             $table->integer('media_id');
             $table->string('document_type')->nullable();
             $table->string('filename')->nullable();
+            $table->string('file')->nullable();
             $table->string('comments')->nullable();
             $table->timestamps();
         });

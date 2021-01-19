@@ -18,6 +18,7 @@ class FilmFinancingPlan extends Model
         'media_id',
         'document_type',
         'filename',
+        'file',
         'comments',
     ];
 

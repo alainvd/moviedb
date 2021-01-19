@@ -16,8 +16,8 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $item['document_type'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $item['filename'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $item['document_type'] == 'FINANCING' ? 'Financing Plan' : '' }}</x-table.cell>
+                    <x-table.cell class="text-center"><a href="{{ route('film-financing-plan-download', ['file' => $item['file']]) }}">{{ $item['filename'] }}</a></x-table.cell>
                     <x-table.cell class="text-center">{{ $item['comments'] }}</x-table.cell>
                     <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
@@ -45,12 +45,14 @@
                 <div class="space-y-2">
 
                     <div>
-                        <x-form.input
+                        <x-form.select
                             :id="'financing_document_type'"
                             :label="'Document Type'"
                             :hasError="$errors->has('editing.document_type')"
                             wire:model="editing.document_type">
-                        </x-form.input>
+
+                            <option value="FINANCING">Financing Plan</option>
+                        </x-form.select>
 
                         @error('editing.document_type')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -58,14 +60,15 @@
                     </div>
 
                     <div>
-                        <x-form.input
-                            :id="'financing_filename'"
-                            :label="'Filename'"
-                            :hasError="$errors->has('editing.filename')"
-                            wire:model="editing.filename">
-                        </x-form.input>
+                        <x-form.file
+                            :id="'financing_file'"
+                            :label="'File'"
+                            :hasError="$errors->has('editing.file')"
+                            wire:model="editing.file"
+                        >
+                        </x-form.file>
 
-                        @error('editing.filename')
+                        @error('editing.file')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
