@@ -11,8 +11,9 @@ class SelectComponent extends Component
 
     public $domId;
     public $label;
-    public $options;
     public $name;
+    public $options;
+    public $items;
 
     public function render()
     {

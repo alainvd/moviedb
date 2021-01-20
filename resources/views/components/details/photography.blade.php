@@ -33,21 +33,13 @@
     </div>
 
     <div class="col-span-1 col-start-3 sm:col-span-1">
-        <x-form.select
-            :id="'shooting-language'"
-            :label="'Shooting Language'"
-            :hasError="$errors->has('shootingLanguage')"
-            wire:model="shootingLanguage">
-
-            @foreach ($languages as $language)
-                <option value="{{ $language['value'] }}">{{$language['label']}}</option>
-            @endforeach
-
-        </x-form.select>
-
-        @error('shootingLanguage')
-            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-        @enderror
+        @livewire('select-component', [
+            'domId' => 'shooting-language',
+            'label' => 'Shooting language',
+            'name' => 'shootingLanguage',
+            'options' => json_encode($languages),
+            'items' => json_encode($languagesSelected)
+        ])
     </div>
 
     <div class="col-span-1 col-start-1">
