@@ -66,8 +66,11 @@ class MovieFicheFormComposer
             'ADAPTATION' => 'Adaptation'
         ];
         $workContractTypes = [
-            'ONE' => 'One',
-            'TWO' => 'Two',
+            'CTONRTRANS' => 'Contract of transfer of rights',
+            'PUBLIDOM' => 'Public domain',
+            'OPTAGR' => 'Option Agreement of transfer of rights',
+            'UNILATDECL' => 'Unilateral declaration of transfer of rights',
+            'COPRODDEV' => 'Co-Production/co-development agreement',
         ];
 
         $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());

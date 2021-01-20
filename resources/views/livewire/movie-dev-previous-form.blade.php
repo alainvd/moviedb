@@ -29,8 +29,9 @@
                 <x-details.photography-dev-prev
                     :movie="$movie"
                     :filmFormats="$filmFormats"
+                    :audiences="$audiences"
                     :languages="$languages"
-                    :audiences="$audiences"></x-details.photography>
+                    :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
             <!-- link applicant work-->

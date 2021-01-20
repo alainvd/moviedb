@@ -47,7 +47,8 @@
                     :filmFormats="$filmFormats"
                     :isApplicant="$isApplicant"
                     :isEditor="$isEditor"
-                    :languages="$languages"></x-details.photography>
+                    :languages="$languages"
+                    :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
             <!-- producers -->

@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Movie;
 use App\FilmFinancingPlan;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class TableEditMovieFinancingPlan extends TableEditBase
@@ -70,21 +69,25 @@ class TableEditMovieFinancingPlan extends TableEditBase
     {
         $do_file_upload = false;
         $item = $this->getItemByKey($this->editing['key']);
-        if (isset($item['file'])) {
+        if (empty($item['file'])) {
+            // new item, required to upload new file
+            $this->validate([
+                'editing.document_type' => 'required|string',    
+                'editing.file' => 'required|mimetypes:application/pdf|max:10000',
+                'editing.comments' => 'required|string',
+            ]);
+            $do_file_upload = true;
+        } else {
             // existing item with file
             // can upload new file, can save without changing file
             if (is_a($this->editing['file'], 'Livewire\TemporaryUploadedFile')) {
                 $this->validate([
+                    'editing.document_type' => 'required|string',    
                     'editing.file' => 'required|mimetypes:application/pdf|max:10000',
+                    'editing.comments' => 'required|string',
                 ]);
                 $do_file_upload = true;
             }
-        } else {
-            // new item, required to upload new file
-            $this->validate([
-                'editing.file' => 'required|mimetypes:application/pdf|max:10000',
-            ]);
-            $do_file_upload = true;
         }
         if ($do_file_upload) {
             $this->editing['filename'] = $this->editing['file']->getClientOriginalName();
@@ -98,7 +101,16 @@ class TableEditMovieFinancingPlan extends TableEditBase
         $this->emitUp('update-movie-film-financing-plans', $this->items);
     }
 
-    public function download(Request $request) {
+    public function can_download($file)
+    {
+        if (FilmFinancingPlan::where('file', $file)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function download(Request $request)
+    {
         $file = FilmFinancingPlan::where('file', $request->input('file'))->first();
         return response()->download(storage_path('files/' . $file->file), $file->filename);
     }

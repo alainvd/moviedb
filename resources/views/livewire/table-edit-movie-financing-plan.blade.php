@@ -17,7 +17,11 @@
                 @foreach ($items as $item)
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['document_type'] == 'FINANCING' ? 'Financing Plan' : '' }}</x-table.cell>
+                    @if($this->can_download($item['file']))
                     <x-table.cell class="text-center"><a href="{{ route('film-financing-plan-download', ['file' => $item['file']]) }}">{{ $item['filename'] }}</a></x-table.cell>
+                    @else
+                    <x-table.cell class="text-center">{{ $item['filename'] }}</a></x-table.cell>
+                    @endif
                     <x-table.cell class="text-center">{{ $item['comments'] }}</x-table.cell>
                     <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>

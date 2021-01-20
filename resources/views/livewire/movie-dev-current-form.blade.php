@@ -31,7 +31,8 @@
                 <x-details.photography-dev-current
                     :movie="$movie"
                     :filmFormats="$filmFormats"
-                    :languages="$languages"></x-details.photography>
+                    :languages="$languages"
+                    :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
             <!-- cast/crew -->

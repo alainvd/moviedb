@@ -34,11 +34,9 @@ class MovieDistForm extends Component
     public ?Movie $movie = null;
     public ?Media $media = null;
 
-    // Movie original
     public $movie_original = [];
 
-    // public $shootingLanguages;
-    public $shootingLanguage = '';
+    public $shootingLanguages;
 
     public $crews = [];
     public $producers = [];
@@ -57,7 +55,7 @@ class MovieDistForm extends Component
     protected $rulesApplicant = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'string|max:255',
+        'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'media.genre_id' => 'required|integer',
         'media.delivery_platform_id' => 'required|integer',
@@ -68,26 +66,19 @@ class MovieDistForm extends Component
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string',
 
-        // 'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
-        // 'shootingLanguage' => 'required|integer',
-        'shootingLanguage' => 'integer',
         'movie.film_length' => 'required|integer',
-        'movie.film_format' => 'required|string|max:255',
+        'movie.film_format' => 'required|string',
 
         'movie.total_budget_currency_amount' => 'required|integer',
-        'movie.total_budget_currency_code' => 'required|string|max:255',
-        // 'movie.total_budget_currency_rate' => 'required|numeric',
-        // 'movie.total_budget_euro' => 'required|integer',
-
-        // 'fiche.comments' => 'string',
+        'movie.total_budget_currency_code' => 'required|string',
     ];
 
     protected $rulesEditor = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'string|max:255',
+        'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'media.genre_id' => 'required|integer',
         'media.delivery_platform_id' => 'required|integer',
@@ -101,8 +92,6 @@ class MovieDistForm extends Component
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
-        // 'shootingLanguage' => 'required|integer',
-        'shootingLanguage' => 'integer',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
 
@@ -130,8 +119,7 @@ class MovieDistForm extends Component
 
     public function mount(Request $request)
     {
-
-        // $this->shootingLanguages = collect([]);
+        $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
@@ -140,12 +128,9 @@ class MovieDistForm extends Component
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
-            // Fill selected languages
-            // $this->shootingLanguages = $this->movie->languages->map(
-            //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
-            // );
-            // $this->shootingLanguage = $this->movie->languages->first()->id;
-
+            $this->shootingLanguages = collect($this->movie->languages->map(
+                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
+            ));
             $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
@@ -170,18 +155,18 @@ class MovieDistForm extends Component
 
     }
 
-    // public function addShootingLanguage($lang)
-    // {
-    //     // @todo build listener names using select name
-    //     $this->shootingLanguages->push($lang[1]);
-    // }
+    public function addShootingLanguage($lang)
+    {
+        // @todo build listener names using select name
+        $this->shootingLanguages->push($lang[1]);
+    }
 
-    // public function removeShootingLanguage($lang)
-    // {
-    //     $this->shootingLanguages = $this->shootingLanguages->reject(
-    //         fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-    //     );
-    // }
+    public function removeShootingLanguage($lang)
+    {
+        $this->shootingLanguages = $this->shootingLanguages->reject(
+            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+        );
+    }
 
     public function callValidate()
     {
@@ -198,18 +183,14 @@ class MovieDistForm extends Component
     public function submit()
     {
         $this->validate();
-    
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
-
-        // When it's new
         if ($this->isNew) {
-            // Save movie
             $this->movie->save();
-            // $this->movie->languages()->attach(
-            //     $this->shootingLanguage
-            // );
-
-            // Load and save media
+            $this->movie->languages()->sync(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
             $media_store = $this->media;
             $this->media = $this->movie->media;
             $this->media->fill([
@@ -220,24 +201,21 @@ class MovieDistForm extends Component
                 'delivery_platform_id' => $media_store->delivery_platform_id,
                 'grantable_type' => 'App\Movie',
             ])->save();
-
-            // Save fiche
             $this->fiche->fill([
                 'media_id' => $this->media->id,
                 'dossier_id' => $this->dossier->id,
                 'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
-
             $this->emit('notify-saved');
-        } else { // When editing
+        } else {
+            // When saving existing fiche
             $this->movie->save();
-            // $this->movie->languages()->attach(
-            //     // $this->shootingLanguages->map(
-            //     //     fn ($lang) => $lang['value']
-            //     // )
-            //     $this->shootingLanguage
-            // );
+            $this->movie->languages()->sync(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
@@ -330,7 +308,6 @@ class MovieDistForm extends Component
 
         if ($this->isApplicant) {
             return view('livewire.movie-dist-form')
-                // ->layout('components.landing-layout');
                 ->layout('components.ecl-layout');
         } else {
             return view('livewire.movie-dist-form')
