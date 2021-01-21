@@ -6,6 +6,7 @@
     <meta content="width=device-width,initial-scale=1" name="viewport"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script defer src="https://europa.eu/webtools/load.js" type="text/javascript"></script>
     <script>
         var cl = document.querySelector('html').classList;
         cl.remove('no-js');
@@ -44,6 +45,7 @@
 
 <body>
 
+<div id="ec-globan"></div>
 @include('partials.ecl.header')
 <main class="relative z-0 flex-1 px-1 py-6 overflow-y-auto focus:outline-none" tabindex="0">
     {{ $slot }}
@@ -63,6 +65,19 @@
 <script src="{{ asset('js/app.js') }}" defer></script>
 @livewireScripts
 @yield('scripts')
+<script>
+window.onload = (event) => {
+    $wt.render("ec-globan", {
+        utility: "globan",
+        lang: "en",
+        theme: "light",
+        logo: true,
+        link: true,
+        mode: false,
+        zindex : 40
+    });
+};
+</script>
 </body>
 
 </html>
