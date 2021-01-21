@@ -5,6 +5,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\VideoGamePreviousForm;
 use App\Http\Controllers\ProjectController;
 use App\Models\Action;
 use Illuminate\Support\Facades\Route;
@@ -113,6 +114,7 @@ Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesControll
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
