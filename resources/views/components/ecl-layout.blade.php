@@ -46,7 +46,9 @@
 <body>
 
 <div id="ec-globan"></div>
-@include('partials.ecl.header')
+@include('partials.ecl.site-header')
+@include('partials.ecl.page-header')
+
 <main class="relative z-0 flex-1 px-1 py-6 overflow-y-auto focus:outline-none" tabindex="0">
     {{ $slot }}
 </main>
