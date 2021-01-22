@@ -27,15 +27,17 @@
         </div>
       </div>
     </div>
+    <!--
     <div class="ecl-site-header-harmonised__banner-top">
       <div class="ecl-container"><a href="https://eacea.ec.europa.eu/" class="ecl-link ecl-link--standalone">Class name</a></div>
     </div>
+    -->
     <nav data-ecl-auto-init="Menu" class="ecl-menu--group1 ecl-menu" aria-expanded="false" data-ecl-menu="true">
       <div class="ecl-menu__overlay" data-ecl-menu-overlay="true"></div>
       <div class="ecl-container ecl-menu__container"><a class="ecl-link ecl-link--standalone ecl-menu__open" href="/example" data-ecl-menu-open="true"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
             <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--hamburger"></use>
           </svg>Menu</a>
-        <div class="ecl-menu__site-name">Media Database</div>
+        <div class="ecl-menu__site-name">Creative Europe MEDIA Database</div>
         <section class="ecl-menu__inner" data-ecl-menu-inner="true">
           <header class="ecl-menu__inner-header"><button data-ecl-menu-close="true" type="submit" class="ecl-menu__close ecl-button ecl-button--text"><span class="ecl-menu__close-container ecl-button__container"><svg focusable="false" aria-hidden="true" data-ecl-icon="true" class="ecl-button__icon ecl-button__icon--before ecl-icon ecl-icon--s">
                   <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--close-filled"></use>

@@ -1,6 +1,6 @@
 <footer class="ecl-footer-harmonised ecl-footer-harmonised--group1">
   <div class="ecl-container ecl-footer-harmonised__container">
-    <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section1"><a href="/example" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone" aria-label="Link to example">Media Database</a>
+    <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section1"><a href="/example" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone" aria-label="Link to example">Creative Europe MEDIA Database</a>
       <div class="ecl-footer-harmonised__description">This site is managed by the Education, Audiovisual and Culture Executive Agency</div>
     </section>
     <div class="ecl-footer-harmonised__section2">
@@ -46,6 +46,7 @@
         </ul>
       </section>
     </div>
+    <!--
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section6">
       <div class="ecl-footer-harmonised__content">More information on:</div>
       <ul class="ecl-footer-harmonised__list ecl-footer-harmonised__list--condensed">
@@ -53,6 +54,7 @@
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Class name 2">Class name 2</a></li>
       </ul>
     </section>
+    -->
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section7"><a href="https://ec.europa.eu/info/index_en" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone">European Commission</a></section>
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section8">
       <ul class="ecl-footer-harmonised__list">
