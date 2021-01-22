@@ -21,9 +21,9 @@
             <li class="ecl-breadcrumb-harmonised__segment ecl-breadcrumb-harmonised__current-page" aria-current="page" data-ecl-breadcrumb-harmonised-item="static" aria-hidden="false">News</li>
           </ol>
         </nav>
-        <div class="ecl-page-header-harmonised__meta">Meta info</div>
+        <!--<div class="ecl-page-header-harmonised__meta">Meta info</div>-->
         <h1 class="ecl-page-header-harmonised__title">Page title</h1>
-        <p class="ecl-page-header-harmonised__description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+        <!--<p class="ecl-page-header-harmonised__description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>-->
       </div>
     </div>
   </div>
