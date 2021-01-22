@@ -18,7 +18,7 @@ class DossierSeeder extends Seeder
      */
     public function run()
     {
-        Dossier::factory(10)->create();
+        Dossier::factory(40)->create();
         // $count = Media::all()->count();
         // Media::all()->each(function ($media) use ($count) {
         //     $dossier = Dossier::factory()->create();

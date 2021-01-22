@@ -27,9 +27,9 @@ class CrewFactory extends BaseFactory
     {
         return [
             'points' => $this->faker->randomFloat(2, 0, 10),
-            'person_id' => Person::factory(),
+            'person_id' => $this->getRelationId(Person::class),
             'title_id' => $this->getRelationId(Title::class),
-            'media_id' => Media::factory(),
+            'media_id' => $this->getRelationId(Media::class),
         ];
     }
 }
