@@ -31,6 +31,7 @@ class MovieSeeder extends Seeder
                     'grantable_type' => "App\Movie",
                     'audience_id' => Audience::where('type', 'App\Movie')->get()->random()->id,
                     'genre_id' => Genre::where('type', 'App\Movie')->get()->random()->id,
+                    'delivery_platform_id' => rand(1, 3),
                 ]);
         });
 
