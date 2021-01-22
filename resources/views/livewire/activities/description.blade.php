@@ -30,13 +30,14 @@
                 :disabled="true">
             </x-form.input>
         </div>
-        <div class="col-span-2 flex justify-end">
+        <div class="col-span-2 ml-auto">
             <x-button.secondary class="mt-6">
                 View details
             </x-button.secondary>
-            <x-button.secondary class="mt-6 ml-8">
+            <x-anchors.secondary
+                :url="route('movie-wizard', $dossier->id)">
                 Select
-            </x-button.secondary>
+            </x-anchors.secondary>
         </div>
     </div>
 </div>

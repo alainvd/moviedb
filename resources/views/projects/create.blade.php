@@ -2,7 +2,7 @@
 
     <div class="px-4 py-8 my-8 bg-white md:px-8 lg:px-16">
         <!-- Title -->
-        <h1 class="text-2xl font-light leading-tight">European Slate Development</h1>
+        <h1 class="text-3xl font-light leading-tight">European Slate Development</h1>
 
         <form action="{{ route('projects.update', $dossier->id) }}" method="POST">
             @csrf

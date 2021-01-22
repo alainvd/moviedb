@@ -6,6 +6,7 @@ use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Livewire\MovieDevCurrentForm;
 use App\Http\Controllers\ProjectController;
+use App\Http\Livewire\Dossiers\MovieWizard;
 use App\Models\Action;
 use Illuminate\Support\Facades\Route;
 
@@ -86,7 +87,9 @@ Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('inde
 
 Route::resource('/projects', ProjectController::class)->middleware('cas.auth');
 Route::view('/reports', 'coming-soon');
-
+Route::get('/projects/{project}/movie-wizard', MovieWizard::class)
+    ->middleware('cas.auth')
+    ->name('movie-wizard');
 
 Route::resource('step', 'App\Http\Controllers\StepController')->only('index');
 
