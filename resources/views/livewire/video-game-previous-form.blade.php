@@ -5,7 +5,7 @@
         <!-- <div class="text-xs leading-tight">Applicant form</div> -->
             <!-- title -->
             <div class="my-8">
-                <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>
+            <h1 class ="text-2xl leading-7 text-gray-900">Video Game - Development - Recent work/previous experience</h1>
             </div>
 
             <!-- basic -->
@@ -15,6 +15,7 @@
                     :isApplicant="$isApplicant"
                     :countries="$countries"
                     :genres="$genres"
+                    :genresSelected="$gameGenres"
                     :platforms="$platforms"
                     :statuses="$statuses"
                     :years="$years"></x-details.basic>
@@ -39,7 +40,15 @@
 
             <!-- technical info -->
             <div class="my-8">
-                <x-details.tech-vg :movie="$movie"></x-details.tech-vg>
+                <x-details.tech-vg 
+                    :movie="$movie" 
+                    :languages="$languages"
+                    :languagesSelected="$shootingLanguages"
+                    :modes="$modes"
+                    :modesSelected="$gameModes"
+                    >
+                </x-details.tech-vg>
+                
             </div>
 
 

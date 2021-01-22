@@ -69,21 +69,16 @@
     </div>
 
     <div class="col-span-2 sm:col-span-1">
-        <x-form.select
-            :id="'film_genre'"
-            :label="'Film Genre'"
-            :hasError="$errors->has('media.genre_id')"
-            wire:model="media.genre_id">
+        
+            @livewire('select-component', [
+                'domId' => 'genres',
+                'label' => 'Genres',
+                'name' => 'genres',
+                'options' => json_encode($genres),
+                'items' => json_encode($genresSelected)
+            ])
 
-            @foreach($genres as $genre)
-                <option value="{{ $genre['id'] }}">{{ $genre['name'] }}</option>
-            @endforeach
-
-        </x-form.select>
-
-        @error('media.genre_id')
-            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-        @enderror
+        <!--add validation -->
     </div>
 
 </div>

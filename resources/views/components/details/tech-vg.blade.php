@@ -23,31 +23,28 @@
     </div>
 
     <div class="col-span-1 sm:col-span-1 md:col-span-1">
-        <x-form.input
-            :id="'game_modes'"
-            :label="'Game Modes'"
-            :hasError="$errors->has('movie.game_modes')"
-            wire:model="movie.game_modes">
-
-        </x-form.input>
-
-        @error('movie.game_modes')
-            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-        @enderror
+        
+            @livewire('select-component', [
+                'domId' => 'game_modes',
+                'label' => 'Game Modes',
+                'name' => 'game_modes',
+                'options' => json_encode($modes),
+                'items' => json_encode($modesSelected)
+            ])
+        
     </div>
 
     <div class="col-span-1 sm:col-span-1 md:col-span-1">
-        <x-form.input
-            :id="'gaming_platform'"
-            :label="'Gaming Platform'"
-            :hasError="$errors->has('movie.gaming_platform')"
-            wire:model="movie.gaming_platform">
+        
+            @livewire('select-component', [
+                'domId' => 'gaming_platform',
+                'label' => 'Gaming Platform',
+                'name' => 'gaming_platform',
+                'options' => json_encode($languages),
+                'items' => json_encode($languagesSelected)
+            ])
 
-        </x-form.input>
-
-        @error('movie.gaming_platform')
-            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-        @enderror
+        
     </div>
 
     <div class="col-span-1 sm:col-span-1 md:col-span-1">

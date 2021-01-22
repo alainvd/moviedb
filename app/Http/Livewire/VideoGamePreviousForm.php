@@ -34,6 +34,10 @@ class VideoGamePreviousForm extends Component
     public ?Movie $movie = null;
     public ?Media $media = null;
 
+    public $gameGenres;
+    public $shootingLanguages;
+    public $gameModes;
+
     // Movie original
     public $movie_original = [];
 
@@ -67,7 +71,7 @@ class VideoGamePreviousForm extends Component
         'movie.synopsis' => 'string',
 
         // 'shootingLanguage' => 'required|integer',
-        'shootingLanguage' => 'integer',
+        //'shootingLanguage' => 'integer',
         'media.audience_id' => 'required|integer',
 
         'fiche.comments' => 'string',
@@ -81,7 +85,7 @@ class VideoGamePreviousForm extends Component
 
     public function mount(Request $request)
     {
-        // $this->shootingLanguages = collect([]);
+        $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
@@ -91,9 +95,9 @@ class VideoGamePreviousForm extends Component
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
             // Fill selected languages
-            // $this->shootingLanguages = $this->movie->languages->map(
-            //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
-            // );
+            $this->shootingLanguages = collect($this->movie->languages->map(
+                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
+            ));
 
             // $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
@@ -119,18 +123,44 @@ class VideoGamePreviousForm extends Component
 
     }
 
-    // public function addShootingLanguage($lang)
-    // {
-    //     // @todo build listener names using select name
-    //     $this->shootingLanguages->push($lang[1]);
-    // }
+    public function addGameGenre($genre)
+     {
+         // @todo build listener names using select name
+         $this->gameGenres->push($genre[1]);
+     }
 
-    // public function removeShootingLanguage($lang)
-    // {
-    //     $this->shootingLanguages = $this->shootingLanguages->reject(
-    //         fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-    //     );
-    // }
+     public function removeGameGenre($genre)
+     {
+        $this->genre = $this->genre->reject(
+            fn ($gameGenres) => $gameGenres['value'] === $genre[1]['value']
+         );
+     }
+
+     public function addShootingLanguage($lang)
+     {
+         // @todo build listener names using select name
+         $this->shootingLanguages->push($lang[1]);
+     }
+
+     public function removeShootingLanguage($lang)
+     {
+        $this->shootingLanguages = $this->shootingLanguages->reject(
+            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+         );
+     }
+
+     public function addGameMode($mode)
+     {
+         // @todo build listener names using select name
+         $this->gameModes->push($mode[1]);
+     }
+
+     public function removeGameMode($mode)
+     {
+        $this->gameModes = $this->gameModes->reject(
+            fn ($gameModes) => $gameModes['value'] === $mode[1]['value']
+         );
+     }
 
     public function callValidate()
     {
@@ -146,7 +176,7 @@ class VideoGamePreviousForm extends Component
 
     public function submit()
     {
-        $this->validate();
+        //$this->validate();
     
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
 
@@ -154,9 +184,13 @@ class VideoGamePreviousForm extends Component
         if ($this->isNew) {
             // Save movie
             $this->movie->save();
-            // $this->movie->languages()->attach(
-            //     $this->shootingLanguage
-            // );
+            $this->movie->languages()->sync(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
+            
+            
 
             // Save media
             $this->media->fill([

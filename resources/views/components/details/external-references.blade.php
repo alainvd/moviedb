@@ -2,7 +2,7 @@
     <div class="col-span-3 md:col-span-1">
         <x-form.input
             :id="'website'"
-            :label="'Web site deidicated to the work'"
+            :label="'Website dedicated to the work'"
             :hasError="$errors->has('movie.imdb_url')"
             wire:model="movie.imdb_url">
 
