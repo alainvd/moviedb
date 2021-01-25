@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Session;
 
 class User extends Authenticatable
 {
@@ -55,4 +56,20 @@ class User extends Authenticatable
             );
         }
     }
+
+    public function setImpersonating($id)
+    {
+        Session::put('impersonate', $id);
+    }
+
+    public function stopImpersonating()
+    {
+        Session::forget('impersonate');
+    }
+
+    public function isImpersonating()
+    {
+        return Session::has('impersonate');
+    }
+
 }

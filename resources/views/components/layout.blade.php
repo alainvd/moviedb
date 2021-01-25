@@ -28,6 +28,7 @@
 </head>
 
 <body class="h-full antialiased leading-none bg-gray-100">
+    @include('impersonate')
     <div>
 
         @livewire('navbar')

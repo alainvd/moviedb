@@ -45,6 +45,7 @@
 
 <body>
 
+@include('impersonate')
 <div id="ec-globan"></div>
 @include('partials.ecl.site-header')
 @include('partials.ecl.page-header')
