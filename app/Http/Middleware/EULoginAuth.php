@@ -44,6 +44,13 @@ class EULoginAuth
                     ])->assignRole('applicant');
                 }
 
+                // impersonate
+                if($request->session()->has('impersonate'))
+                {
+                    $user = User::where('id', $request->session()->get('impersonate'))
+                    ->first();
+                }
+
                 cas()->setAttributes(
                     $user->toArray()
                 );

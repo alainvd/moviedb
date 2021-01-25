@@ -27,6 +27,7 @@
 
 <body>
 
+@include('impersonate')
 @include('partials.landing.header')
 <main class="relative z-0 flex-1 px-12 py-6 overflow-y-auto focus:outline-none" tabindex="0">
     {{ $slot }}

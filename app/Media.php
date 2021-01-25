@@ -22,7 +22,6 @@ class Media extends Model
         'grantable_id',
         'grantable_type',
         'audience_id',
-        'media_id',
         'delivery_platform_id',
     ];
 

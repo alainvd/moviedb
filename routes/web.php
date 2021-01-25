@@ -126,7 +126,5 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 
 Route::view('/demo', 'demo');
 
-
-
-
-
+Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
+Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');

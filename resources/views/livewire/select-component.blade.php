@@ -2,6 +2,7 @@
 
 	var choices = new Choices($refs.mySelect, {
 		removeItemButton: true,
+		duplicateItemsAllowed: false,
 		choices: {{ $options }},
 	});
 
