@@ -13,6 +13,11 @@
         cl.add('has-js');
       </script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    <script type="application/json">
+        {
+            "utility" : "cck"
+        }
+    </script>
 
     <link
         rel="stylesheet"

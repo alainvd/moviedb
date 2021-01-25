@@ -68,7 +68,7 @@
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section9">
       <ul class="ecl-footer-harmonised__list">
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Language policy">Language policy</a></li>
-        <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Cookies">Cookies</a></li>
+        <li class="ecl-footer-harmonised__list-item"><a href="https://ec.europa.eu/info/cookies_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Cookies">Cookies</a></li>
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Privacy policy">Privacy policy</a></li>
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Legal notice">Legal notice</a></li>
       </ul>
