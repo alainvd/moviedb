@@ -1,4 +1,4 @@
-<div class="w-full my-16" x-data="{
+<div class="w-full md:w-3/4 mx-auto my-16 pb-8 bg-white shadow-md" x-data="{
         currentStep: @entangle('currentStep')
     }">
     <h1 class="my-4 text-3xl font-light leading-tight">
@@ -224,3 +224,5 @@
         </x-button.primary>
     </div>
 </div>
+
+<img src="{{ asset('images/dossier/wizard-1.png')}}" alt="Movie wizard">
