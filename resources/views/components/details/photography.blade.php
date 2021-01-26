@@ -32,14 +32,25 @@
         @enderror
     </div>
 
-    <div class="col-span-1 col-start-3 sm:col-span-1">
+    <div
+        x-data="{ error: {{ $errors->has('movie.shooting_language') ? 1 : 0 }} }"
+        x-init="$watch('error', value => error == 1 ? 
+        document.getElementById('shooting-language').parentElement.classList.add('border', 'rounded-md', 'border-red-500')
+        : 
+        document.getElementById('shooting-language').parentElement.classList.remove('border', 'rounded-md', 'border-red-500')
+        )"
+        class="col-span-1 col-start-3 sm:col-span-1">
         @livewire('select-component', [
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
             'name' => 'shootingLanguage',
             'options' => json_encode($languages),
-            'items' => json_encode($languagesSelected)
+            'items' => json_encode($languagesSelected),
         ])
+
+        @error('movie.shooting_language')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-span-1 col-start-1">

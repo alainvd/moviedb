@@ -68,6 +68,7 @@ class MovieDistForm extends Component
 
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string',
 
@@ -92,6 +93,7 @@ class MovieDistForm extends Component
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
 
@@ -170,7 +172,9 @@ class MovieDistForm extends Component
 
     public function callValidate()
     {
+        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
+        unset($this->movie->shooting_language);
     }
 
     public function reject()
@@ -182,7 +186,10 @@ class MovieDistForm extends Component
 
     public function submit()
     {
+        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
+        unset($this->movie->shooting_language);
+
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
             $this->movie->save();

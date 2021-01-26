@@ -68,6 +68,7 @@ class MovieDevCurrentForm extends Component
         'movie.synopsis' => 'string',
 
         'movie.photography_start' => 'required|date:d.m.Y',
+        'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer',
         'movie.number_of_episodes' => 'integer',
@@ -154,7 +155,9 @@ class MovieDevCurrentForm extends Component
 
     public function callValidate()
     {
+        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
+        unset($this->movie->shooting_language);
     }
 
     public function reject()
@@ -166,7 +169,9 @@ class MovieDevCurrentForm extends Component
 
     public function submit()
     {
+        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
+        unset($this->movie->shooting_language);
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
             $this->movie->save();
