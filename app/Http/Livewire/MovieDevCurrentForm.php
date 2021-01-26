@@ -175,11 +175,14 @@ class MovieDevCurrentForm extends Component
                     fn ($lang) => $lang['value']
                 )
             );
-            // Save media
-            // TODO: compare this to MovieDistForm
+            $media_store = $this->media;
+            $this->media = $this->movie->media;
             $this->media->fill([
                 'title' => $this->movie->original_title,
+                'audience_id' => $media_store->audience_id,
+                'genre_id' => $media_store->genre_id,
                 'grantable_id' => $this->movie->id,
+                'delivery_platform_id' => $media_store->delivery_platform_id,
                 'grantable_type' => 'App\Movie',
             ])->save();
             $this->fiche->fill([
