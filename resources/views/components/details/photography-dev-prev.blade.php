@@ -26,7 +26,7 @@
     <div class="col-span-1">
         <x-form.select
             :id="'audience'"
-            :label="'Audience'"
+            :label="'Targeted Audience'"
             :hasError="$errors->has('media.audience_id')"
             wire:model="media.audience_id">
 

@@ -1,6 +1,6 @@
 <div class="flex justify-between">
     <h2 class="text-2xl leading-7 text-gray-900">
-        DIST{{ $movie->year_of_copyright }}/{{ $movie->id }}/
+        DIST {{$movie->year_of_copyright }}/{{ $movie->id }}/
         - {{ $movie->original_title }}
     </h2>
 

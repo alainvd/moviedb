@@ -43,7 +43,10 @@ class ViewServiceProvider extends ServiceProvider
             'livewire.movie-dev-current-form',
             'App\Http\View\Composers\MovieFicheFormComposer',
         );
-
+        View::composer(
+            'livewire.video-game-previous-form',
+            'App\Http\View\Composers\MovieFicheFormComposer',
+        );
         View::composer(
             'livewire.dossiers.activities.distributors',
             DistributorsComposer::class

@@ -26,4 +26,5 @@ public/mix-manifest.json
 /draft.yaml
 /.blueprint
 /storage/framework/
+/bin/
 /storage/files/

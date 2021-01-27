@@ -37,4 +37,9 @@ class Fiche extends Model
     {
         return $query->where('activity_id', $activityId);
     }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }
