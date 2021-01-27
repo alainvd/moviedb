@@ -10,6 +10,7 @@
     @include('partials.scripts.alpine')
     @include('partials.scripts.choices')
     @include('partials.scripts.ecl')
+    @include('partials.scripts.cck')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
