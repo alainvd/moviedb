@@ -14,6 +14,7 @@ class ProjectController extends Controller
         'company' => 'required|string|min:3',
         'film_tite' => 'required',
     ];
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +56,9 @@ class ProjectController extends Controller
             'contact_person' => Auth::user()->email,
         ]);
 
-        return view('dossiers.create', compact('dossier'));
+        $layout = $this->getLayout();
+
+        return view('dossiers.create', compact('dossier', 'layout'));
     }
 
     /**
@@ -79,7 +82,9 @@ class ProjectController extends Controller
     {
         $dossier = Dossier::find($id);
 
-        return view('dossiers.create', compact('dossier'));
+        $layout = $this->getLayout();
+
+        return view('dossiers.create', compact('dossier', 'layout'));
     }
 
     /**
@@ -173,5 +178,16 @@ class ProjectController extends Controller
         } else {
             return "integer|between:{$min},{$max}";
         }
+    }
+
+    protected function getLayout()
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('applicant')) {
+            return 'ecl-layout';
+        }
+
+        return 'layout';
     }
 }

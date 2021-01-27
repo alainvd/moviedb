@@ -110,9 +110,11 @@ class MovieWizard extends Component
             $results = $query->simplePaginate(5);
         }
 
+        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
+
         return view('livewire.dossiers.movie-wizard', [
                 'results' => $results,
             ])
-            ->layout('components.ecl-layout', ['title' => 'Films on the move']);
+            ->layout($layout, ['title' => 'Films on the move']);
     }
 }

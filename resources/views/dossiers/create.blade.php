@@ -1,7 +1,11 @@
-<x-ecl-layout :title="'Films on the Move'">
-    <div class="px-4 bg-white md:px-8 lg:px-16">
+<x-dynamic-component :component="$layout" :title="'Films on the Move'">
+    <div class="px-4 bg-white">
         <!-- Title -->
         <!-- <h1 class="text-3xl font-light leading-tight">European Slate Development</h1> -->
+
+        @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
+            @include('dossiers.instructions.dist')
+        @endif
 
         <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf
@@ -71,4 +75,4 @@
             </div>
         </form>
     </div>
-</x-ecl-layout>
+</x-dynamic-component>
