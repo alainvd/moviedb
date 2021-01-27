@@ -9,26 +9,86 @@ class TitleSeeder extends Seeder
 {
 
     public $titles = [
-        'Director/Project Leader',
-        'Author/(Script)writer/Creator',
-        'Script-editor',
-        'Composer',
-        'Production Designer',
-        'Director of Photgraphy',
-        'Editor',
-        'Sound',
-        'Storyboard Artist',
-        'Graphic artist',
-        'Character Designer',
-        'Animation Supervisor',
-        'Art(istic) Director',
-        'Technical Director',
-        'Head of Development',
-        'Producer',
-        'Creative Director',
-        'Game Designer',
-        'Lead Programmer',
-        'Cast/Voice Talent',
+        [
+            'name' => 'Director/Project Leader',
+            'code' => 'DIRECTOR'
+        ],
+        [
+            'name' => 'Author/(Script)writer/Creator',
+            'code' => 'AUTHOR'
+        ],
+        [
+            'name' => 'Script-editor',
+            'code' => 'SCRIPTEDITOR'
+        ],
+        [
+            'name' => 'Composer',
+            'code' => 'COMPOSER'
+        ],
+        [
+            'name' => 'Production Designer',
+            'code' => 'PRODDESIGNER'
+        ],
+        [
+            'name' => 'Director of Photography',
+            'code' => 'DIRPHOTOGRAPHY'
+        ],
+        [
+            'name' => 'Editor',
+            'code' => 'EDITOR'
+        ],
+        [
+            'name' => 'Sound',
+            'code' => 'SOUND'
+        ],
+        [
+            'name' => 'Storyboard Artist',
+            'code' => 'STORYARTIST'
+        ],
+        [
+            'name' => 'Graphic artist',
+            'code' => 'GRAPHICARTIST'
+        ],
+        [
+            'name' => 'Character Designer',
+            'code' => 'CHARDESIGNER'
+        ],
+        [
+            'name' => 'Animation Supervisor',
+            'code' => 'ANIMATIONSUP'
+        ],
+        [
+            'name' => 'Art(istic) Director',
+            'code' => 'ARTDIRECTOR'
+        ],
+        [
+            'name' => 'Technical Director',
+            'code' => 'TECHDIRECTOR'
+        ],
+        [
+            'name' => 'Head of Development',
+            'code' => 'HEADDEV'
+        ],
+        [
+            'name' => 'Producer',
+            'code' => 'PRODUCER'
+        ],
+        [
+            'name' => 'Creative Director',
+            'code' => 'CREATIVEDIR'
+        ],
+        [
+            'name' => 'Game Designer',
+            'code' => 'GAMEDESIGNER'
+        ],
+        [
+            'name' => 'Lead Programmer',
+            'code' => 'LEADPROGRAMMER'
+        ],
+        [
+            'name' => 'Cast/Voice Talent',
+            'code' => 'CASTTALENT'
+        ],
     ];
 
     /**
@@ -40,9 +100,8 @@ class TitleSeeder extends Seeder
     {
         foreach ($this->titles as $title) {
             Title::create([
-                'name' => $title,
-                'code' => $title,
-
+                'name' => $title['name'],
+                'code' => $title['code'],
             ]);
         }
     }

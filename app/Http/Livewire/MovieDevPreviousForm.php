@@ -34,31 +34,24 @@ class MovieDevPreviousForm extends Component
     public ?Movie $movie = null;
     public ?Media $media = null;
 
-    // Movie original
     public $movie_original = [];
 
-    // public $shootingLanguages;
-    public $shootingLanguage = '';
+    public $shootingLanguages;
 
-    // public $crews = [];
     public $producers = [];
     public $sales_agents = [];
 
     protected $listeners = [
-        // 'update-movie-crews' => 'updateMovieCrews',
         'update-movie-producers' => 'updateMovieProducers',
         'update-movie-sales-agents' => 'updateMovieSalesAgents',
         'addItem' => 'addShootingLanguage',
         'removeItem' => 'removeShootingLanguage'
     ];
 
-    /**
-     * Each wired fields needs to be here or it will be filtered
-     */
     protected $rules = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'string|max:255',
+        'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'media.genre_id' => 'required|integer',
 
@@ -67,8 +60,6 @@ class MovieDevPreviousForm extends Component
         'movie.synopsis' => 'string',
 
         'movie.film_length' => 'required|integer',
-        // 'shootingLanguage' => 'required|integer',
-        'shootingLanguage' => 'integer',
         'media.audience_id' => 'required|integer',
 
         'movie.link_applicant_work' => 'string',
@@ -87,7 +78,7 @@ class MovieDevPreviousForm extends Component
 
     public function mount(Request $request)
     {
-        // $this->shootingLanguages = collect([]);
+        $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
@@ -96,15 +87,11 @@ class MovieDevPreviousForm extends Component
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
-            // Fill selected languages
-            // $this->shootingLanguages = $this->movie->languages->map(
-            //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
-            // );
-
-            // $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
+            $this->shootingLanguages = collect($this->movie->languages->map(
+                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
+            ));
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
-            // dd($this->producers);
         }
 
         if (Auth::user()->hasRole('applicant')) {
@@ -125,18 +112,18 @@ class MovieDevPreviousForm extends Component
 
     }
 
-    // public function addShootingLanguage($lang)
-    // {
-    //     // @todo build listener names using select name
-    //     $this->shootingLanguages->push($lang[1]);
-    // }
+    public function addShootingLanguage($lang)
+    {
+        // @todo build listener names using select name
+        $this->shootingLanguages->push($lang[1]);
+    }
 
-    // public function removeShootingLanguage($lang)
-    // {
-    //     $this->shootingLanguages = $this->shootingLanguages->reject(
-    //         fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-    //     );
-    // }
+    public function removeShootingLanguage($lang)
+    {
+        $this->shootingLanguages = $this->shootingLanguages->reject(
+            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+        );
+    }
 
     public function callValidate()
     {
@@ -153,41 +140,39 @@ class MovieDevPreviousForm extends Component
     public function submit()
     {
         $this->validate();
-    
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
-
-        // When it's new
         if ($this->isNew) {
-            // Save movie
             $this->movie->save();
-            // $this->movie->languages()->attach(
-            //     $this->shootingLanguage
-            // );
-
-            // Save media
+            $this->movie->languages()->sync(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
+            $media_store = $this->media;
+            $this->media = $this->movie->media;
             $this->media->fill([
                 'title' => $this->movie->original_title,
+                'audience_id' => $media_store->audience_id,
+                'genre_id' => $media_store->genre_id,
                 'grantable_id' => $this->movie->id,
+                'delivery_platform_id' => $media_store->delivery_platform_id,
                 'grantable_type' => 'App\Movie',
             ])->save();
-
-            // Save fiche
             $this->fiche->fill([
                 'media_id' => $this->media->id,
                 'dossier_id' => $this->dossier->id,
                 'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
-
             $this->emit('notify-saved');
-        } else { // When editing
+        } else { 
+            // When editing
             $this->movie->save();
-            // $this->movie->languages()->attach(
-            //     // $this->shootingLanguages->map(
-            //     //     fn ($lang) => $lang['value']
-            //     // )
-            //     $this->shootingLanguage
-            // );
+            $this->movie->languages()->sync(
+                $this->shootingLanguages->map(
+                    fn ($lang) => $lang['value']
+                )
+            );
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
@@ -195,19 +180,13 @@ class MovieDevPreviousForm extends Component
         }
 
         // crew, producers, sales agents
-        // $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
         $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        }
+        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
+        // }
     }
-
-    // public function updateMovieCrews($items)
-    // {
-    //     $this->crews = $items;
-    // }
 
     public function updateMovieProducers($items)
     {

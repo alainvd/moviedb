@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Session;
 
 class User extends Authenticatable
 {
@@ -46,11 +47,29 @@ class User extends Authenticatable
         $attributes['password'] = Str::random(16);
 
         // Check if there is a user associated with this email
-        return User::firstOrCreate(
-            [
-                'eu_login_username' => $attributes['eu_login_username']
-            ],
-            $attributes
-        );
+        if (isset($attributes['eu_login_username'])) {
+            return User::firstOrCreate(
+                [
+                    'eu_login_username' => $attributes['eu_login_username']
+                ],
+                $attributes
+            );
+        }
     }
+
+    public function setImpersonating($id)
+    {
+        Session::put('impersonate', $id);
+    }
+
+    public function stopImpersonating()
+    {
+        Session::forget('impersonate');
+    }
+
+    public function isImpersonating()
+    {
+        return Session::has('impersonate');
+    }
+
 }

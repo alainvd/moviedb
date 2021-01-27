@@ -19,8 +19,8 @@ class Producer extends Model
         'role',
         'name',
         'city',
-        'country_id',
-        'language_id',
+        'country',
+        'language',
         'share',
         'budget',
     ];
@@ -46,7 +46,7 @@ class Producer extends Model
     }
 
     const ROLES = [
-        'producer' => 'Producer',
-        'coproducer' => 'Coproducer',
+        'PRODUCER' => 'Producer',
+        'COPRODUCER' => 'Coproducer',
     ];
 }
