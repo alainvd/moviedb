@@ -7,6 +7,7 @@ use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Livewire\MovieDevCurrentForm;
 use App\Http\Livewire\VideoGamePreviousForm;
 use App\Http\Controllers\ProjectController;
+use App\Http\Livewire\MediaDatatables;
 use App\Models\Action;
 use Illuminate\Support\Facades\Route;
 
@@ -78,9 +79,9 @@ $dossiers = [
         'closed' => true,
     ],
 ];
-Route::get('dossiers', function () use ($dossiers) {
-    return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers');
+//Route::get('dossiers', function () use ($dossiers) {
+//    return view('dossiers', ['dossiers' => $dossiers]);
+//})->name('dossiers');
 
 
 Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
@@ -125,6 +126,14 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 
 Route::view('/demo', 'demo');
 
+Route::get('dossiers', function () {
+    return view('livewire.dossier-datatables');})->name('dossiers');
+
+
+
+Route::get('media', function () {
+        return view('livewire.media-datatables');})->name('bla');
+    
 
 
 
