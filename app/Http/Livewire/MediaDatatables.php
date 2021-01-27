@@ -1,7 +1,7 @@
 <?php
-  
+
 namespace App\Http\Livewire;
-   
+
 use Livewire\Component;
 use App\Crew;
 use App\Media;
@@ -16,17 +16,18 @@ use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use Illuminate\Support\Facades\Log;
 
 
-  
+
 class MediaDatatables extends LivewireDatatable
 {
-    
-    
+
+
     public $model = Media::class;
 
-    
-    
+
+
     /**
      * Write code on Method
      *
@@ -44,25 +45,30 @@ class MediaDatatables extends LivewireDatatable
             Column::callback('grantable_type', 'mediaType')
                 ->label('Type')
                 ->filterable(),
-            //Column::name('grantable.year_of_copyright')
-            //    ->label('YEAR OF COPYRIGHT'),
+            Column::callback(['id','grantable_type', 'grantable_id'], function ($id,$grantable_type, $grantable_id) {
+                return  Media::find($id)->grantable->original_title;
+            })
+                ->label('Test')
+                ->filterable(),
             Column::name('crew.person_id')
-                ->label('DIRECTOR'),             
+                ->label('DIRECTOR'),
             Column::name('fiche.status.name')
                 ->label('STATUS'),
-           
+
         ];
     }
 
     public function mediaType($text)
     {
+
+
         if ($text=='App\Movie') {
 
             return 'Movie';
         }
-        
+
         else return 'VideoGame';
     }
 
-    
+
 }
