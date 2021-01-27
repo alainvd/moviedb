@@ -45,7 +45,7 @@ class ViewServiceProvider extends ServiceProvider
         );
 
         View::composer(
-            'livewire.activities.distributors',
+            'livewire.dossiers.activities.distributors',
             DistributorsComposer::class
         );
 

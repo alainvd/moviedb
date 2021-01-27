@@ -11,7 +11,8 @@ class ProjectController extends Controller
 {
 
     protected $dossierRules = [
-        'company' => 'required|string|min:3'
+        'company' => 'required|string|min:3',
+        'film_tite' => 'required',
     ];
     /**
      * Display a listing of the resource.
@@ -54,7 +55,7 @@ class ProjectController extends Controller
             'contact_person' => Auth::user()->email,
         ]);
 
-        return view('projects.create', compact('dossier'));
+        return view('dossiers.create', compact('dossier'));
     }
 
     /**
@@ -76,7 +77,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $dossier = Dossier::find($id);
+
+        return view('dossiers.create', compact('dossier'));
     }
 
     /**
@@ -137,19 +140,19 @@ class ProjectController extends Controller
             $rules['current_works'] = $this->getMinMaxRule('current_works');
         }
 
-        if ($request->has('film_id')) {
-            $rules['film_id'] = 'required|integer';
-        }
+        // if ($request->has('film_id')) {
+        //     $rules['film_id'] = 'required|integer';
+        // }
 
-        if ($request->has('coordinator_count')) {
-            $minCoordinators = $request->input('min_coordinators');
-            $rules['coordinator_count'] = "integer|min:{$minCoordinators}";
-        }
+        // if ($request->has('coordinator_count')) {
+        //     $minCoordinators = $request->input('min_coordinators');
+        //     $rules['coordinator_count'] = "integer|min:{$minCoordinators}";
+        // }
 
-        if ($request->has('participant_count')) {
-            $minParticipants = $request->input('min_participants');
-            $rules['participant_count'] = "integer|min:{$minParticipants}";
-        }
+        // if ($request->has('participant_count')) {
+        //     $minParticipants = $request->input('min_participants');
+        //     $rules['participant_count'] = "integer|min:{$minParticipants}";
+        // }
 
         return $rules;
     }

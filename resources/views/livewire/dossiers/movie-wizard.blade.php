@@ -1,9 +1,9 @@
-<div class="w-full md:w-3/4 mx-auto my-16 pb-8 bg-white shadow-md" x-data="{
+<div class="pb-8 bg-white shadow-md" x-data="{
         currentStep: @entangle('currentStep')
     }">
-    <h1 class="my-4 text-3xl font-light leading-tight">
+    <!-- <h1 class="my-4 text-3xl font-light leading-tight">
         Films on the move
-    </h1>
+    </h1> -->
 
     <!-- tabs -->
     <div class="w-full flex flex-row flex-wrap">
@@ -70,7 +70,6 @@
                     <x-table.heading>COPYRIGHT</x-table.heading>
                 </x-slot>
                 <x-slot name="body">
-                    <form>
                     @forelse ($results as $result)
                         <x-table.row>
                             <x-table.cell class="text-center">
@@ -98,7 +97,6 @@
                             <x-table.cell class="text-center" colspan="6">No movies found</x-table.cell>
                         </x-table.row>
                     @endforelse
-                    </form>
                 </x-slot>
             </x-table>
 
@@ -112,7 +110,7 @@
                 Step 3: Confirm your selection or go back to search again.
             </h3>
 
-            @if ($movie)
+            @if ($movie->id)
 
             <div class="my-8 px-16 md:ml-8 grid grid-cols-3 gap-4">
                 <div class="col-span-2">
@@ -214,7 +212,10 @@
             <div class="text-md text-gray-500">
                 Could not find the work you are looking for?
                 &nbsp;
-                <a href="#" class="text-indigo-600">
+                <a href="{{ route('dist-fiche', [
+                    'dossier' => $dossier,
+                    'activity' => 1,
+                ]) }}" class="text-indigo-600">
                     Create a new work
                 </a>
             </div>
@@ -225,4 +226,4 @@
     </div>
 </div>
 
-<img src="{{ asset('images/dossier/wizard-1.png')}}" alt="Movie wizard">
+<img class="mt-4" src="{{ asset('images/dossier/wizard-1.png')}}" alt="Movie wizard">

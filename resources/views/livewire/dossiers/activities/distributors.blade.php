@@ -1,7 +1,7 @@
 <div class="my-16">
     <!-- Distributor counts -->
-    <input type="hidden" name="coordinator_count" wire:model="coordinatorCount">
-    <input type="hidden" name="participant_count" wire:model="participantCount">
+    <!-- <input type="hidden" name="coordinator_count" wire:model="coordinatorCount">
+    <input type="hidden" name="participant_count" wire:model="participantCount"> -->
 
     <h3 class="text-lg leading-tight font-normal my-4">
         Distributors Participating in the Grouping
@@ -177,7 +177,7 @@
     </x-modal.dialog>
 
     <!-- Delete Distributor Modal -->
-    <form wire:submit.prevent="deleteDistributor">
+    <!-- <form wire:submit.prevent="deleteDistributor"> -->
         <x-modal.confirmation wire:model.defer="showDeleteModal">
             <x-slot name="title">Delete Distributor</x-slot>
 
@@ -195,5 +195,5 @@
                 </div>
             </x-slot>
         </x-modal.confirmation>
-    </form>
+    <!-- </form> -->
 </div>

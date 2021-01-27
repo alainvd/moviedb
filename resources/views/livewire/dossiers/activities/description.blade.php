@@ -9,7 +9,8 @@
                 :label="'Film Title'"
                 :hasError="$errors->has('film_title')"
                 name="film_title"
-                :disabled="true">
+                :disabled="true"
+                wire:model="movie.original_title">
             </x-form.input>
 
             @error('film_title')
@@ -20,14 +21,16 @@
             <x-form.input
                 :id="'country'"
                 :label="'Country'"
-                :disabled="true">
+                :disabled="true"
+                wire:model="movie.film_country_of_origin">
             </x-form.input>
         </div>
         <div class="col-span-1">
             <x-form.input
                 :id="'copyright'"
                 :label="'Copyright'"
-                :disabled="true">
+                :disabled="true"
+                wire:model="movie.year_of_copyright">
             </x-form.input>
         </div>
         <div class="col-span-2 ml-auto">
@@ -35,7 +38,7 @@
                 View details
             </x-button.secondary>
             <x-anchors.secondary
-                :url="route('movie-wizard', $dossier->id)">
+                :url="route('movie-wizard', ['dossier' => $dossier])">
                 Select
             </x-anchors.secondary>
         </div>

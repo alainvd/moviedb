@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Dossiers;
 
+use App\Dossier;
 use App\Media;
+use App\Models\Activity;
 use App\Models\Fiche;
 use App\Movie;
 use App\User;
@@ -27,12 +29,15 @@ class MovieWizard extends Component
         'director' => 'sometimes',
     ];
 
+    public Dossier $dossier;
     public Movie $movie;
 
     public User $user;
 
-    public function mount()
+    public function mount(Dossier $dossier)
     {
+        $this->dossier = $dossier;
+        $this->movie = new Movie();
         $this->user = Auth::user();
     }
 
@@ -47,8 +52,17 @@ class MovieWizard extends Component
             $this->validate();
         }
 
+        if ($this->currentStep === 2) {
+            if (! $this->movie->id) {
+                return;
+            }
+        }
+
         if ($this->currentStep === 3) {
-            return;
+            return redirect(route('dossiers.show', [
+                'dossier' => $this->dossier,
+                'movie_id' => $this->movie->id
+            ]));
         }
 
         $this->currentStep++;
@@ -99,6 +113,6 @@ class MovieWizard extends Component
         return view('livewire.dossiers.movie-wizard', [
                 'results' => $results,
             ])
-            ->layout('components.landing-layout');
+            ->layout('components.ecl-layout', ['title' => 'Films on the move']);
     }
 }
