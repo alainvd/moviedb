@@ -36,10 +36,5 @@ class Fiche extends Model
     public function scopeForActivity($query, $activityId)
     {
         return $query->where('activity_id', $activityId);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
-    }
+    } 
 }
