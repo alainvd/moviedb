@@ -7,15 +7,14 @@ use Illuminate\Support\Arr;
 class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevious
 {
 
-    static function rules()
+    protected function rules()
     {
         return [
-            'editing.media_id' => '',
-            'editing.role' => ['required'],
+            'editing.role' => 'required|string',
             'editing.name' => 'required|string|max:255',
-            'editing.city' => '',
-            'editing.country_id' => 'required',
-            'editing.language_id' => '',
+            'editing.city' => 'string',
+            'editing.country' => 'required|string',
+            'editing.language' => 'string',
             'editing.share' => '',
             'editing.budget' => '',
         ] + TableEditBase::rules();
@@ -24,12 +23,12 @@ class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevio
     public function mount($movie_id = null)
     {
         parent::mount($movie_id);
-        // TODO: dublication with MovieFicheFormComposer
+        // TODO: somewhat dublication with MovieFicheFormComposer
         $this->languages = Language::where('active', true)
             ->get()
             ->map(fn ($lang) => [
-                'value' => $lang->id,
-                'label' => $lang->name,
+                'code' => $lang->code,
+                'name' => $lang->name,
             ])
             ->toArray();
     }

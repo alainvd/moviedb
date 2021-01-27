@@ -1,20 +1,20 @@
 <div>
   <header data-ecl-auto-init="SiteHeaderHarmonised" class="ecl-site-header-harmonised--group1 ecl-site-header-harmonised" data-ecl-has-menu="true">
     <div class="ecl-site-header-harmonised__container ecl-container">
-      <div class="ecl-site-header-harmonised__top"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__logo-link" href="/example" aria-label="European Commission"><img alt="European Commission logo" title="European Commission" class="ecl-site-header-harmonised__logo-image" src="/ecl-images/logo/logo--en.svg" /></a>
+      <div class="ecl-site-header-harmonised__top"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__logo-link" href="/" aria-label="European Commission"><img alt="European Commission logo" title="European Commission" class="ecl-site-header-harmonised__logo-image" src="/ecl-images/logo/logo--en.svg" /></a>
         <div class="ecl-site-header-harmonised__action">
           <div class="ecl-site-header-harmonised__login-container"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__login-toggle" href="/example" data-ecl-login-toggle="true" aria-controls="login-box-id" aria-expanded="false"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--logged-in"></use>
-              </svg>Logged in<svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__login-arrow ecl-icon ecl-icon--xs">
+              </svg>Log in<svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__login-arrow ecl-icon ecl-icon--xs">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
               </svg></a>
             <div id="login-box-id" class="ecl-site-header-harmonised__login-box" data-ecl-login-box="true">
               <p class="ecl-site-header-harmonised__login-description">Logged in as &lt;last name&gt;, &lt;first name&gt;</p>
               <hr class="ecl-site-header-harmonised__login-separator" /><a href="/example" class="ecl-link ecl-link--standalone">Log out</a>
             </div>
-          </div><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__language-selector" href="/example" aria-label="English" data-ecl-language-selector="true" aria-controls="language-list-overlay"><span class="ecl-site-header-harmonised__language-icon"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
+          </div><!--<a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__language-selector" href="/example" aria-label="English" data-ecl-language-selector="true" aria-controls="language-list-overlay"><span class="ecl-site-header-harmonised__language-icon"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--language"></use>
-              </svg><span class="ecl-site-header-harmonised__language-code">en</span></span>English</a>
+              </svg><span class="ecl-site-header-harmonised__language-code">en</span></span>English</a>-->
           <div class="ecl-site-header-harmonised__search-container"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__search-toggle" href="/example" data-ecl-search-toggle="true" aria-controls="search-form-id" aria-expanded="false"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--search"></use>
               </svg>Search</a>
@@ -27,15 +27,17 @@
         </div>
       </div>
     </div>
+    <!--
     <div class="ecl-site-header-harmonised__banner-top">
-      <div class="ecl-container"><a href="/example" class="ecl-link ecl-link--standalone">Class name</a></div>
+      <div class="ecl-container"><a href="https://eacea.ec.europa.eu/" class="ecl-link ecl-link--standalone">Class name</a></div>
     </div>
+    -->
     <nav data-ecl-auto-init="Menu" class="ecl-menu--group1 ecl-menu" aria-expanded="false" data-ecl-menu="true">
       <div class="ecl-menu__overlay" data-ecl-menu-overlay="true"></div>
       <div class="ecl-container ecl-menu__container"><a class="ecl-link ecl-link--standalone ecl-menu__open" href="/example" data-ecl-menu-open="true"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
             <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--hamburger"></use>
           </svg>Menu</a>
-        <div class="ecl-menu__site-name">Site name</div>
+        <div class="ecl-menu__site-name">Creative Europe MEDIA Database</div>
         <section class="ecl-menu__inner" data-ecl-menu-inner="true">
           <header class="ecl-menu__inner-header"><button data-ecl-menu-close="true" type="submit" class="ecl-menu__close ecl-button ecl-button--text"><span class="ecl-menu__close-container ecl-button__container"><svg focusable="false" aria-hidden="true" data-ecl-icon="true" class="ecl-button__icon ecl-button__icon--before ecl-icon ecl-icon--s">
                   <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--close-filled"></use>

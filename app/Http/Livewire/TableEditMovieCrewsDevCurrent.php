@@ -11,17 +11,17 @@ use App\Models\Country;
 class TableEditMovieCrewsDevCurrent extends TableEditMovieCrews
 {
 
-    static function rules()
+    protected function rules()
     {
         return [
-            'editing.points' => 'numeric',
-            'editing.title_id' => 'required',
+            'editing.points' => '',
             'editing.person.firstname' => 'required|string|max:255',
             'editing.person.lastname' => 'required|string|max:255',
-            'editing.person.gender' => 'required|string|max:255',
-            'editing.person.nationality1' => 'required|string|max:255',
-            'editing.person.nationality2' => 'string|max:255',
-            'editing.person.country_of_residence' => 'string|max:255',
+            'editing.person.gender' => 'required|string',
+            'editing.person.nationality1' => 'required|string',
+            'editing.person.nationality2' => 'string',
+            'editing.person.country_of_residence' => 'string',
+            'editing.title_id' => 'required|integer',
         ] + TableEditBase::rules();
     }
 

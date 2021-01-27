@@ -13,19 +13,24 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public $countries = [];
 
+    public $countries_by_code = [];
+
     protected function defaults()
     {
         return [
+            'name' => '',
+            'country' => '',
             'contact_person' => '',
             'email' => '',
+            'distribution_date' => null,
         ] + parent::defaults();
     }
 
-    static function rules()
+    protected function rules()
     {
         return [
             'editing.name' => 'required|string|max:255',
-            'editing.country_id' => 'required',
+            'editing.country' => 'required|string',
             'editing.contact_person' => 'required|string|max:255',
             'editing.email' => 'required|string|max:255',
             'editing.distribution_date' => '',
@@ -36,7 +41,7 @@ class TableEditMovieSalesAgents extends TableEditBase
     {
         return [
             'editing.name' => 'name',
-            'editing.country_id' => 'country',
+            'editing.country' => 'country',
             'editing.contact_person' => 'contact person',
             'editing.email' => 'email',
             'editing.distribution_date' => 'date',
@@ -51,7 +56,8 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public function mount($movie_id = null)
     {
-        $this->countries = Country::all()->keyBy('id')->toArray();
+        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
+        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->load();

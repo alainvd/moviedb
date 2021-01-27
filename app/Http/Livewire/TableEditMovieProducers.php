@@ -13,6 +13,8 @@ class TableEditMovieProducers extends TableEditBase
 
     public $countries = [];
 
+    public $countries_by_code = [];
+
     public $languages = [];
 
     public $producer_roles = [];
@@ -22,21 +24,24 @@ class TableEditMovieProducers extends TableEditBase
     protected function defaults()
     {
         return [
+            'role' => '',
+            'name' => '',
             'city' => '',
-            'language_id' => null,
-            'budget' => null,
+            'country' => '',
+            'language' => '',
             'share' => null,
+            'budget' => null,
         ] + parent::defaults();
     }
 
-    static function rules()
+    protected function rules()
     {
         return [
-            'editing.media_id' => '',
-            'editing.role' => ['required'],
+            'editing.role' => 'required|string',
             'editing.name' => 'required|string|max:255',
             'editing.city' => 'required|string|max:255',
-            'editing.country_id' => 'required',
+            'editing.country' => 'required|string',
+            'editing.language' => 'string',
             'editing.share' => 'required|integer|min:1|max:100',
             'editing.budget' => '',
         ] + TableEditBase::rules();
@@ -49,8 +54,8 @@ class TableEditMovieProducers extends TableEditBase
             'editing.role' => 'role',
             'editing.name' => 'name',
             'editing.city' => 'city',
-            'editing.country_id' => 'country',
-            'editing.language_id' => 'language',
+            'editing.country' => 'country',
+            'editing.language' => 'language',
             'editing.share' => 'share',
             'editing.budget' => 'budget',
         ];
@@ -64,7 +69,8 @@ class TableEditMovieProducers extends TableEditBase
 
     public function mount($movie_id = null)
     {
-        $this->countries = Country::all()->keyBy('id')->toArray();
+        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
+        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         $this->producer_roles = Producer::ROLES;
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);

@@ -1,13 +1,13 @@
 <footer class="ecl-footer-harmonised ecl-footer-harmonised--group1">
   <div class="ecl-container ecl-footer-harmonised__container">
-    <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section1"><a href="/example" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone" aria-label="Link to example">Site name</a>
-      <div class="ecl-footer-harmonised__description">This site is managed by the Directorate-General for &quot;DG identification&quot;</div>
+    <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section1"><a href="/example" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone" aria-label="Link to example">Creative Europe MEDIA Database</a>
+      <div class="ecl-footer-harmonised__description">This site is managed by the Education, Audiovisual and Culture Executive Agency</div>
     </section>
     <div class="ecl-footer-harmonised__section2">
       <section class="ecl-footer-harmonised__section">
         <div class="ecl-footer-harmonised__title ecl-footer-harmonised__title--separator">Contact us</div>
         <ul class="ecl-footer-harmonised__list">
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Contact information of the DG">Contact information of the DG</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/about-eacea/contacts_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Contact information of the DG">Contact information of EACEA</a></li>
         </ul>
       </section>
       <section class="ecl-footer-harmonised__section">
@@ -29,20 +29,24 @@
       <section class="ecl-footer-harmonised__section">
         <div class="ecl-footer-harmonised__title ecl-footer-harmonised__title--separator">About us</div>
         <ul class="ecl-footer-harmonised__list">
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Information about the DG">Information about the DG</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/about-eacea_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Information about the DG">Information about EACEA</a></li>
         </ul>
       </section>
       <section class="ecl-footer-harmonised__section">
         <div class="ecl-footer-harmonised__title ecl-footer-harmonised__title--separator">Related sites</div>
         <ul class="ecl-footer-harmonised__list">
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 1">Related link 1</a></li>
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 2">Related link 2</a></li>
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 3">Related link 3</a></li>
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 4">Related link 4</a></li>
-          <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 5">Related link 5</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/erasmus-plus_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 1">Erasmus +</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/creative-europe_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 2">Creative Europe</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/europe-for-citizens_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 3">Europe for Citizens</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/sites/european-solidarity-corps" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 4">European Solidarity Corps</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/intra-africa" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 5">Intra-Africa</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/eu-aid-volunteers_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 5">EU Aid Volunteers</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/national-policies/" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 5">National Policies Platform</a></li>
+          <li class="ecl-footer-harmonised__list-item"><a href="https://eacea.ec.europa.eu/sites/2007-2013" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Related link 5">Programmes 2007-2013</a></li>
         </ul>
       </section>
     </div>
+    <!--
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section6">
       <div class="ecl-footer-harmonised__content">More information on:</div>
       <ul class="ecl-footer-harmonised__list ecl-footer-harmonised__list--condensed">
@@ -50,6 +54,7 @@
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Class name 2">Class name 2</a></li>
       </ul>
     </section>
+    -->
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section7"><a href="https://ec.europa.eu/info/index_en" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone">European Commission</a></section>
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section8">
       <ul class="ecl-footer-harmonised__list">
@@ -63,7 +68,7 @@
     <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section9">
       <ul class="ecl-footer-harmonised__list">
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Language policy">Language policy</a></li>
-        <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Cookies">Cookies</a></li>
+        <li class="ecl-footer-harmonised__list-item"><a href="https://ec.europa.eu/info/cookies_en" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Cookies">Cookies</a></li>
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Privacy policy">Privacy policy</a></li>
         <li class="ecl-footer-harmonised__list-item"><a href="/example" class="ecl-footer-harmonised__link ecl-link ecl-link--standalone" aria-label="Link to Legal notice">Legal notice</a></li>
       </ul>

@@ -37,9 +37,9 @@ class Person extends Model
     ];
 
     const GENDERS = [
-        'male' => 'Male',
-        'female' => 'Female',
-        'na' => 'N/A',
+        'MALE' => 'Male',
+        'FEMALE' => 'Female',
+        'NA' => 'N/A',
     ];
 
     public function getFullnameAttribute()

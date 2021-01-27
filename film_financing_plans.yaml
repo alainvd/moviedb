@@ -1,0 +1,18 @@
+models:
+
+  FilmFinancingPlan:
+    media_id: integer
+    document_type: string
+    filename: string
+    comments: string
+    relationships:
+      belongsTo: Media
+
+controllers:
+
+  FilmFinancingPlan:
+    index:
+      query: all
+      render: film_financing_plans.index with filmFinancingPlans
+
+seeders: FilmFinancingPlan

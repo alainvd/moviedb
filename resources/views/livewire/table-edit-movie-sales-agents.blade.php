@@ -24,7 +24,7 @@
                 @foreach ($items as $item)
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['country_id']) ? $countries[$item['country_id']]['name'] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>@endif
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>@endif
                     @if($fiche=='devPrev')<x-table.cell class="text-center">{{ $item['distribution_date'] }}</x-table.cell>@endif
@@ -73,17 +73,17 @@
 
                     <div>
                         <x-form.select
-                            :id="'agents_country_id'"
+                            :id="'agents_country'"
                             :label="'Country'"
-                            :hasError="$errors->has('editing.country_id')"
-                            wire:model="editing.country_id">
+                            :hasError="$errors->has('editing.country')"
+                            wire:model="editing.country">
                 
                             @foreach ($countries as $country)
-                                <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
+                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                             @endforeach
                         </x-form.select>
                 
-                        @error('editing.country_id')
+                        @error('editing.country')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>

@@ -5,13 +5,13 @@ namespace App\Http\Livewire;
 class TableEditMovieSalesAgentsDevPrevious extends TableEditMovieSalesAgents
 {
 
-    static function rules()
+    protected function rules()
     {
         return [
             'editing.name' => 'required|string|max:255',
-            'editing.country_id' => 'required',
-            'editing.contact_person' => '',
-            'editing.email' => '',
+            'editing.country' => 'required|string',
+            'editing.contact_person' => 'string',
+            'editing.email' => 'string',
             'editing.distribution_date' => 'required|date:d.m.Y',
         ] + TableEditBase::rules();
     }

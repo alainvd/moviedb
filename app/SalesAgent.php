@@ -18,7 +18,7 @@ class SalesAgent extends Model
     protected $fillable = [
         'media_id',
         'name',
-        'country_id',
+        'country',
         'contact_person',
         'email',
         'distribution_date',

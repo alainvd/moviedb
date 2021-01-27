@@ -16,11 +16,11 @@ class CreateProducersTable extends Migration
         Schema::create('producers', function (Blueprint $table) {
             $table->id();
             $table->integer('media_id');
-            $table->enum('role', ["producer","coproducer"]);
+            $table->string('role')->nullable();
             $table->string('name')->nullable();
             $table->string('city')->nullable();
-            $table->integer('country_id')->nullable();
-            $table->unsignedBigInteger('language_id')->nullable();
+            $table->string('country')->nullable();
+            $table->string('language')->nullable();
             $table->integer('share')->nullable();
             $table->integer('budget')->nullable();
             $table->timestamps();
