@@ -28,6 +28,11 @@ class Fiche extends Model
         return $this->belongsTo(Dossier::class);
     }
 
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
     public function scopeForActivity($query, $activityId)
     {
         return $query->where('activity_id', $activityId);

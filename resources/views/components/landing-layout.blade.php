@@ -29,7 +29,7 @@
 
 @include('impersonate')
 @include('partials.landing.header')
-<main class="relative z-0 flex-1 px-12 py-6 overflow-y-auto focus:outline-none" tabindex="0">
+<main class="w-full relative z-0 flex-1 px-24 py-6 overflow-y-auto focus:outline-none" tabindex="0" style="background: url('{{ asset('images/dossier/dots-side-1.png') }}') right 250px no-repeat">
     {{ $slot }}
 </main>
 

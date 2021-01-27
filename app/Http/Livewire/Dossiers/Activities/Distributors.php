@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Activities;
+namespace App\Http\Livewire\Dossiers\Activities;
 
 use App\Models\Distributor;
 use App\User;
@@ -88,6 +88,6 @@ class Distributors extends Component
 
     public function render()
     {
-        return view('livewire.activities.distributors');
+        return view('livewire.dossiers.activities.distributors');
     }
 }

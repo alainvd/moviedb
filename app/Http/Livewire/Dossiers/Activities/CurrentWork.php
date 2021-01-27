@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Activities;
+namespace App\Http\Livewire\Dossiers\Activities;
 
 use Livewire\Component;
 
@@ -11,6 +11,6 @@ class CurrentWork extends Component
 
     public function render()
     {
-        return view('livewire.activities.current-work');
+        return view('livewire.dossiers.activities.current-work');
     }
 }
