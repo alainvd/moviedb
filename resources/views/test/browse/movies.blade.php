@@ -30,7 +30,7 @@
 
                         </div>
 
-                        @if($media->grantable_type == "App\Videogame")
+                        @if($media->grantable_type == "App\VideoGame")
                             <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
                                  src="https://images.unsplash.com/photo-1580234831315-438a4813685c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"
                                  alt="">

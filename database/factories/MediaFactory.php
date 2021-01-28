@@ -29,7 +29,7 @@ class MediaFactory extends BaseFactory
             'audience_id' => $this->getRelationId(Audience::class),
             'genre_id' => $this->getRelationId(Genre::class),
             'grantable_id' => $this->faker->numberBetween(1,5),
-            'grantable_type' => $this->faker->randomElement(["App\Movie","App\Videogame"]),
+            'grantable_type' => $this->faker->randomElement(["App\Movie","App\VideoGame"]),
             'delivery_platform_id' => $this->faker->numberBetween(0, 2),
         ];
     }

@@ -35,7 +35,7 @@ class VideoGameCreated
                 "title" => $videoGame->original_title,
                 "grantable_id" => $videoGame->id,
                 "logline" => $videoGame->logline,
-                "grantable_type" => "App\Videogame",
+                "grantable_type" => "App\VideoGame",
                 "delivery_platform_id" => 0,
 
 

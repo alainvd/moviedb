@@ -19,7 +19,7 @@ class AudienceSeeder extends Seeder
             "App\Movie" => [
                 "Children", "Adults","All"
             ],
-            "App\Videogame" => [
+            "App\VideoGame" => [
                 "PEGI OK", "PEGI 3", "PEGI 7", "PEGI 12", "PEGI 16", "PEGI 18",
             ]
         ];
