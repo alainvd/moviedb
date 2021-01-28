@@ -87,6 +87,12 @@ class MovieWizard extends Component
 
         $query = Media::where('grantable_type', 'App\Movie')
             ->join('movies', 'media.grantable_id', '=', 'movies.id')
+            ->join('fiches', 'fiches.media_id', '=', 'media.id')
+            ->whereNotIn('fiches.status_id', function ($query) {
+                $query->select('id')
+                    ->from('statuses')
+                    ->whereIn('name', ['Duplicated']);
+            })
             ->with('grantable')
             ->with('fiche')
             ->with('people');

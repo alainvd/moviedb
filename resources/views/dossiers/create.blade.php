@@ -4,10 +4,13 @@
     :style="'background: url(\'' . asset('images/dossier/dots-vertical-1.png') . '\') 2% 12% no-repeat'">
     <div class="px-4 bg-white">
         <!-- Title -->
-        <!-- <h1 class="text-3xl font-light leading-tight">European Slate Development</h1> -->
 
-        @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
-            @include('dossiers.instructions.dist')
+        @if (Auth::user()->hasRole('applicant'))
+            @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
+                @include('dossiers.instructions.dist')
+            @endif
+        @else
+            <h1 class="mt-8 text-3xl font-light leading-tight">Films on the Move</h1>
         @endif
 
         <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
