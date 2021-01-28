@@ -67,8 +67,7 @@ class Distributors extends Component
             $this->editId = $id;
             $this->currentDistributor = $this->movie->media
                 ->distributors()
-                ->find($id)
-                ->first();
+                ->find($id);
         } else {
             $this->editId = null;
             $this->currentDistributor = new Distributor();
