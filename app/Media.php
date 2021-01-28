@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Distributor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -62,6 +63,11 @@ class Media extends Model
     public function people()
     {
         return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id');
+    }
+
+    public function distributors()
+    {
+        return $this->belongsToMany(Distributor::class);
     }
 
     public function filmFinancingPlans()

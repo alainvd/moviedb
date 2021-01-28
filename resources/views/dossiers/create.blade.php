@@ -1,4 +1,7 @@
-<x-dynamic-component :component="$layout" :title="'Films on the Move'">
+<x-dynamic-component
+    :component="$layout"
+    :title="'Films on the Move'"
+    :style="'background: url(\'' . asset('images/dossier/dots-vertical-1.png') . '\') 2% 12% no-repeat'">
     <div class="px-4 bg-white">
         <!-- Title -->
         <!-- <h1 class="text-3xl font-light leading-tight">European Slate Development</h1> -->
@@ -52,8 +55,7 @@
                 </div>
             </x-layout.section>
 
-            <x-layout.section
-                :title="'Development'">
+            <x-layout.section>
                 @foreach ($dossier->action->activities as $activity)
 
                     @foreach($activity->pivot->rules as $ruleName => $rule)
@@ -74,5 +76,13 @@
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
         </form>
+
+        @if ($errors->has('film_title'))
+            <div class="mt-1 text-red-500 text-sm">
+                You must select a movie
+            </div>
+        @endif
     </div>
+
+
 </x-dynamic-component>

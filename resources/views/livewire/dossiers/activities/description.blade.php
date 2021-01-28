@@ -1,15 +1,17 @@
 <div class="my-16">
     <h3 class="text-lg leading-tight font-normal my-4">
-        Description of the Project
+        Film selection
     </h3>
+
     <div class="grid grid-cols-6 gap-4">
+        <input type="hidden" name="movie_id" wire:model="movie.id">
         <div class="col-span-2">
             <x-form.input
                 :id="'film-title'"
                 :label="'Film Title'"
                 :hasError="$errors->has('film_title')"
                 name="film_title"
-                :disabled="true"
+                :readonly="true"
                 wire:model="movie.original_title">
             </x-form.input>
 

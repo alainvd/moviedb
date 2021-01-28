@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Call;
 use App\Dossier;
+use App\Media;
+use App\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +14,7 @@ class ProjectController extends Controller
 
     protected $dossierRules = [
         'company' => 'required|string|min:3',
-        'film_tite' => 'required',
+        'film_title' => 'required',
     ];
 
     /**
@@ -109,11 +111,18 @@ class ProjectController extends Controller
     {
         $this->validate($request, $this->buildValidator($request));
 
+        $params = $request->only(['company', 'movie_id']);
+
         $dossier = Dossier::findOrFail($id);
-        $dossier->company = $request->input('company');
+        $movie = Movie::findOrFail($params['movie_id']);
+
+        $dossier->company = $params['company'];
+        if ($movie) {
+            $dossier->fiches()->save($movie->media->fiche);
+        }
         $dossier->save();
 
-        return redirect()->back();
+        return redirect()->route('dossiers.show', $dossier);
     }
 
     /**
