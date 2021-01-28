@@ -59,6 +59,8 @@ class MovieWizard extends Component
         }
 
         if ($this->currentStep === 3) {
+            // @todo - instead of a get variable, save the corresponding fiche
+            // on the dossier
             return redirect(route('dossiers.show', [
                 'dossier' => $this->dossier,
                 'movie_id' => $this->movie->id
@@ -110,9 +112,14 @@ class MovieWizard extends Component
             $results = $query->simplePaginate(5);
         }
 
+        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
+
         return view('livewire.dossiers.movie-wizard', [
                 'results' => $results,
             ])
-            ->layout('components.ecl-layout', ['title' => 'Films on the move']);
+            ->layout($layout, [
+                'title' => 'Films on the move',
+                'style' => 'background: url(\'' . asset('images/dossier/dots-side-1.png') . '\') right 30% no-repeat',
+            ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,10 @@ class Distributor extends Model
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function media()
+    {
+        return $this->belongsToMany(Media::class);
     }
 }

@@ -29,30 +29,31 @@
         </x-slot>
 
         <x-slot name="body">
+
             @forelse ($distributors as $index => $distributor)
 
             <x-table.row>
-                <x-table.cell class="text-center">{{ $distributor['country']['name'] }}</x-table.cell>
-                <x-table.cell class="text-center">{{ $distributor['name'] }}</x-table.cell>
+                <x-table.cell class="text-center">{{ $distributor->country->name }}</x-table.cell>
+                <x-table.cell class="text-center">{{ $distributor->name }}</x-table.cell>
                 @if ($isBackoffice)
-                    <x-table.cell class="text-center">{{ $distributor['role'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
                 @endif
             <x-table.cell class="text-center">
-                    {{ $distributor['forecast_release_date'] }}
+                    {{ $distributor->forecast_release_date }}
                 </x-table.cell>
                 @if ($isBackoffice)
                     <x-table.cell class="text-center">
-                        {{ $distributor['forecast_grant'] }}
+                        {{ $distributor->forecast_grant }}
                     </x-table.cell>
                 @endif
                 <x-table.cell class="text-center space-x-2">
                     <a
-                        wire:click="showAdd({{ $index }})"
+                        wire:click="showAdd({{ $distributor->id }})"
                         class="cursor-pointer text-indigo-600 hover:text-indigo-900">
                         Edit
                     </a>
                     <a
-                        wire:click="showDelete({{ $index }})"
+                        wire:click="showDelete({{ $distributor->id }})"
                         class="cursor-pointer text-red-600 hover:text-red-900">
                         Delete
                     </a>
@@ -78,7 +79,7 @@
     @enderror
 
     <div class="mt-5 text-right">
-        <x-button.secondary wire:click="$set('showAddModal', true)" wire:loading.attr="disabled">
+        <x-button.secondary wire:click="showAdd" wire:loading.attr="disabled">
             Add
         </x-button.secondary>
     </div>
@@ -177,23 +178,37 @@
     </x-modal.dialog>
 
     <!-- Delete Distributor Modal -->
-    <!-- <form wire:submit.prevent="deleteDistributor"> -->
-        <x-modal.confirmation wire:model.defer="showDeleteModal">
-            <x-slot name="title">Delete Distributor</x-slot>
+    <x-modal.confirmation wire:model.defer="showDeleteModal">
+        <x-slot name="title">Delete Distributor</x-slot>
 
-            <x-slot name="content">
-                <div class="py-8 text-xl">
-                    Are you sure you want to delete this distributor?
-                </div>
-            </x-slot>
+        <x-slot name="content">
+            <div class="py-8 text-xl">
+                Are you sure you want to delete this distributor?
+            </div>
+        </x-slot>
 
-            <x-slot name="footer">
-                <div class="flex justify-end items-center space-x-3">
-                    <x-button.primary type="submit">Yes</x-button>
+        <x-slot name="footer">
+            <div class="flex justify-end items-center space-x-3">
+                <x-button.primary wire:click="deleteDistributor()">Yes</x-button>
 
-                    <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
-                </div>
-            </x-slot>
-        </x-modal.confirmation>
-    <!-- </form> -->
+                <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
+            </div>
+        </x-slot>
+    </x-modal.confirmation>
+
+    <x-modal.confirmation wire:model.defer="showNoMovieModal">
+        <x-slot name="title">Movie not selected</x-slot>
+
+        <x-slot name="content">
+            <div class="py-8 text-xl">
+                You must select a movie in order to add distributors
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <div class="flex justify-end items-center space-x-3">
+                <x-button.primary wire:click="$set('showNoMovieModal', false)">OK</x-button>
+            </div>
+        </x-slot>
+    </x-modal.confirmation>
 </div>

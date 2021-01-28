@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
+use App\Dossier;
 use App\Models\Distributor;
+use App\Movie;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -14,16 +16,20 @@ class Distributors extends Component
 
     public $showAddModal = false;
     public $showDeleteModal = false;
+    public $showNoMovieModal = false;
 
-    public $editIndex = null;
-    public $deleteIndex = null;
+    public $editId = null;
+    public $deleteId = null;
 
     // The authenticated user
     public User $user;
     public $isBackoffice = false;
 
-    public $distributors = [];
+    public $dists = [];
     public Distributor $currentDistributor;
+
+    public Dossier $dossier;
+    public Movie $movie;
 
     protected $rules = [
         'currentDistributor.country_id' => 'required|integer',
@@ -38,42 +44,60 @@ class Distributors extends Component
         $this->user = Auth::user();
         $this->isBackoffice = $this->user->hasAnyRole(['editor', 'admin']);
         $this->currentDistributor = new Distributor();
+        $this->movie = new Movie();
+
+        $movieId = request('movie_id');
+        $fiche = $this->dossier->fiches()->first();
+
+        if ($fiche) {
+            $this->movie = $fiche->media->grantable;
+        } else if ($movieId) {
+            $this->movie = Movie::find($movieId);
+        }
     }
 
-    public function showAdd($index = null)
+    public function showAdd($id = null)
     {
-        if (is_int($index)) {
-            $this->editIndex = $index;
-            $this->currentDistributor = Distributor::make($this->distributors[$index]);
+        if (! $this->movie->id) {
+            $this->showNoMovieModal = true;
+            return;
+        }
+
+        if ($id) {
+            $this->editId = $id;
+            $this->currentDistributor = $this->movie->media
+                ->distributors()
+                ->find($id)
+                ->first();
         } else {
-            $this->editIndex = null;
+            $this->editId = null;
+            $this->currentDistributor = new Distributor();
         }
 
         $this->showAddModal = true;
     }
 
-    public function showDelete($index)
+    public function showDelete($id)
     {
         $this->showDeleteModal = true;
-        $this->deleteIndex = $index;
-    }
-
-    public function showNoMovie()
-    {
-
+        $this->deleteId = $id;
     }
 
     public function addDistributor()
     {
         $this->validate();
 
-        // Force eager loading of country
-        $country = $this->currentDistributor->country;
-
-        // Replace at index if editing, else push
-        if (is_int($this->editIndex)) {
-            $this->distributors[$this->editIndex] = $this->currentDistributor->toArray();
-        } else $this->distributors[] = $this->currentDistributor->toArray();
+        $this->currentDistributor->created_by = $this->user->id;
+        if ($this->editId) {
+            $this->movie->media
+                ->distributors()
+                ->find($this->editId)
+                ->update($this->currentDistributor->toArray());
+        } else {
+            $this->movie->media
+                ->distributors()
+                ->save($this->currentDistributor);
+        }
 
         $this->currentDistributor = new Distributor();
         $this->showAddModal = false;
@@ -81,13 +105,24 @@ class Distributors extends Component
 
     public function deleteDistributor()
     {
-        unset($this->distributors[$this->deleteIndex]);
-        $this->deleteIndex = null;
+        // unset($this->distributors[$this->deleteId]);
+        $this->movie->media->distributors()
+            ->find($this->deleteId)
+            ->delete();
+        $this->deleteId = null;
         $this->showDeleteModal = false;
     }
 
     public function render()
     {
-        return view('livewire.dossiers.activities.distributors');
+        $distributors = collect([]);
+
+        if ($this->movie->id) {
+            $distributors = $this->movie->media->distributors();
+        }
+
+        return view('livewire.dossiers.activities.distributors', [
+            'distributors' => $distributors->count() ? $distributors->get() : collect([]),
+        ]);
     }
 }
