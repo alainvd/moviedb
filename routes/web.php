@@ -136,6 +136,10 @@ Route::get('dossiers', function () {
 Route::get('media', function () {
         return view('livewire.media-datatables');})->name('bla');
 
+
+
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
+Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+//Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');

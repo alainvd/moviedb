@@ -32,10 +32,10 @@ class DossierDatatables extends LivewireDatatable
         return [
             Column::name('action.name')
                 ->label('ACTION')
-                ->filterable(['DEVSLATE','DEVSLATEEUMINI','DISTSEL','EUCODEV','TV']), //todo link action filter values to DB
+                ->filterable(['DEVSLATE','DEVSLATEEUMINI','DISTAUTOG','DISTSAG','DISTSEL','EUCODEV','TV']), //todo link action filter values to DB
             NumberColumn::name('year')
                 ->label('YEAR')
-                ->filterable(['2021','2020','2019','2018','2017']),
+                ->filterable(['2021','2020','2019','2018','2017','2016','2015','2014']),
             Column::name('project_ref_id')
                 ->label('ID')
                 ->linkTo('project', 6),
@@ -43,8 +43,8 @@ class DossierDatatables extends LivewireDatatable
                 ->label('Company')
                 ->filterable()
                 ->searchable(),
-            Column::name('status_id')
-                ->label('Status'),
+            // Column::name('status_id')
+            //     ->label('Status'),
             Column::name('updated_at')
                 ->label('LAST UPDATE')
                 ->defaultSort('desc')

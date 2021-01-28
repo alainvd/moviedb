@@ -10,6 +10,7 @@ use App\Person;
 use App\VideoGame;
 use App\Fiche;
 use App\Models\Action;
+use App\Models\Country;
 use App\Models\Status;
 use Illuminate\Support\Str;
 use Mediconesystems\LivewireDatatables\Column;
@@ -23,11 +24,11 @@ use Illuminate\Support\Facades\Log;
 class MediaDatatables extends LivewireDatatable
 {
 
-
+    public $hideable = 'select';
+    public $countries = Country::class;
     public $model = Media::class;
-
-
-
+    
+    
     /**
      * Write code on Method
      *
@@ -35,26 +36,29 @@ class MediaDatatables extends LivewireDatatable
      */
     public function columns()
     {
+        
         return [
             //Column::name('id')
             //  ->label('MEDIA ID'),
             Column::name('fiche.id')
-                ->label('FICHE ID'),
+                ->label('ID')
+                ->linkTo('media'),
             Column::name('title')
                 ->label('TITLE'),
             Column::callback('grantable_type', 'mediaType')
                 ->label('TYPE')
-                ->filterable(),
+                ->filterable()
+                ->hide(),
             Column::callback(['id'], function ($id) {
                 return  Media::find($id)->grantable->year_of_copyright;
             })
                 ->label('COPYRIGHT')
-                ->filterable(),
-            Column::name('crew.person_id')
+                ->filterable(['2021','2020','2019','2018','2017','2016','2015','2014']),
+            Column::callback('id','getDirectorName')
                 ->label('DIRECTOR'),
             Column::callback('id', 'grantableCountry')
                 ->label('COUNTRY')
-                ->filterable(),
+                ->filterable(['AT','BE','CZ','DA','DE','ES','EL','FI','FR','IE','IT','LU']),
             Column::name('fiche.status.name')
                 ->label('STATUS'),
             Column::callback('id', 'grantableLastModificationDate')
@@ -62,6 +66,7 @@ class MediaDatatables extends LivewireDatatable
                 ->filterable(),
         ];
     }
+
 
     public function mediaType($text)
     {
@@ -73,6 +78,22 @@ class MediaDatatables extends LivewireDatatable
         }
 
         else return 'VideoGame';
+    }
+
+    public function getDirectorName($id)
+    {
+        $director = Media::find($id)->people()->where(function ($query) {
+            $query->select('code')
+                ->from('titles')
+                ->whereColumn('titles.id', 'crews.title_id')
+                ->limit(1);
+        }, 'DIRECTOR')->first();
+
+        if ($director) {
+            return $director->full_name;
+        }
+
+        return '';
     }
 
     public function grantableCountry($id)
