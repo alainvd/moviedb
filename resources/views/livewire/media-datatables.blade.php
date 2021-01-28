@@ -1,6 +1,5 @@
 <x-layout>
-    <div class="md:py-12">
-        <div class="w-full p-8 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
+    <div class="w-screen">
 
 
             <div>
@@ -15,7 +14,6 @@
                 />
 
             </div>
-        </div>
 
     </div>
 

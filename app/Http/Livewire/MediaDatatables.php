@@ -36,25 +36,30 @@ class MediaDatatables extends LivewireDatatable
     public function columns()
     {
         return [
-            Column::name('id')
-                ->label('MEDIA ID'),
+            //Column::name('id')
+            //  ->label('MEDIA ID'),
             Column::name('fiche.id')
                 ->label('FICHE ID'),
             Column::name('title')
-                ->label('Title'),
+                ->label('TITLE'),
             Column::callback('grantable_type', 'mediaType')
-                ->label('Type')
+                ->label('TYPE')
                 ->filterable(),
-            Column::callback(['id','grantable_type', 'grantable_id'], function ($id,$grantable_type, $grantable_id) {
-                return  Media::find($id)->grantable->original_title;
+            Column::callback(['id'], function ($id) {
+                return  Media::find($id)->grantable->year_of_copyright;
             })
-                ->label('Test')
+                ->label('COPYRIGHT')
                 ->filterable(),
             Column::name('crew.person_id')
                 ->label('DIRECTOR'),
+            Column::callback('id', 'grantableCountry')
+                ->label('COUNTRY')
+                ->filterable(),
             Column::name('fiche.status.name')
                 ->label('STATUS'),
-
+            Column::callback('id', 'grantableLastModificationDate')
+                ->label('LAST UPDATE')
+                ->filterable(),
         ];
     }
 
@@ -68,6 +73,20 @@ class MediaDatatables extends LivewireDatatable
         }
 
         else return 'VideoGame';
+    }
+
+    public function grantableCountry($id)
+    {
+        if (Media::find($id)->grantable_type == 'App\Movie')
+        {
+            return  Media::find($id)->grantable->film_country_of_origin;
+        }
+        else { return 'ZZ';}
+    }
+
+    public function grantableLastModificationDate($id)
+    {
+        return  Media::find($id)->grantable->updated_at;
     }
 
 
