@@ -1,10 +1,9 @@
-<x-landing-layout>
-
-    <div class="px-4 py-8 my-8 bg-white md:px-8 lg:px-16">
+<x-ecl-layout :title="'Films on the Move'">
+    <div class="px-4 bg-white md:px-8 lg:px-16">
         <!-- Title -->
-        <h1 class="text-2xl font-light leading-tight">European Slate Development</h1>
+        <!-- <h1 class="text-3xl font-light leading-tight">European Slate Development</h1> -->
 
-        <form action="{{ route('projects.update', $dossier->id) }}" method="POST">
+        <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf
             {{ method_field('PATCH') }}
             <!-- Dossier details section -->
@@ -57,8 +56,8 @@
                         <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
                     @endforeach
 
-                    @include(
-                        "projects.activities.$activity->name",
+                    @livewire(
+                        "dossiers.activities.$activity->name",
                         [
                             'activity' => $activity,
                             'dossier' => $dossier,
@@ -67,9 +66,9 @@
                 @endforeach
             </x-layout.section>
 
-             <div x-data class="flex items-center justify-end mt-32 space-x-3">
+            <div x-data class="flex items-center justify-end mt-32 space-x-3">
                 <x-button.primary type="submit">Save</x-button.primary>
-             </div>
+            </div>
         </form>
     </div>
-</x-landing-layout>
+</x-ecl-layout>

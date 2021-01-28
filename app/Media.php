@@ -54,19 +54,35 @@ class Media extends Model
         return $this->hasOne('App\Models\Fiche');
     }
 
-    public function crew(){
+    public function crews()
+    {
         return $this->hasMany(Crew::class);
     }
 
     public function people()
     {
-        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id'
-        );
+        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id');
     }
 
     public function filmFinancingPlans()
     {
         return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
+    }
+
+    public function getDirectorName()
+    {
+        $director = $this->people()->where(function ($query) {
+            $query->select('code')
+                ->from('titles')
+                ->whereColumn('titles.id', 'crews.title_id')
+                ->limit(1);
+        }, 'DIRECTOR')->first();
+
+        if ($director) {
+            return $director->full_name;
+        }
+
+        return '';
     }
 
 }

@@ -5,7 +5,10 @@ use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\VideoGamePreviousForm;
 use App\Http\Controllers\ProjectController;
+use App\Http\Livewire\Dossiers\MovieWizard;
+use App\Http\Livewire\MediaDatatables;
 use App\Models\Action;
 use Illuminate\Support\Facades\Route;
 
@@ -77,16 +80,18 @@ $dossiers = [
         'closed' => true,
     ],
 ];
-Route::get('dossiers', function () use ($dossiers) {
-    return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers');
 
+Route::get('dossiers-public', function () use ($dossiers) {
+    return view('dossiers', ['dossiers' => $dossiers]);
+})->name('dossiers-public');
 
 Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
 
-Route::resource('/projects', ProjectController::class)->middleware('cas.auth');
+Route::resource('/dossiers', ProjectController::class)->middleware('cas.auth');
 Route::view('/reports', 'coming-soon');
-
+Route::get('/dossiers/{dossier}/movie-wizard', MovieWizard::class)
+    ->middleware('cas.auth')
+    ->name('movie-wizard');
 
 Route::resource('step', 'App\Http\Controllers\StepController')->only('index');
 
@@ -113,9 +118,10 @@ Route::get('film-financing-plan-download', [App\Http\Livewire\TableEditMovieFina
 
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
@@ -126,5 +132,13 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 
 Route::view('/demo', 'demo');
 
+
+Route::get('dossiers', function () {
+    return view('livewire.dossier-datatables');})->name('dossiers');
+
+Route::get('media', function () {
+        return view('livewire.media-datatables');})->name('bla');
+
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
+

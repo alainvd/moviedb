@@ -100,7 +100,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         $fullName = (Str::of(Str::title($actor["film_staff_name"]))->trim());
         $firstName = $this->getFirstName($fullName);
         $lastName = $this->getLastName($fullName, $firstName);
-//        echo($fullName . "\n");
+        echo($fullName . "\n");
 //        echo($this->getFirstName($fullName) . "\n");
 //        echo($lastName . "\n");
 //        echo("================================================\n");

@@ -22,7 +22,7 @@
           </ol>
         </nav>
         <!--<div class="ecl-page-header-harmonised__meta">Meta info</div>-->
-        <h1 class="ecl-page-header-harmonised__title">Page title</h1>
+        <h1 class="ecl-page-header-harmonised__title">{{ $title ?? 'Page title' }}</h1>
         <!--<p class="ecl-page-header-harmonised__description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>-->
       </div>
     </div>
