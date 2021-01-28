@@ -60,6 +60,7 @@ class MovieDevPreviousForm extends Component
         'movie.synopsis' => 'string',
 
         'movie.film_length' => 'required|integer',
+        'movie.shooting_language' => 'required',
         'media.audience_id' => 'required|integer',
 
         'movie.link_applicant_work' => 'string',
@@ -127,7 +128,9 @@ class MovieDevPreviousForm extends Component
 
     public function callValidate()
     {
+        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
+        unset($this->movie->shooting_language);
     }
 
     public function reject()
@@ -139,7 +142,9 @@ class MovieDevPreviousForm extends Component
 
     public function submit()
     {
+        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
+        unset($this->movie->shooting_language);
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
             $this->movie->save();

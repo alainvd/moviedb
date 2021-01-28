@@ -1,8 +1,10 @@
 <div>
     
     <div class="mb-8 text-lg">
-        Film Financing Plan
+        Supporting Documents
     </div>
+
+    <div class="mb-1 text-sm text-red-500">Film financing plan is required.</div>
 
     <div>
         <x-table>
@@ -42,7 +44,7 @@
     <form class="space-y-2">
         <x-modal.dialog wire:model="showingEditModal">
             <x-slot name="title">
-                Add/Edit financing plan
+                Add/Edit supporting document
             </x-slot>
 
             <x-slot name="content">
@@ -106,10 +108,10 @@
 
     <form wire:submit.prevent="deleteItem">
         <x-modal.confirmation wire:model.defer="showingDeleteModal">
-            <x-slot name="title">Delete financingplan</x-slot>
+            <x-slot name="title">Delete supporting document</x-slot>
 
             <x-slot name="content">
-                <div class="py-8">Do you want to remove this financing plan?</div>
+                <div class="py-8">Do you want to remove this supporting document?</div>
             </x-slot>
 
             <x-slot name="footer">

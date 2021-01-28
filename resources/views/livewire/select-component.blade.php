@@ -25,8 +25,8 @@
 	);
 
 };">
-    <label class="block text-sm font-light leading-5 text-gray-700" for="{{$domId}}">
-        {{$label}}
-    </label>
-    <select multiple id="{{$domId}}" x-ref="mySelect"></select>
+	<label for="{{ $domId }}" class="block text-sm font-light leading-5 text-gray-700">
+		{{ $label }}
+	</label>
+	<select multiple id="{{ $domId }}" x-ref="mySelect"></select>
 </div>

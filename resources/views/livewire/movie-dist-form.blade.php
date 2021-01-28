@@ -1,5 +1,5 @@
 <form wire:submit.prevent="submit">
-    <div class="md:py-6">
+    <div>
         <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16">
             <!-- title -->
             <div class="my-8">
