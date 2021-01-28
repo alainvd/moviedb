@@ -4,8 +4,6 @@
         Supporting Documents
     </div>
 
-    <div class="mb-1 text-sm text-red-500">Film financing plan is required.</div>
-
     <div>
         <x-table>
             <x-slot name="head">
