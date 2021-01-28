@@ -313,12 +313,25 @@ class MovieDistForm extends Component
             $this->emit('validation-errors');
         }
 
+        $title = 'Films - Distribution';
+        $crumbs[] = [
+            'url' => route('dossiers'),
+            'title' => 'My dossiers'
+        ];
+        $crumbs[] = [
+            'url' => route('dossiers'),
+            'title' => 'Edit dossier'
+        ];
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
+
         if ($this->isApplicant) {
             return view('livewire.movie-dist-form')
-                ->layout('components.ecl-layout');
+                ->layout('components.ecl-layout', ['title' => $title, 'crumbs' => $crumbs]);
         } else {
             return view('livewire.movie-dist-form')
-                ->layout('components.layout');
+                ->layout('components.layout', ['title' => $title, 'crumbs' => $crumbs]);
         }
     }
 
