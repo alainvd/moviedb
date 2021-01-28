@@ -1,7 +1,7 @@
 <?php
-  
+
 namespace App\Http\Livewire;
-   
+
 use Livewire\Component;
 use App\Dossier;
 use App\Models\Action;
@@ -13,19 +13,19 @@ use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 
-  
+
 class DossierDatatables extends LivewireDatatable
 {
-    
-    
+
+
     public $model = Dossier::class;
 
-    
-    
+
+
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return array()
      */
     public function columns()
     {
@@ -50,10 +50,10 @@ class DossierDatatables extends LivewireDatatable
             Column::name('updated_at')
                 ->label('LAST UPDATE')
                 ->defaultSort('desc')
-  
-           
+
+
         ];
     }
 
-    
+
 }
