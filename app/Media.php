@@ -85,4 +85,20 @@ class Media extends Model
         return '';
     }
 
+    public function scopeDirectorName()
+    {
+        // $director = $this->people()->where(function ($query) {
+        //     $query->select('code')
+        //         ->from('titles')
+        //         ->whereColumn('titles.id', 'crews.title_id')
+        //         ->limit(1);
+        // }, 'DIRECTOR')->first();
+
+        // if ($director) {
+        //     return $director->full_name;
+        // }
+
+        return '';
+    }
+
 }

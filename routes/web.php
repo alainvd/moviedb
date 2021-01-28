@@ -126,6 +126,8 @@ Route::get('/dossiers/{dossier}/activities/{activity}/fiches/vg-prev/{fiche?}', 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
 
+Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
+
 Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);

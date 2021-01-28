@@ -38,18 +38,24 @@ class MediaDatatables extends LivewireDatatable
             Column::name('id')
                 ->label('MEDIA ID'),
             Column::name('fiche.id')
-                ->label('FICHE ID'),
+                ->label('FICHE ID')
+                ->linkTo('media',2),
             Column::name('title')
                 ->label('Title'),
+                
             Column::callback('grantable_type', 'mediaType')
                 ->label('Type')
                 ->filterable(),
             //Column::name('grantable.year_of_copyright')
             //    ->label('YEAR OF COPYRIGHT'),
-            Column::name('crew.person_id')
-                ->label('DIRECTOR'),             
+            //Column::name('crew.person_id')
+        //  ->label('DIRECTOR'),             
             Column::name('fiche.status.name')
-                ->label('STATUS'),
+                ->label('STATUS')
+                ->filterable(['New']),
+            Column::scope('directorName','Director')
+                ->label('STATUS')
+                ->filterable(['New']),
            
         ];
     }
@@ -62,6 +68,22 @@ class MediaDatatables extends LivewireDatatable
         }
         
         else return 'VideoGame';
+    }
+
+    public function scopeDirectorName()
+    {
+        $director = $this->people()->where(function ($query) {
+            $query->select('code')
+                ->from('titles')
+                ->whereColumn('titles.id', 'crews.title_id')
+                ->limit(1);
+        }, 'DIRECTOR')->first();
+
+        if ($director) {
+            return $director->full_name;
+        }
+
+        return '';
     }
 
     
