@@ -2,23 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Crew;
 use App\Media;
-use App\Movie;
-use App\Person;
-use App\VideoGame;
-use App\Fiche;
-use App\Models\Action;
 use App\Models\Country;
-use App\Models\Status;
-use Illuminate\Support\Str;
 use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\NumberColumn;
-use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
-use Illuminate\Support\Facades\Log;
-
 
 
 class MediaDatatables extends LivewireDatatable
@@ -27,16 +14,16 @@ class MediaDatatables extends LivewireDatatable
     public $hideable = 'select';
     public $countries = Country::class;
     public $model = Media::class;
-    
-    
+
+
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return array()
      */
     public function columns()
     {
-        
+
         return [
             //Column::name('id')
             //  ->label('MEDIA ID'),
