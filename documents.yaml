@@ -1,6 +1,6 @@
 models:
 
-  FilmFinancingPlan:
+  Document:
     media_id: integer
     document_type: string
     filename: string
@@ -10,9 +10,9 @@ models:
 
 controllers:
 
-  FilmFinancingPlan:
+  Document:
     index:
       query: all
-      render: film_financing_plans.index with filmFinancingPlans
+      render: documents.index with Documents
 
-seeders: FilmFinancingPlan
+seeders: Document

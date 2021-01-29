@@ -70,9 +70,9 @@ class Media extends Model
         return $this->belongsToMany(Distributor::class);
     }
 
-    public function filmFinancingPlans()
+    public function Documents()
     {
-        return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
+        return $this->hasMany(\App\Document::class, 'media_id', 'id');
     }
 
     public function getDirectorName()

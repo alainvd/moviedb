@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FilmFinancingPlan extends Model
+class Document extends Model
 {
     use HasFactory;
 

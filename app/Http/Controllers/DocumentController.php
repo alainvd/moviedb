@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\FilmFinancingPlan;
+use App\Document;
 use Illuminate\Http\Request;
 
-class FilmFinancingPlanController extends Controller
+class DocumentController extends Controller
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -13,8 +13,8 @@ class FilmFinancingPlanController extends Controller
      */
     public function index(Request $request)
     {
-        $filmFinancingPlans = FilmFinancingPlan::all();
+        $Documents = Document::all();
 
-        return view('film_financing_plans.index', compact('filmFinancingPlans'));
+        return view('documents.index', compact('Documents'));
     }
 }

@@ -3,11 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Movie;
-use App\FilmFinancingPlan;
+use App\Document;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 
-class TableEditMovieFinancingPlan extends TableEditBase
+class TableEditMovieDocuments extends TableEditBase
 {
 
     use WithFileUploads;
@@ -62,7 +62,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     private function load()
     {
-        $this->items = FilmFinancingPlan::where('media_id', $this->movie->media->id)->get()->toArray();
+        $this->items = Document::where('media_id', $this->movie->media->id)->get()->toArray();
         $this->addUniqueKeys();
     }
 
@@ -76,7 +76,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-financing-plan');
+        return view('livewire.table-edit-movie-documents');
     }
 
     public function saveItem()
@@ -104,12 +104,12 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-film-financing-plans', $this->items);
+        $this->emitUp('update-movie-documents', $this->items);
     }
 
     public function can_download($file)
     {
-        if (FilmFinancingPlan::where('file', $file)->first()) {
+        if (Document::where('file', $file)->first()) {
             return true;
         }
         return false;
@@ -117,7 +117,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     public function download(Request $request)
     {
-        $file = FilmFinancingPlan::where('file', $request->input('file'))->first();
+        $file = Document::where('file', $request->input('file'))->first();
         return response()->download(storage_path('files/' . $file->file), $file->filename);
     }
 }

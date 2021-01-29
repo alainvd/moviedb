@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Audience;
 use App\Crew;
 use App\Dossier;
-use App\FilmFinancingPlan;
+use App\Document;
 use App\Genre;
 use Livewire\Component;
 use App\Movie;
@@ -41,13 +41,13 @@ class MovieDistForm extends Component
     public $crews = [];
     public $producers = [];
     public $sales_agents = [];
-    public $film_financing_plans = [];
+    public $documents = [];
 
     protected $listeners = [
         'update-movie-crews' => 'updateMovieCrews',
         'update-movie-producers' => 'updateMovieProducers',
         'update-movie-sales-agents' => 'updateMovieSalesAgents',
-        'update-movie-film-financing-plans' => 'updateMovieFilmFinancingPlans',
+        'update-movie-documents' => 'updateMovieDocuments',
         'addItem' => 'addShootingLanguage',
         'removeItem' => 'removeShootingLanguage'
     ];
@@ -136,7 +136,7 @@ class MovieDistForm extends Component
             $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
             $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
-            $this->film_financing_plans = FilmFinancingPlan::where('media_id', $this->movie->media->id)->get()->toArray();
+            $this->documents = Document::where('media_id', $this->movie->media->id)->get()->toArray();
         }
 
         if (Auth::user()->hasRole('applicant')) {
@@ -229,11 +229,11 @@ class MovieDistForm extends Component
             $this->emit('notify-saved');
         }
 
-        // crew, producers, sales agents, financing plans
+        // crew, producers, sales agents, documents
         $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
         $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
-        $this->saveItems(FilmFinancingPlan::where('media_id', $this->movie->media->id)->get(), $this->film_financing_plans, FilmFinancingPlan::class);
+        $this->saveItems(Document::where('media_id', $this->movie->media->id)->get(), $this->documents, Document::class);
 
         // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
         //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
@@ -255,9 +255,9 @@ class MovieDistForm extends Component
         $this->sales_agents = $items;
     }
 
-    public function updateMovieFilmFinancingPlans($items)
+    public function updateMovieDocuments($items)
     {
-        $this->film_financing_plans = $items;
+        $this->documents = $items;
     }
 
     public function saveItems($existing_items, $saving_items, $saving_class)

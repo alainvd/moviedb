@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\FilmFinancingPlan;
+use App\Document;
 use Illuminate\Database\Seeder;
 
-class FilmFinancingPlanSeeder extends Seeder
+class DocumentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class FilmFinancingPlanSeeder extends Seeder
      */
     public function run()
     {
-        FilmFinancingPlan::factory()->count(5)->create();
+        Document::factory()->count(5)->create();
     }
 }
