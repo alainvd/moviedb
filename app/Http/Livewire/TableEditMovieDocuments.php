@@ -16,6 +16,10 @@ class TableEditMovieDocuments extends TableEditBase
 
     public $documentTypes;
 
+    public $filesErrorMessage;
+
+    protected $listeners = ['filesErrorMessage'];
+
     protected function defaults()
     {
         return [
@@ -121,5 +125,9 @@ class TableEditMovieDocuments extends TableEditBase
     {
         $file = Document::where('file', $request->input('file'))->first();
         return response()->download(storage_path('files/' . $file->file), $file->filename);
+    }
+
+    public function filesErrorMessage($message) {
+        $this->filesErrorMessage = $message;
     }
 }

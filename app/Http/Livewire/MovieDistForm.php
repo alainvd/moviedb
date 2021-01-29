@@ -113,6 +113,14 @@ class MovieDistForm extends Component
         }
     }
 
+    protected function validateDocumentsFinancingPlan() {
+        // check if financing plan document is present
+        foreach ($this->documents as $document) {
+            if ($document['document_type'] == 'FINANCING') return true;
+        }
+        return false;
+    }
+
     protected function movieDefaults() {
         return [
             'total_budget_currency_code' => 'EUR',
@@ -175,6 +183,11 @@ class MovieDistForm extends Component
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
+        if (!$this->validateDocumentsFinancingPlan()) {
+            $this->emit('filesErrorMessage', 'Film financing plan is required.');
+        } else {
+            $this->emit('filesErrorMessage', null);
+        }
     }
 
     public function reject()

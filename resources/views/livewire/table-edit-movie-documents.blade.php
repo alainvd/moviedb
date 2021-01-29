@@ -4,6 +4,11 @@
         Supporting Documents
     </div>
 
+    @if ($filesErrorMessage)
+        <div class="mt-1 text-sm text-red-500">{{ $filesErrorMessage }}</div>
+    @endif
+
+
     <div>
         <x-table>
             <x-slot name="head">
