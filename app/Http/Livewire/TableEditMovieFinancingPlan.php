@@ -35,6 +35,12 @@ class TableEditMovieFinancingPlan extends TableEditBase
         ] + parent::rules();
     }
 
+    protected $upload_rules = [
+        'editing.document_type' => 'required|string',    
+        'editing.file' => 'required|mimetypes:application/pdf,application/excel,application/vnd.ms-excel, application/vnd.msexcel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|max:12288',
+        'editing.comments' => 'required|string',
+    ];
+
     protected function validationAttributes()
     {
         return [
@@ -44,6 +50,14 @@ class TableEditMovieFinancingPlan extends TableEditBase
             'editing.file' => 'file',
             'editing.comments' => 'comments',
         ];
+    }
+
+    public function messages()
+    {
+      return [            
+        'editing.file.required' => "You must use the 'Choose file' button to select which file you wish to upload",
+        'editing.file.mimetypes' => "Only PDF or spreadsheet files are allowed",
+      ];
     }
 
     private function load()
@@ -71,21 +85,13 @@ class TableEditMovieFinancingPlan extends TableEditBase
         $item = $this->getItemByKey($this->editing['key']);
         if (empty($item['file'])) {
             // new item, required to upload new file
-            $this->validate([
-                'editing.document_type' => 'required|string',    
-                'editing.file' => 'required|mimetypes:application/pdf|max:10000',
-                'editing.comments' => 'required|string',
-            ]);
+            $this->validate($this->upload_rules);
             $do_file_upload = true;
         } else {
             // existing item with file
             // can upload new file, can save without changing file
             if (is_a($this->editing['file'], 'Livewire\TemporaryUploadedFile')) {
-                $this->validate([
-                    'editing.document_type' => 'required|string',    
-                    'editing.file' => 'required|mimetypes:application/pdf|max:10000',
-                    'editing.comments' => 'required|string',
-                ]);
+                $this->validate($this->upload_rules);
                 $do_file_upload = true;
             }
         }
