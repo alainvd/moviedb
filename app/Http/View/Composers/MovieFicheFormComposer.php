@@ -72,6 +72,10 @@ class MovieFicheFormComposer
             'UNILATDECL' => 'Unilateral declaration of transfer of rights',
             'COPRODDEV' => 'Co-Production/co-development agreement',
         ];
+        $documentTypes = [
+            'FINANCING' => 'Financing plan',
+            'OTHER' => 'Other',
+        ];
 
         $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());
         $view->with('countries', $countries);
@@ -87,5 +91,6 @@ class MovieFicheFormComposer
         $view->with('userExperiences', $userExperiences);
         $view->with('workOrigins', $workOrigins);
         $view->with('workContractTypes', $workContractTypes);
+        $view->with('documentTypes', $documentTypes);
     }
 }

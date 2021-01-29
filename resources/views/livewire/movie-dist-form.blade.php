@@ -72,7 +72,7 @@
 
             <!-- documents -->
             <div class="my-8" id="table-documents">
-                @livewire('table-edit-movie-documents', ['movie_id' => $movie->id])
+                @livewire('table-edit-movie-documents', ['movie_id' => $movie->id, 'documentTypes' => $documentTypes])
             </div>
 
             <!-- comments -->

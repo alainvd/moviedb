@@ -16,7 +16,7 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $item['document_type'] == 'FINANCING' ? 'Financing Plan' : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $item['document_type'] ? $documentTypes[$item['document_type']] : '' }}</x-table.cell>
                     @if($this->can_download($item['file']))
                     <x-table.cell class="text-center"><a href="{{ route('document-download', ['file' => $item['file']]) }}">{{ $item['filename'] }}</a></x-table.cell>
                     @else
@@ -55,7 +55,9 @@
                             :hasError="$errors->has('editing.document_type')"
                             wire:model="editing.document_type">
 
-                            <option value="FINANCING">Financing Plan</option>
+                            @foreach($documentTypes as $key => $value)
+                                <option value="{{ $key }}">{{ $value }}</option>
+                            @endforeach
                         </x-form.select>
 
                         @error('editing.document_type')

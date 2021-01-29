@@ -14,6 +14,8 @@ class TableEditMovieDocuments extends TableEditBase
 
     public Movie $movie;
 
+    public $documentTypes;
+
     protected function defaults()
     {
         return [
