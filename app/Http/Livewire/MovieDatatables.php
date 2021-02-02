@@ -9,7 +9,7 @@ use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 
-class MediaDatatables extends LivewireDatatable
+class MovieDatatables extends LivewireDatatable
 {
 
     public $hideable = 'select';
@@ -30,7 +30,7 @@ class MediaDatatables extends LivewireDatatable
             //  ->label('MEDIA ID'),
             Column::name('id')
                 ->label('ID')
-                ->linkTo('movies'),
+                ->linkTo('browse/movies'),
             Column::name('original_title')
                 ->label('TITLE'),
             Column::name('year_of_copyright')

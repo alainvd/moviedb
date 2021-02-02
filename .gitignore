@@ -23,7 +23,7 @@ composer.lock
 /phpunit.xml
 /.phpunit.result.cache
 public/mix-manifest.json
-/draft.yaml
+/blueprints/draft.yaml
 /.blueprint
 /storage/framework/
 /bin/

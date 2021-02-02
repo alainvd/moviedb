@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
+    public function index()
+    {
+        return view('test.index');
+    }
+
     public function cas()
     {
         return view('test.cas');
@@ -31,7 +36,6 @@ class TestController extends Controller
 
     public function crew()
     {
-        //$media = Media::where('grantable_id',17765)->first();
 
         $movie = Movie::first();
 
