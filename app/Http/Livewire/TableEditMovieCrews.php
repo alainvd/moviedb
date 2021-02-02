@@ -27,6 +27,10 @@ class TableEditMovieCrews extends TableEditBase
 
     public $points_total = 0;
 
+    public $crewErrorMessages;
+
+    protected $listeners = ['crewErrorMessages'];
+
     protected function defaults()
     {
         return Crew::defaultsCrew() + parent::defaults();
@@ -60,6 +64,15 @@ class TableEditMovieCrews extends TableEditBase
         } else {
             return $this->rulesApplicant + TableEditBase::rules();
         }
+    }
+
+    public function crewRules($isEditor)  {
+        if ($isEditor) {
+            $rules = $this->rulesEditor + TableEditBase::rules();
+        } else {
+            $rules = $this->rulesApplicant + TableEditBase::rules();
+        }
+        return parent::rulesCleanup($rules);
     }
 
     protected function validationAttributes()
@@ -126,4 +139,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->recalculatePoints();
     }
 
+    public function crewErrorMessages($messages) {
+        $this->crewErrorMessages = $messages;
+    }
 }

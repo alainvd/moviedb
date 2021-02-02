@@ -4,6 +4,12 @@
         Cast and Crew
     </div>
 
+    @if($crewErrorMessages)
+    @foreach ($crewErrorMessages as $message)
+        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+    @endforeach
+    @endif
+
     <div x-data="{ points_total: {{ $points_total }} }">
         <x-table>
             <x-slot name="head">

@@ -19,6 +19,7 @@ use App\Models\Activity;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class MovieDistForm extends Component
 {
@@ -113,6 +114,25 @@ class MovieDistForm extends Component
         }
     }
 
+    protected function validateMovieCrew() {
+        // check for all crew members
+        // ...
+        // check for all fields
+        foreach ($this->crews as $crew) {
+            $req = new Request($crew);
+            $movieCrews = new TableEditMovieCrews();
+            try{
+                $req->validate($movieCrews->crewRules($this->isEditor));
+            }
+            catch (ValidationException $e){
+                $messages = collect($e->validator->getMessageBag());
+                $msgs = $messages->map(fn ($msg) => array_pop($msg));
+                return $msgs;
+            }
+        }
+        return true;
+    }
+
     protected function validateDocumentsFinancingPlan() {
         // check if financing plan document is present
         foreach ($this->documents as $document) {
@@ -187,6 +207,12 @@ class MovieDistForm extends Component
             $this->emit('filesErrorMessage', 'Film financing plan is required.');
         } else {
             $this->emit('filesErrorMessage', null);
+        }
+        $validateMovieCrew = $this->validateMovieCrew();
+        if ($validateMovieCrew !== true) {
+            $this->emit('crewErrorMessages', $validateMovieCrew);
+        } else {
+            $this->emit('crewErrorMessages', null);
         }
     }
 
