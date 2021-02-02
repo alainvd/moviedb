@@ -16,7 +16,7 @@ class MovieController extends Controller
     {
         $movies = Movie::simplePaginate(30);
 
-        return view('movies', compact(['movies']));
+        return view('movies.list', compact(['movies']));
     }
 
     /**
@@ -40,15 +40,10 @@ class MovieController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Movie  $movie
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Movie $movie)
     {
-        //
+        return view('movies.show', compact(['movie']));
     }
 
     /**

@@ -170,7 +170,7 @@ class MovieDevPreviousForm extends Component
                 'created_by' => 1,
             ])->save();
             $this->emit('notify-saved');
-        } else { 
+        } else {
             // When editing
             $this->movie->save();
             $this->movie->languages()->sync(

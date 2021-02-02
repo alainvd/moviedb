@@ -40,7 +40,7 @@ class TitleFactory extends Factory
     {
         $random_element = $this->faker->randomElement($this->titles);
         return [
-            'name' => $random_element['title'],
+            'name' => $random_element['name'],
             'code' => $random_element['code'],
         ];
     }

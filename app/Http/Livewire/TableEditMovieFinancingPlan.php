@@ -72,7 +72,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
         if (empty($item['file'])) {
             // new item, required to upload new file
             $this->validate([
-                'editing.document_type' => 'required|string',    
+                'editing.document_type' => 'required|string',
                 'editing.file' => 'required|mimetypes:application/pdf|max:10000',
                 'editing.comments' => 'required|string',
             ]);
@@ -82,7 +82,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
             // can upload new file, can save without changing file
             if (is_a($this->editing['file'], 'Livewire\TemporaryUploadedFile')) {
                 $this->validate([
-                    'editing.document_type' => 'required|string',    
+                    'editing.document_type' => 'required|string',
                     'editing.file' => 'required|mimetypes:application/pdf|max:10000',
                     'editing.comments' => 'required|string',
                 ]);

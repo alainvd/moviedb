@@ -15,7 +15,7 @@ class Producer extends Model
      * @var array
      */
     protected $fillable = [
-        'media_id',
+        'movie_id',
         'role',
         'name',
         'city',
@@ -40,9 +40,9 @@ class Producer extends Model
         return $this->belongsTo(\App\Models\Country::class);
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(\App\Movie::class);
     }
 
     const ROLES = [

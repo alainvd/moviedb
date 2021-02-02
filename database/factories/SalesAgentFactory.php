@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Movie;
 use App\SalesAgent;
 use App\Media;
 use App\Models\Country;
@@ -31,7 +32,7 @@ class SalesAgentFactory extends BaseFactory
         }
 
         return [
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
             'name' => $this->faker->name,
             'country' => $country_code1,
             'contact_person' => $this->faker->name,

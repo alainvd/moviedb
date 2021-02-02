@@ -18,7 +18,7 @@ class Crew extends Model
         'points',
         'person_id',
         'title_id',
-        'media_id',
+        'movie_id',
     ];
 
     /**
@@ -41,8 +41,8 @@ class Crew extends Model
         return $this->hasOne(\App\Person::class, 'id', 'person_id');
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(\App\Movie::class);
     }
 }

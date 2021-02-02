@@ -78,7 +78,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
     }
 
 
-   
+
     /**
      * @param $actor
      */

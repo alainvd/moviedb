@@ -2,13 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Audience;
+use App\Genre;
 use App\Models\Country;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Movie;
 
-class MovieFactory extends Factory
+class MovieFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -63,6 +65,8 @@ class MovieFactory extends Factory
             'photography_start' => $this->faker->date(),
             'photography_end' => $this->faker->date(),
             'user_experience' => $this->faker->randomElement(['LINEAR', 'INTERACTIVE']),
+            'genre_id' => $this->getRelationId(Genre::class),
+            'audience_id' => $this->getRelationId(Audience::class),
         ];
     }
 }

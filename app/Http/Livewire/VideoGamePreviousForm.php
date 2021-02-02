@@ -147,7 +147,7 @@ class VideoGamePreviousForm extends Component
     public function submit()
     {
         $this->validate();
-    
+
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
 
         // When it's new

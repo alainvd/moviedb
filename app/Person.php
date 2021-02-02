@@ -60,9 +60,10 @@ class Person extends Model
     }
 
     // Through intermediate table
-    public function media()
+    public function movie()
     {
-        return $this->hasOneThrough(\App\Media::class, \App\Crew::class, 'person_id', 'id', 'id', 'media_id');
+        //Why not hasMany ?
+        return $this->hasOneThrough(\App\Movie::class, \App\Crew::class, 'person_id', 'id', 'id', 'movie_id');
     }
 
 }

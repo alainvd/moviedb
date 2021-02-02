@@ -52,7 +52,7 @@ class MoviesImport implements ToModel, WithHeadingRow
             'production_costs_currency' => $row['production_costs_currency'],
             'production_costs' => $row['production_costs'],
             'production_costs_in_euro' => $row['production_costs_in_euro'],
-            
+
             //'production_budget_local_currency' => $row['production_budget_local_currency'],
 
 

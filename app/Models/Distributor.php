@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Media;
+use App\Movie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,8 +36,8 @@ class Distributor extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsToMany(Media::class);
+        return $this->belongsToMany(Movie::class);
     }
 }

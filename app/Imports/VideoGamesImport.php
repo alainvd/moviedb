@@ -22,7 +22,7 @@ class VideoGamesImport implements ToModel, WithHeadingRow
             'id' => $row['id'],
             'original_title' => $row['original_title'],
             'logline' => $row['logline'],
-            
+
         ]);
 
 

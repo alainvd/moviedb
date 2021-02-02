@@ -36,5 +36,5 @@ class Fiche extends Model
     public function scopeForActivity($query, $activityId)
     {
         return $query->where('activity_id', $activityId);
-    } 
+    }
 }

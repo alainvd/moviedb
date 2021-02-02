@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Movie;
 use App\Producer;
 use App\Media;
 use App\Models\Country;
@@ -39,7 +40,7 @@ class ProducerFactory extends BaseFactory
         }
 
         return [
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
             'role' => $this->faker->randomElement(["PRODUCER", "COPRODUCER"]),
             'name' => $this->faker->name,
             'city' => $this->faker->city,

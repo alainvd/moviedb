@@ -58,7 +58,7 @@ class MoviesImportDevSP implements ToModel, WithHeadingRow, WithChunkReading
             'link_applicant_work' => $row['link_applicant_work'],
             'link_applicant_work_person_name' => $row['link_applicant_work_person_name'],
             'link_applicant_work_person_position' => $row['link_applicant_work_person_position'],
-            'link_applicant_work_person_credit' => $row['link_applicant_work_person_credit'],            
+            'link_applicant_work_person_credit' => $row['link_applicant_work_person_credit'],
             'rights_origin_of_work'=> $row['rights_origin_of_work'],
             'rights_contract_type'=> $row['rights_contract_type'],
             'rights_contract_start_date' => $row['rights_contract_start_date']? $this->formatDate($row['rights_contract_start_date'], $row['id_code_film']) : null,

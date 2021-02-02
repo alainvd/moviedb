@@ -16,7 +16,7 @@ class SalesAgent extends Model
      * @var array
      */
     protected $fillable = [
-        'media_id',
+        'movie_id',
         'name',
         'country',
         'contact_person',
@@ -43,8 +43,8 @@ class SalesAgent extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo(Media::class);
+        return $this->belongsTo(Movie::class);
     }
 }

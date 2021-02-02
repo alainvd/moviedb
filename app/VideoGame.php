@@ -3,19 +3,13 @@
 namespace App;
 
 
-use App\Events\VideoGameCreated;
-use App\Interfaces\Grantable;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VideoGame extends Model implements Grantable
+class VideoGame extends Model
 {
     use HasFactory;
-
-     //Event to create a media when we create a video game
-     protected $dispatchesEvents = [
-        'created' => VideoGameCreated::class,
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -35,16 +29,17 @@ class VideoGame extends Model implements Grantable
 
     //protected $table = "videogames";
 
-
-    public function media()
+    public function genre()
     {
-        return $this->morphOne(\App\Media::class, 'grantable');
+        return $this->belongsTo('App\Genre');
     }
 
-    public function whoami()
+    public function audience()
     {
-        return "I'm a video game ... BIIP BIP BIIIIIP";
+        return $this->belongsTo('App\Audience');
     }
+
+
 
 
 }

@@ -15,7 +15,7 @@ class FilmFinancingPlan extends Model
      * @var array
      */
     protected $fillable = [
-        'media_id',
+        'movie_id',
         'document_type',
         'filename',
         'file',
@@ -32,8 +32,8 @@ class FilmFinancingPlan extends Model
     ];
 
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(\App\movie::class);
     }
 }

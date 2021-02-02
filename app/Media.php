@@ -35,45 +35,45 @@ class Media extends Model
         'id' => 'integer',
     ];
 
-    public function genre()
-    {
-        return $this->belongsTo('App\Genre');
-    }
+//    public function genre()
+//    {
+//        return $this->belongsTo('App\Genre');
+//    }
 
-    public function audience()
-    {
-        return $this->belongsTo('App\Audience');
-    }
+//    public function audience()
+//    {
+//        return $this->belongsTo('App\Audience');
+//    }
 
-    public function grantable()
-    {
-        return $this->morphTo();
-    }
+//    public function grantable()
+//    {
+//        return $this->morphTo();
+//    }
 
     public function fiche()
     {
         return $this->hasOne('App\Models\Fiche');
     }
 
-    public function crews()
-    {
-        return $this->hasMany(Crew::class);
-    }
+//    public function crews()
+//    {
+//        return $this->hasMany(Crew::class);
+//    }
 
-    public function people()
-    {
-        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id');
-    }
-
-    public function distributors()
-    {
-        return $this->belongsToMany(Distributor::class);
-    }
-
-    public function filmFinancingPlans()
-    {
-        return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
-    }
+//    public function people()
+//    {
+//        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id');
+//    }
+//
+//    public function distributors()
+//    {
+//        return $this->belongsToMany(Distributor::class);
+//    }
+//
+//    public function filmFinancingPlans()
+//    {
+//        return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
+//    }
 
     public function getDirectorName()
     {

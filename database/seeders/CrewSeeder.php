@@ -18,7 +18,7 @@ class CrewSeeder extends Seeder
         Movie::all()->each(function ($movie) {
             Crew::factory()->count(rand(3, 12))
                 ->create([
-                    'media_id' => $movie->media->id,
+                    'movie_id' => $movie->id
                 ]);
         });
     }
