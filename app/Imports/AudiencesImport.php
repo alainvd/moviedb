@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Audience;
-use App\Media;
+use App\Models\Movie;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -22,9 +22,9 @@ class AudiencesImport implements ToCollection, WithHeadingRow
 
             if ($row["film_audience"]) {
 
-                $media = Media::where(
+                $movie = Movie::where(
                     [
-                        "grantable_id" => $row["id_code_film"]
+                        "legacy_id" => $row["id_code_film"]
                     ]
                 )->first();
 
@@ -33,11 +33,11 @@ class AudiencesImport implements ToCollection, WithHeadingRow
                     [
                         "name"=> $row["film_audience"]
                     ],[
-                        "type"=> $media->grantable_type
+                        "type"=> "Movie"
                     ]
                     );
 
-                $media->update(['audience_id' => $audience->id]);
+                $movie->update(['audience_id' => $audience->id]);
 
             }
 

@@ -15,11 +15,11 @@ class GenreSeeder extends Seeder
     public function run()
     {
         $genres = [
-            "App\Models\Movie" => [
+            "Movie" => [
                 "Fiction", "Creative Documentary","Animation","Live-Action Children Film", "Action", "Comedy", "Animation", "Dark Comedy", "Drama", "Thriller", "Adventure", "Historical", "Fantasy", "Cyber Punk", "Romance"
             ],
 
-            "App\Models\VideoGame" => [
+            "VideoGame" => [
                 "Adventure",
                 "Role-Playing Game",
                 "Action",

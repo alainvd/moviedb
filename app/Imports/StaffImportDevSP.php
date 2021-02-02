@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Crew;
 use App\Models\Genre;
 use App\Media;
+use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Title;
 use Illuminate\Support\Collection;
@@ -33,7 +34,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
             $person = $this->getPerson($row);
 
             //Get Media
-            $media = $this->getMedia($row);
+            $movie = $this->getMovie($row);
 
             //Get Title
             $title = $this->getTitle($row);
@@ -42,7 +43,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
             $crew = new Crew([
                 "person_id" => $person->id,
                 "title_id" => $title->id,
-                "media_id" => $media->id
+                "movie_id" => $movie->id
             ]);
             $crew->save();
 
@@ -56,14 +57,13 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
         return Title::firstWhere("name", "=", $row["role_name"]);
     }
 
-    private function getMedia($row)
+    private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $media = Media::firstWhere([
-            "grantable_id" => $filmID,
-            "grantable_type" => "App\Models\Movie"
-        ]);
-        return $media;
+        echo($filmID);
+        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        dd($movie);
+        return $movie;
     }
 
 
