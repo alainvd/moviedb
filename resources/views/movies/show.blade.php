@@ -24,7 +24,7 @@
                         Genre
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{$movie->genre->name}}
+                        {{$movie->genre->name ?? 'No Genre Found'}}
                     </dd>
                 </div>
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -32,7 +32,7 @@
                         Audience
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{$movie->audience->name}}
+                        {{$movie->audience->name ?? 'No Audience Found'}}
                     </dd>
                 </div>
 

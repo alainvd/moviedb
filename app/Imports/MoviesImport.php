@@ -33,11 +33,8 @@ class MoviesImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
-//        dd($row);
-
-
         return new Movie([
-            'id' => $row['id_code_film'],
+            'legacy_id' => $row['id_code_film'],
             'original_title' => $row['original_title'],
             'shooting_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
             'shooting_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,

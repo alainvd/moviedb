@@ -10,7 +10,7 @@
 
             <div class="">
                 <livewire:movie-datatables
-                  searchable="title"
+                  searchable="original_title"
                    exportable
                 />
 
