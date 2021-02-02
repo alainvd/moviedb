@@ -184,7 +184,7 @@ class MovieDevPreviousForm extends Component
             $this->emit('notify-saved');
         }
 
-        // crew, producers, sales agents
+        // producers, sales agents
         $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 

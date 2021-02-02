@@ -106,6 +106,7 @@ class MovieDevCurrentForm extends Component
             $this->fiche = new Fiche;
             $this->media = new Media;
             $this->movie = new Movie($this->movieDefaults());
+            $this->crews = Crew::newMovieCrew();
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;

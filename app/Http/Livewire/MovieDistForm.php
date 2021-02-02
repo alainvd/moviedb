@@ -2,23 +2,23 @@
 
 namespace App\Http\Livewire;
 
-use App\Audience;
 use App\Crew;
-use App\Dossier;
-use App\Document;
 use App\Genre;
-use Livewire\Component;
-use App\Movie;
 use App\Media;
-use App\Models\Activity;
-use App\Models\Country;
-use App\Models\Fiche;
-use App\Models\Language;
+use App\Movie;
 use App\Person;
+use App\Dossier;
+use App\Audience;
+use App\Document;
 use App\Producer;
 use App\SalesAgent;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Fiche;
+use App\Models\Country;
+use Livewire\Component;
+use App\Models\Activity;
+use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MovieDistForm extends Component
 {
@@ -135,6 +135,7 @@ class MovieDistForm extends Component
             $this->fiche = new Fiche;
             $this->media = new Media;
             $this->movie = new Movie($this->movieDefaults());
+            $this->crews = Crew::newMovieCrew();
         } else {
             $this->media = $this->fiche->media;
             $this->movie = $this->media->grantable;
@@ -162,7 +163,6 @@ class MovieDistForm extends Component
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }
-
     }
 
     public function addShootingLanguage($lang)
@@ -272,7 +272,7 @@ class MovieDistForm extends Component
     {
         $this->documents = $items;
     }
-
+    
     public function saveItems($existing_items, $saving_items, $saving_class)
     {
         // delete first

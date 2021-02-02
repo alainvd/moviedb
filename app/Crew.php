@@ -45,4 +45,35 @@ class Crew extends Model
     {
         return $this->belongsTo(\App\Media::class);
     }
+
+    static function defaultsCrew()
+    {
+        return [
+            'points' => null,
+            'person' => [
+                'firstname' => '',
+                'lastname' => '',
+                'gender' => '',
+                'nationality1' => '',
+                'nationality2' => '',
+                'country_of_residence' => '',
+            ],
+            'title_id' => null,
+        ];
+    }
+
+    static function newMovieCrew()
+    {
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'AUTHOR')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'DIRECTOR')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'COMPOSER')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'PRODDESIGNER')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'DIRPHOTOGRAPHY')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'EDITOR')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'SOUND')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'ACTOR1')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'ACTOR2')->first()->id]);
+        $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'ACTOR3')->first()->id]);
+        return $crew;
+    }
 }

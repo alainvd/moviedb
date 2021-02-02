@@ -89,6 +89,22 @@ class TitleSeeder extends Seeder
             'name' => 'Cast/Voice Talent',
             'code' => 'CASTTALENT'
         ],
+        [
+            'name' => 'Actor 1',
+            'code' => 'ACTOR1'
+        ],
+        [
+            'name' => 'Actor 2',
+            'code' => 'ACTOR2'
+        ],
+        [
+            'name' => 'Actor 3',
+            'code' => 'ACTOR3'
+        ],
+        [
+            'name' => 'Voice-over',
+            'code' => 'VOICEOVER'
+        ],
     ];
 
     /**
