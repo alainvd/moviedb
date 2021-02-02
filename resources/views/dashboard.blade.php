@@ -33,8 +33,8 @@ Read the documentation to get started: https://tailwindui.com/documentation
                                 <li class="py-4 flex space-x-3">
                                     <div class="flex flex-col">
                                         <span class="text-sm leading-5 font-medium text-gray-900">PROJECT REF ID: {{$dossier->id}}-{{$dossier->project_ref_id}}</span>
-                                        @foreach($dossier->media as $media)
-                                        <span class="text-sm leading-5 text-gray-500">Media {{$media->id}}: {{$media->title}}</span>
+                                        @foreach($dossier->movie as $movie)
+                                        <span class="text-sm leading-5 text-gray-500">Media {{$movie->id}}: {{$movie->title}}</span>
                                         @endforeach
                                     </div>
                                 </li>
