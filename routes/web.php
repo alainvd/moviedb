@@ -91,49 +91,19 @@ Route::resource('/dossiers', ProjectController::class)
         'dossier' => 'project_ref_id'
     ])
     ->middleware('cas.auth');
-Route::view('/reports', 'coming-soon');
+
 Route::get('/dossiers/{dossier:project_ref_id}/movie-wizard', MovieWizard::class)
     ->middleware('cas.auth')
     ->name('movie-wizard');
 
-Route::resource('step', 'App\Http\Controllers\StepController')->only('index');
 
-Route::resource('step-definition', 'App\Http\Controllers\StepDefinitionController')->only('index');
 
-Route::resource('checklist', 'App\Http\Controllers\ChecklistController')->only('index');
-
-Route::resource('person', 'App\Http\Controllers\PersonController')->only('index');
-
-Route::resource('title', 'App\Http\Controllers\TitleController')->only('index');
-
-Route::resource('crew', 'App\Http\Controllers\CrewController')->only('index');
-
-Route::resource('audience', 'App\Http\Controllers\AudienceController')->only('index');
-
-Route::resource('genre', 'App\Http\Controllers\GenreController')->only('index');
-
-Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('index');
-
-Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
-
-Route::resource('film-financing-plan', 'App\Http\Controllers\FilmFinancingPlanController')->only('index');
 Route::get('film-financing-plan-download', [App\Http\Livewire\TableEditMovieFinancingPlan::class, 'download'])->middleware('cas.auth')->name('film-financing-plan-download');
-
-Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
-
-
-Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
-
-Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
-Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
-Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
-
-Route::view('/demo', 'demo');
 
 
 Route::get('dossiers', function () {
@@ -142,10 +112,34 @@ Route::get('dossiers', function () {
 Route::get('media', function () {
         return view('livewire.media-datatables');})->name('bla');
 
-
-
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
 Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
+
+//Pending
+Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
+Route::view('/reports', 'coming-soon');
+
+//Test Routes
+Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
+Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
+Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
+Route::view('/demo', 'demo');
+
+Route::resource('step', 'App\Http\Controllers\StepController')->only('index');
+Route::resource('step-definition', 'App\Http\Controllers\StepDefinitionController')->only('index');
+Route::resource('checklist', 'App\Http\Controllers\ChecklistController')->only('index');
+Route::resource('person', 'App\Http\Controllers\PersonController')->only('index');
+Route::resource('title', 'App\Http\Controllers\TitleController')->only('index');
+Route::resource('crew', 'App\Http\Controllers\CrewController')->only('index');
+Route::resource('audience', 'App\Http\Controllers\AudienceController')->only('index');
+Route::resource('genre', 'App\Http\Controllers\GenreController')->only('index');
+Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('index');
+Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
+Route::resource('film-financing-plan', 'App\Http\Controllers\FilmFinancingPlanController')->only('index');
+
+
+//Unused Routes

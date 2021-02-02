@@ -22,7 +22,7 @@ class TestController extends Controller
 
     public function movies()
     {
-        //$medium = Media::where('grantable_type','App\Models\Movie')->simplePaginate(30);
+
         $movies = Movie::simplePaginate(30);
 
 
@@ -31,10 +31,11 @@ class TestController extends Controller
 
     public function crew()
     {
-        $media = Media::where('grantable_id',17765)->first();
+        //$media = Media::where('grantable_id',17765)->first();
 
+        $movie = Movie::first();
 
-        return view('test.browse.crew', compact('media'));
+        return view('test.browse.crew', compact('movie'));
     }
 
     public function audience()
