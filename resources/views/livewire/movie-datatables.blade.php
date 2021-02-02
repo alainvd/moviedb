@@ -9,7 +9,7 @@
             <br>
 
             <div class="">
-                <livewire:media-datatables
+                <livewire:movie-datatables
                   searchable="title"
                    exportable
                 />

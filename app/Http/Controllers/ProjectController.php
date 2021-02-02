@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Call;
 use App\Models\Dossier;
-use App\Media;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
