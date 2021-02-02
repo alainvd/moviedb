@@ -53,6 +53,11 @@ return [
             'root' => storage_path('excel'),
         ],
 
+        'files' => [
+            'driver' => 'local',
+            'root' => storage_path('files'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Checklist;
+use App\Models\Checklist;
 use Illuminate\Http\Request;
 
 class ChecklistController extends Controller
@@ -13,7 +13,7 @@ class ChecklistController extends Controller
      */
     public function index(Request $request)
     {
-        $checklists = Checklist::all()->groupBy(['dossier_id','media_id']);
+        $checklists = Checklist::all()->groupBy(['dossier_id','movie_id']);
 
         return view('checklist.index', compact('checklists'));
     }

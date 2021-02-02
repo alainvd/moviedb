@@ -2,7 +2,8 @@
 
 namespace Database\Factories;
 
-use App\SalesAgent;
+use App\Models\Movie;
+use App\Models\SalesAgent;
 use App\Media;
 use App\Models\Country;
 
@@ -22,10 +23,18 @@ class SalesAgentFactory extends BaseFactory
      */
     public function definition()
     {
+
+        if(Country::all()->count() > 0){
+            $country_code1 = Country::all()->random()->code;
+        } else {
+            $country1 = Country::factory()->make();
+            $country_code1 = $country1->code;
+        }
+
         return [
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
             'name' => $this->faker->name,
-            'country_id' => $this->getRelationId(Country::class),
+            'country' => $country_code1,
             'contact_person' => $this->faker->name,
             'email' => $this->faker->safeEmail,
             'distribution_date' => $this->faker->date,

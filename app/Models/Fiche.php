@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Dossier;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,11 @@ class Fiche extends Model
     public function dossier()
     {
         return $this->belongsTo(Dossier::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 
     public function scopeForActivity($query, $activityId)

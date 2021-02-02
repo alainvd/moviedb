@@ -18,7 +18,7 @@ class CreateCrewsTable extends Migration
             $table->integer('points')->nullable();
             $table->integer('person_id');
             $table->integer('title_id');
-            $table->integer('media_id');
+            $table->integer('movie_id');
             $table->timestamps();
         });
     }

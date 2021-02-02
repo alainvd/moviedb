@@ -2,12 +2,12 @@
 
 namespace App\Http\View\Composers;
 
-use App\Audience;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Genre;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Status;
-use App\Producer;
+use App\Models\Producer;
 use Illuminate\View\View;
 
 class MovieFicheFormComposer
@@ -21,7 +21,7 @@ class MovieFicheFormComposer
         $countries = Country::where('active', true)
             ->get()
             ->toArray();
-        $genres = Genre::where('type', 'App\Movie')->get()->toArray();
+        $genres = Genre::where('type', 'App\Models\Movie')->get()->toArray();
         $languages = Language::where('active', true)
             ->get()
             ->map(fn ($lang) => [
@@ -66,11 +66,14 @@ class MovieFicheFormComposer
             'ADAPTATION' => 'Adaptation'
         ];
         $workContractTypes = [
-            'ONE' => 'One',
-            'TWO' => 'Two',
+            'CTONRTRANS' => 'Contract of transfer of rights',
+            'PUBLIDOM' => 'Public domain',
+            'OPTAGR' => 'Option Agreement of transfer of rights',
+            'UNILATDECL' => 'Unilateral declaration of transfer of rights',
+            'COPRODDEV' => 'Co-Production/co-development agreement',
         ];
 
-        $view->with('audiences', $audiences->where('type', 'App\Movie')->toArray());
+        $view->with('audiences', $audiences->where('type', 'App\Models\Movie')->toArray());
         $view->with('countries', $countries);
         $view->with('filmFormats', $filmFormats);
         $view->with('filmTypes', $filmTypes);

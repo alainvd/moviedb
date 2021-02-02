@@ -1,5 +1,5 @@
 <form wire:submit.prevent="submit">
-    <div class="md:py-6">
+    <div>
         <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16">
             <!-- title -->
             <div class="my-8">
@@ -47,7 +47,8 @@
                     :filmFormats="$filmFormats"
                     :isApplicant="$isApplicant"
                     :isEditor="$isEditor"
-                    :languages="$languages"></x-details.photography>
+                    :languages="$languages"
+                    :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
             <!-- producers -->
@@ -69,6 +70,12 @@
                 @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
             </div>
 
+            <!-- financing plan -->
+            <div class="my-8" id="table-financing-plan">
+                @livewire('table-edit-movie-financing-plan', ['movie_id' => $movie->id])
+            </div>
+
+            <!-- comments -->
             @if($isEditor)
             <div class="my-8">
                 <x-form.textarea

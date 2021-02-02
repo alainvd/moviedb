@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Person;
+use App\Models\Person;
 
 class PersonFactory extends Factory
 {
@@ -28,7 +28,7 @@ class PersonFactory extends Factory
         $firstname = $this->faker->firstName;
 
         $genders = [
-            'male', 'female', 'na',
+            'MALE', 'FEMALE', 'NA',
         ];
 
         if(Country::all()->count() > 0){
@@ -45,12 +45,12 @@ class PersonFactory extends Factory
         }
 
         return [
-            'lastname' => $this->faker->lastName,
-            'firstname' => $this->faker->firstName,
-            'gender' => $this->faker->word,
-            'nationality1' => $this->faker->word,
-            'nationality2' => $this->faker->word,
-            'country_of_residence' => $this->faker->word,
+            'lastname' => $lastname,
+            'firstname' => $firstname,
+            'gender' => $this->faker->randomElement($genders),
+            'nationality1' => $country_code1,
+            'nationality2' => $country_code2,
+            'country_of_residence' => $country_code3,
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Genre;
+use App\Models\Genre;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -11,8 +11,9 @@ class SelectComponent extends Component
 
     public $domId;
     public $label;
-    public $options;
     public $name;
+    public $options;
+    public $items;
 
     public function render()
     {

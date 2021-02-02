@@ -7,7 +7,7 @@
     <div x-data="{ points_total: {{ $points_total }} }">
         <x-table>
             <x-slot name="head">
-                <x-table.heading>Title</x-table.heading>
+                <x-table.heading>Role</x-table.heading>
                 <x-table.heading>Full name</x-table.heading>
                 <x-table.heading>Gender</x-table.heading>
                 <x-table.heading>Nationality 1</x-table.heading>
@@ -23,9 +23,9 @@
                     <x-table.cell class="text-center">{{ $titles[$item['title_id']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $genders[$item['person']['gender']] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_key[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
-                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countries_by_key[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
-                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countries_by_key[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
+                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_code[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countries_by_code[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countries_by_code[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     <x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
@@ -60,7 +60,7 @@
                     <div>
                         <x-form.select
                             :id="'crews_title_id'"
-                            :label="'Title'"
+                            :label="'Role'"
                             :hasError="$errors->has('editing.title_id')"
                             wire:model="editing.title_id">
 

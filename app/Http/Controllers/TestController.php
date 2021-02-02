@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Audience;
-use App\Media;
+use App\Models\Audience;
+
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
+    public function index()
+    {
+        return view('test.index');
+    }
+
     public function cas()
     {
         return view('test.cas');
@@ -21,18 +27,19 @@ class TestController extends Controller
 
     public function movies()
     {
-        $medium = Media::where('grantable_type','App\Movie')->simplePaginate(30);
+
+        $movies = Movie::simplePaginate(30);
 
 
-        return view('test.browse.movies', compact('medium'));
+        return view('test.browse.movies', compact('movies'));
     }
 
     public function crew()
     {
-        $media = Media::where('grantable_id',17765)->first();
 
+        $movie = Movie::first();
 
-        return view('test.browse.crew', compact('media'));
+        return view('test.browse.crew', compact('movie'));
     }
 
     public function audience()

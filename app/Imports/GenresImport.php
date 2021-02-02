@@ -2,9 +2,9 @@
 
 namespace App\Imports;
 
-use App\Audience;
-use App\Genre;
-use App\Media;
+use App\Models\Audience;
+use App\Models\Genre;
+use App\Models\Movie;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -21,9 +21,9 @@ class GenresImport implements ToCollection, WithHeadingRow
 
             if ($row["media_film_detailsfilm_genre"]) {
 
-                $media = Media::where(
+                $movie = Movie::where(
                     [
-                        "grantable_id" => $row["id_code_film"]
+                        "legacy_id" => $row["id_code_film"]
                     ]
                 )->firstOrFail();
 
@@ -32,11 +32,11 @@ class GenresImport implements ToCollection, WithHeadingRow
                     [
                         "name"=> $row["media_film_detailsfilm_genre"]
                     ],[
-                        "type"=> $media->grantable_type
+                        "type"=> "Movie"
                     ]
                 );
 
-                $media->update(['genre_id' => $genre->id]);
+                $movie->update(['genre_id' => $genre->id]);
 
             }
 

@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Audience;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Genre;
 use App\Http\View\Composers\DistributorsComposer;
+use App\Http\View\Composers\MovieFicheFormComposer;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Status;
@@ -42,10 +43,18 @@ class ViewServiceProvider extends ServiceProvider
             'livewire.movie-dev-current-form',
             'App\Http\View\Composers\MovieFicheFormComposer',
         );
+        View::composer(
+            'livewire.video-game-previous-form',
+            'App\Http\View\Composers\MovieFicheFormComposer',
+        );
+        View::composer(
+            'livewire.dossiers.activities.distributors',
+            DistributorsComposer::class
+        );
 
         View::composer(
-            'livewire.activities.distributors',
-            DistributorsComposer::class
+            'livewire.dossiers.movie-wizard',
+            MovieFicheFormComposer::class
         );
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Dossier;
-use App\Media;
+use App\Models\Dossier;
 use App\Models\Fiche;
+use App\Models\Movie;
 use App\Models\Status;
-use App\User;
+use App\Models\User;
 
 class FicheFactory extends BaseFactory
 {
@@ -25,7 +25,7 @@ class FicheFactory extends BaseFactory
     public function definition()
     {
         return [
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
             'dossier_id' => $this->getRelationId(Dossier::class),
             'status_id' => $this->getRelationId(Status::class),
             'created_by' => $this->getRelationId(User::class),

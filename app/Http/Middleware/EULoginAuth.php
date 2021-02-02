@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\CommonUser;
-use App\User;
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +42,13 @@ class EULoginAuth
                     $user = User::factory()->make([
                         'eu_login_username' => $this->cas->user(),
                     ])->assignRole('applicant');
+                }
+
+                // impersonate
+                if($request->session()->has('impersonate'))
+                {
+                    $user = User::where('id', $request->session()->get('impersonate'))
+                    ->first();
                 }
 
                 cas()->setAttributes(

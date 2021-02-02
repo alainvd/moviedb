@@ -1,0 +1,20 @@
+models:
+
+  SalesAgent:
+    media_id: integer
+    name: string
+    country_id: integer
+    contact_person: string
+    email: string
+    relationships:
+      belongsTo: Country, Media
+
+controllers:
+
+  SalesAgent:
+    index:
+      query: all
+      render: sales_agent.index with salesAgents
+
+
+seeders: SalesAgent

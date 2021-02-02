@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Call;
+use App\Models\Call;
 use App\Models\Action;
 use Illuminate\Database\Seeder;
 

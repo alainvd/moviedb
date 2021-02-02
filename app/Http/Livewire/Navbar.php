@@ -8,7 +8,7 @@ use Livewire\Component;
 class Navbar extends Component
 {
     public $active = '';
-    public $links = ['dashboard','dossiers','media', 'reports','helpdesk'];
+    public $links = ['dashboard','dossiers','movies', 'reports','helpdesk'];
 
     public function __construct()
     {

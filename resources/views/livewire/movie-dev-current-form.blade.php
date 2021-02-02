@@ -1,5 +1,5 @@
 <form wire:submit.prevent="submit">
-    <div class="md:py-6">
+    <div>
         <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
             <!-- title -->
             <div class="my-8">
@@ -31,7 +31,8 @@
                 <x-details.photography-dev-current
                     :movie="$movie"
                     :filmFormats="$filmFormats"
-                    :languages="$languages"></x-details.photography>
+                    :languages="$languages"
+                    :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
             <!-- cast/crew -->
@@ -57,6 +58,7 @@
                 <x-details.budget-dev-current></x-details.budget>
             </div>
 
+            <!-- comments -->
             <div class="my-8">
                 <x-form.textarea
                     :id="'comments'"
