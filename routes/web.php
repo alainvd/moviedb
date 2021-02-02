@@ -85,11 +85,13 @@ Route::get('dossiers-public', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
 })->name('dossiers-public');
 
-Route::resource('dossier', 'App\Http\Controllers\DossierController')->only('index');
-
-Route::resource('/dossiers', ProjectController::class)->middleware('cas.auth');
+Route::resource('/dossiers', ProjectController::class)
+    ->scoped([
+        'dossier' => 'project_ref_id'
+    ])
+    ->middleware('cas.auth');
 Route::view('/reports', 'coming-soon');
-Route::get('/dossiers/{dossier}/movie-wizard', MovieWizard::class)
+Route::get('/dossiers/{dossier:project_ref_id}/movie-wizard', MovieWizard::class)
     ->middleware('cas.auth')
     ->name('movie-wizard');
 
@@ -118,10 +120,10 @@ Route::get('film-financing-plan-download', [App\Http\Livewire\TableEditMovieFina
 
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
 
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
