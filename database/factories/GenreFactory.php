@@ -28,7 +28,7 @@ class GenreFactory extends Factory
 
         return [
             'name' => $this->faker->randomElement($genre_types),
-            'type' => $this->faker->randomElement(["App\Models\Movie","App\VideoGame"])
+            'type' => $this->faker->randomElement(["App\Models\Movie","App\Models\VideoGame"])
         ];
     }
 }

@@ -29,7 +29,7 @@ class AudienceFactory extends Factory
 
         return [
             'name' => $this->faker->randomElement($audience_types),
-            'type' => $this->faker->randomElement(["App\Models\Movie","App\VideoGame"])
+            'type' => $this->faker->randomElement(["App\Models\Movie","App\Models\VideoGame"])
         ];
     }
 }

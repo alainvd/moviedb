@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Media;
-use App\VideoGame;
+use App\Models\VideoGame;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 

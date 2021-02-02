@@ -55,11 +55,6 @@ class Movie extends Model
         'rights_adapt_contract_signature_date' => 'date:d.m.Y',
     ];
 
-    public function media()
-    {
-        return $this->morphOne(\App\Media::class, 'grantable');
-    }
-
     public function crew()
     {
         return $this->hasMany(\App\Models\Crew::class, 'movie_id', 'id');

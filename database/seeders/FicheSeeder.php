@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Dossier;
 use App\Media;
 use App\Models\Fiche;
+use App\Models\Movie;
 use Illuminate\Database\Seeder;
 
 class FicheSeeder extends Seeder
@@ -16,9 +17,9 @@ class FicheSeeder extends Seeder
      */
     public function run()
     {
-        Media::all()->each(function ($media) {
+        Movie::all()->each(function ($movie) {
             Fiche::factory()->create([
-                'media_id' => $media->id,
+                'movie_id' => $movie->id,
                 'dossier_id' => Dossier::all()->random()->id,
             ]);
         });

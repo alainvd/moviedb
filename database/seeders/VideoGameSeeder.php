@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Media;
 use App\Models\Movie;
-use App\VideoGame;
+use App\Models\VideoGame;
 use Illuminate\Database\Seeder;
 
 class VideoGameSeeder extends Seeder

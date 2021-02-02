@@ -19,7 +19,7 @@ class GenreSeeder extends Seeder
                 "Fiction", "Creative Documentary","Animation","Live-Action Children Film", "Action", "Comedy", "Animation", "Dark Comedy", "Drama", "Thriller", "Adventure", "Historical", "Fantasy", "Cyber Punk", "Romance"
             ],
 
-            "App\VideoGame" => [
+            "App\Models\VideoGame" => [
                 "Adventure",
                 "Role-Playing Game",
                 "Action",
