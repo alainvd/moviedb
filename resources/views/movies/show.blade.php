@@ -36,11 +36,14 @@
                     </dd>
                 </div>
 
+
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">
                         Distributors
                     </dt>
+
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        @if(!$movie->distributors->isEmpty())
                         <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
                             @foreach($movie->distributors as $distributor)
                                 <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
@@ -56,8 +59,13 @@
                             @endforeach
 
                         </ul>
+                        @else
+                            No Distributor Found
+                        @endif
                     </dd>
+
                 </div>
+
 
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">

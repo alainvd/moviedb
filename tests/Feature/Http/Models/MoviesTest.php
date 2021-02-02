@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Models;
 use App\Audience;
 use App\Crew;
 use App\Helpers\MoviesHelpers;
+use App\Models\Distributor;
 use App\Movie;
 use App\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,8 +29,12 @@ class MoviesTest extends TestCase
 
         //Create crew data
         $person = Person::factory()->create();
-
         Crew::factory()->create(["person_id" => $person->id, "movie_id" => $movie->id]);
+
+        //Create and link Distributor
+        $distributor = Distributor::factory()->create();
+        $movie->distributors()->save($distributor);
+
 
         $response = $this->get(route('movie_show',['movie'=>$movie->id]));
 
@@ -40,5 +45,6 @@ class MoviesTest extends TestCase
         $response->assertSeeText($movie->genre->name);
         $response->assertSeeText($movie->audience->name);
         $response->assertSeeText($person->fullname);
+        $response->assertSeeText($distributor->name);
     }
 }

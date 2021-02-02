@@ -15,13 +15,13 @@ class CreateDistributorsTable extends Migration
     {
         Schema::create('distributors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('country_id');
             $table->string('name');
             $table->string('role')->nullable();
+            $table->unsignedBigInteger('country_id');
             $table->date('forecast_release_date');
             $table->integer('forecast_grant')->nullable();
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updatedBy')->nullable();
+//            $table->unsignedBigInteger('created_by');
+//            $table->unsignedBigInteger('updatedBy')->nullable();
             $table->timestamps();
         });
     }
