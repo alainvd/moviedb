@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Checklist;
-use App\StepDefinition;
+use App\Models\Checklist;
+use App\Models\StepDefinition;
 use Illuminate\Database\Seeder;
 
 class ChecklistSeeder extends Seeder

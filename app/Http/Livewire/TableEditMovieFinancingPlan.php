@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Movie;
-use App\FilmFinancingPlan;
+use App\Models\Movie;
+use App\Models\FilmFinancingPlan;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 

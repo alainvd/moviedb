@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Movie;
-use App\Title;
+use App\Models\Movie;
+use App\Models\Title;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;

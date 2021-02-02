@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Audience;
-use App\Crew;
-use App\Dossier;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Crew;
+use App\Models\Dossier;
+use App\Models\Genre;
 use App\Http\Livewire\MovieDetailForm;
 use App\Http\Livewire\TableEditMovieCrews;
 use App\Http\Livewire\TableEditMovieProducers;
@@ -14,11 +14,11 @@ use App\Media;
 use App\Models\Country;
 use App\Models\Fiche;
 use App\Models\Status;
-use App\Movie;
-use App\Producer;
-use App\SalesAgent;
-use App\Title;
-use App\User;
+use App\Models\Movie;
+use App\Models\Producer;
+use App\Models\SalesAgent;
+use App\Models\Title;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
@@ -104,7 +104,7 @@ class MovieDetailsFormTest extends TestCase
             'id' => $this->media->id,
             'title' => $newTitle,
             'grantable_id' => $this->movie->id,
-            'grantable_type' => 'App\Movie',
+            'grantable_type' => 'App\Models\Movie',
         ]);
     }
 
@@ -210,7 +210,7 @@ class MovieDetailsFormTest extends TestCase
             'european_nationality_flag' => null,
         ]);
         $this->media = Media::make([
-            'grantable_type' => 'App\Movie',
+            'grantable_type' => 'App\Models\Movie',
             'title' => $this->movie->original_title,
             'audience_id' => Audience::all()->random()->id,
             'genre_id' => Genre::all()->random()->id,

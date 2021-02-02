@@ -1,11 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
+
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FilmFinancingPlan extends Model
+class VideoGame extends Model
 {
     use HasFactory;
 
@@ -14,13 +16,7 @@ class FilmFinancingPlan extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'movie_id',
-        'document_type',
-        'filename',
-        'file',
-        'comments',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -31,9 +27,19 @@ class FilmFinancingPlan extends Model
         'id' => 'integer',
     ];
 
+    //protected $table = "videogames";
 
-    public function movie()
+    public function genre()
     {
-        return $this->belongsTo(\App\movie::class);
+        return $this->belongsTo('App\Models\Genre');
     }
+
+    public function audience()
+    {
+        return $this->belongsTo('App\Models\Audience');
+    }
+
+
+
+
 }

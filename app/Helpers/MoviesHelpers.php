@@ -8,7 +8,7 @@ class MoviesHelpers
 {
     public static function addCrewMember($person, $points, $title_id, $movie_id)
     {
-        $person = \App\Person::create($person);
+        $person = \App\Models\Person::create($person);
 
         $crew = Crew::create([
             'points' => $points,

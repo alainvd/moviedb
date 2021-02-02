@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Genre;
+use App\Models\Genre;
 use Illuminate\Database\Seeder;
 
 class GenreSeeder extends Seeder
@@ -15,7 +15,7 @@ class GenreSeeder extends Seeder
     public function run()
     {
         $genres = [
-            "App\Movie" => [
+            "App\Models\Movie" => [
                 "Fiction", "Creative Documentary","Animation","Live-Action Children Film", "Action", "Comedy", "Animation", "Dark Comedy", "Drama", "Thriller", "Adventure", "Historical", "Fantasy", "Cyber Punk", "Romance"
             ],
 

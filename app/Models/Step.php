@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Title extends Model
+class Step extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,8 @@ class Title extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'code',
+        'category',
+        'description',
     ];
 
     /**
@@ -29,8 +29,13 @@ class Title extends Model
     ];
 
 
-    public function crews()
+    public function stepDefinitions()
     {
-        return $this->hasMany(\App\Crew::class);
+        return $this->hasMany(\App\Models\StepDefinition::class);
+    }
+
+    public function checklists()
+    {
+        return $this->hasMany(\App\Models\Checklist::class);
     }
 }

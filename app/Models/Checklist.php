@@ -1,12 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SalesAgent extends Model
+class Checklist extends Model
 {
     use HasFactory;
 
@@ -16,16 +15,11 @@ class SalesAgent extends Model
      * @var array
      */
     protected $fillable = [
-        'movie_id',
-        'name',
-        'country',
-        'contact_person',
-        'email',
-        'distribution_date',
-    ];
-
-    protected $dates = [
-        'distribution_date',
+        'position',
+        'status',
+        'dossier_id',
+        'step_id',
+        'status_by',
     ];
 
     /**
@@ -35,16 +29,21 @@ class SalesAgent extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'distribution_date' => 'date:d.m.Y'
     ];
 
-    public function country()
+
+    public function step()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(\App\Models\Step::class);
+    }
+
+    public function dossier()
+    {
+        return $this->belongsTo(\App\Models\Dossier::class);
     }
 
     public function movie()
     {
-        return $this->belongsTo(Movie::class);
+        return $this->belongsTo(\App\Models\Movie::class);
     }
 }

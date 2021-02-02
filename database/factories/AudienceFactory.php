@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Audience;
+use App\Models\Audience;
 
 class AudienceFactory extends Factory
 {
@@ -29,7 +29,7 @@ class AudienceFactory extends Factory
 
         return [
             'name' => $this->faker->randomElement($audience_types),
-            'type' => $this->faker->randomElement(["App\Movie","App\VideoGame"])
+            'type' => $this->faker->randomElement(["App\Models\Movie","App\VideoGame"])
         ];
     }
 }

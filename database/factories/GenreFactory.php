@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Genre;
+use App\Models\Genre;
 
 class GenreFactory extends Factory
 {
@@ -28,7 +28,7 @@ class GenreFactory extends Factory
 
         return [
             'name' => $this->faker->randomElement($genre_types),
-            'type' => $this->faker->randomElement(["App\Movie","App\VideoGame"])
+            'type' => $this->faker->randomElement(["App\Models\Movie","App\VideoGame"])
         ];
     }
 }

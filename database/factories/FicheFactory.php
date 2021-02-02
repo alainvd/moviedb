@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Media;
 use App\Models\Fiche;
 use App\Models\Status;
-use App\User;
+use App\Models\User;
 
 class FicheFactory extends BaseFactory
 {

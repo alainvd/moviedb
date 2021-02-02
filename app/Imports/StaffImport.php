@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Crew;
-use App\Genre;
+use App\Models\Crew;
+use App\Models\Genre;
 use App\Media;
-use App\Person;
-use App\Title;
+use App\Models\Person;
+use App\Models\Title;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -63,7 +63,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         $filmID = $row["id_code_film"];
         $media = Media::firstWhere([
             "grantable_id" => $filmID,
-            "grantable_type" => "App\Movie"
+            "grantable_type" => "App\Models\Movie"
         ]);
         return $media;
     }

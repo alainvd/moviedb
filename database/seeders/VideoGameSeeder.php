@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Media;
-use App\Movie;
+use App\Models\Movie;
 use App\VideoGame;
 use Illuminate\Database\Seeder;
 

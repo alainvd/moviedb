@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Audience;
-use App\StepDefinition;
+use App\Models\Audience;
+use App\Models\StepDefinition;
 use Illuminate\Database\Seeder;
 
 class AudienceSeeder extends Seeder
@@ -16,7 +16,7 @@ class AudienceSeeder extends Seeder
     public function run()
     {
         $audiences = [
-            "App\Movie" => [
+            "App\Models\Movie" => [
                 "Children", "Adults","All"
             ],
             "App\VideoGame" => [

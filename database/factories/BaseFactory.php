@@ -25,7 +25,7 @@ abstract class BaseFactory extends Factory
         if ($model->all()->count() > 0) {
             return $model->all()->random()->id;
         } else {
-            return $model->factory();
+            return $model->factory()->create();
         }
     }
 }

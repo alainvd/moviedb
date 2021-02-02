@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Audience;
+use App\Models\Audience;
 use App\Media;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;

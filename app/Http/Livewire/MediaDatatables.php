@@ -59,7 +59,7 @@ class MediaDatatables extends LivewireDatatable
     {
 
 
-        if ($text=='App\Movie') {
+        if ($text=='App\Models\Movie') {
 
             return 'Movie';
         }
@@ -85,7 +85,7 @@ class MediaDatatables extends LivewireDatatable
 
     public function grantableCountry($id)
     {
-        if (Media::find($id)->grantable_type == 'App\Movie')
+        if (Media::find($id)->grantable_type == 'App\Models\Movie')
         {
             return  Media::find($id)->grantable->film_country_of_origin;
         }

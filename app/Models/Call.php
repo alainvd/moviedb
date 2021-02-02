@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +42,7 @@ class Call extends Model
 
     public function dossiers()
     {
-        return $this->hasMany(\App\Dossier::class);
+        return $this->hasMany(\App\Models\Dossier::class);
     }
 
     public function action(){

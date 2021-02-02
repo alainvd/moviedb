@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Movie;
-use App\Producer;
+use App\Models\Movie;
+use App\Models\Producer;
 use App\Models\Country;
 
 class TableEditMovieProducers extends TableEditBase

@@ -3,12 +3,12 @@
 namespace Database\Factories;
 
 use App\Media;
-use App\Movie;
-use App\Person;
-use App\Title;
+use App\Models\Movie;
+use App\Models\Person;
+use App\Models\Title;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Crew;
+use App\Models\Crew;
 
 class CrewFactory extends BaseFactory
 {

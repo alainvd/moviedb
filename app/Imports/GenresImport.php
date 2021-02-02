@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Audience;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Genre;
 use App\Media;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;

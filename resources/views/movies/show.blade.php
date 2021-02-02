@@ -44,23 +44,81 @@
 
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         @if(!$movie->distributors->isEmpty())
-                        <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
-                            @foreach($movie->distributors as $distributor)
-                                <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                    <div class="w-0 flex-1 flex items-center">
+                            <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                                @foreach($movie->distributors as $distributor)
+                                    <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                        <div class="w-0 flex-1 flex items-center">
 
 
                                     <span class="ml-2 flex-1 w-0 truncate">
                   {{$distributor->name}}
                 </span>
-                                    </div>
+                                        </div>
 
-                                </li>
-                            @endforeach
+                                    </li>
+                                @endforeach
 
-                        </ul>
+                            </ul>
                         @else
                             No Distributor Found
+                        @endif
+                    </dd>
+
+                </div>
+
+                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Financing Plan
+                    </dt>
+
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        @if(!$movie->filmFinancingPlans->isEmpty())
+                            <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                                @foreach($movie->filmFinancingPlans as $financingPlan)
+                                    <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                        <div class="w-0 flex-1 flex items-center">
+
+
+                                    <span class="ml-2 flex-1 w-0 truncate">
+                  {{$financingPlan->filename}}
+                </span>
+                                        </div>
+
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                        @else
+                            No Financing Plan Found
+                        @endif
+                    </dd>
+
+                </div>
+
+                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Languages
+                    </dt>
+
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        @if(!$movie->languages->isEmpty())
+                            <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                                @foreach($movie->languages as $language)
+                                    <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                        <div class="w-0 flex-1 flex items-center">
+
+
+                                    <span class="ml-2 flex-1 w-0 truncate">
+                  {{$language->name}}
+                </span>
+                                        </div>
+
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                        @else
+                            No Languages Found
                         @endif
                     </dd>
 

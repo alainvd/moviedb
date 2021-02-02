@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Movie;
-use App\SalesAgent;
+use App\Models\Movie;
+use App\Models\SalesAgent;
 use App\Models\Country;
 
 class TableEditMovieSalesAgents extends TableEditBase

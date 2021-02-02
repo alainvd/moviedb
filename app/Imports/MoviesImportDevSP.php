@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Media;
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

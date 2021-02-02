@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Models\Activity;
-use App\Movie;
+use App\Models\Movie;
 use Livewire\Component;
 
 class Description extends Component

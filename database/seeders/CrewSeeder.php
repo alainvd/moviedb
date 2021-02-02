@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Crew;
-use App\Movie;
+use App\Models\Crew;
+use App\Models\Movie;
 use Illuminate\Database\Seeder;
 
 class CrewSeeder extends Seeder

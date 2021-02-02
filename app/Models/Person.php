@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -50,20 +50,20 @@ class Person extends Model
     // Intermediate table
     public function crew()
     {
-        return $this->hasOne(\App\Crew::class);
+        return $this->hasOne(\App\Models\Crew::class);
     }
 
     // Through intermediate table
     public function title()
     {
-        return $this->hasOneThrough(\App\Title::class, \App\Crew::class, 'person_id', 'id', 'id', 'title_id');
+        return $this->hasOneThrough(\App\Models\Title::class, \App\Models\Crew::class, 'person_id', 'id', 'id', 'title_id');
     }
 
     // Through intermediate table
     public function movie()
     {
         //Why not hasMany ?
-        return $this->hasOneThrough(\App\Movie::class, \App\Crew::class, 'person_id', 'id', 'id', 'movie_id');
+        return $this->hasOneThrough(\App\Models\Movie::class, \App\Models\Crew::class, 'person_id', 'id', 'id', 'movie_id');
     }
 
 }

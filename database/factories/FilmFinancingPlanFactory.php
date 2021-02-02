@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Media;
-use App\FilmFinancingPlan;
+use App\Models\FilmFinancingPlan;
 
 class FilmFinancingPlanFactory extends BaseFactory
 {

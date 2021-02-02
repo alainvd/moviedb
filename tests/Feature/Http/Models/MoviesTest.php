@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Http\Models;
 
-use App\Audience;
-use App\Crew;
-use App\Helpers\MoviesHelpers;
+use App\Models\Audience;
+use App\Models\Crew;
+use App\Models\FilmFinancingPlan;
 use App\Models\Distributor;
-use App\Movie;
-use App\Person;
+use App\Models\Language;
+use App\Models\Movie;
+use App\Models\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -35,6 +36,15 @@ class MoviesTest extends TestCase
         $distributor = Distributor::factory()->create();
         $movie->distributors()->save($distributor);
 
+        //Create and Link Film Financing Plan
+        $financingPlan = FilmFinancingPlan::factory()->create();
+        $movie->filmFinancingPlans()->save($financingPlan);
+
+        //Create and link languages
+        $language = Language::factory()->create();
+        $movie->languages()->save($language);
+
+
 
         $response = $this->get(route('movie_show',['movie'=>$movie->id]));
 
@@ -46,5 +56,7 @@ class MoviesTest extends TestCase
         $response->assertSeeText($movie->audience->name);
         $response->assertSeeText($person->fullname);
         $response->assertSeeText($distributor->name);
+        $response->assertSeeText($financingPlan->filename);
+        $response->assertSeeText($language->name);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Audience;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Genre;
 use App\Models\Country;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Movie;
+use App\Models\Movie;
 
 class MovieFactory extends BaseFactory
 {

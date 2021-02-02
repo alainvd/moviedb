@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Media;
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

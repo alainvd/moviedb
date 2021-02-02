@@ -37,12 +37,12 @@ class Media extends Model
 
 //    public function genre()
 //    {
-//        return $this->belongsTo('App\Genre');
+//        return $this->belongsTo('App\Models\Genre');
 //    }
 
 //    public function audience()
 //    {
-//        return $this->belongsTo('App\Audience');
+//        return $this->belongsTo('App\Models\Audience');
 //    }
 
 //    public function grantable()
@@ -62,7 +62,7 @@ class Media extends Model
 
 //    public function people()
 //    {
-//        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'media_id', 'id', 'id', 'person_id');
+//        return $this->hasManyThrough(\App\Models\Person::class, \App\Models\Crew::class, 'media_id', 'id', 'id', 'person_id');
 //    }
 //
 //    public function distributors()
@@ -72,7 +72,7 @@ class Media extends Model
 //
 //    public function filmFinancingPlans()
 //    {
-//        return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
+//        return $this->hasMany(\App\Models\FilmFinancingPlan::class, 'media_id', 'id');
 //    }
 
     public function getDirectorName()

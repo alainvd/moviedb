@@ -1,6 +1,6 @@
 <?php
 
-use App\Call;
+use App\Models\Call;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;

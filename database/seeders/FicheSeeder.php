@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Media;
 use App\Models\Fiche;
 use Illuminate\Database\Seeder;

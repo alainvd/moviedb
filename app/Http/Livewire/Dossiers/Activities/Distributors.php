@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Models\Distributor;
-use App\Movie;
-use App\User;
+use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

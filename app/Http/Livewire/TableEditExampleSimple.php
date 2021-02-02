@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Producer;
+use App\Models\Producer;
 use App\Models\Country;
 
 class TableEditExampleSimple extends TableEditBase

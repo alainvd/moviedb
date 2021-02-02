@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Audience;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Genre;
 use App\Media;
 use App\Models\Status;
-use App\User;
+use App\Models\User;
 
 class MediaFactory extends BaseFactory
 {
@@ -29,7 +29,7 @@ class MediaFactory extends BaseFactory
             'audience_id' => $this->getRelationId(Audience::class),
 
             'grantable_id' => $this->faker->numberBetween(1,5),
-            'grantable_type' => $this->faker->randomElement(["App\Movie","App\VideoGame"]),
+            'grantable_type' => $this->faker->randomElement(["App\Models\Movie","App\VideoGame"]),
             'delivery_platform_id' => $this->faker->numberBetween(0, 2),
         ];
     }

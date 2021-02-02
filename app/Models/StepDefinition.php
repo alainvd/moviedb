@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Checklist extends Model
+class StepDefinition extends Model
 {
     use HasFactory;
 
@@ -15,11 +15,10 @@ class Checklist extends Model
      * @var array
      */
     protected $fillable = [
-        'position',
-        'status',
-        'dossier_id',
+        'action',
         'step_id',
-        'status_by',
+        'position',
+        'version',
     ];
 
     /**
@@ -34,16 +33,11 @@ class Checklist extends Model
 
     public function step()
     {
-        return $this->belongsTo(\App\Step::class);
+        return $this->belongsTo(\App\Models\Step::class);
     }
 
-    public function dossier()
+    public function action()
     {
-        return $this->belongsTo(\App\Dossier::class);
-    }
-
-    public function media()
-    {
-        return $this->belongsTo(\App\Media::class);
+        return $this->hasOne(\App\Models\Action::class);
     }
 }

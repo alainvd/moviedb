@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Genre extends Model
+class Title extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class Genre extends Model
      */
     protected $fillable = [
         'name',
-        'type',
+        'code',
     ];
 
     /**
@@ -29,8 +29,8 @@ class Genre extends Model
     ];
 
 
-    public function media()
+    public function crews()
     {
-        return $this->hasMany(\App\Media::class);
+        return $this->hasMany(\App\Models\Crew::class);
     }
 }

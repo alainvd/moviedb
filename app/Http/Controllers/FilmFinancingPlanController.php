@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\FilmFinancingPlan;
+use App\Models\FilmFinancingPlan;
 use Illuminate\Http\Request;
 
 class FilmFinancingPlanController extends Controller

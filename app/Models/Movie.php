@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Models\Distributor;
 use App\Models\Language;
@@ -62,17 +62,17 @@ class Movie extends Model
 
     public function crew()
     {
-        return $this->hasMany(\App\Crew::class, 'movie_id', 'id');
+        return $this->hasMany(\App\Models\Crew::class, 'movie_id', 'id');
     }
 
     public function genre()
     {
-        return $this->belongsTo('App\Genre');
+        return $this->belongsTo('App\Models\Genre');
     }
 
     public function audience()
     {
-        return $this->belongsTo('App\Audience');
+        return $this->belongsTo('App\Models\Audience');
     }
 
     public function languages()
@@ -87,7 +87,7 @@ class Movie extends Model
 
     public function people()
     {
-        return $this->hasManyThrough(\App\Person::class, \App\Crew::class, 'movie_id', 'id', 'id', 'person_id');
+        return $this->hasManyThrough(\App\Models\Person::class, \App\Models\Crew::class, 'movie_id', 'id', 'id', 'person_id');
     }
 
     public function distributors()
@@ -97,7 +97,7 @@ class Movie extends Model
 
     public function filmFinancingPlans()
     {
-        return $this->hasMany(\App\FilmFinancingPlan::class, 'media_id', 'id');
+        return $this->hasMany(\App\Models\FilmFinancingPlan::class, 'movie_id', 'id');
     }
 
 

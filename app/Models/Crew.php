@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,16 +33,16 @@ class Crew extends Model
 
     public function title()
     {
-        return $this->belongsTo(\App\Title::class);
+        return $this->belongsTo(\App\Models\Title::class);
     }
 
     public function person()
     {
-        return $this->hasOne(\App\Person::class, 'id', 'person_id');
+        return $this->hasOne(\App\Models\Person::class, 'id', 'person_id');
     }
 
     public function movie()
     {
-        return $this->belongsTo(\App\Movie::class);
+        return $this->belongsTo(\App\Models\Movie::class);
     }
 }
