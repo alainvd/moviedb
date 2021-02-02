@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Audience extends Model
+class FilmFinancingPlan extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,11 @@ class Audience extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'type',
+        'movie_id',
+        'document_type',
+        'filename',
+        'file',
+        'comments',
     ];
 
     /**
@@ -29,8 +32,8 @@ class Audience extends Model
     ];
 
 
-    public function media()
+    public function movie()
     {
-        return $this->hasMany(\App\Media::class);
+        return $this->belongsTo(\App\Models\Movie::class);
     }
 }

@@ -2,20 +2,20 @@
 
 namespace App\Http\Livewire;
 
-use App\Audience;
-use App\Crew;
-use App\Dossier;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Crew;
+use App\Models\Dossier;
+use App\Models\Genre;
 use Livewire\Component;
-use App\Movie;
+use App\Models\Movie;
 use App\Media;
 use App\Models\Activity;
 use App\Models\Country;
 use App\Models\Fiche;
 use App\Models\Language;
-use App\Person;
-use App\Producer;
-use App\SalesAgent;
+use App\Models\Person;
+use App\Models\Producer;
+use App\Models\SalesAgent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -188,7 +188,7 @@ class MovieDevCurrentForm extends Component
                 'genre_id' => $media_store->genre_id,
                 'grantable_id' => $this->movie->id,
                 'delivery_platform_id' => $media_store->delivery_platform_id,
-                'grantable_type' => 'App\Movie',
+                'grantable_type' => 'App\Models\Movie',
             ])->save();
             $this->fiche->fill([
                 'media_id' => $this->media->id,

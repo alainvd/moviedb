@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDistributorMediaTable extends Migration
+class CreateDistributorMovieTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateDistributorMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('distributor_media', function (Blueprint $table) {
+        Schema::create('distributor_movie', function (Blueprint $table) {
             $table->unsignedBigInteger('distributor_id');
-            $table->unsignedBigInteger('media_id');
+            $table->unsignedBigInteger('movie_id');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateDistributorMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('distributor_media');
+        Schema::dropIfExists('distributor_movie');
     }
 }

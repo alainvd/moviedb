@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Audience;
-use App\Media;
+use App\Models\Audience;
+
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -21,10 +22,11 @@ class TestController extends Controller
 
     public function movies()
     {
-        $medium = Media::where('grantable_type','App\Movie')->simplePaginate(30);
+        //$medium = Media::where('grantable_type','App\Models\Movie')->simplePaginate(30);
+        $movies = Movie::simplePaginate(30);
 
 
-        return view('test.browse.movies', compact('medium'));
+        return view('test.browse.movies', compact('movies'));
     }
 
     public function crew()

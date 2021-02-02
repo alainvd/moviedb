@@ -15,7 +15,7 @@ class CreateProducersTable extends Migration
     {
         Schema::create('producers', function (Blueprint $table) {
             $table->id();
-            $table->integer('media_id');
+            $table->integer('movie_id');
             $table->string('role')->nullable();
             $table->string('name')->nullable();
             $table->string('city')->nullable();

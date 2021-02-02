@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Call;
-use App\Dossier;
+use App\Models\Call;
+use App\Models\Dossier;
 use App\Media;
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

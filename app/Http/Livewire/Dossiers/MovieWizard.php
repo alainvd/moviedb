@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Dossiers;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Media;
 use App\Models\Activity;
 use App\Models\Fiche;
-use App\Movie;
-use App\User;
+use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -85,7 +85,7 @@ class MovieWizard extends Component
         $results = collect([]);
         $hasSearch = false;
 
-        $query = Media::where('grantable_type', 'App\Movie')
+        $query = Media::where('grantable_type', 'App\Models\Movie')
             ->join('movies', 'media.grantable_id', '=', 'movies.id')
             ->join('fiches', 'fiches.media_id', '=', 'media.id')
             ->whereNotIn('fiches.status_id', function ($query) {

@@ -20,5 +20,5 @@ class TableEditMovieSalesAgentsDevPrevious extends TableEditMovieSalesAgents
     {
         return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'devPrev']);
     }
-    
+
 }

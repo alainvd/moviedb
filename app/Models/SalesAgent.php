@@ -1,11 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Producer extends Model
+class SalesAgent extends Model
 {
     use HasFactory;
 
@@ -15,14 +16,16 @@ class Producer extends Model
      * @var array
      */
     protected $fillable = [
-        'media_id',
-        'role',
+        'movie_id',
         'name',
-        'city',
         'country',
-        'language',
-        'share',
-        'budget',
+        'contact_person',
+        'email',
+        'distribution_date',
+    ];
+
+    protected $dates = [
+        'distribution_date',
     ];
 
     /**
@@ -32,21 +35,16 @@ class Producer extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'distribution_date' => 'date:d.m.Y'
     ];
-
 
     public function country()
     {
-        return $this->belongsTo(\App\Models\Country::class);
+        return $this->belongsTo(Country::class);
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(Movie::class);
     }
-
-    const ROLES = [
-        'PRODUCER' => 'Producer',
-        'COPRODUCER' => 'Coproducer',
-    ];
 }

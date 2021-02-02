@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Country;
 use App\Models\Distributor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DistributorFactory extends Factory
+class DistributorFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,7 +23,11 @@ class DistributorFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'country_id' =>  $this->getRelationId(Country::class),
+            'forecast_release_date' => $this->faker->date
         ];
     }
 }
+
+

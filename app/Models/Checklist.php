@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Crew extends Model
+class Checklist extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,11 @@ class Crew extends Model
      * @var array
      */
     protected $fillable = [
-        'points',
-        'person_id',
-        'title_id',
-        'media_id',
+        'position',
+        'status',
+        'dossier_id',
+        'step_id',
+        'status_by',
     ];
 
     /**
@@ -31,18 +32,18 @@ class Crew extends Model
     ];
 
 
-    public function title()
+    public function step()
     {
-        return $this->belongsTo(\App\Title::class);
+        return $this->belongsTo(\App\Models\Step::class);
     }
 
-    public function person()
+    public function dossier()
     {
-        return $this->hasOne(\App\Person::class, 'id', 'person_id');
+        return $this->belongsTo(\App\Models\Dossier::class);
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo(\App\Media::class);
+        return $this->belongsTo(\App\Models\Movie::class);
     }
 }

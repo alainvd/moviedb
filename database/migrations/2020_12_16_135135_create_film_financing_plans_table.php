@@ -15,7 +15,7 @@ class CreateFilmFinancingPlansTable extends Migration
     {
         Schema::create('film_financing_plans', function (Blueprint $table) {
             $table->id();
-            $table->integer('media_id');
+            $table->integer('movie_id');
             $table->string('document_type')->nullable();
             $table->string('filename')->nullable();
             $table->string('file')->nullable();

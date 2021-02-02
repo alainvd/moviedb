@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Media;
-use App\Step;
+use App\Models\Movie;
+use App\Models\Step;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Checklist;
+use App\Models\Checklist;
 
 class ChecklistFactory extends BaseFactory
 {
@@ -30,7 +31,7 @@ class ChecklistFactory extends BaseFactory
             'status' => $this->faker->word,
             'dossier_id' => $this->getRelationId(Dossier::class),
             'step_id' => $this->getRelationId(Step::class),
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
             'status_by' => $this->faker->word,
         ];
     }

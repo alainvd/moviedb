@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StepDefinition extends Model
+class Genre extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,8 @@ class StepDefinition extends Model
      * @var array
      */
     protected $fillable = [
-        'action',
-        'step_id',
-        'position',
-        'version',
+        'name',
+        'type',
     ];
 
     /**
@@ -31,13 +29,8 @@ class StepDefinition extends Model
     ];
 
 
-    public function step()
+    public function movie()
     {
-        return $this->belongsTo(\App\Step::class);
-    }
-
-    public function action()
-    {
-        return $this->hasOne(\App\Action::class);
+        return $this->hasMany(\App\Models\Movie::class);
     }
 }

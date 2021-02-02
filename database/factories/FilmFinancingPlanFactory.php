@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Media;
-use App\FilmFinancingPlan;
+use App\Models\FilmFinancingPlan;
 
 class FilmFinancingPlanFactory extends BaseFactory
 {
@@ -24,7 +25,7 @@ class FilmFinancingPlanFactory extends BaseFactory
     public function definition()
     {
         return [
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
             'document_type' => $this->faker->word,
             'filename' => $this->faker->word,
             'comments' => $this->faker->sentence,

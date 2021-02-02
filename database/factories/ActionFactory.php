@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
+use App\Models\Action;
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\Step;
 
-class StepFactory extends Factory
+class ActionFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Step::class;
+    protected $model = Action::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,7 @@ class StepFactory extends Factory
     public function definition()
     {
         return [
-            'category' => $this->faker->word,
-            'description' => $this->faker->text,
+            'name' => $this->faker->name,
         ];
     }
 }

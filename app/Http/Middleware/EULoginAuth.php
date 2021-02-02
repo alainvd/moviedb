@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\CommonUser;
-use App\User;
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;

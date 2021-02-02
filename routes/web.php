@@ -1,6 +1,6 @@
 <?php
 
-use App\Call;
+use App\Models\Call;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;
@@ -28,6 +28,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('movies', [MovieController::class,'index'])->name('movies');
+Route::get('movies/{movie}', [MovieController::class,'show'])->name('movie_show');
 
 Route::resource('call', '\App\Http\Controllers\CallController')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->only('index');

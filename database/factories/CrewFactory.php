@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use App\Media;
-use App\Person;
-use App\Title;
+use App\Models\Movie;
+use App\Models\Person;
+use App\Models\Title;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Crew;
+use App\Models\Crew;
 
 class CrewFactory extends BaseFactory
 {
@@ -29,7 +30,7 @@ class CrewFactory extends BaseFactory
             'points' => $this->faker->randomFloat(2, 0, 10),
             'person_id' => $this->getRelationId(Person::class),
             'title_id' => $this->getRelationId(Title::class),
-            'media_id' => $this->getRelationId(Media::class),
+            'movie_id' => $this->getRelationId(Movie::class),
         ];
     }
 }

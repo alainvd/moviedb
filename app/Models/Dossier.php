@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Models\Action;
 use App\Models\Fiche;
@@ -46,14 +46,14 @@ class Dossier extends Model
         return $this->belongsTo(Call::class);
     }
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsToMany(\App\Media::class);
+        return $this->belongsToMany(\App\Models\Movie::class);
     }
 
     public function checklists()
     {
-        return $this->hasMany(\App\Checklist::class);
+        return $this->hasMany(\App\Models\Checklist::class);
     }
 
     public function fiches()

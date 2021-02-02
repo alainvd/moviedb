@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Step;
+use App\Models\Step;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\StepDefinition;
+use App\Models\StepDefinition;
 
 class StepDefinitionFactory extends Factory
 {

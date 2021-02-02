@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Media;
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -52,7 +52,7 @@ class MoviesImport implements ToModel, WithHeadingRow
             'production_costs_currency' => $row['production_costs_currency'],
             'production_costs' => $row['production_costs'],
             'production_costs_in_euro' => $row['production_costs_in_euro'],
-            
+
             //'production_budget_local_currency' => $row['production_budget_local_currency'],
 
 

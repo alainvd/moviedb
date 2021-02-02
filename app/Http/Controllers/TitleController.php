@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Title;
+use App\Models\Title;
 use Illuminate\Http\Request;
 
 class TitleController extends Controller

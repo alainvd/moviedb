@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -16,7 +16,7 @@ class MovieController extends Controller
     {
         $movies = Movie::simplePaginate(30);
 
-        return view('movies', compact(['movies']));
+        return view('movies.list', compact(['movies']));
     }
 
     /**
@@ -40,21 +40,16 @@ class MovieController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Movie  $movie
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Movie $movie)
     {
-        //
+        return view('movies.show', compact(['movie']));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Movie  $movie
+     * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
     public function edit(Movie $movie)
@@ -66,7 +61,7 @@ class MovieController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Movie  $movie
+     * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Movie $movie)
@@ -77,7 +72,7 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Movie  $movie
+     * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
     public function destroy(Movie $movie)

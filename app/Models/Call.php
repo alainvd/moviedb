@@ -1,12 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SalesAgent extends Model
+class Call extends Model
 {
     use HasFactory;
 
@@ -16,16 +15,10 @@ class SalesAgent extends Model
      * @var array
      */
     protected $fillable = [
-        'media_id',
         'name',
-        'country',
-        'contact_person',
-        'email',
-        'distribution_date',
-    ];
-
-    protected $dates = [
-        'distribution_date',
+        'description',
+        'published_at',
+        'status',
     ];
 
     /**
@@ -35,16 +28,24 @@ class SalesAgent extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'distribution_date' => 'date:d.m.Y'
     ];
 
-    public function country()
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'published_at',
+    ];
+
+
+    public function dossiers()
     {
-        return $this->belongsTo(Country::class);
+        return $this->hasMany(\App\Models\Dossier::class);
     }
 
-    public function media()
-    {
-        return $this->belongsTo(Media::class);
+    public function action(){
+        return $this->belongsTo(\App\Models\Action::class);
     }
 }

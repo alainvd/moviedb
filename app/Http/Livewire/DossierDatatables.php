@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Dossier;
+use App\Models\Dossier;
 use App\Models\Action;
 use App\Models\Status;
 use Illuminate\Support\Str;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Producer;
+use App\Models\Producer;
 use Illuminate\Http\Request;
 
 class ProducerController extends Controller

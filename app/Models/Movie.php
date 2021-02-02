@@ -1,22 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Events\MovieCreated;
-use App\Interfaces\Grantable;
+use App\Models\Distributor;
 use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Movie extends Model implements Grantable
+class Movie extends Model
 {
     use HasFactory;
 
-    //Event to create a media when we create a movie
-    protected $dispatchesEvents = [
-        'created' => MovieCreated::class,
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -60,24 +55,19 @@ class Movie extends Model implements Grantable
         'rights_adapt_contract_signature_date' => 'date:d.m.Y',
     ];
 
-    public function media()
+    public function crew()
     {
-        return $this->morphOne(\App\Media::class, 'grantable');
+        return $this->hasMany(\App\Models\Crew::class, 'movie_id', 'id');
     }
 
-    public function crews()
+    public function genre()
     {
-        return $this->hasMany(\App\Crew::class, 'media_id', 'id');
-    }
-
-    public function whoami()
-    {
-        return "I'm a movie ... bring some popcorn";
+        return $this->belongsTo('App\Models\Genre');
     }
 
     public function audience()
     {
-        return $this->media()->audience();
+        return $this->belongsTo('App\Models\Audience');
     }
 
     public function languages()
@@ -85,16 +75,29 @@ class Movie extends Model implements Grantable
         return $this->belongsToMany(Language::class, 'movie_language');
     }
 
-    public function addPerson($person, $points, $title_id, $media_id, $movie_id)
+    public function crews()
     {
-        $person = \App\Person::create($person);
-        $media_id = Movie::find($movie_id)->media->id;
-        $crew = Crew::create([
-            'points' => $points,
-            'person_id' => $person->id,
-            'title_id' => $title_id,
-            'media_id' => $media_id
-        ]);
-        return $person;
+        return $this->hasMany(Crew::class);
+    }
+
+    public function people()
+    {
+        return $this->hasManyThrough(\App\Models\Person::class, \App\Models\Crew::class, 'movie_id', 'id', 'id', 'person_id');
+    }
+
+    public function distributors()
+    {
+        return $this->belongsToMany(Distributor::class);
+    }
+
+    public function filmFinancingPlans()
+    {
+        return $this->hasMany(\App\Models\FilmFinancingPlan::class, 'movie_id', 'id');
+    }
+
+
+
+    public function getTitleAttribute(){
+        return $this->original_title;
     }
 }

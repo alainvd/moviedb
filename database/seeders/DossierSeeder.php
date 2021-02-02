@@ -4,7 +4,7 @@
 namespace Database\Seeders;
 
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Media;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

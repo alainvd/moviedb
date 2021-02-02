@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Checklist;
-use App\StepDefinition;
+use App\Models\Checklist;
+use App\Models\StepDefinition;
 use Illuminate\Database\Seeder;
 
 class ChecklistSeeder extends Seeder
@@ -21,7 +21,7 @@ class ChecklistSeeder extends Seeder
             Checklist::create([
                 'position'=>$step_definition->position,
                 'dossier_id'=>1,
-                'media_id'=>2,
+                'movie_id'=>2,
                 'step_id'=>$step_definition->step_id,
                 'status'=>'PENDING'
             ]);
@@ -29,7 +29,7 @@ class ChecklistSeeder extends Seeder
             Checklist::create([
                 'position'=>$step_definition->position,
                 'dossier_id'=>1,
-                'media_id'=>4,
+                'movie_id'=>4,
                 'step_id'=>$step_definition->step_id,
                 'status'=>'PENDING'
             ]);
@@ -38,7 +38,7 @@ class ChecklistSeeder extends Seeder
             Checklist::create([
                 'position'=>$step_definition->position,
                 'dossier_id'=>3,
-                'media_id'=>4,
+                'movie_id'=>4,
                 'step_id'=>$step_definition->step_id,
                 'status'=>'PENDING'
             ]);

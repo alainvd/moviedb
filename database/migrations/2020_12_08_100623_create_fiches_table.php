@@ -15,7 +15,7 @@ class CreateFichesTable extends Migration
     {
         Schema::create('fiches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('media_id');
+            $table->unsignedBigInteger('movie_id');
             $table->unsignedBigInteger('dossier_id');
             // @todo refactor without nullable for activity
             $table->unsignedBigInteger('activity_id')->nullable();
@@ -25,7 +25,7 @@ class CreateFichesTable extends Migration
             $table->text('comments')->nullable();
             $table->timestamps();
 
-            $table->foreign('media_id')->references('id')->on('media');
+            $table->foreign('movie_id')->references('id')->on('movies');
             $table->foreign('dossier_id')->references('id')->on('dossiers');
             $table->foreign('status_id')->references('id')->on('statuses');
             $table->foreign('created_by')->references('id')->on('users');

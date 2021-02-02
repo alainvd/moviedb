@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Call extends Model
+class Audience extends Model
 {
     use HasFactory;
 
@@ -16,9 +16,7 @@ class Call extends Model
      */
     protected $fillable = [
         'name',
-        'description',
-        'published_at',
-        'status',
+        'type',
     ];
 
     /**
@@ -30,22 +28,9 @@ class Call extends Model
         'id' => 'integer',
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'published_at',
-    ];
 
-
-    public function dossiers()
+    public function movie()
     {
-        return $this->hasMany(\App\Dossier::class);
-    }
-
-    public function action(){
-        return $this->belongsTo(\App\Models\Action::class);
+        return $this->hasMany(\App\Models\Movie::class);
     }
 }

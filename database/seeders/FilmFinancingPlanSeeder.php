@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\FilmFinancingPlan;
+use App\Models\FilmFinancingPlan;
 use Illuminate\Database\Seeder;
 
 class FilmFinancingPlanSeeder extends Seeder
