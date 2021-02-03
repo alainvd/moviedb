@@ -116,6 +116,9 @@ Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index
 Route::get('/browse/movies', [MovieController::class,'index'])->name('movies');
 Route::get('/browse/movies/{movie}', [MovieController::class,'show'])->name('movie_show');
 
+
+Route::get('/landing/SEP', [\App\Http\Controllers\SEPController::class,'index'])->middleware(['cas.auth'])->name('SEP');
+
 Route::resource('call', '\App\Http\Controllers\CallController')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->only('index');
 Route::resource('step', 'App\Http\Controllers\StepController')->only('index');
