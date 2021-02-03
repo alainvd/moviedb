@@ -95,9 +95,28 @@ class Movie extends Model
         return $this->hasMany(\App\Models\FilmFinancingPlan::class, 'movie_id', 'id');
     }
 
-
+    public function fiche()
+    {
+        return $this->hasOne(Fiche::class);
+    }
 
     public function getTitleAttribute(){
         return $this->original_title;
+    }
+
+    public function getDirectorAttribute()
+    {
+        $director = $this->people()->where(function ($query) {
+            $query->select('code')
+                ->from('titles')
+                ->whereColumn('titles.id', 'crews.title_id')
+                ->limit(1);
+        }, 'DIRECTOR')->first();
+
+        if ($director) {
+            return $director->full_name;
+        }
+
+        return '';
     }
 }
