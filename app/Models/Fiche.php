@@ -19,9 +19,9 @@ class Fiche extends Model
         'activity_id'
     ];
 
-    public function media()
+    public function movie()
     {
-        return $this->belongsTo('App\Media');
+        return $this->belongsTo(Movie::class);
     }
 
     public function dossier()

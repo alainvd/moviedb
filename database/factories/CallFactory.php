@@ -52,8 +52,7 @@ class CallFactory extends BaseFactory
             $this->faker->randomDigitNotNull()
         );
 
-
-        $action = Action::find($this->getRelationId(Action::class))->first();
+        $action = Action::where('name', $this->faker->randomElement($codes))->first();
 
         return [
             // H2020-LC-GD-2020-3
