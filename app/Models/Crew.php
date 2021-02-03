@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Movie;
+use App\Models\Title;
+use App\Models\Person;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Crew extends Model
 {
@@ -33,17 +36,17 @@ class Crew extends Model
 
     public function title()
     {
-        return $this->belongsTo(\App\Models\Title::class);
+        return $this->belongsTo(Title::class);
     }
 
     public function person()
     {
-        return $this->hasOne(\App\Models\Person::class, 'id', 'person_id');
+        return $this->hasOne(Person::class, 'id', 'person_id');
     }
 
     public function movie()
     {
-        return $this->belongsTo(\App\Models\Movie::class);
+        return $this->belongsTo(Movie::class);
     }
 
     static function defaultsCrew()

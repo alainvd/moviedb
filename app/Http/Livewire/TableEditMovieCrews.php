@@ -97,7 +97,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->items = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
+            $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
             $this->addUniqueKeys();
         } else {
             $this->items = Crew::newMovieCrew();

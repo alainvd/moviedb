@@ -1,7 +1,7 @@
 models:
 
   Document:
-    media_id: integer
+    movie_id: integer
     document_type: string
     filename: string
     comments: string

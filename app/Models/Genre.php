@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Genre extends Model
 {
@@ -31,6 +32,6 @@ class Genre extends Model
 
     public function movie()
     {
-        return $this->hasMany(\App\Models\Movie::class);
+        return $this->hasMany(Movie::class);
     }
 }

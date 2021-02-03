@@ -2,24 +2,22 @@
 
 namespace App\Http\Livewire;
 
-use App\Crew;
-use App\Genre;
-use App\Media;
-use App\Movie;
-use App\Title;
-use App\Person;
-use App\Dossier;
-use App\Audience;
+use App\Models\Crew;
+use App\Models\Genre;
+use App\Models\Movie;
+use App\Models\Title;
+use App\Models\Person;
+use App\Models\Dossier;
+use App\Models\Audience;
 use App\Models\Document;
-use App\Producer;
-use App\SalesAgent;
+use App\Models\Producer;
+use App\Models\SalesAgent;
 use App\Models\Fiche;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Language;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -35,7 +33,6 @@ class MovieDistForm extends Component
     public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
-    public ?Media $media = null;
 
     public $movie_original = [];
 
@@ -60,9 +57,9 @@ class MovieDistForm extends Component
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
-        'media.genre_id' => 'required|integer',
-        'media.delivery_platform_id' => 'required|integer',
-        'media.audience_id' => 'required|integer',
+        'movie.genre_id' => 'required|integer',
+        'movie.film_delivery_platform' => 'required|string',
+        'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string',
 
         'movie.imdb_url' => 'string|max:255',
@@ -84,9 +81,9 @@ class MovieDistForm extends Component
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
-        'media.genre_id' => 'required|integer',
-        'media.delivery_platform_id' => 'required|integer',
-        'media.audience_id' => 'required|integer',
+        'movie.genre_id' => 'required|integer',
+        'movie.film_delivery_platform' => 'required|string',
+        'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string',
 
         'movie.imdb_url' => 'string|max:255',
@@ -187,19 +184,17 @@ class MovieDistForm extends Component
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
-            $this->media = new Media;
             $this->movie = new Movie($this->movieDefaults());
             $this->crews = Crew::newMovieCrew();
         } else {
-            $this->media = $this->fiche->media;
-            $this->movie = $this->media->grantable;
+            $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
             ));
-            $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
-            $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
-            $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
-            $this->documents = Document::where('media_id', $this->movie->media->id)->get()->toArray();
+            $this->crews = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+            $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
+            $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
+            $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
         }
 
         if (Auth::user()->hasRole('applicant')) {
@@ -235,7 +230,6 @@ class MovieDistForm extends Component
     public function reject()
     {
         $this->fiche = new Fiche;
-        $this->media = new Media;
         $this->movie = new Movie;
     }
 
@@ -253,18 +247,8 @@ class MovieDistForm extends Component
                     fn ($lang) => $lang['value']
                 )
             );
-            $media_store = $this->media;
-            $this->media = $this->movie->media;
-            $this->media->fill([
-                'title' => $this->movie->original_title,
-                'audience_id' => $media_store->audience_id,
-                'genre_id' => $media_store->genre_id,
-                'grantable_id' => $this->movie->id,
-                'delivery_platform_id' => $media_store->delivery_platform_id,
-                'grantable_type' => 'App\Models\Movie',
-            ])->save();
             $this->fiche->fill([
-                'media_id' => $this->media->id,
+                'movie_id' => $this->movie->id,
                 'dossier_id' => $this->dossier->id,
                 'activity_id' => $this->activity->id,
                 'created_by' => 1,
@@ -278,17 +262,15 @@ class MovieDistForm extends Component
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->media->title = $this->movie->original_title;
-            $this->media->save();
             $this->fiche->save();
             $this->emit('notify-saved');
         }
 
         // crew, producers, sales agents, documents
-        $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
-        $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
-        $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
-        $this->saveItems(Document::where('media_id', $this->movie->media->id)->get(), $this->documents, Document::class);
+        $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
+        $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
+        $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
+        $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
 
         // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
         //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
@@ -341,7 +323,7 @@ class MovieDistForm extends Component
             unset($item['key']);
             unset($item['created_at']);
             unset($item['updated_at']);
-            $item['media_id'] = $this->movie->media->id;
+            $item['movie_id'] = $this->movie->id;
             if (isset($item['id'])) {
                 if ($saving_class == 'person_crew') {
                     // TODO: is there an 'update with' thing?
@@ -364,17 +346,18 @@ class MovieDistForm extends Component
 
     public function render()
     {
+
         if($this->getErrorBag()->any()){
             $this->emit('validation-errors');
         }
 
         $title = 'Films - Distribution';
         $crumbs[] = [
-            'url' => route('dossiers'),
+            'url' => route('dossiers-public'),
             'title' => 'My dossiers'
         ];
         $crumbs[] = [
-            'url' => route('dossiers'),
+            'url' => route('dossiers-public'),
             'title' => 'Edit dossier'
         ];
         $crumbs[] = [

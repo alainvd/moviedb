@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Movie;
+use App\Models\Movie;
 use App\Models\Document;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class TableEditMovieDocuments extends TableEditBase
     protected function rules()
     {
         return [
-            'editing.media_id' => '',
+            'editing.movie_id' => '',
             'editing.document_type' => 'required|string',
             'editing.filename' => 'required|string',
             'editing.file' => '',
@@ -50,7 +50,7 @@ class TableEditMovieDocuments extends TableEditBase
     protected function validationAttributes()
     {
         return [
-            'editing.media_id' => 'media_id',
+            'editing.movie_id' => 'movie_id',
             'editing.document_type' => 'document type',
             'editing.filename' => 'filename',
             'editing.file' => 'file',
@@ -68,7 +68,7 @@ class TableEditMovieDocuments extends TableEditBase
 
     private function load()
     {
-        $this->items = Document::where('media_id', $this->movie->media->id)->get()->toArray();
+        $this->items = Document::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
     }
 

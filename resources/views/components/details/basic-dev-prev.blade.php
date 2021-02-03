@@ -72,8 +72,8 @@
         <x-form.select
             :id="'film_genre'"
             :label="'Film Genre'"
-            :hasError="$errors->has('media.genre_id')"
-            wire:model="media.genre_id">
+            :hasError="$errors->has('movie.genre_id')"
+            wire:model="movie.genre_id">
 
             @foreach($genres as $genre)
                 <option value="{{ $genre['id'] }}">{{ $genre['name'] }}</option>
@@ -81,7 +81,7 @@
 
         </x-form.select>
 
-        @error('media.genre_id')
+        @error('movie.genre_id')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>

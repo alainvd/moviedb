@@ -50,7 +50,7 @@ class TableEditMovieProducers extends TableEditBase
     protected function validationAttributes()
     {
         return [
-            'editing.media_id' => 'media_id',
+            'editing.movie_id' => 'movie_id',
             'editing.role' => 'role',
             'editing.name' => 'name',
             'editing.city' => 'city',
@@ -63,7 +63,7 @@ class TableEditMovieProducers extends TableEditBase
 
     private function load()
     {
-        $this->items = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
+        $this->items = Producer::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
     }
 

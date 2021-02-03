@@ -35,7 +35,7 @@
         </x-table>
 
         <div class="mt-5 text-right">
-            @if ($media_id)
+            @if ($movie_id)
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>

@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Distributor;
-use App\Models\Language;
-use App\Models\Crew;
-use App\Models\Person;
-use App\Models\Document;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Crew;
+use App\Models\Genre;
+use App\Models\Person;
+use App\Models\Audience;
+use App\Models\Document;
+use App\Models\Language;
+use App\Models\Distributor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Movie extends Model
 {
@@ -65,12 +67,12 @@ class Movie extends Model
 
     public function genre()
     {
-        return $this->belongsTo('App\Models\Genre');
+        return $this->belongsTo(Genre::class);
     }
 
     public function audience()
     {
-        return $this->belongsTo('App\Models\Audience');
+        return $this->belongsTo(Audience::class);
     }
 
     public function languages()

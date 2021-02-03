@@ -86,8 +86,6 @@ Route::get('/dossiers/{dossier:project_ref_id}/movie-wizard', MovieWizard::class
     ->middleware('cas.auth')
     ->name('movie-wizard');
 
-Route::get('film-financing-plan-download', [App\Http\Livewire\TableEditMovieFinancingPlan::class, 'download'])->middleware('cas.auth')->name('film-financing-plan-download');
-
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
@@ -96,7 +94,7 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/vg-p
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
-Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
 
 //Pending

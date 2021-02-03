@@ -55,7 +55,7 @@
 
                     <div>
                         <x-form.select
-                            :id="'financing_document_type'"
+                            :id="'document_type'"
                             :label="'Document Type'"
                             :hasError="$errors->has('editing.document_type')"
                             wire:model="editing.document_type">
@@ -72,7 +72,7 @@
 
                     <div>
                         <x-form.file
-                            :id="'financing_file'"
+                            :id="'document_file'"
                             :label="'File'"
                             :hasError="$errors->has('editing.file')"
                             wire:model="editing.file"
@@ -86,7 +86,7 @@
 
                     <div>
                         <x-form.input
-                            :id="'financing_comments'"
+                            :id="'document_comments'"
                             :label="'Comments'"
                             :hasError="$errors->has('editing.comments')"
                             wire:model="editing.comments">

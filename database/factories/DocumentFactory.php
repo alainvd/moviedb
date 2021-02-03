@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Media;
 use App\Models\Document;
 
 class DocumentFactory extends BaseFactory

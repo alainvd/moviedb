@@ -7,7 +7,6 @@ use App\Models\Genre;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Status;
-use App\Models\Producer;
 use Illuminate\View\View;
 
 class MovieFicheFormComposer
@@ -21,7 +20,7 @@ class MovieFicheFormComposer
         $countries = Country::where('active', true)
             ->get()
             ->toArray();
-        $genres = Genre::where('type', 'App\Models\Movie')->get()->toArray();
+        $genres = Genre::where('type', 'Movie')->get()->toArray();
         $languages = Language::where('active', true)
             ->get()
             ->map(fn ($lang) => [
@@ -30,9 +29,9 @@ class MovieFicheFormComposer
             ])
             ->toArray();
         $platforms = [
-            1 => 'Features / Cinema',
-            2 => 'TV',
-            3 => 'Digital',
+            'CINEMA' => 'Features / Cinema',
+            'TV' => 'TV',
+            'DIGITAL' => 'Digital',
         ];
         $filmFormats = [
             '35MM' => '35mm',
