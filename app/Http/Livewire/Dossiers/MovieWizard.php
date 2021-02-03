@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Dossiers;
 
-use App\Dossier;
+use App\Models\Dossier;
 use App\Media;
 use App\Models\Activity;
 use App\Models\Fiche;
-use App\Movie;
-use App\User;
+use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -59,6 +59,8 @@ class MovieWizard extends Component
         }
 
         if ($this->currentStep === 3) {
+            // @todo - instead of a get variable, save the corresponding fiche
+            // on the dossier
             return redirect(route('dossiers.show', [
                 'dossier' => $this->dossier,
                 'movie_id' => $this->movie->id
@@ -83,8 +85,14 @@ class MovieWizard extends Component
         $results = collect([]);
         $hasSearch = false;
 
-        $query = Media::where('grantable_type', 'App\Movie')
+        $query = Media::where('grantable_type', 'App\Models\Movie')
             ->join('movies', 'media.grantable_id', '=', 'movies.id')
+            ->join('fiches', 'fiches.media_id', '=', 'media.id')
+            ->whereNotIn('fiches.status_id', function ($query) {
+                $query->select('id')
+                    ->from('statuses')
+                    ->whereIn('name', ['Duplicated']);
+            })
             ->with('grantable')
             ->with('fiche')
             ->with('people');
@@ -110,9 +118,14 @@ class MovieWizard extends Component
             $results = $query->simplePaginate(5);
         }
 
+        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
+
         return view('livewire.dossiers.movie-wizard', [
                 'results' => $results,
             ])
-            ->layout('components.ecl-layout', ['title' => 'Films on the move']);
+            ->layout($layout, [
+                'title' => 'Films on the move',
+                'style' => 'background: url(\'' . asset('images/dossier/dots-side-1.png') . '\') right 30% no-repeat',
+            ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Movie;
-use App\User;
+use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

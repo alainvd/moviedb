@@ -1,4 +1,4 @@
-<div class="pb-8 bg-white shadow-md" x-data="{
+<div class="pb-8 my-8 bg-white shadow-md" x-data="{
         currentStep: @entangle('currentStep')
     }">
     <!-- <h1 class="my-4 text-3xl font-light leading-tight">

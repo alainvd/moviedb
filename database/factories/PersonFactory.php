@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Person;
+use App\Models\Person;
 
 class PersonFactory extends Factory
 {

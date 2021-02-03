@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Producer;
+use App\Models\Producer;
 use App\Models\Country;
 use Illuminate\Support\Str;
 

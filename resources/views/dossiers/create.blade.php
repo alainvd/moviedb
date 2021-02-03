@@ -1,7 +1,17 @@
-<x-ecl-layout :title="'Films on the Move'">
-    <div class="px-4 bg-white md:px-8 lg:px-16">
+<x-dynamic-component
+    :component="$layout"
+    :title="'Films on the Move'"
+    :style="'background: url(\'' . asset('images/dossier/dots-vertical-1.png') . '\') 2% 12% no-repeat'">
+    <div class="px-4 bg-white">
         <!-- Title -->
-        <!-- <h1 class="text-3xl font-light leading-tight">European Slate Development</h1> -->
+
+        @if (Auth::user()->hasRole('applicant'))
+            @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
+                @include('dossiers.instructions.dist')
+            @endif
+        @else
+            <h1 class="mt-8 text-3xl font-light leading-tight">Films on the Move</h1>
+        @endif
 
         <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf
@@ -48,8 +58,7 @@
                 </div>
             </x-layout.section>
 
-            <x-layout.section
-                :title="'Development'">
+            <x-layout.section>
                 @foreach ($dossier->action->activities as $activity)
 
                     @foreach($activity->pivot->rules as $ruleName => $rule)
@@ -70,5 +79,13 @@
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
         </form>
+
+        @if ($errors->has('film_title'))
+            <div class="mt-1 text-red-500 text-sm">
+                You must select a movie
+            </div>
+        @endif
     </div>
-</x-ecl-layout>
+
+
+</x-dynamic-component>

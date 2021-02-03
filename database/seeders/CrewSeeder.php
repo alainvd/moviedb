@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Crew;
-use App\Movie;
+use App\Models\Crew;
+use App\Models\Movie;
 use Illuminate\Database\Seeder;
 
 class CrewSeeder extends Seeder
@@ -18,7 +18,7 @@ class CrewSeeder extends Seeder
         Movie::all()->each(function ($movie) {
             Crew::factory()->count(rand(3, 12))
                 ->create([
-                    'media_id' => $movie->media->id,
+                    'movie_id' => $movie->id
                 ]);
         });
     }

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Title;
+use App\Models\Title;
 
 class TitleFactory extends Factory
 {
@@ -40,7 +40,7 @@ class TitleFactory extends Factory
     {
         $random_element = $this->faker->randomElement($this->titles);
         return [
-            'name' => $random_element['title'],
+            'name' => $random_element['name'],
             'code' => $random_element['code'],
         ];
     }

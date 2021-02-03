@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Call;
-use App\Dossier;
+use App\Models\Call;
+use App\Models\Dossier;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,8 +13,9 @@ class ProjectController extends Controller
 
     protected $dossierRules = [
         'company' => 'required|string|min:3',
-        'film_tite' => 'required',
+        'film_title' => 'required',
     ];
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +57,9 @@ class ProjectController extends Controller
             'contact_person' => Auth::user()->email,
         ]);
 
-        return view('dossiers.create', compact('dossier'));
+        $layout = $this->getLayout();
+
+        return view('dossiers.create', compact('dossier', 'layout'));
     }
 
     /**
@@ -75,11 +79,11 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Dossier $dossier)
     {
-        $dossier = Dossier::find($id);
+        $layout = $this->getLayout();
 
-        return view('dossiers.create', compact('dossier'));
+        return view('dossiers.create', compact('dossier', 'layout'));
     }
 
     /**
@@ -104,11 +108,18 @@ class ProjectController extends Controller
     {
         $this->validate($request, $this->buildValidator($request));
 
+        $params = $request->only(['company', 'movie_id']);
+
         $dossier = Dossier::findOrFail($id);
-        $dossier->company = $request->input('company');
+        $movie = Movie::findOrFail($params['movie_id']);
+
+        $dossier->company = $params['company'];
+        if ($movie) {
+            $dossier->fiches()->save($movie->media->fiche);
+        }
         $dossier->save();
 
-        return redirect()->back();
+        return redirect()->route('dossiers.show', $dossier);
     }
 
     /**
@@ -173,5 +184,16 @@ class ProjectController extends Controller
         } else {
             return "integer|between:{$min},{$max}";
         }
+    }
+
+    protected function getLayout()
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('applicant')) {
+            return 'ecl-layout';
+        }
+
+        return 'layout';
     }
 }

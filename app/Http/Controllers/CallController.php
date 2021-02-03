@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Call;
+use App\Models\Call;
 use Illuminate\Http\Request;
 
 class CallController extends Controller

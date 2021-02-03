@@ -37,7 +37,7 @@
       <div class="ecl-container ecl-menu__container"><a class="ecl-link ecl-link--standalone ecl-menu__open" href="/example" data-ecl-menu-open="true"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
             <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--hamburger"></use>
           </svg>Menu</a>
-        <div class="ecl-menu__site-name">Creative Europe MEDIA Database</div>
+        <div class="ecl-menu__site-name">Creative Europe MEDIA database</div>
         <section class="ecl-menu__inner" data-ecl-menu-inner="true">
           <header class="ecl-menu__inner-header"><button data-ecl-menu-close="true" type="submit" class="ecl-menu__close ecl-button ecl-button--text"><span class="ecl-menu__close-container ecl-button__container"><svg focusable="false" aria-hidden="true" data-ecl-icon="true" class="ecl-button__icon ecl-button__icon--before ecl-icon ecl-icon--s">
                   <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--close-filled"></use>
@@ -47,7 +47,9 @@
                 </svg><span class="ecl-button__label" data-ecl-label="true">Back</span></span></button>
           </header>
           <ul class="ecl-menu__list">
-            <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link" data-ecl-menu-link="true">Home</a></li>
+            <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers" class="ecl-menu__link" data-ecl-menu-link="true">My Dossiers</a></li>
+            <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers/1/activities/2/fiches/dist" class="ecl-menu__link" data-ecl-menu-link="true">Create Movie</a></li>
+            <!--
             <li class="ecl-menu__item ecl-menu__item--current ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link ecl-menu__link--current" data-ecl-menu-link="true">Item 2<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
                   <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
                 </svg></a>
@@ -162,6 +164,7 @@
                 </ul>
               </div>
             </li>
+            -->
           </ul>
         </section>
       </div>

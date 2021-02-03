@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Action;
-use App\StepDefinition;
+use App\Models\StepDefinition;
 use Illuminate\Database\Seeder;
 
 class StepDefinitionSeeder extends Seeder

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Call;
-use App\Dossier;
+use App\Models\Call;
+use App\Models\Dossier;
 use App\Models\Action;
 use App\Models\Status;
 
