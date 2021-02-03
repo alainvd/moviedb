@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Dossier;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,5 @@ class Fiche extends Model
     public function scopeForActivity($query, $activityId)
     {
         return $query->where('activity_id', $activityId);
-    } 
+    }
 }

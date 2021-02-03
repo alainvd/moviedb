@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Movie;
-use App\Document;
+use App\Models\Document;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 

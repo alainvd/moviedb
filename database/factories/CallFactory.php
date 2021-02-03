@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Action;
-use App\Call;
+use App\Models\Call;
 
 class CallFactory extends BaseFactory
 {
@@ -21,19 +21,22 @@ class CallFactory extends BaseFactory
      */
     public function definition()
     {
-        $actions = [
+        $codes = [
             "DEVSLATE",
-            "DEVSPANI",
-            "DEVSPDOC",
-            "DEVSPFIC",
+            "DEVSLATEEU",
+            "DEVSLATEEUMINI",
+            "EUCODEV",
+            // "DEVSPANI",
+            // "DEVSPDOC",
+            // "DEVSPFIC",
             "DEVVG",
-            "DISTAUTOG",
-            "DISTAUTOR1",
-            "DISTAUTOR2",
-            "DISTAUTOR3",
+            // "DISTAUTOG",
+            // "DISTAUTOR1",
+            // "DISTAUTOR2",
+            // "DISTAUTOR3",
             "DISTSAG",
-            "DISTSAR1",
-            "DISTSAR2",
+            // "DISTSAR1",
+            // "DISTSAR2",
             "DISTSEL",
             "TV"
         ];
@@ -49,13 +52,12 @@ class CallFactory extends BaseFactory
             $this->faker->randomDigitNotNull()
         );
 
-        $action = Action::all()->random();
 
-        // @TODO refactor
+        $action = Action::find($this->getRelationId(Action::class))->first();
+
         return [
             // H2020-LC-GD-2020-3
             'name' => $name . '-' . $action->name,
-            // 'action_id' => $this->getRelationId(Action::class),
             'action_id' => $action->id,
             'description' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),

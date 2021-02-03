@@ -15,7 +15,7 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->integer('legacy_id')->nullable();
+            $table->integer('legacy_id')->nullable()->index();
             $table->string('original_title', 255);
             $table->string('logline', 4000)->nullable();
             $table->string('imdb_url')->nullable();
@@ -73,6 +73,11 @@ class CreateMoviesTable extends Migration
             $table->date('rights_adapt_contract_start_date')->nullable();
             $table->date('rights_adapt_contract_end_date')->nullable();
             $table->date('rights_adapt_contract_signature_date')->nullable();
+
+            //Moved From Media
+            $table->unsignedInteger('genre_id')->nullable();
+            $table->unsignedInteger('audience_id')->nullable();
+
             $table->timestamps();
         });
     }
@@ -81,7 +86,7 @@ class CreateMoviesTable extends Migration
      * Reverse the migrations.
      *
      * @return void
-     * 
+     *
      */
     public function down()
 

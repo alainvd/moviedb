@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Audience;
+use App\Models\Audience;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

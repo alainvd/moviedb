@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Call;
+use App\Models\Call;
 use Illuminate\Database\Seeder;
 
 class CallSeeder extends Seeder

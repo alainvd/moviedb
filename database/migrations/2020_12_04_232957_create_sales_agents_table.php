@@ -15,7 +15,7 @@ class CreateSalesAgentsTable extends Migration
     {
         Schema::create('sales_agents', function (Blueprint $table) {
             $table->id();
-            $table->integer('media_id');
+            $table->integer('movie_id');
             $table->string('name')->nullable();
             $table->string('country')->nullable();
             $table->string('contact_person')->nullable();

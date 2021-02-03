@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Genre;
+use App\Models\Genre;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 

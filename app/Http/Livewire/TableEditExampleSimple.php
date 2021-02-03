@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Producer;
+use App\Models\Producer;
 use App\Models\Country;
 
 class TableEditExampleSimple extends TableEditBase
 {
 
-    public $media_id = null;
+    public $movie_id = null;
 
     public $countries = [];
 
@@ -43,7 +43,7 @@ class TableEditExampleSimple extends TableEditBase
     protected function validationAttributes()
     {
         return [
-            'editing.media_id' => 'media_id',
+            'editing.movie_id' => 'movie_id',
             'editing.role' => 'role',
             'editing.name' => 'name',
             'editing.city' => 'city',
@@ -55,17 +55,17 @@ class TableEditExampleSimple extends TableEditBase
 
     private function load()
     {
-        $this->items = Producer::where('media_id', $this->media_id)->get()->toArray();
+        $this->items = Producer::where('movie_id', $this->movie_id)->get()->toArray();
         $this->addUniqueKeys();
     }
 
-    public function mount($media_id = null)
+    public function mount($movie_id = null)
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         $this->producer_roles = Producer::ROLES;
-        if ($media_id) {
-            $this->media_id = $media_id;
+        if ($movie_id) {
+            $this->movie_id = $movie_id;
             $this->load();
         }
     }
@@ -80,7 +80,7 @@ class TableEditExampleSimple extends TableEditBase
             $producer = new Producer;
         }
         $producer->fill($this->editing);
-        $producer->media_id = $this->media_id;
+        $producer->movie_id = $this->movie_id;
         $producer->save();
         $this->load();
     }

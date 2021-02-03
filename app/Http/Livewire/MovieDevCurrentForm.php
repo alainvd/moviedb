@@ -230,7 +230,7 @@ class MovieDevCurrentForm extends Component
                 'genre_id' => $media_store->genre_id,
                 'grantable_id' => $this->movie->id,
                 'delivery_platform_id' => $media_store->delivery_platform_id,
-                'grantable_type' => 'App\Movie',
+                'grantable_type' => 'App\Models\Movie',
             ])->save();
             $this->fiche->fill([
                 'media_id' => $this->media->id,

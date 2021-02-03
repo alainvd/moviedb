@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\SalesAgent;
+use App\Models\SalesAgent;
 use Illuminate\Database\Seeder;
 
 class SalesAgentSeeder extends Seeder

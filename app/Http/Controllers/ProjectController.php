@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Call;
-use App\Dossier;
-use App\Media;
-use App\Movie;
+use App\Models\Call;
+use App\Models\Dossier;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,10 +79,8 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Dossier $dossier)
     {
-        $dossier = Dossier::find($id);
-
         $layout = $this->getLayout();
 
         return view('dossiers.create', compact('dossier', 'layout'));

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Document;
+use App\Models\Document;
 use Illuminate\Database\Seeder;
 
 class DocumentSeeder extends Seeder

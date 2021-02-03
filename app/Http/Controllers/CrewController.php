@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Crew;
+use App\Models\Crew;
 use Illuminate\Http\Request;
 
 class CrewController extends Controller

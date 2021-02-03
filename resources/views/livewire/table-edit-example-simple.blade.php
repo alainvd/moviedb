@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="mb-8 text-lg">
         Producers
     </div>
@@ -15,7 +15,7 @@
                 <x-table.heading>Budget</x-table.heading>
                 <x-table.heading></x-table.heading>
             </x-slot>
-            
+
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
@@ -35,7 +35,7 @@
         </x-table>
 
         <div class="mt-5 text-right">
-            @if ($media_id)
+            @if ($movie_id)
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
@@ -75,7 +75,7 @@
                             :hasError="$errors->has('editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
-                        
+
                         @error('editing.name')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
@@ -100,7 +100,7 @@
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
                             wire:model="editing.country">
-                
+
                             @foreach ($countries as $country)
                                 <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                             @endforeach
@@ -118,7 +118,7 @@
                             :trailing="'%'"
                             :hasError="$errors->has('editing.share')"
                             wire:model="editing.share"
-                        > 
+                        >
                         </x-form.input>
                         @error('editing.share')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -132,7 +132,7 @@
                             :trailing="'€'"
                             :hasError="$errors->has('editing.budget')"
                             wire:model="editing.budget"
-                        > 
+                        >
                         </x-form.input>
 
                         @error('editing.budget')

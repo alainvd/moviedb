@@ -2,16 +2,15 @@
 
 namespace App\Imports;
 
-use App\Crew;
-use App\Genre;
-use App\Media;
-use App\Person;
-use App\Title;
+use App\Models\Crew;
+use App\Models\Genre;
+use App\Models\Movie;
+use App\Models\Person;
+use App\Models\Title;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
@@ -33,8 +32,8 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             //Get Person
             $actor = $this->getPerson($row);
 
-            //Get Media
-            $media = $this->getMedia($row);
+            //Get Movie
+            $movie = $this->getMovie($row);
 
             //Get Title
             $title = $this->getTitle($row);
@@ -44,7 +43,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
                 "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
                 "person_id" => $actor->id,
                 "title_id" => $title->id,
-                "media_id" => $media->id
+                "movie_id" => $movie->id
             ]);
             $crew->save();
 
@@ -58,14 +57,13 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         return Title::firstWhere("name", "=", $row["film_role_name"]);
     }
 
-    private function getMedia($row)
+
+
+    private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $media = Media::firstWhere([
-            "grantable_id" => $filmID,
-            "grantable_type" => "App\Movie"
-        ]);
-        return $media;
+        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        return $movie;
     }
 
 
@@ -115,8 +113,4 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         return $person;
     }
 
-    public function chunkSize(): int
-    {
-        return 1000;
-    }
 }

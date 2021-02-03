@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Movie;
-use App\Title;
-use App\Crew;
-use App\Person;
+use App\Models\Movie;
+use App\Models\Title;
+use App\Models\Crew;
+use App\Models\Person;
 use App\Models\Country;
 
 class TableEditMovieCrewsDevCurrent extends TableEditMovieCrews

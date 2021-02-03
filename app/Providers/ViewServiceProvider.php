@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Audience;
-use App\Genre;
+use App\Models\Audience;
+use App\Models\Genre;
 use App\Http\View\Composers\DistributorsComposer;
 use App\Http\View\Composers\MovieFicheFormComposer;
 use App\Models\Country;

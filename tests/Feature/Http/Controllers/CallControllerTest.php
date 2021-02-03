@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Call;
+use App\Models\Call;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,6 +19,7 @@ class CallControllerTest extends TestCase
     public function index_displays_view()
     {
         $calls = Call::factory()->count(3)->create();
+
 
         $response = $this->get(route('call.index'));
 
