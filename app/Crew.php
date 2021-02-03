@@ -76,4 +76,20 @@ class Crew extends Model
         $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'ACTOR3')->first()->id]);
         return $crew;
     }
+
+    static function requiredMovieCrew()
+    {
+        return [
+            'AUTHOR',
+            'DIRECTOR',
+            'COMPOSER',
+            'PRODDESIGNER',
+            'DIRPHOTOGRAPHY',
+            'EDITOR',
+            'SOUND',
+            'ACTOR1',
+            'ACTOR2',
+            'ACTOR3',
+        ];
+    }
 }

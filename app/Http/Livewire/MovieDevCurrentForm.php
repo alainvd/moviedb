@@ -6,6 +6,7 @@ use App\Crew;
 use App\Genre;
 use App\Media;
 use App\Movie;
+use App\Title;
 use App\Person;
 use App\Dossier;
 use App\Audience;
@@ -93,21 +94,36 @@ class MovieDevCurrentForm extends Component
         'fiche.comments' => 'string',
     ];
 
+    // TODO: code dublication
     protected function validateMovieCrew() {
         // check for all crew members
-        // ...
-        // check for all fields
+        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew())->get();
+        $requiredCrewMessages = [];
+        foreach ($requiredTitles as $title) {
+            if (!array_filter(
+                $this->crews,
+                function ($crew) use ($title) {
+                    return $crew['title_id'] == $title->id;
+                }
+            ))
+            {
+                $requiredCrewMessages[] = 'Required crew member: ' . $title->name;
+            }
+        }
+        // check for all crew person fields
+        $requiredPersonFieldMessages = [];
         foreach ($this->crews as $crew) {
             $req = new Request($crew);
-            $movieCrews = new TableEditMovieCrewsDevCurrent();
+            $movieCrews = new TableEditMovieCrews();
             try{
                 $req->validate($movieCrews->crewRules($this->isEditor));
             }
             catch (ValidationException $e){
-                $messages = collect($e->validator->getMessageBag());
-                $msgs = $messages->map(fn ($msg) => array_pop($msg));
-                return $msgs;
+                $requiredPersonFieldMessages[] = 'Crew member is missing required fields: ' . Title::find($crew['title_id'])->name;
             }
+        }
+        if (!empty($requiredCrewMessages) || !empty($requiredPersonFieldMessages) ) {
+            return array_merge($requiredCrewMessages,$requiredPersonFieldMessages);
         }
         return true;
     }
