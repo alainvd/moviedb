@@ -25,7 +25,6 @@ class Distributors extends Component
     public User $user;
     public $isBackoffice = false;
 
-    public $dists = [];
     public Distributor $currentDistributor;
 
     public Dossier $dossier;
@@ -43,7 +42,7 @@ class Distributors extends Component
     {
         $this->user = Auth::user();
         $this->isBackoffice = $this->user->hasAnyRole(['editor', 'admin']);
-        $this->currentDistributor = new Distributor();
+        // $this->currentDistributor = new Distributor();
         $this->movie = new Movie();
 
         $movieId = request('movie_id');

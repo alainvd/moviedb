@@ -77,7 +77,7 @@ class MovieWizard extends Component
 
     public function selectMovie($id)
     {
-        $this->movie = Media::find($id)->grantable;
+        $this->movie = Movie::find($id);
     }
 
     public function render()
@@ -85,17 +85,13 @@ class MovieWizard extends Component
         $results = collect([]);
         $hasSearch = false;
 
-        $query = Media::where('grantable_type', 'App\Models\Movie')
-            ->join('movies', 'media.grantable_id', '=', 'movies.id')
-            ->join('fiches', 'fiches.media_id', '=', 'media.id')
+        $query = Movie::join('fiches', 'fiches.movie_id', '=', 'movies.id')
             ->whereNotIn('fiches.status_id', function ($query) {
                 $query->select('id')
                     ->from('statuses')
                     ->whereIn('name', ['Duplicated']);
-            })
-            ->with('grantable')
-            ->with('fiche')
-            ->with('people');
+            });
+            // ->with('people');
 
         if ($this->originalTitle) {
             $hasSearch = true;

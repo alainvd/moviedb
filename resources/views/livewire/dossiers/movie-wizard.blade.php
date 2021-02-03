@@ -77,13 +77,13 @@
                                     wire:click="selectMovie({{ $result->id }})">
                             </x-table.cell>
                             <x-table.cell class="text-center">
-                                {{ $result->grantable->original_title  }}
+                                {{ $result->original_title  }}
                             </x-table.cell>
                             <x-table.cell class="text-center">
-                                {{ $result->getDirectorName() }}
+                                {{ $result->director }}
                             </x-table.cell>
                             <x-table.cell class="text-center">
-                                {{ $result->grantable->film_country_of_origin  }}
+                                {{ $result->film_country_of_origin  }}
                             </x-table.cell>
                             <x-table.cell class="text-center">
                                 {{ $result->fiche->status->name  }}
@@ -127,7 +127,7 @@
                         Status
                     </label>
                     <div class="border-b-2 border-indigo-600 pb-2" id="original-title">
-                        {{ $movie->media->fiche->status->name }}
+                        {{ $movie->fiche->status->name }}
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
                         Film genre
                     </label>
                     <div class="border-b-2 border-indigo-600 pb-2" id="original-title">
-                        {{ $movie->media->genre->name }}
+                        {{ $movie->genre->name }}
                     </div>
                 </div>
 
@@ -161,7 +161,7 @@
                         Film delivery platform
                     </label>
                     <div class="border-b-2 border-indigo-600 pb-2" id="original-title">
-                        {{ $platforms[$movie->media->delivery_platform_id] }}
+                        {{ $platforms[$movie->delivery_platform_id] }}
                     </div>
                 </div>
                 <div class="col-span-1">
@@ -169,7 +169,7 @@
                         Audience
                     </label>
                     <div class="border-b-2 border-indigo-600 pb-2" id="original-title">
-                        {{ $movie->media->audience->name }}
+                        {{ $movie->audience->name }}
                     </div>
                 </div>
                 <div class="col-span-1">
@@ -195,7 +195,7 @@
                         Film director
                     </label>
                     <div class="border-b-2 border-indigo-600 pb-2" id="original-title">
-                        {{ $movie->media->getDirectorName() }}
+                        {{ $movie->director }}
                     </div>
                 </div>
             </div>
