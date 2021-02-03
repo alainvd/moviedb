@@ -141,12 +141,30 @@ class MovieDistForm extends Component
         return false;
     }
 
+    public function callValidate()
+    {
+        $this->movie->shooting_language = $this->shootingLanguages;
+        $this->validate();
+        unset($this->movie->shooting_language);
+        if (!$this->validateDocumentsFinancingPlan()) {
+            $this->emit('filesErrorMessage', 'Film financing plan is required.');
+        } else {
+            $this->emit('filesErrorMessage', null);
+        }
+        $validateMovieCrew = $this->validateMovieCrew();
+        if ($validateMovieCrew !== true) {
+            $this->emit('crewErrorMessages', $validateMovieCrew);
+        } else {
+            $this->emit('crewErrorMessages', null);
+        }
+    }
+
     protected function movieDefaults() {
         return [
             'total_budget_currency_code' => 'EUR',
         ];
     }
-
+    
     public function mount(Request $request)
     {
         $this->shootingLanguages = collect([]);
@@ -196,24 +214,6 @@ class MovieDistForm extends Component
         $this->shootingLanguages = $this->shootingLanguages->reject(
             fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
         );
-    }
-
-    public function callValidate()
-    {
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
-        if (!$this->validateDocumentsFinancingPlan()) {
-            $this->emit('filesErrorMessage', 'Film financing plan is required.');
-        } else {
-            $this->emit('filesErrorMessage', null);
-        }
-        $validateMovieCrew = $this->validateMovieCrew();
-        if ($validateMovieCrew !== true) {
-            $this->emit('crewErrorMessages', $validateMovieCrew);
-        } else {
-            $this->emit('crewErrorMessages', null);
-        }
     }
 
     public function reject()

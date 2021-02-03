@@ -2,22 +2,23 @@
 
 namespace App\Http\Livewire;
 
-use App\Audience;
 use App\Crew;
-use App\Dossier;
 use App\Genre;
-use Livewire\Component;
-use App\Movie;
 use App\Media;
-use App\Models\Activity;
-use App\Models\Country;
-use App\Models\Fiche;
-use App\Models\Language;
+use App\Movie;
 use App\Person;
+use App\Dossier;
+use App\Audience;
 use App\Producer;
 use App\SalesAgent;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Fiche;
+use App\Models\Country;
+use Livewire\Component;
+use App\Models\Activity;
+use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 
 class MovieDevCurrentForm extends Component
@@ -92,6 +93,38 @@ class MovieDevCurrentForm extends Component
         'fiche.comments' => 'string',
     ];
 
+    protected function validateMovieCrew() {
+        // check for all crew members
+        // ...
+        // check for all fields
+        foreach ($this->crews as $crew) {
+            $req = new Request($crew);
+            $movieCrews = new TableEditMovieCrewsDevCurrent();
+            try{
+                $req->validate($movieCrews->crewRules($this->isEditor));
+            }
+            catch (ValidationException $e){
+                $messages = collect($e->validator->getMessageBag());
+                $msgs = $messages->map(fn ($msg) => array_pop($msg));
+                return $msgs;
+            }
+        }
+        return true;
+    }
+    
+    public function callValidate()
+    {
+        $this->movie->shooting_language = $this->shootingLanguages;
+        $this->validate();
+        unset($this->movie->shooting_language);
+        $validateMovieCrew = $this->validateMovieCrew();
+        if ($validateMovieCrew !== true) {
+            $this->emit('crewErrorMessages', $validateMovieCrew);
+        } else {
+            $this->emit('crewErrorMessages', null);
+        }
+    }
+
     protected function movieDefaults() {
         return [
             'total_budget_currency_code' => 'EUR',
@@ -138,7 +171,6 @@ class MovieDevCurrentForm extends Component
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }
-
     }
 
     public function addShootingLanguage($lang)
@@ -152,13 +184,6 @@ class MovieDevCurrentForm extends Component
         $this->shootingLanguages = $this->shootingLanguages->reject(
             fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
         );
-    }
-
-    public function callValidate()
-    {
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
     }
 
     public function reject()
