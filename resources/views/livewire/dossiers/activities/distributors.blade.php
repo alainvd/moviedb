@@ -1,12 +1,8 @@
 <div class="my-16">
-    <!-- Distributor counts -->
-    <!-- <input type="hidden" name="coordinator_count" wire:model="coordinatorCount">
-    <input type="hidden" name="participant_count" wire:model="participantCount"> -->
-
     <h3 class="text-lg leading-tight font-normal my-4">
         Distributors Participating in the Grouping
     </h3>
-    <x-table class="{{ $errors->has('coordinator_count') || $errors->has('participant_count') ? 'border border-red-500' : '' }}">
+    <x-table>
         <x-slot name="head">
             <x-table.heading>DISTRIBUTION COUNTRY</x-table.heading>
             <x-table.heading>COMPANY NAME</x-table.heading>
@@ -69,14 +65,6 @@
             @endforelse
         </x-slot>
     </x-table>
-
-    @error('coordinator_count')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-    @enderror
-
-    @error('participant_count')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-    @enderror
 
     <div class="mt-5 text-right">
         <x-button.secondary wire:click="showAdd" wire:loading.attr="disabled">

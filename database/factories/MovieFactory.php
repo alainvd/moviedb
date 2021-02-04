@@ -68,6 +68,7 @@ class MovieFactory extends BaseFactory
             'user_experience' => $this->faker->randomElement(['LINEAR', 'INTERACTIVE']),
             'genre_id' => $this->getRelationId(Genre::class),
             'audience_id' => $this->getRelationId(Audience::class),
+            'delivery_platform_id' => $this->faker->randomElement([1, 2, 3]),
         ];
     }
 }

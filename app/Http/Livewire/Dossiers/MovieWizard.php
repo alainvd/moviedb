@@ -91,7 +91,6 @@ class MovieWizard extends Component
                     ->from('statuses')
                     ->whereIn('name', ['Duplicated']);
             });
-            // ->with('people');
 
         if ($this->originalTitle) {
             $hasSearch = true;
@@ -105,7 +104,7 @@ class MovieWizard extends Component
                     ->from('crews')
                     ->join('people', 'people.id', '=', 'crews.person_id')
                     ->join('titles', 'titles.id', '=', 'crews.title_id')
-                    ->whereColumn('crews.media_id', 'media.id')
+                    ->whereColumn('crews.movie_id', 'movies.id')
                     ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$this->director}%'");
             }, 'DIRECTOR');
         }

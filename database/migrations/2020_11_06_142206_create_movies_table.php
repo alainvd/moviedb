@@ -78,6 +78,7 @@ class CreateMoviesTable extends Migration
             //Moved From Media
             $table->unsignedInteger('genre_id')->nullable();
             $table->unsignedInteger('audience_id')->nullable();
+            $table->unsignedTinyInteger('delivery_platform_id')->nullable();
 
             $table->timestamps();
         });
