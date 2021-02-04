@@ -26,8 +26,8 @@
                     <x-table.cell class="text-center">{{ $item['share'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['budget'] }}</x-table.cell>
                     <x-table.cell class="space-x-2 text-center">
-                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
-                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
+                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer">Edit</a>
+                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer">Delete</a>
                     </x-table.cell>
                 </x-table.row>
                 @endforeach

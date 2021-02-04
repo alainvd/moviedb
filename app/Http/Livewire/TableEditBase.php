@@ -48,6 +48,15 @@ class TableEditBase extends Component
         ];
     }
 
+    public function rulesCleanup($rules = []) {
+        $rules_new = [];
+        foreach ($rules as $name => $val) {
+            // remove "editing." part
+            $rules_new[substr($name, 8)] = $val;
+        }
+        return $rules_new;
+    }
+
     protected function findItemByKey($key)
     {
         $item = array_filter(

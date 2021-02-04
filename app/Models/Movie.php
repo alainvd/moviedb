@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Distributor;
-use App\Models\Language;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Crew;
+use App\Models\Genre;
+use App\Models\Person;
+use App\Models\Audience;
+use App\Models\Document;
+use App\Models\Language;
+use App\Models\Distributor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Movie extends Model
 {
@@ -57,17 +62,17 @@ class Movie extends Model
 
     public function crew()
     {
-        return $this->hasMany(\App\Models\Crew::class, 'movie_id', 'id');
+        return $this->hasMany(Crew::class, 'movie_id', 'id');
     }
 
     public function genre()
     {
-        return $this->belongsTo('App\Models\Genre');
+        return $this->belongsTo(Genre::class);
     }
 
     public function audience()
     {
-        return $this->belongsTo('App\Models\Audience');
+        return $this->belongsTo(Audience::class);
     }
 
     public function languages()
@@ -82,7 +87,7 @@ class Movie extends Model
 
     public function people()
     {
-        return $this->hasManyThrough(\App\Models\Person::class, \App\Models\Crew::class, 'movie_id', 'id', 'id', 'person_id');
+        return $this->hasManyThrough(Person::class, Crew::class, 'movie_id', 'id', 'id', 'person_id');
     }
 
     public function distributors()
@@ -90,9 +95,9 @@ class Movie extends Model
         return $this->belongsToMany(Distributor::class);
     }
 
-    public function filmFinancingPlans()
+    public function documents()
     {
-        return $this->hasMany(\App\Models\FilmFinancingPlan::class, 'movie_id', 'id');
+        return $this->hasMany(Document::class, 'movie_id', 'id');
     }
 
     public function fiche()

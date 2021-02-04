@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Dossier;
+use App\Models\Movie;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,12 +13,13 @@ class Fiche extends Model
     use HasFactory;
 
     protected $fillable = [
-        'media_id',
+        'movie_id',
         'dossier_id',
+        'activity_id',
         'status_id',
         'created_by',
         'updated_by',
-        'activity_id'
+        'comments',
     ];
 
     public function movie()

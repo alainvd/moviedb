@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Movie;
 use App\Models\Country;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SalesAgent extends Model
 {

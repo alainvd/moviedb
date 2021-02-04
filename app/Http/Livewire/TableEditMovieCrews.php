@@ -27,20 +27,13 @@ class TableEditMovieCrews extends TableEditBase
 
     public $points_total = 0;
 
+    public $crewErrorMessages;
+
+    protected $listeners = ['crewErrorMessages'];
+
     protected function defaults()
     {
-        return [
-            'points' => null,
-            'person' => [
-                'firstname' => '',
-                'lastname' => '',
-                'gender' => '',
-                'nationality1' => '',
-                'nationality2' => '',
-                'country_of_residence' => '',
-            ],
-            'title_id' => null,
-        ] + parent::defaults();
+        return Crew::defaultsCrew() + parent::defaults();
     }
 
     protected $rulesApplicant = [
@@ -73,6 +66,15 @@ class TableEditMovieCrews extends TableEditBase
         }
     }
 
+    public function crewRules($isEditor)  {
+        if ($isEditor) {
+            $rules = $this->rulesEditor + TableEditBase::rules();
+        } else {
+            $rules = $this->rulesApplicant + TableEditBase::rules();
+        }
+        return parent::rulesCleanup($rules);
+    }
+
     protected function validationAttributes()
     {
         return [
@@ -87,14 +89,6 @@ class TableEditMovieCrews extends TableEditBase
         ];
     }
 
-    private function load()
-    {
-        // Get people related to media:
-        // Crew with person
-        $this->items = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
-        $this->addUniqueKeys();
-    }
-
     public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
@@ -103,7 +97,11 @@ class TableEditMovieCrews extends TableEditBase
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->load();
+            $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+            $this->addUniqueKeys();
+        } else {
+            $this->items = Crew::newMovieCrew();
+            $this->addUniqueKeys();
         }
         $this->isApplicant = $isApplicant;
         $this->isEditor = $isEditor;
@@ -141,4 +139,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->recalculatePoints();
     }
 
+    public function crewErrorMessages($messages) {
+        $this->crewErrorMessages = $messages;
+    }
 }

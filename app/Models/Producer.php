@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Movie;
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Producer extends Model
 {
@@ -34,15 +36,14 @@ class Producer extends Model
         'id' => 'integer',
     ];
 
-
     public function country()
     {
-        return $this->belongsTo(\App\Models\Country::class);
+        return $this->belongsTo(Country::class);
     }
 
     public function movie()
     {
-        return $this->belongsTo(\App\Models\Movie::class);
+        return $this->belongsTo(Movie::class);
     }
 
     const ROLES = [

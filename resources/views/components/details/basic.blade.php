@@ -80,8 +80,8 @@
         <x-form.select
             :id="'film_genre'"
             :label="'Film Genre'"
-            :hasError="$errors->has('media.genre_id')"
-            wire:model="media.genre_id">
+            :hasError="$errors->has('movie.genre_id')"
+            wire:model="movie.genre_id">
 
             @foreach($genres as $genre)
                 <option value="{{ $genre['id'] }}">{{ $genre['name'] }}</option>
@@ -89,17 +89,17 @@
 
         </x-form.select>
 
-        @error('media.genre_id')
+        @error('movie.genre_id')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-span-1">
         <x-form.select
-            :id="'delivery_platform'"
+            :id="'film_delivery_platform'"
             :label="'Film Delivery Platform'"
-            :hasError="$errors->has('media.delivery_platform_id')"
-            wire:model="media.delivery_platform_id">
+            :hasError="$errors->has('movie.film_delivery_platform')"
+            wire:model="movie.film_delivery_platform">
 
             @foreach($platforms as $key => $value)
                 <option value="{{$key}}">{{$value}}</option>
@@ -107,7 +107,7 @@
 
         </x-form.select>
 
-        @error('media.delivery_platform_id')
+        @error('movie.film_delivery_platform')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
@@ -116,8 +116,8 @@
         <x-form.select
             :id="'audience'"
             :label="'Audience'"
-            :hasError="$errors->has('media.audience_id')"
-            wire:model="media.audience_id">
+            :hasError="$errors->has('movie.audience_id')"
+            wire:model="movie.audience_id">
 
             @foreach ($audiences as $audience)
                 <option value="{{ $audience['id'] }}">
@@ -127,7 +127,7 @@
 
         </x-form.select>
 
-        @error('media.audience_id')
+        @error('movie.audience_id')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>

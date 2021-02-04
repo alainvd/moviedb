@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Genre;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class SelectComponent extends Component
