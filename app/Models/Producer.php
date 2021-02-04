@@ -45,9 +45,4 @@ class Producer extends Model
     {
         return $this->belongsTo(Movie::class);
     }
-
-    const ROLES = [
-        'PRODUCER' => 'Producer',
-        'COPRODUCER' => 'Coproducer',
-    ];
 }

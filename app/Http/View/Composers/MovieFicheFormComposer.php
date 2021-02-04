@@ -75,6 +75,10 @@ class MovieFicheFormComposer
             'FINANCING' => 'Financing plan',
             'OTHER' => 'Other',
         ];
+        $producerRoles = [
+            'PRODUCER' => 'Producer',
+            'COPRODUCER' => 'Coproducer',
+        ];
 
         $view->with('audiences', $audiences->where('type', 'App\Models\Movie')->toArray());
         $view->with('countries', $countries);
@@ -91,5 +95,6 @@ class MovieFicheFormComposer
         $view->with('workOrigins', $workOrigins);
         $view->with('workContractTypes', $workContractTypes);
         $view->with('documentTypes', $documentTypes);
+        $view->with('producerRoles', $producerRoles);
     }
 }

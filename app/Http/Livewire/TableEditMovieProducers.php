@@ -17,8 +17,6 @@ class TableEditMovieProducers extends TableEditBase
 
     public $languages = [];
 
-    public $producer_roles = [];
-
     public $budget_total = 0;
 
     protected function defaults()
@@ -71,7 +69,6 @@ class TableEditMovieProducers extends TableEditBase
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->producer_roles = Producer::ROLES;
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->load();

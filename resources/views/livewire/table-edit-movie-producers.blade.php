@@ -28,7 +28,7 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     @if($fiche == 'dist')<x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>@endif
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
@@ -72,7 +72,7 @@
                             :hasError="$errors->has('editing.role')"
                             wire:model="editing.role">
                 
-                            @foreach($producer_roles as $key => $name)
+                            @foreach($producerRoles as $key => $name)
                                 <option value="{{ $key }}">{{ $name }}</option>
                             @endforeach
                         </x-form.select>

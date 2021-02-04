@@ -14,8 +14,6 @@ class TableEditExampleSimple extends TableEditBase
 
     public $countries_by_code = [];
 
-    public $producer_roles = [];
-
     protected function defaults()
     {
         return [
@@ -63,7 +61,6 @@ class TableEditExampleSimple extends TableEditBase
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->producer_roles = Producer::ROLES;
         if ($movie_id) {
             $this->movie_id = $movie_id;
             $this->load();
