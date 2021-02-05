@@ -20,17 +20,9 @@ class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevio
         ] + TableEditBase::rules();
     }
 
-    public function mount($movie_id = null)
-    {
-        parent::mount($movie_id);
-        // TODO: somewhat dublication with MovieFicheFormComposer
-        $this->languages = Language::where('active', true)
-            ->get()
-            ->map(fn ($lang) => [
-                'code' => $lang->code,
-                'name' => $lang->name,
-            ])
-            ->toArray();
+    public function tableEditRules($isEditor)  {
+        $rules = $this->rules() + TableEditBase::rules();
+        return parent::rulesCleanup($rules);
     }
 
     public function render()

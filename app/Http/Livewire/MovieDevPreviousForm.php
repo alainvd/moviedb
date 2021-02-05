@@ -2,21 +2,22 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Audience;
 use App\Models\Crew;
-use App\Models\Dossier;
-use App\Models\Genre;
-use Livewire\Component;
-use App\Models\Movie;
-use App\Models\Activity;
-use App\Models\Country;
 use App\Models\Fiche;
-use App\Models\Language;
+use App\Models\Genre;
+use App\Models\Movie;
 use App\Models\Person;
+use App\Models\Country;
+use App\Models\Dossier;
+use Livewire\Component;
+use App\Models\Activity;
+use App\Models\Audience;
+use App\Models\Language;
 use App\Models\Producer;
 use App\Models\SalesAgent;
-use Illuminate\Support\Facades\Auth;
+use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class MovieDevPreviousForm extends Component
@@ -31,8 +32,6 @@ class MovieDevPreviousForm extends Component
     public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
-
-    public $movie_original = [];
 
     public $shootingLanguages;
 
@@ -127,6 +126,20 @@ class MovieDevPreviousForm extends Component
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
+
+        $validateMovieProducers = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'].' '.$producer['name'];});
+        if ($validateMovieProducers !== true) {
+            $this->emit('producerErrorMessages', $validateMovieProducers);
+        } else {
+            $this->emit('producerErrorMessages', null);
+        }
+        
+        $validateMovieSalesAgents = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];});
+        if ($validateMovieSalesAgents !== true) {
+            $this->emit('salesAgentErrorMessages', $validateMovieSalesAgents);
+        } else {
+            $this->emit('salesAgentErrorMessages', null);
+        }
     }
 
     public function reject()

@@ -3,19 +3,20 @@
 namespace App\Http\Livewire;
 
 use App\Models\Crew;
+use App\Models\Fiche;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Title;
 use App\Models\Person;
-use App\Models\Dossier;
-use App\Models\Audience;
-use App\Models\Producer;
-use App\Models\SalesAgent;
-use App\Models\Fiche;
 use App\Models\Country;
+use App\Models\Dossier;
 use Livewire\Component;
 use App\Models\Activity;
+use App\Models\Audience;
 use App\Models\Language;
+use App\Models\Producer;
+use App\Models\SalesAgent;
+use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -33,8 +34,6 @@ class MovieDevCurrentForm extends Component
     public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
-
-    public $movie_original = [];
 
     public $shootingLanguages;
 
@@ -109,19 +108,10 @@ class MovieDevCurrentForm extends Component
             }
         }
         // check for all crew person fields
-        $requiredPersonFieldMessages = [];
-        foreach ($this->crews as $crew) {
-            $req = new Request($crew);
-            $movieCrews = new TableEditMovieCrews();
-            try{
-                $req->validate($movieCrews->crewRules($this->isEditor));
-            }
-            catch (ValidationException $e){
-                $requiredPersonFieldMessages[] = 'Crew member is missing required fields: ' . Title::find($crew['title_id'])->name;
-            }
-        }
-        if (!empty($requiredCrewMessages) || !empty($requiredPersonFieldMessages) ) {
-            return array_merge($requiredCrewMessages,$requiredPersonFieldMessages);
+        $requiredFieldMessages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;});
+
+        if (!empty($requiredCrewMessages) || !empty($requiredFieldMessages) ) {
+            return array_merge($requiredCrewMessages, $requiredFieldMessages);
         }
         return true;
     }
@@ -131,11 +121,19 @@ class MovieDevCurrentForm extends Component
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
+
         $validateMovieCrew = $this->validateMovieCrew();
         if ($validateMovieCrew !== true) {
             $this->emit('crewErrorMessages', $validateMovieCrew);
         } else {
             $this->emit('crewErrorMessages', null);
+        }
+
+        $validateMovieProducers = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];});
+        if ($validateMovieProducers !== true) {
+            $this->emit('producerErrorMessages', $validateMovieProducers);
+        } else {
+            $this->emit('producerErrorMessages', null);
         }
     }
 

@@ -19,17 +19,13 @@ class TableEditMovieProducers extends TableEditBase
 
     public $budget_total = 0;
 
+    public $producerErrorMessages;
+
+    protected $listeners = ['producerErrorMessages'];
+
     protected function defaults()
     {
-        return [
-            'role' => '',
-            'name' => '',
-            'city' => '',
-            'country' => '',
-            'language' => '',
-            'share' => null,
-            'budget' => null,
-        ] + parent::defaults();
+        return Producer::defaultsCrew() + parent::defaults();
     }
 
     protected function rules()
@@ -43,6 +39,11 @@ class TableEditMovieProducers extends TableEditBase
             'editing.share' => 'required|integer|min:1|max:100',
             'editing.budget' => '',
         ] + TableEditBase::rules();
+    }
+
+    public function tableEditRules($isEditor)  {
+        $rules = $this->rules() + TableEditBase::rules();
+        return parent::rulesCleanup($rules);
     }
 
     protected function validationAttributes()
@@ -83,5 +84,9 @@ class TableEditMovieProducers extends TableEditBase
     protected function sendItems()
     {
         $this->emitUp('update-movie-producers', $this->items);
+    }
+
+    public function producerErrorMessages($messages) {
+        $this->producerErrorMessages = $messages;
     }
 }

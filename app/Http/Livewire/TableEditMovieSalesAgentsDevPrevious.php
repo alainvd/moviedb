@@ -16,6 +16,11 @@ class TableEditMovieSalesAgentsDevPrevious extends TableEditMovieSalesAgents
         ] + TableEditBase::rules();
     }
 
+    public function tableEditRules($isEditor)  {
+        $rules = $this->rules() + TableEditBase::rules();
+        return parent::rulesCleanup($rules);
+    }
+    
     public function render()
     {
         return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'devPrev']);

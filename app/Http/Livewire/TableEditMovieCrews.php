@@ -66,7 +66,7 @@ class TableEditMovieCrews extends TableEditBase
         }
     }
 
-    public function crewRules($isEditor)  {
+    public function tableEditRules($isEditor)  {
         if ($isEditor) {
             $rules = $this->rulesEditor + TableEditBase::rules();
         } else {

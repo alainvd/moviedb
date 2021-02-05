@@ -28,6 +28,13 @@ class MovieFicheFormComposer
                 'label' => $lang->name,
             ])
             ->toArray();
+        $languages_with_code = Language::where('active', true)
+            ->get()
+            ->map(fn ($lang) => [
+                'code' => $lang->code,
+                'name' => $lang->name,
+            ])
+            ->toArray();
         $platforms = [
             'CINEMA' => 'Features / Cinema',
             'TV' => 'TV',
@@ -80,12 +87,15 @@ class MovieFicheFormComposer
             'COPRODUCER' => 'Coproducer',
         ];
 
+        // dd($languages);
+
         $view->with('audiences', $audiences->where('type', 'App\Models\Movie')->toArray());
         $view->with('countries', $countries);
         $view->with('filmFormats', $filmFormats);
         $view->with('filmTypes', $filmTypes);
         $view->with('genres', $genres);
         $view->with('languages', $languages);
+        $view->with('languages_with_code', $languages_with_code);
         $view->with('platforms', $platforms);
         $view->with('statuses', $statuses);
         $view->with('years', $years);

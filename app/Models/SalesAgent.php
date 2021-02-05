@@ -48,4 +48,15 @@ class SalesAgent extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+    static function defaultsSalesAgent()
+    {
+        return [
+            'name' => '',
+            'country' => '',
+            'contact_person' => '',
+            'email' => '',
+            'distribution_date' => null,
+        ];
+    }
 }

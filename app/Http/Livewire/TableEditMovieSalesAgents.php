@@ -15,15 +15,13 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public $countries_by_code = [];
 
+    public $salesAgentErrorMessages;
+
+    protected $listeners = ['salesAgentErrorMessages'];
+
     protected function defaults()
     {
-        return [
-            'name' => '',
-            'country' => '',
-            'contact_person' => '',
-            'email' => '',
-            'distribution_date' => null,
-        ] + parent::defaults();
+        return SalesAgent::defaultsCrew() + parent::defaults();
     }
 
     protected function rules()
@@ -37,6 +35,11 @@ class TableEditMovieSalesAgents extends TableEditBase
         ] + TableEditBase::rules();
     }
 
+    public function tableEditRules($isEditor)  {
+        $rules = $this->rules() + TableEditBase::rules();
+        return parent::rulesCleanup($rules);
+    }
+    
     protected function validationAttributes()
     {
         return [
@@ -72,5 +75,9 @@ class TableEditMovieSalesAgents extends TableEditBase
     protected function sendItems()
     {
         $this->emitUp('update-movie-sales-agents', $this->items);
+    }
+
+    public function salesAgentErrorMessages($messages) {
+        $this->salesAgentErrorMessages = $messages;
     }
 }

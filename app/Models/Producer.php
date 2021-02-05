@@ -45,4 +45,17 @@ class Producer extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+    static function defaultsProducer()
+    {
+        return [
+            'role' => '',
+            'name' => '',
+            'city' => '',
+            'country' => '',
+            'language' => '',
+            'share' => null,
+            'budget' => null,
+        ];
+    }
 }
