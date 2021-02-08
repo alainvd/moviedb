@@ -115,7 +115,7 @@ class TableEditMovieCrews extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-crews', $this->items);
+        $this->emitUp('updateMovieCrews', $this->items);
     }
 
     protected function recalculatePoints()

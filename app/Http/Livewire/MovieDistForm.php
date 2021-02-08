@@ -10,7 +10,6 @@ use App\Models\Title;
 use App\Models\Person;
 use App\Models\Country;
 use App\Models\Dossier;
-use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Audience;
 use App\Models\Document;
@@ -19,7 +18,6 @@ use App\Models\Producer;
 use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class MovieDistForm extends FicheFormBase
@@ -33,14 +31,16 @@ class MovieDistForm extends FicheFormBase
 
     public $shootingLanguages;
 
-    protected $listeners = [
-        'update-movie-crews' => 'updateMovieCrews',
-        'update-movie-producers' => 'updateMovieProducers',
-        'update-movie-sales-agents' => 'updateMovieSalesAgents',
-        'update-movie-documents' => 'updateMovieDocuments',
-        'addItem' => 'addShootingLanguage',
-        'removeItem' => 'removeShootingLanguage'
-    ];
+    protected function getListeners()
+    {
+        return array_merge(
+            parent::getListeners(), [
+            'updateMovieCrews',
+            'updateMovieProducers',
+            'updateMovieSalesAgents',
+            'updateMovieDocuments',
+        ]);
+    }
 
     protected $rulesApplicant = [
         'movie.original_title' => 'required|string|max:255',
@@ -151,19 +151,6 @@ class MovieDistForm extends FicheFormBase
             $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
         }
         parent::mount($request);
-    }
-
-    public function addShootingLanguage($lang)
-    {
-        // @todo build listener names using select name
-        $this->shootingLanguages->push($lang[1]);
-    }
-
-    public function removeShootingLanguage($lang)
-    {
-        $this->shootingLanguages = $this->shootingLanguages->reject(
-            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-        );
     }
 
     public function reject()

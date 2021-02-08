@@ -74,7 +74,7 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-sales-agents', $this->items);
+        $this->emitUp('updateMovieSalesAgents', $this->items);
     }
 
     public function salesAgentErrorMessages($messages) {

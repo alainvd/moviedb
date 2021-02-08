@@ -110,7 +110,7 @@ class TableEditMovieDocuments extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-documents', $this->items);
+        $this->emitUp('updateMovieDocuments', $this->items);
     }
 
     public function can_download($file)

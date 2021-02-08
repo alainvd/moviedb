@@ -83,7 +83,7 @@ class TableEditMovieProducers extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-producers', $this->items);
+        $this->emitUp('updateMovieProducers', $this->items);
     }
 
     public function producerErrorMessages($messages) {

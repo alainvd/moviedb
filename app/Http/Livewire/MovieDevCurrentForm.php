@@ -10,7 +10,6 @@ use App\Models\Title;
 use App\Models\Person;
 use App\Models\Country;
 use App\Models\Dossier;
-use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Audience;
 use App\Models\Language;
@@ -18,9 +17,6 @@ use App\Models\Producer;
 use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-
 
 class MovieDevCurrentForm extends FicheFormBase
 {
@@ -37,13 +33,15 @@ class MovieDevCurrentForm extends FicheFormBase
     public $producers = [];
     public $sales_agents = [];
 
-    protected $listeners = [
-        'update-movie-crews' => 'updateMovieCrews',
-        'update-movie-producers' => 'updateMovieProducers',
-        'update-movie-sales-agents' => 'updateMovieSalesAgents',
-        'addItem' => 'addShootingLanguage',
-        'removeItem' => 'removeShootingLanguage'
-    ];
+    protected function getListeners()
+    {
+        return array_merge(
+            parent::getListeners(), [
+            'updateMovieCrews',
+            'updateMovieProducers',
+            'updateMovieSalesAgents',
+        ]);
+    }
 
     /**
      * Each wired fields needs to be here or it will be filtered
@@ -124,19 +122,6 @@ class MovieDevCurrentForm extends FicheFormBase
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
         }
         parent::mount($request);
-    }
-
-    public function addShootingLanguage($lang)
-    {
-        // @todo build listener names using select name
-        $this->shootingLanguages->push($lang[1]);
-    }
-
-    public function removeShootingLanguage($lang)
-    {
-        $this->shootingLanguages = $this->shootingLanguages->reject(
-            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-        );
     }
 
     public function reject()

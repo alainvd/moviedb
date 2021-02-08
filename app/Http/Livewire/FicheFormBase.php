@@ -18,6 +18,14 @@ class FicheFormBase extends Component
     public $sales_agents = [];
     public $documents = [];
 
+    protected function getListeners()
+    {
+        return [
+            'addItem',
+            'removeItem'
+        ];
+    }
+
     public function mount(Request $request)
     {
         if (Auth::user()->hasRole('applicant')) {
@@ -36,6 +44,18 @@ class FicheFormBase extends Component
         if($this->getErrorBag()->any()){
             $this->emit('validation-errors');
         }
+    }
+
+    public function addItem($data)
+    {
+        $this->{$data[0]}->push($data[1]);
+    }
+
+    public function removeItem($data)
+    {
+        $this->{$data[0]} = $this->{$data[0]}->reject(
+            fn ($item) => $item['value'] === $data[1]['value']
+        );
     }
 
     public function updateMovieCrews($items)

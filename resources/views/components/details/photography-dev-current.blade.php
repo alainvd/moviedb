@@ -23,7 +23,7 @@
         @livewire('select-component', [
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
-            'name' => 'shootingLanguage',
+            'name' => 'shootingLanguages',
             'options' => json_encode($languages),
             'items' => json_encode($languagesSelected),
         ])
