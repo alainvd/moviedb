@@ -124,4 +124,11 @@ class Movie extends Model
 
         return '';
     }
+
+    static function defaultsMovie()
+    {
+        return [
+            'total_budget_currency_code' => 'EUR',
+        ];
+    }
 }

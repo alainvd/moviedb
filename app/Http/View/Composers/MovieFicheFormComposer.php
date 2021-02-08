@@ -87,8 +87,6 @@ class MovieFicheFormComposer
             'COPRODUCER' => 'Coproducer',
         ];
 
-        // dd($languages);
-
         $view->with('audiences', $audiences->where('type', 'App\Models\Movie')->toArray());
         $view->with('countries', $countries);
         $view->with('filmFormats', $filmFormats);

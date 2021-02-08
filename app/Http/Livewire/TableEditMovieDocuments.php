@@ -16,9 +16,9 @@ class TableEditMovieDocuments extends TableEditBase
 
     public $documentTypes;
 
-    public $filesErrorMessage;
+    public $filesErrorMessages;
 
-    protected $listeners = ['filesErrorMessage'];
+    protected $listeners = ['filesErrorMessages'];
 
     protected function defaults()
     {
@@ -127,7 +127,7 @@ class TableEditMovieDocuments extends TableEditBase
         return response()->download(storage_path('files/' . $file->file), $file->filename);
     }
 
-    public function filesErrorMessage($message) {
-        $this->filesErrorMessage = $message;
+    public function filesErrorMessages($message) {
+        $this->filesErrorMessages = $message;
     }
 }

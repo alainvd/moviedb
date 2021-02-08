@@ -90,57 +90,24 @@ class MovieDevCurrentForm extends Component
 
         'fiche.comments' => 'string',
     ];
-
-    // TODO: code dublication
-    protected function validateMovieCrew() {
-        // check for all crew members
-        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew())->get();
-        $requiredCrewMessages = [];
-        foreach ($requiredTitles as $title) {
-            if (!array_filter(
-                $this->crews,
-                function ($crew) use ($title) {
-                    return $crew['title_id'] == $title->id;
-                }
-            ))
-            {
-                $requiredCrewMessages[] = 'Required crew member: ' . $title->name;
-            }
-        }
-        // check for all crew person fields
-        $requiredFieldMessages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;});
-
-        if (!empty($requiredCrewMessages) || !empty($requiredFieldMessages) ) {
-            return array_merge($requiredCrewMessages, $requiredFieldMessages);
-        }
-        return true;
-    }
     
     public function callValidate()
     {
+        // Validate form itself
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
 
-        $validateMovieCrew = $this->validateMovieCrew();
-        if ($validateMovieCrew !== true) {
-            $this->emit('crewErrorMessages', $validateMovieCrew);
-        } else {
-            $this->emit('crewErrorMessages', null);
-        }
+        // Validate subform
+        $this->emit('crewErrorMessages', array_merge(
+            FormHelpers::requiredCrew($this->crews),
+            FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;})
+        ));
 
-        $validateMovieProducers = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];});
-        if ($validateMovieProducers !== true) {
-            $this->emit('producerErrorMessages', $validateMovieProducers);
-        } else {
-            $this->emit('producerErrorMessages', null);
-        }
-    }
-
-    protected function movieDefaults() {
-        return [
-            'total_budget_currency_code' => 'EUR',
-        ];
+        // Validate subform
+        $this->emit('producerErrorMessages',
+            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];})
+        );
     }
 
     public function mount(Request $request)
@@ -149,7 +116,7 @@ class MovieDevCurrentForm extends Component
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
-            $this->movie = new Movie($this->movieDefaults());
+            $this->movie = new Movie(Movie::defaultsMovie());
             $this->crews = Crew::newMovieCrew();
         } else {
             $this->movie = $this->fiche->movie;

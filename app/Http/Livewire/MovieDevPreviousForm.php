@@ -68,10 +68,22 @@ class MovieDevPreviousForm extends Component
         'fiche.comments' => 'string',
     ];
 
-    protected function movieDefaults() {
-        return [
-            'total_budget_currency_code' => 'EUR',
-        ];
+    public function callValidate()
+    {
+        // Validate form itself
+        $this->movie->shooting_language = $this->shootingLanguages;
+        $this->validate();
+        unset($this->movie->shooting_language);
+
+        // Validate subform
+        $this->emit('producerErrorMessages',
+            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'];})
+        );
+
+        // Validate subform
+        $this->emit('salesAgentErrorMessages',
+            FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];})
+        );
     }
 
     public function mount(Request $request)
@@ -80,7 +92,7 @@ class MovieDevPreviousForm extends Component
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
-            $this->movie = new Movie($this->movieDefaults());
+            $this->movie = new Movie(Movie::defaultsMovie());
         } else {
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
@@ -119,27 +131,6 @@ class MovieDevPreviousForm extends Component
         $this->shootingLanguages = $this->shootingLanguages->reject(
             fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
         );
-    }
-
-    public function callValidate()
-    {
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
-
-        $validateMovieProducers = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'].' '.$producer['name'];});
-        if ($validateMovieProducers !== true) {
-            $this->emit('producerErrorMessages', $validateMovieProducers);
-        } else {
-            $this->emit('producerErrorMessages', null);
-        }
-        
-        $validateMovieSalesAgents = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];});
-        if ($validateMovieSalesAgents !== true) {
-            $this->emit('salesAgentErrorMessages', $validateMovieSalesAgents);
-        } else {
-            $this->emit('salesAgentErrorMessages', null);
-        }
     }
 
     public function reject()

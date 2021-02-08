@@ -112,76 +112,33 @@ class MovieDistForm extends Component
         }
     }
 
-    protected function validateMovieCrew() {
-        // check for all crew members
-        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew())->get();
-        $requiredCrewMessages = [];
-        foreach ($requiredTitles as $title) {
-            if (!array_filter(
-                $this->crews,
-                function ($crew) use ($title) {
-                    return $crew['title_id'] == $title->id;
-                }
-            ))
-            {
-                $requiredCrewMessages[] = 'Required crew member: ' . $title->name;
-            }
-        }
-        // check for all crew person fields
-        $requiredFieldMessages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrews::class, function($crew) {return Title::find($crew['title_id'])->name;});
-
-        if (!empty($requiredCrewMessages) || !empty($requiredFieldMessages) ) {
-            return array_merge($requiredCrewMessages, $requiredFieldMessages);
-        }
-        return true;
-    }
-
-    protected function validateDocumentsFinancingPlan() {
-        // check if financing plan document is present
-        foreach ($this->documents as $document) {
-            if ($document['document_type'] == 'FINANCING') return true;
-        }
-        return false;
-    }
-
     public function callValidate()
     {
+        // Validate form itself
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
 
-        if (!$this->validateDocumentsFinancingPlan()) {
-            $this->emit('filesErrorMessage', 'Film financing plan is required.');
-        } else {
-            $this->emit('filesErrorMessage', null);
-        }
+        // Validate subform
+        $this->emit('crewErrorMessages', array_merge(
+            FormHelpers::requiredCrew($this->crews),
+            FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrews::class, function($crew) {return Title::find($crew['title_id'])->name;})
+        ));
 
-        $validateMovieCrew = $this->validateMovieCrew();
-        if ($validateMovieCrew !== true) {
-            $this->emit('crewErrorMessages', $validateMovieCrew);
-        } else {
-            $this->emit('crewErrorMessages', null);
-        }
+        // Validate subform
+        $this->emit('producerErrorMessages',
+            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];})
+        );
 
-        $validateMovieProducers = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
-        if ($validateMovieProducers !== true) {
-            $this->emit('producerErrorMessages', $validateMovieProducers);
-        } else {
-            $this->emit('producerErrorMessages', null);
-        }
+        // Validate subform
+        $this->emit('salesAgentErrorMessages',
+            FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];})
+        );
 
-        $validateMovieSalesAgents = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];});
-        if ($validateMovieSalesAgents !== true) {
-            $this->emit('salesAgentErrorMessages', $validateMovieSalesAgents);
-        } else {
-            $this->emit('salesAgentErrorMessages', null);
-        }
-    }
-
-    protected function movieDefaults() {
-        return [
-            'total_budget_currency_code' => 'EUR',
-        ];
+        // Validate subform
+        $this->emit('filesErrorMessages',
+            FormHelpers::validateDocumentsFinancingPlan($this->documents)
+        );
     }
 
     public function mount(Request $request)
@@ -190,7 +147,7 @@ class MovieDistForm extends Component
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
-            $this->movie = new Movie($this->movieDefaults());
+            $this->movie = new Movie(Movie::defaultsMovie());
             $this->crews = Crew::newMovieCrew();
         } else {
             $this->movie = $this->fiche->movie;

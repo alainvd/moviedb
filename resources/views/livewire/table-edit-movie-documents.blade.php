@@ -4,10 +4,11 @@
         Supporting Documents
     </div>
 
-    @if ($filesErrorMessage)
-        <div class="mt-1 text-sm text-red-500">{{ $filesErrorMessage }}</div>
+    @if($filesErrorMessages)
+    @foreach ($filesErrorMessages as $message)
+        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+    @endforeach
     @endif
-
 
     <div>
         <x-table>
