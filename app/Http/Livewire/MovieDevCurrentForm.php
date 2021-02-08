@@ -101,7 +101,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
     public function submit()
     {
-        parent::sumbit();
+        parent::submit();
 
         // crew, producers, sales agents
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
