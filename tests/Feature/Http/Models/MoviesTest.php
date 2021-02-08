@@ -4,7 +4,7 @@ namespace Tests\Feature\Http\Models;
 
 use App\Models\Audience;
 use App\Models\Crew;
-use App\Models\FilmFinancingPlan;
+use App\Models\Document;
 use App\Models\Distributor;
 use App\Models\Language;
 use App\Models\Movie;
@@ -36,9 +36,9 @@ class MoviesTest extends TestCase
         $distributor = Distributor::factory()->create();
         $movie->distributors()->save($distributor);
 
-        //Create and Link Film Financing Plan
-        $financingPlan = FilmFinancingPlan::factory()->create();
-        $movie->filmFinancingPlans()->save($financingPlan);
+        //Create and Link Documents
+        $document = Document::factory()->create();
+        $movie->documents()->save($document);
 
         //Create and link languages
         $language = Language::factory()->create();
@@ -56,7 +56,7 @@ class MoviesTest extends TestCase
         $response->assertSeeText($movie->audience->name);
         $response->assertSeeText($person->fullname);
         $response->assertSeeText($distributor->name);
-        $response->assertSeeText($financingPlan->filename);
+        $response->assertSeeText($document->filename);
         $response->assertSeeText($language->name);
     }
 }

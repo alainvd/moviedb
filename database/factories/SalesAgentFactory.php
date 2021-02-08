@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Movie;
 use App\Models\SalesAgent;
-use App\Media;
 use App\Models\Country;
 
 class SalesAgentFactory extends BaseFactory

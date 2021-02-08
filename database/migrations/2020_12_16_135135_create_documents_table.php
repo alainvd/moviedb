@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilmFinancingPlansTable extends Migration
+class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFilmFinancingPlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('film_financing_plans', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->integer('movie_id');
             $table->string('document_type')->nullable();
@@ -31,6 +31,6 @@ class CreateFilmFinancingPlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('film_financing_plans');
+        Schema::dropIfExists('documents');
     }
 }

@@ -40,6 +40,9 @@
                     <li class="px-6 py-4">
                         <a href="/demo">Demo page (SEP mock page)</a>
                     </li>
+                    <li class="px-6 py-4">
+                        <a href="/landing/SEP?call_id=call-101&topic=topic-101&action_type=action-101&draft_proposal_id=111&PIC=222">SEP Landing Page</a>
+                    </li>
 
                 </ul>
             </div>

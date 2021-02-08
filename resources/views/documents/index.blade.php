@@ -2,9 +2,9 @@
 
 @section('content')
     <ul>
-        @foreach($filmFinancingPlans as $filmFinancingPlan)
+        @foreach($Documents as $Document)
             <li>
-                {{ $filmFinancingPlan }}
+                {{ $Document }}
             </li>
         @endforeach
     </ul>

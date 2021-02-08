@@ -4,6 +4,11 @@
         Supporting Documents
     </div>
 
+    @if ($filesErrorMessage)
+        <div class="mt-1 text-sm text-red-500">{{ $filesErrorMessage }}</div>
+    @endif
+
+
     <div>
         <x-table>
             <x-slot name="head">
@@ -16,16 +21,16 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $item['document_type'] == 'FINANCING' ? 'Financing Plan' : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $item['document_type'] ? $documentTypes[$item['document_type']] : '' }}</x-table.cell>
                     @if($this->can_download($item['file']))
-                    <x-table.cell class="text-center"><a href="{{ route('film-financing-plan-download', ['file' => $item['file']]) }}">{{ $item['filename'] }}</a></x-table.cell>
+                    <x-table.cell class="text-center"><a href="{{ route('document-download', ['file' => $item['file']]) }}">{{ $item['filename'] }}</a></x-table.cell>
                     @else
                     <x-table.cell class="text-center">{{ $item['filename'] }}</a></x-table.cell>
                     @endif
                     <x-table.cell class="text-center">{{ $item['comments'] }}</x-table.cell>
                     <x-table.cell class="space-x-2 text-center">
-                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="cursor-pointer">Edit</a>
-                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="cursor-pointer">Delete</a>
+                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer">Edit</a>
+                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer">Delete</a>
                     </x-table.cell>
                 </x-table.row>
                 @endforeach
@@ -50,12 +55,14 @@
 
                     <div>
                         <x-form.select
-                            :id="'financing_document_type'"
+                            :id="'document_type'"
                             :label="'Document Type'"
                             :hasError="$errors->has('editing.document_type')"
                             wire:model="editing.document_type">
 
-                            <option value="FINANCING">Financing Plan</option>
+                            @foreach($documentTypes as $key => $value)
+                                <option value="{{ $key }}">{{ $value }}</option>
+                            @endforeach
                         </x-form.select>
 
                         @error('editing.document_type')
@@ -65,7 +72,7 @@
 
                     <div>
                         <x-form.file
-                            :id="'financing_file'"
+                            :id="'document_file'"
                             :label="'File'"
                             :hasError="$errors->has('editing.file')"
                             wire:model="editing.file"
@@ -79,7 +86,7 @@
 
                     <div>
                         <x-form.input
-                            :id="'financing_comments'"
+                            :id="'document_comments'"
                             :label="'Comments'"
                             :hasError="$errors->has('editing.comments')"
                             wire:model="editing.comments">

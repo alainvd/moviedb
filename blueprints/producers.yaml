@@ -1,7 +1,7 @@
 models:
 
   Producer:
-    media_id: integer
+    movie_id: integer
     role: enum:producer,coproducer
     name: string
     city: string

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class FilmFinancingPlan extends Model
+class Document extends Model
 {
     use HasFactory;
 
@@ -34,6 +35,6 @@ class FilmFinancingPlan extends Model
 
     public function movie()
     {
-        return $this->belongsTo(\App\Models\Movie::class);
+        return $this->belongsTo(Movie::class);
     }
 }

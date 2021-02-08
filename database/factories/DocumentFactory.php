@@ -5,17 +5,16 @@ namespace Database\Factories;
 use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Media;
-use App\Models\FilmFinancingPlan;
+use App\Models\Document;
 
-class FilmFinancingPlanFactory extends BaseFactory
+class DocumentFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = FilmFinancingPlan::class;
+    protected $model = Document::class;
 
     /**
      * Define the model's default state.

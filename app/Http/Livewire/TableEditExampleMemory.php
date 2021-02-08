@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class TableEditExampleMemory extends TableEditBase
 {
 
-    public $media_id = null;
+    public $movie_id = null;
 
     public $countries = [];
 
@@ -45,7 +45,7 @@ class TableEditExampleMemory extends TableEditBase
     protected function validationAttributes()
     {
         return [
-            'editing.media_id' => 'media_id',
+            'editing.movie_id' => 'movie_id',
             'editing.role' => 'role',
             'editing.name' => 'name',
             'editing.city' => 'city',
@@ -57,17 +57,17 @@ class TableEditExampleMemory extends TableEditBase
 
     private function load()
     {
-        $this->items = Producer::where('media_id', $this->media_id)->get()->toArray();
+        $this->items = Producer::where('movie_id', $this->movie_id)->get()->toArray();
         $this->addUniqueKeys();
     }
 
-    public function mount($media_id = null)
+    public function mount($movie_id = null)
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         $this->producer_roles = Producer::ROLES;
-        if ($media_id) {
-            $this->media_id = $media_id;
+        if ($movie_id) {
+            $this->movie_id = $movie_id;
             $this->load();
         }
     }

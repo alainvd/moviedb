@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Media;
+use App\Models\Document;
 use Illuminate\Database\Seeder;
 
-class MediaSeeder extends Seeder
+class DocumentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class MediaSeeder extends Seeder
      */
     public function run()
     {
-        Media::factory()->count(5)->create();
+        Document::factory()->count(5)->create();
     }
 }

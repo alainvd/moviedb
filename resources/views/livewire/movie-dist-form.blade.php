@@ -70,9 +70,9 @@
                 @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id])
             </div>
 
-            <!-- financing plan -->
-            <div class="my-8" id="table-financing-plan">
-                @livewire('table-edit-movie-financing-plan', ['movie_id' => $movie->id])
+            <!-- documents -->
+            <div class="my-8" id="table-documents">
+                @livewire('table-edit-movie-documents', ['movie_id' => $movie->id, 'documentTypes' => $documentTypes])
             </div>
 
             <!-- comments -->

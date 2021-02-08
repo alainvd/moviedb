@@ -50,7 +50,7 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     private function load()
     {
-        $this->items = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
+        $this->items = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
     }
 

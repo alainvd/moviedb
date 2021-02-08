@@ -38,8 +38,8 @@
         <x-form.select
             :id="'audience'"
             :label="'Targeted Audience'"
-            :hasError="$errors->has('media.audience_id')"
-            wire:model="media.audience_id">
+            :hasError="$errors->has('movie.audience_id')"
+            wire:model="movie.audience_id">
 
             @foreach ($audiences as $audience)
                 <option value="{{ $audience['id'] }}">
@@ -49,7 +49,7 @@
 
         </x-form.select>
 
-        @error('media.audience_id')
+        @error('movie.audience_id')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
