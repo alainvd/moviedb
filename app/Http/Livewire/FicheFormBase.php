@@ -13,11 +13,6 @@ class FicheFormBase extends Component
     public $isApplicant = false;
     public $isEditor = false;
 
-    public $crews = [];
-    public $producers = [];
-    public $sales_agents = [];
-    public $documents = [];
-
     protected function getListeners()
     {
         return [
@@ -56,26 +51,6 @@ class FicheFormBase extends Component
         $this->{$data[0]} = $this->{$data[0]}->reject(
             fn ($item) => $item['value'] === $data[1]['value']
         );
-    }
-
-    public function updateMovieCrews($items)
-    {
-        $this->crews = $items;
-    }
-
-    public function updateMovieProducers($items)
-    {
-        $this->producers = $items;
-    }
-
-    public function updateMovieSalesAgents($items)
-    {
-        $this->sales_agents = $items;
-    }
-
-    public function updateMovieDocuments($items)
-    {
-        $this->documents = $items;
     }
 
 }
