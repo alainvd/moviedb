@@ -135,16 +135,6 @@ class MovieDevCurrentForm extends Component
             $this->isEditor = true;
         }
 
-        if($request->input('editor')) {
-            $this->isApplicant = false;
-            $this->isEditor = true;
-        }
-
-        // @TODO use role here after fixing hydration issue for masquerade user
-        if (Auth::user()->eu_login_username === 'mediadb-applicant') {
-            $this->isApplicant = true;
-        }
-
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }

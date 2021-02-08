@@ -108,11 +108,6 @@ class VideoGamePreviousForm extends Component
             $this->isEditor = true;
         }
 
-        if($request->input('editor')) {
-            $this->isApplicant = false;
-            $this->isEditor = true;
-        }
-
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }
