@@ -22,12 +22,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class MovieDistForm extends Component
+class MovieDistForm extends FicheFormBase
 {
-
-    public $isNew = false;
-    public $isApplicant = false;
-    public $isEditor = false;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -36,11 +32,6 @@ class MovieDistForm extends Component
     public ?Movie $movie = null;
 
     public $shootingLanguages;
-
-    public $crews = [];
-    public $producers = [];
-    public $sales_agents = [];
-    public $documents = [];
 
     protected $listeners = [
         'update-movie-crews' => 'updateMovieCrews',
@@ -159,17 +150,7 @@ class MovieDistForm extends Component
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
             $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
         }
-
-        if (Auth::user()->hasRole('applicant')) {
-            $this->isApplicant = true;
-        }
-        if (Auth::user()->hasRole('editor')) {
-            $this->isEditor = true;
-        }
-
-        if ($this->isApplicant && $this->isNew) {
-            $this->fiche->status_id = 1;
-        }
+        parent::mount($request);
     }
 
     public function addShootingLanguage($lang)
@@ -234,26 +215,6 @@ class MovieDistForm extends Component
         //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
         // }
     }
-
-    public function updateMovieCrews($items)
-    {
-        $this->crews = $items;
-    }
-
-    public function updateMovieProducers($items)
-    {
-        $this->producers = $items;
-    }
-
-    public function updateMovieSalesAgents($items)
-    {
-        $this->sales_agents = $items;
-    }
-
-    public function updateMovieDocuments($items)
-    {
-        $this->documents = $items;
-    }
     
     public function saveItems($existing_items, $saving_items, $saving_class)
     {
@@ -304,10 +265,7 @@ class MovieDistForm extends Component
 
     public function render()
     {
-
-        if($this->getErrorBag()->any()){
-            $this->emit('validation-errors');
-        }
+        parent::render();
 
         $title = 'Films - Distribution';
         $crumbs[] = [

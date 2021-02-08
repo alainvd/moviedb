@@ -25,7 +25,7 @@ class TableEditMovieProducers extends TableEditBase
 
     protected function defaults()
     {
-        return Producer::defaultsCrew() + parent::defaults();
+        return Producer::defaultsProducer() + parent::defaults();
     }
 
     protected function rules()

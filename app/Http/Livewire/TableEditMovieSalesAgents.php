@@ -21,7 +21,7 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     protected function defaults()
     {
-        return SalesAgent::defaultsCrew() + parent::defaults();
+        return SalesAgent::defaultsSalesAgent() + parent::defaults();
     }
 
     protected function rules()

@@ -22,12 +22,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 
-class MovieDevCurrentForm extends Component
+class MovieDevCurrentForm extends FicheFormBase
 {
-
-    public $isNew = false;
-    public $isApplicant = false;
-    public $isEditor = false;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -127,17 +123,7 @@ class MovieDevCurrentForm extends Component
             $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
         }
-
-        if (Auth::user()->hasRole('applicant')) {
-            $this->isApplicant = true;
-        }
-        if (Auth::user()->hasRole('editor')) {
-            $this->isEditor = true;
-        }
-
-        if ($this->isApplicant && $this->isNew) {
-            $this->fiche->status_id = 1;
-        }
+        parent::mount($request);
     }
 
     public function addShootingLanguage($lang)
@@ -202,21 +188,6 @@ class MovieDevCurrentForm extends Component
         // }
     }
 
-    public function updateMovieCrews($items)
-    {
-        $this->crews = $items;
-    }
-
-    public function updateMovieProducers($items)
-    {
-        $this->producers = $items;
-    }
-
-    public function updateMovieSalesAgents($items)
-    {
-        $this->sales_agents = $items;
-    }
-
     public function saveItems($existing_items, $saving_items, $saving_class)
     {
         // delete first
@@ -266,10 +237,8 @@ class MovieDevCurrentForm extends Component
 
     public function render()
     {
-        if($this->getErrorBag()->any()){
-            $this->emit('validation-errors');
-        }
-
+        parent::render();
+        
         return view('livewire.movie-dev-current-form')
             ->layout('components.layout');
     }
