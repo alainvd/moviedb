@@ -12,7 +12,8 @@
             :label="'Start Date of Principal Photography'"
             :hasError="$errors->has('movie.photography_start')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.photography_start')"
-            wire:model.lazy="movie.photography_start">
+            wire:model.lazy="movie.photography_start"
+            >
         </x-form.datepicker>
 
         @error('movie.photography_start')

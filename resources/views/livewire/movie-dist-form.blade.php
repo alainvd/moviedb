@@ -3,7 +3,9 @@
         <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16">
             <!-- title -->
             <div class="my-8">
-                <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>
+                <x-details.title
+                    :movie="$movie"
+                    :fiche="$fiche"></x-details.title>
             </div>
 
             <!-- basic -->
@@ -24,7 +26,9 @@
 
             <!-- summary -->
             <div class="my-8">
-                <x-details.summary :rules="$rules" :movie="$movie"></x-details.summary>
+                <x-details.summary
+                    :rules="$rules"
+                    :movie="$movie"></x-details.summary>
             </div>
 
             <!-- cast/crew -->
@@ -81,8 +85,7 @@
                     :label="'EACEA Comments'"
                     :hasError="$errors->has('fiche.comments')"
                     :isRequired="FormHelpers::isRequired($rules, 'fiche.comments')"
-                    wire:model="fiche.comments">
-                </x-form.textarea>
+                    wire:model="fiche.comments"></x-form.textarea>
 
                 @error('fiche.comments')
                     <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
