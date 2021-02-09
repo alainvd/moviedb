@@ -3,7 +3,7 @@
     <div class="col-span-1">
         <x-form.currency-amount
             :idAmount="'total_budget_currency_amount'"
-            :labelAmount="'Total Budget'"
+            :labelAmount="'Total Production Budget'"
             :hasErrorAmount="$errors->has('movie.total_budget_currency_amount')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_currency_amount')"
             :modelAmount="'movie.total_budget_currency_amount'"
@@ -28,7 +28,7 @@
     <div class="col-span-1">
         <x-form.input
             :id="'total_budget_currency_rate'"
-            :label="'Conversion rate'"
+            :label="'Conversion Rate'"
             :hasError="$errors->has('movie.total_budget_currency_rate')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_currency_rate')"
             wire:model="movie.total_budget_currency_rate"
@@ -46,7 +46,7 @@
     <div class="col-span-1">
         <x-form.input
             :id="'total_budget_euro'"
-            :label="'Total budget in EURO'"
+            :label="'Total Production Budget in EURO'"
             :hasError="$errors->has('movie.total_budget_euro')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_euro')"
             wire:model="movie.total_budget_euro"

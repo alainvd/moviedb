@@ -58,6 +58,11 @@
                     :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
+            <!-- producers -->
+            <div class="my-8" id="table-producers">
+                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+            </div>
+
             <!-- Total budget -->
             <div class="my-8">
                 <x-details.budget

@@ -2,13 +2,13 @@
     
     <div class="mb-8 text-lg">
         @if($fiche=='dist')
-        Production Structure
+        Production Structure and Financing
         @endif
         @if($fiche=='devPrev')
-        Production Structure
+        Production Structure and Financing
         @endif
         @if($fiche=='devCurrent')
-        Estimated Production Structure
+        Estimated Production Structure and Financing
         @endif
     </div>
 
@@ -22,11 +22,11 @@
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Role</x-table.heading>
-                <x-table.heading>Name</x-table.heading>
+                <x-table.heading>Company Name</x-table.heading>
                 @if($fiche == 'dist')<x-table.heading>City</x-table.heading>@endif
                 <x-table.heading>Country</x-table.heading>
                 @if($fiche == 'devCurrent')<x-table.heading>Language</x-table.heading>@endif
-                @if(in_array($fiche, ['dist', 'devPrev']))<x-table.heading>Share</x-table.heading>@endif
+                @if(in_array($fiche, ['dist', 'devPrev']))<x-table.heading>Share in %</x-table.heading>@endif
                 @if($fiche == 'devPrev')<x-table.heading>Budget</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
@@ -53,7 +53,7 @@
         <div class="mt-5 text-right">
             @if($fiche == 'devPrev')
             <span class="mr-4">
-                TOTAL BUDGET: <span class="font-bold" x-text="budget_total"></span>€
+                TOTAL PRODUCTION BUDGET: <span class="font-bold" x-text="budget_total"></span>€
             </span>
             @endif
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
@@ -92,7 +92,7 @@
                     <div>
                         <x-form.input
                             :id="'producer_name'"
-                            :label="'Name'"
+                            :label="'Company Name'"
                             :hasError="$errors->has('editing.name')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">
@@ -162,7 +162,7 @@
                     <div>
                         <x-form.input-trailing
                             :id="'producer_share'"
-                            :label="'Share'"
+                            :label="'Share in %'"
                             :trailing="'%'"
                             :hasError="$errors->has('editing.share')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.share')"

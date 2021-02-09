@@ -45,7 +45,7 @@
         class="col-span-1 col-start-3 sm:col-span-1">
         @livewire('select-component', [
             'domId' => 'shooting-language',
-            'label' => 'Shooting language',
+            'label' => 'Shooting languages',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
             'options' => json_encode($languages),

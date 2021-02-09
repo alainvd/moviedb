@@ -51,7 +51,7 @@ class TableEditMovieProducers extends TableEditBase
         return [
             'editing.movie_id' => 'movie_id',
             'editing.role' => 'role',
-            'editing.name' => 'name',
+            'editing.name' => 'company name',
             'editing.city' => 'city',
             'editing.country' => 'country',
             'editing.language' => 'language',

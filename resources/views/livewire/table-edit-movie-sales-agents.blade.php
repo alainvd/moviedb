@@ -18,7 +18,7 @@
     <div>
         <x-table>
             <x-slot name="head">
-                <x-table.heading>Name</x-table.heading>
+                <x-table.heading>Company Name</x-table.heading>
                 <x-table.heading>Country</x-table.heading>
                 @if($fiche=='dist')<x-table.heading>Contact Person</x-table.heading>@endif
                 @if($fiche=='dist')<x-table.heading>Email</x-table.heading>@endif
@@ -67,7 +67,7 @@
                     <div>
                         <x-form.input
                             :id="'agents_name'"
-                            :label="'Name'"
+                            :label="'Company Name'"
                             :hasError="$errors->has('editing.name')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">

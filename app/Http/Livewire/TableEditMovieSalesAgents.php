@@ -43,7 +43,7 @@ class TableEditMovieSalesAgents extends TableEditBase
     protected function validationAttributes()
     {
         return [
-            'editing.name' => 'name',
+            'editing.name' => 'company name',
             'editing.country' => 'country',
             'editing.contact_person' => 'contact person',
             'editing.email' => 'email',

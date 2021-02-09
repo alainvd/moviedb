@@ -64,7 +64,7 @@
     <div class="col-span-1">
         <x-form.select
             :id="'copyright'"
-            :label="'Copyright'"
+            :label="'Year of copyright'"
             :hasError="$errors->has('movie.year_of_copyright')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.year_of_copyright')"
             wire:model="movie.year_of_copyright">
