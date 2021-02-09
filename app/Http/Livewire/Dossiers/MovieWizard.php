@@ -3,9 +3,6 @@
 namespace App\Http\Livewire\Dossiers;
 
 use App\Models\Dossier;
-use App\Media;
-use App\Models\Activity;
-use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +19,6 @@ class MovieWizard extends Component
     // Fields
     public $originalTitle;
     public $director;
-    // public $selectedMovie;
 
     protected $rules = [
         'originalTitle' => 'required_without:director',
