@@ -9,6 +9,7 @@
             <!-- basic -->
             <div class="my-8">
                 <x-details.basic
+                    :rules="$rules"
                     :movie="$movie"
                     :isApplicant="$isApplicant"
                     :isEditor="$isEditor"
@@ -23,7 +24,7 @@
 
             <!-- summary -->
             <div class="my-8">
-                <x-details.summary :movie="$movie"></x-details.summary>
+                <x-details.summary :rules="$rules" :movie="$movie"></x-details.summary>
             </div>
 
             <!-- cast/crew -->
@@ -35,6 +36,7 @@
             @if($isEditor)
             <div class="my-8">
                 <x-details.points
+                    :rules="$rules"
                     :movie="$movie"
                     :countries="$countries"></x-details.summary>
             </div>
@@ -43,6 +45,7 @@
             <!-- photography -->
             <div class="my-8">
                 <x-details.photography
+                    :rules="$rules"
                     :movie="$movie"
                     :filmFormats="$filmFormats"
                     :isApplicant="$isApplicant"
@@ -51,18 +54,13 @@
                     :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
-            <!-- producers -->
-            <div class="my-8" id="table-producers">
-                @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
-            </div>
-
             <!-- Total budget -->
             <div class="my-8">
                 <x-details.budget
+                    :rules="$rules"
                     :currencies="$currencies"
                     :isApplicant="$isApplicant"
-                    :isEditor="$isEditor"
-                    ></x-details.budget>
+                    :isEditor="$isEditor"></x-details.budget>
             </div>
 
             <!-- agents -->
@@ -82,6 +80,7 @@
                     :id="'comments'"
                     :label="'EACEA Comments'"
                     :hasError="$errors->has('fiche.comments')"
+                    :isRequired="FormHelpers::isRequired($rules, 'fiche.comments')"
                     wire:model="fiche.comments">
                 </x-form.textarea>
 

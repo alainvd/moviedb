@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Crew;
 use App\Models\Title;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -48,5 +49,12 @@ class FormHelpers
             if ($document['document_type'] == 'FINANCING') return [];
         }
         return ['Film financing plan is required.'];
+    }
+
+    public static function isRequired($rules, $field) {
+        if (isset($rules[$field])) {
+            return Str::contains($rules[$field], 'required');
+        }
+        return false;
     }
 }

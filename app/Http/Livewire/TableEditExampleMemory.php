@@ -71,7 +71,7 @@ class TableEditExampleMemory extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-example-memory');
+        return view('livewire.table-edit-example-memory', ['rules' => $this->rules()]);
     }
 
     protected function sendItems()

@@ -11,6 +11,7 @@
             :id="'photography_start'"
             :label="'Start Date of Principal Photography'"
             :hasError="$errors->has('movie.photography_start')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.photography_start')"
             wire:model.lazy="movie.photography_start">
         </x-form.datepicker>
 
@@ -24,7 +25,8 @@
             :id="'photography_end'"
             :label="'End Date of Principal Photography'"
             :hasError="$errors->has('movie.photography_end')"
-            wire:model="movie.photography_end">
+            :isRequired="FormHelpers::isRequired($rules, 'movie.photography_end')"
+            wire:model.lazy="movie.photography_end">
         </x-form.datepicker>
 
         @error('movie.photography_end')
@@ -43,6 +45,7 @@
         @livewire('select-component', [
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
             'options' => json_encode($languages),
             'items' => json_encode($languagesSelected),
@@ -58,6 +61,7 @@
             :id="'film_length'"
             :label="'Film Length (in minutes)'"
             :hasError="$errors->has('movie.film_length')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_length')"
             wire:model="movie.film_length">
         </x-form.input>
 
@@ -71,6 +75,7 @@
             :id="'film_format'"
             :label="'Film Format'"
             :hasError="$errors->has('movie.film_format')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_format')"
             wire:model="movie.film_format">
 
             @foreach ($filmFormats as $key => $value)

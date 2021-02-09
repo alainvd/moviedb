@@ -78,7 +78,7 @@ class TableEditMovieProducers extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-producers', ['fiche' => 'dist']);
+        return view('livewire.table-edit-movie-producers', ['fiche' => 'dist', 'rules' => $this->rules()]);
     }
 
     protected function sendItems()

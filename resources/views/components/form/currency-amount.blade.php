@@ -1,8 +1,9 @@
 <div>
     <label for="{{ $idAmount }}" class="block text-sm font-light leading-5 text-gray-700">
         {{ $labelAmount }}
+        <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
     </label>
-    <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="relative mt-1 rounded-md shadow-sm">
         <input 
             type="text"
             name="{{ $idAmount }}"
@@ -16,7 +17,7 @@
             <select
                 id="{{ $idCurrency }}"
                 name="{{ $idCurrency }}"
-                class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 mr-2 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+                class="h-full py-0 pl-2 mr-2 text-gray-500 bg-transparent border-transparent rounded-md focus:ring-indigo-500 focus:border-indigo-500 pr-7 sm:text-sm"
                 wire:model="{{ $modelCurrency }}"
             >
                 @foreach($currencies as $code => $currency)

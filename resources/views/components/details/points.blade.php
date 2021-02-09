@@ -4,6 +4,7 @@
             :id="'film_country_of_origin'"
             :label="'Country of Origin'"
             :hasError="$errors->has('movie.film_country_of_origin')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
@@ -22,6 +23,7 @@
             :id="'points-country_of_origin_points'"
             :label="'Points for Country of Origin'"
             :hasError="$errors->has('movie.country_of_origin_points')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.country_of_origin_points')"
             wire:model="movie.country_of_origin_points"
             placeholder="0.00">
 

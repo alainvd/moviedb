@@ -4,6 +4,7 @@
             :id="'rights_origin_of_work'"
             :label="'Origin of Work'"
             :hasError="$errors->has('movie.rights_origin_of_work')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_origin_of_work')"
             wire:model="movie.rights_origin_of_work">
 
             @foreach ($workOrigins as $key => $value)
@@ -22,6 +23,7 @@
             :id="'rights_contract_type'"
             :label="'Type of contract with Author'"
             :hasError="$errors->has('movie.rights_contract_type')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_contract_type')"
             wire:model="movie.rights_contract_type">
 
             @foreach ($workContractTypes as $key => $value)
@@ -40,6 +42,7 @@
             :id="'rights_contract_start_date'"
             :label="'Start Date of the Ownership'"
             :hasError="$errors->has('movie.rights_contract_start_date')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_contract_start_date')"
             wire:model.lazy="movie.rights_contract_start_date">
         </x-form.datepicker>
 
@@ -53,6 +56,7 @@
             :id="'rights_contract_end_date'"
             :label="'End Date of the Ownership'"
             :hasError="$errors->has('movie.rights_contract_end_date')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_contract_end_date')"
             wire:model.lazy="movie.rights_contract_end_date">
         </x-form.datepicker>
 
@@ -66,6 +70,7 @@
             :id="'rights_contract_signature_date'"
             :label="'Date of signature of the agreement'"
             :hasError="$errors->has('movie.rights_contract_signature_date')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_contract_signature_date')"
             wire:model.lazy="movie.rights_contract_signature_date">
         </x-form.datepicker>
 
@@ -80,6 +85,7 @@
             :id="'rights_adapt_author_name'"
             :label="'Name of Author'"
             :hasError="$errors->has('movie.rights_adapt_author_name')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_adapt_author_name')"
             wire:model="movie.rights_adapt_author_name">
         </x-form.input>
 
@@ -93,6 +99,7 @@
             :id="'rights_adapt_original_title'"
             :label="'Original Title'"
             :hasError="$errors->has('movie.rights_adapt_original_title')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_adapt_original_title')"
             wire:model="movie.rights_adapt_original_title">
         </x-form.input>
 
@@ -106,6 +113,7 @@
             :id="'rights_adapt_contract_type'"
             :label="'Type of contract with original Author'"
             :hasError="$errors->has('movie.rights_adapt_contract_type')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_adapt_contract_type')"
             wire:model="movie.rights_adapt_contract_type">
 
             @foreach ($workContractTypes as $key => $value)
@@ -124,6 +132,7 @@
             :id="'rights_adapt_contract_start_date'"
             :label="'Start Date of the Ownership'"
             :hasError="$errors->has('movie.rights_adapt_contract_start_date')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_adapt_contract_start_date')"
             wire:model.lazy="movie.rights_adapt_contract_start_date">
         </x-form.datepicker>
 
@@ -137,6 +146,7 @@
             :id="'rights_adapt_contract_end_date'"
             :label="'End Date of the Ownership'"
             :hasError="$errors->has('movie.rights_adapt_contract_end_date')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_adapt_contract_end_date')"
             wire:model.lazy="movie.rights_adapt_contract_end_date">
         </x-form.datepicker>
 
@@ -150,6 +160,7 @@
             :id="'rights_adapt_contract_signature_date'"
             :label="'Date of signature of the agreement'"
             :hasError="$errors->has('movie.rights_adapt_contract_signature_date')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.rights_adapt_contract_signature_date')"
             wire:model.lazy="movie.rights_adapt_contract_signature_date">
         </x-form.datepicker>
 

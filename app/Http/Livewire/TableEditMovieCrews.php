@@ -110,7 +110,7 @@ class TableEditMovieCrews extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-crews', ['fiche' => 'dist']);
+        return view('livewire.table-edit-movie-crews', ['fiche' => 'dist', 'rules' => $this->rules()]);
     }
 
     protected function sendItems()

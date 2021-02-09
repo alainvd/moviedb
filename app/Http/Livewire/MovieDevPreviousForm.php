@@ -49,6 +49,11 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
+    protected function rules()
+    {
+        return $this->rules;
+    }
+
     public function callValidate()
     {
         // Validate form itself
@@ -95,7 +100,7 @@ class MovieDevPreviousForm extends FicheMovieFormBase
     {
         parent::render();
         
-        return view('livewire.movie-dev-previous-form')
+        return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
             ->layout('components.layout');
     }
 

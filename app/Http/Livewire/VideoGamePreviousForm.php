@@ -261,7 +261,7 @@ class VideoGamePreviousForm extends Component
             $this->emit('validation-errors');
         }
 
-        return view('livewire.video-game-previous-form')
+        return view('livewire.video-game-previous-form', ['rules' => $this->rules()])
             ->layout('components.layout');
     }
 

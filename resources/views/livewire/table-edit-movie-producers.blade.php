@@ -76,6 +76,7 @@
                             :id="'producer_role'"
                             :label="'Role'"
                             :hasError="$errors->has('editing.role')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.role')"
                             wire:model="editing.role">
                 
                             @foreach($producerRoles as $key => $name)
@@ -93,6 +94,7 @@
                             :id="'producer_name'"
                             :label="'Name'"
                             :hasError="$errors->has('editing.name')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
@@ -107,6 +109,7 @@
                             :id="'producer_city'"
                             :label="'City'"
                             :hasError="$errors->has('editing.city')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.city')"
                             wire:model="editing.city">
                         </x-form.input>
 
@@ -121,6 +124,7 @@
                             :id="'producer_country'"
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
                             wire:model="editing.country">
                 
                             @foreach ($countries as $country)
@@ -139,6 +143,7 @@
                             :id="'language'"
                             :label="'Language'"
                             :hasError="$errors->has('editing.language')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.language')"
                             wire:model="editing.language">
                 
                             @foreach ($languages_with_code as $language)
@@ -160,6 +165,7 @@
                             :label="'Share'"
                             :trailing="'%'"
                             :hasError="$errors->has('editing.share')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.share')"
                             wire:model="editing.share"
                         > 
                         </x-form.input>
@@ -176,6 +182,7 @@
                             :label="'Budget'"
                             :trailing="'€'"
                             :hasError="$errors->has('editing.budget')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.budget')"
                             wire:model="editing.budget"
                         > 
                         </x-form.input>

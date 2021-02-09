@@ -5,6 +5,7 @@
             :id="'film_length'"
             :label="'Film Length (in minutes)'"
             :hasError="$errors->has('movie.film_length')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_length')"
             wire:model="movie.film_length">
         </x-form.input>
 
@@ -24,6 +25,7 @@
         @livewire('select-component', [
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
             'options' => json_encode($languages),
             'items' => json_encode($languagesSelected),
@@ -39,6 +41,7 @@
             :id="'audience'"
             :label="'Targeted Audience'"
             :hasError="$errors->has('movie.audience_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.audience_id')"
             wire:model="movie.audience_id">
 
             @foreach ($audiences as $audience)

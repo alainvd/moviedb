@@ -25,7 +25,7 @@ class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
     
     public function render()
     {
-        return view('livewire.table-edit-movie-producers', ['fiche' => 'devPrev']);
+        return view('livewire.table-edit-movie-producers', ['fiche' => 'devPrev', 'rules' => $this->rules()]);
     }
 
     public function mount($movie_id = null)

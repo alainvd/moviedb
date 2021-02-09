@@ -69,7 +69,7 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'dist']);
+        return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'dist', 'rules' => $this->rules()]);
     }
 
     protected function sendItems()

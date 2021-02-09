@@ -36,7 +36,7 @@ class TableEditMovieDocuments extends TableEditBase
             'editing.movie_id' => '',
             'editing.document_type' => 'required|string',
             'editing.filename' => 'required|string',
-            'editing.file' => '',
+            'editing.file' => 'required',
             'editing.comments' => 'required|string',
         ] + parent::rules();
     }
@@ -82,7 +82,7 @@ class TableEditMovieDocuments extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-documents');
+        return view('livewire.table-edit-movie-documents', ['rules' => $this->rules()]);
     }
 
     public function saveItem()

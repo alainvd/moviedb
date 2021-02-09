@@ -59,6 +59,7 @@
                             :id="'document_type'"
                             :label="'Document Type'"
                             :hasError="$errors->has('editing.document_type')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.document_type')"
                             wire:model="editing.document_type">
 
                             @foreach($documentTypes as $key => $value)
@@ -76,6 +77,7 @@
                             :id="'document_file'"
                             :label="'File'"
                             :hasError="$errors->has('editing.file')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.file')"
                             wire:model="editing.file"
                         >
                         </x-form.file>
@@ -90,6 +92,7 @@
                             :id="'document_comments'"
                             :label="'Comments'"
                             :hasError="$errors->has('editing.comments')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.comments')"
                             wire:model="editing.comments">
                         </x-form.input>
 

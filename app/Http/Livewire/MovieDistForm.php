@@ -162,11 +162,11 @@ class MovieDistForm extends FicheMovieFormBase
         ];
 
         if ($this->isApplicant) {
-            return view('livewire.movie-dist-form')
+            return view('livewire.movie-dist-form', ['rules' => $this->rules()])
                 ->layout('components.ecl-layout', ['title' => $title, 'crumbs' => $crumbs]);
         } else {
-            return view('livewire.movie-dist-form')
-                ->layout('components.layout', ['title' => $title, 'crumbs' => $crumbs]);
+            return view('livewire.movie-dist-form', ['rules' => $this->rules()])
+                ->layout('components.layout', ['title' => $title, 'crumbs' => $crumbs, 'rules' => $this->rules()]);
         }
     }
 

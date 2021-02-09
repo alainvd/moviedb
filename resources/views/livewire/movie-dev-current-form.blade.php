@@ -9,6 +9,7 @@
             <!-- basic -->
             <div class="my-8">
                 <x-details.basic-dev-current
+                    :rules="$rules"
                     :movie="$movie"
                     :isApplicant="$isApplicant"
                     :audiences="$audiences"
@@ -23,12 +24,13 @@
 
             <!-- summary -->
             <div class="my-8">
-                <x-details.summary :movie="$movie"></x-details.summary>
+                <x-details.summary :rules="$rules" :movie="$movie"></x-details.summary>
             </div>
 
             <!-- photography -->
             <div class="my-8">
                 <x-details.photography-dev-current
+                    :rules="$rules"
                     :movie="$movie"
                     :filmFormats="$filmFormats"
                     :languages="$languages"
@@ -43,6 +45,7 @@
             <!-- Ownership -->
             <div class="my-8">
                 <x-details.ownership
+                    :rules="$rules"
                     :workOrigins="$workOrigins"
                     :workContractTypes="$workContractTypes"
                     :movie="$movie"></x-details.photography>
@@ -55,7 +58,7 @@
 
             <!-- budget-dev-current -->
             <div class="my-8">
-                <x-details.budget-dev-current></x-details.budget>
+                <x-details.budget-dev-current :rules="$rules"></x-details.budget>
             </div>
 
             <!-- comments -->
@@ -64,6 +67,7 @@
                     :id="'comments'"
                     :label="'EACEA Comments'"
                     :hasError="$errors->has('fiche.comments')"
+                    :isRequired="FormHelpers::isRequired($rules, 'fiche.comments')"
                     wire:model="fiche.comments">
                 </x-form.textarea>
 

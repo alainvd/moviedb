@@ -69,6 +69,7 @@
                             :id="'agents_name'"
                             :label="'Name'"
                             :hasError="$errors->has('editing.name')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
@@ -82,6 +83,7 @@
                             :id="'agents_country'"
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
                             wire:model="editing.country">
                 
                             @foreach ($countries as $country)
@@ -100,6 +102,7 @@
                             :id="'agents_contact_person'"
                             :label="'Contact person'"
                             :hasError="$errors->has('editing.contact_person')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.contact_person')"
                             wire:model="editing.contact_person">
                         </x-form.input>
 
@@ -115,6 +118,7 @@
                             :id="'agents_email'"
                             :label="'Email'"
                             :hasError="$errors->has('editing.email')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.email')"
                             wire:model="editing.email">
                         </x-form.input>
 
@@ -130,6 +134,7 @@
                             :id="'agents_distribution_date'"
                             :label="'Date'"
                             :hasError="$errors->has('editing.distribution_date')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.distribution_date')"
                             wire:model.lazy="editing.distribution_date">
                         </x-form.datepicker>
                 

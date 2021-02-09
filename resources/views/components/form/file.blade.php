@@ -1,6 +1,7 @@
 <label for="{{ $id }}" class="block text-sm font-light leading-5 text-gray-700">
     {{ $label }}
     {{ $slot }}
+    <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
 </label>
 
 <input

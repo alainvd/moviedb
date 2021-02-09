@@ -92,7 +92,7 @@ class TableEditExampleSimple extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-example-simple');
+        return view('livewire.table-edit-example-simple', ['rules' => $this->rules()]);
     }
 
 }

@@ -4,6 +4,7 @@
             :id="'photography_start'"
             :label="'Start Date of Principal Photography'"
             :hasError="$errors->has('movie.photography_start')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.photography_start')"
             wire:model.lazy="movie.photography_start">
         </x-form.datepicker>
 
@@ -23,6 +24,7 @@
         @livewire('select-component', [
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
             'options' => json_encode($languages),
             'items' => json_encode($languagesSelected),
@@ -38,6 +40,7 @@
             :label="'Development cost'"
             :trailing="'€'"
             :hasError="$errors->has('movie.development_costs_in_euro')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.development_costs_in_euro')"
             wire:model="movie.development_costs_in_euro">
         </x-form.input>
 
@@ -52,6 +55,7 @@
             :label="'Total duration'"
             :trailing="'Minutes'"
             :hasError="$errors->has('movie.film_length')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_length')"
             wire:model="movie.film_length">
         </x-form.input>
 
@@ -66,6 +70,7 @@
             :id="'number_of_episodes'"
             :label="'Number of episodes'"
             :hasError="$errors->has('movie.number_of_episodes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.number_of_episodes')"
             wire:model="movie.number_of_episodes">
         </x-form.input>
 
@@ -81,6 +86,7 @@
             :label="'Average duration of episode'"
             :trailing="'Minutes'"
             :hasError="$errors->has('movie.length_of_episodes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.length_of_episodes')"
             wire:model="movie.length_of_episodes">
         </x-form.input>
 

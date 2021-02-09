@@ -23,7 +23,7 @@ class TableEditMovieSalesAgentsDevPrevious extends TableEditMovieSalesAgents
     
     public function render()
     {
-        return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'devPrev']);
+        return view('livewire.table-edit-movie-sales-agents', ['fiche' => 'devPrev', 'rules' => $this->rules()]);
     }
 
 }
