@@ -116,7 +116,7 @@ class MovieWizard extends Component
             ])
             ->layout($layout, [
                 'title' => 'Films on the move',
-                'style' => 'background: url(\'' . asset('images/dossier/dots-side-1.png') . '\') right 30% no-repeat',
+                'class' => 'wizard-page',
             ]);
     }
 }

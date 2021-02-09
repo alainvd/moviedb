@@ -6,21 +6,10 @@
         <x-slot name="head">
             <x-table.heading>DISTRIBUTION COUNTRY</x-table.heading>
             <x-table.heading>COMPANY NAME</x-table.heading>
-
-            @if ($isBackoffice)
-
-                <x-table.heading>ROLE</x-table.heading>
-
-            @endif
-
+            <x-table.heading>ROLE</x-table.heading>
             <x-table.heading>FORECAST RELEASE DATE</x-table.heading>
-
-            @if ($isBackoffice)
-
-                <x-table.heading>FORECAST GRANT</x-table.heading>
-
-            @endif
-
+            <x-table.heading>P&A Costs</x-table.heading>
+            <x-table.heading>FORECAST GRANT</x-table.heading>
             <x-table.heading>&nbsp;</x-table.heading>
         </x-slot>
 
@@ -31,17 +20,16 @@
             <x-table.row>
                 <x-table.cell class="text-center">{{ $distributor->country->name }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $distributor->name }}</x-table.cell>
-                @if ($isBackoffice)
-                    <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
-                @endif
-            <x-table.cell class="text-center">
+                <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
+                <x-table.cell class="text-center">
                     {{ $distributor->forecast_release_date }}
                 </x-table.cell>
-                @if ($isBackoffice)
-                    <x-table.cell class="text-center">
-                        {{ $distributor->forecast_grant }}
-                    </x-table.cell>
-                @endif
+                <x-table.cell class="text-center">
+                    {{ 'p&a costs' }}
+                </x-table.cell>
+                <x-table.cell class="text-center">
+                    {{ $distributor->forecast_grant }}
+                </x-table.cell>
                 <x-table.cell class="text-center space-x-2">
                     <a
                         wire:click="showAdd({{ $distributor->id }})"
@@ -105,7 +93,6 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @if ($isBackoffice)
             <div class="my-4">
                 <x-form.select
                     :id="'company-role'"
@@ -123,7 +110,6 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @endif
             <div class="my-4">
                 <x-form.datepicker
                     :id="'release-date'"
@@ -136,7 +122,6 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @if ($isBackoffice)
             <div class="my-4">
                 <x-form.input
                     :id="'forecast-grant'"
@@ -149,7 +134,6 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @endif
         </x-slot>
 
         <x-slot name="footer">
