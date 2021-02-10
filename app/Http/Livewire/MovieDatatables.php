@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Country;
 use App\Models\Movie;
+use App\Models\Status;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -34,21 +35,19 @@ class MovieDatatables extends LivewireDatatable
             Column::name('original_title')
                 ->label('TITLE'),
             Column::name('year_of_copyright')
-                ->label('Year of Copyright')
+                ->label('YEAR OF COPYRIGHT')
                 ->filterable($this->copyrightYears),
-
-//            Column::callback('id','getDirectorName')
-//                ->label('DIRECTOR'),
-//            Column::callback('id', 'grantableCountry')
-//                ->label('COUNTRY')
-//                ->filterable(['AT','BE','CZ','DA','DE','ES','EL','FI','FR','IE','IT','LU']),
-//            Column::name('')
-//                ->label('STATUS'),
-//            Column::name('fiche.status.name')
-//                ->label('STATUS'),
-//            Column::callback('id', 'grantableLastModificationDate')
-//                ->label('LAST UPDATE')
-//                ->filterable(),
+            Column::callback('id','getDirectorName')
+                ->label('DIRECTOR'),
+            Column::name('film_country_of_origin')
+                ->label('COUNTRY')
+                ->filterable($this->countryoforigin),
+            Column::name('fiche.status.name')
+                ->label('STATUS')
+                ->filterable($this->statusAll),
+            Column::name('updated_at')
+                ->label('LAST UPDATE'),
+                   
         ];
     }
 
@@ -58,11 +57,20 @@ class MovieDatatables extends LivewireDatatable
         return $sortedYears;
     }
 
+    public function getCountryOfOriginProperty()
+    {
+        $sortedCountries = Movie::pluck('film_country_of_origin')->sort()->unique()->values()->all();
+        return $sortedCountries;
+    }
+
+    public function getStatusAllProperty()
+    {
+        $sortedStatuses = Status::pluck('name')->sort()->unique()->values()->all();
+        return $sortedStatuses;
+    }
+
     public function mediaType($text)
     {
-
-
-
 
             return 'Movie';
 
@@ -73,22 +81,14 @@ class MovieDatatables extends LivewireDatatable
         $director = Movie::find($id)->people()->where(function ($query) {
             $query->select('code')
                 ->from('titles')
-                ->whereColumn('titles.id', 'crews.title_id')
-                ->limit(1);
+                ->whereColumn('titles.id', 'crews.title_id');
         }, 'DIRECTOR')->first();
 
         if ($director) {
-            return $director->full_name;
+            return $director->fullname;
         }
 
         return '';
-    }
-
-
-
-    public function grantableLastModificationDate($id)
-    {
-        return  Media::find($id)->grantable->updated_at;
     }
 
 
