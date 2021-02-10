@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Media;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Title;

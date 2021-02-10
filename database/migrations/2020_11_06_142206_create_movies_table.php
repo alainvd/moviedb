@@ -28,6 +28,7 @@ class CreateMoviesTable extends Migration
             $table->integer('length_of_episodes')->nullable();
             $table->string('film_country_of_origin')->nullable();
             $table->integer('year_of_copyright')->nullable();
+            $table->string('film_delivery_platform')->nullable();
             $table->integer('directors_film')->nullable();
             $table->string('european_nationality_flag',255)->nullable();
             $table->longText('european_nationality_basis')->nullable();
@@ -77,6 +78,7 @@ class CreateMoviesTable extends Migration
             //Moved From Media
             $table->unsignedInteger('genre_id')->nullable();
             $table->unsignedInteger('audience_id')->nullable();
+            $table->string('delivery_platform')->nullable();
 
             $table->timestamps();
         });

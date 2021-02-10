@@ -69,3 +69,25 @@ main {
     content: "ownership";
 }
 */
+
+@media (min-width: 640px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 1024px) {
+    body.wizard-page {
+        background: url('../images/dossier/dots-side-1.png') right 35% no-repeat;
+    }
+}
+
+@media (min-width: 1280px) {
+    body.dossier-page {
+        background: url('../images/dossier/dots-vertical-1.png') 2% 11% no-repeat;
+    }
+}
+
+

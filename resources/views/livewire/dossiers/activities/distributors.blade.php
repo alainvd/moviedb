@@ -1,30 +1,15 @@
 <div class="my-16">
-    <!-- Distributor counts -->
-    <!-- <input type="hidden" name="coordinator_count" wire:model="coordinatorCount">
-    <input type="hidden" name="participant_count" wire:model="participantCount"> -->
-
     <h3 class="text-lg leading-tight font-normal my-4">
         Distributors Participating in the Grouping
     </h3>
-    <x-table class="{{ $errors->has('coordinator_count') || $errors->has('participant_count') ? 'border border-red-500' : '' }}">
+    <x-table>
         <x-slot name="head">
             <x-table.heading>DISTRIBUTION COUNTRY</x-table.heading>
             <x-table.heading>COMPANY NAME</x-table.heading>
-
-            @if ($isBackoffice)
-
-                <x-table.heading>ROLE</x-table.heading>
-
-            @endif
-
+            <x-table.heading>ROLE</x-table.heading>
             <x-table.heading>FORECAST RELEASE DATE</x-table.heading>
-
-            @if ($isBackoffice)
-
-                <x-table.heading>FORECAST GRANT</x-table.heading>
-
-            @endif
-
+            <x-table.heading>P&A Costs</x-table.heading>
+            <x-table.heading>FORECAST GRANT</x-table.heading>
             <x-table.heading>&nbsp;</x-table.heading>
         </x-slot>
 
@@ -35,17 +20,16 @@
             <x-table.row>
                 <x-table.cell class="text-center">{{ $distributor->country->name }}</x-table.cell>
                 <x-table.cell class="text-center">{{ $distributor->name }}</x-table.cell>
-                @if ($isBackoffice)
-                    <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
-                @endif
-            <x-table.cell class="text-center">
+                <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
+                <x-table.cell class="text-center">
                     {{ $distributor->forecast_release_date }}
                 </x-table.cell>
-                @if ($isBackoffice)
-                    <x-table.cell class="text-center">
-                        {{ $distributor->forecast_grant }}
-                    </x-table.cell>
-                @endif
+                <x-table.cell class="text-center">
+                    {{ $distributor->pa_costs }} EURO
+                </x-table.cell>
+                <x-table.cell class="text-center">
+                    {{ $distributor->forecast_grant }} EURO
+                </x-table.cell>
                 <x-table.cell class="text-center space-x-2">
                     <a
                         wire:click="showAdd({{ $distributor->id }})"
@@ -63,20 +47,12 @@
             @empty
 
             <x-table.row>
-                <x-table.cell class="text-center" colspan="5">No distributors yet</x-table.cell>
+                <x-table.cell class="text-center" colspan="100%">No distributors yet</x-table.cell>
             </x-table.row>
 
             @endforelse
         </x-slot>
     </x-table>
-
-    @error('coordinator_count')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-    @enderror
-
-    @error('participant_count')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
-    @enderror
 
     <div class="mt-5 text-right">
         <x-button.secondary wire:click="showAdd" wire:loading.attr="disabled">
@@ -105,7 +81,7 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="my-4">
+            <div class="my-4 md:w-1/2">
                 <x-form.input
                     :id="'company-name'"
                     :label="'Company Name'"
@@ -117,7 +93,6 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @if ($isBackoffice)
             <div class="my-4">
                 <x-form.select
                     :id="'company-role'"
@@ -135,8 +110,7 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @endif
-            <div class="my-4">
+            <div class="my-4 md:w-1/2">
                 <x-form.datepicker
                     :id="'release-date'"
                     :label="'Forecast Release Date'"
@@ -148,20 +122,30 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @if ($isBackoffice)
-            <div class="my-4">
-                <x-form.input
+            <div class="my-4 md:w-1/2">
+                <x-form.simple-currency
+                    :id="'pa-costs'"
+                    :label="'P&A Costs'"
+                    :hasError="$errors->has('currentDistributor.pa_costs')"
+                    wire:model="currentDistributor.pa_costs">
+                </x-form.simple-currency>
+
+                @error ('currentDistributor.pa_costs')
+                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="my-4 md:w-1/2">
+                <x-form.simple-currency
                     :id="'forecast-grant'"
                     :label="'Forecast Grant'"
                     :hasError="$errors->has('currentDistributor.forecast_grant')"
                     wire:model="currentDistributor.forecast_grant">
-                </x-form.input>
+                </x-form.simple-currency>
 
                 @error ('currentDistributor.forecast_grant')
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            @endif
         </x-slot>
 
         <x-slot name="footer">

@@ -3,16 +3,22 @@
 namespace App\Http\Livewire;
 
 use App\Models\Movie;
-use App\Models\FilmFinancingPlan;
+use App\Models\Document;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 
-class TableEditMovieFinancingPlan extends TableEditBase
+class TableEditMovieDocuments extends TableEditBase
 {
 
     use WithFileUploads;
 
     public Movie $movie;
+
+    public $documentTypes;
+
+    public $filesErrorMessage;
+
+    protected $listeners = ['filesErrorMessage'];
 
     protected function defaults()
     {
@@ -27,7 +33,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
     protected function rules()
     {
         return [
-            'editing.media_id' => '',
+            'editing.movie_id' => '',
             'editing.document_type' => 'required|string',
             'editing.filename' => 'required|string',
             'editing.file' => '',
@@ -35,10 +41,16 @@ class TableEditMovieFinancingPlan extends TableEditBase
         ] + parent::rules();
     }
 
+    protected $upload_rules = [
+        'editing.document_type' => 'required|string',    
+        'editing.file' => 'required|mimetypes:application/pdf,application/excel,application/vnd.ms-excel, application/vnd.msexcel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|max:12288',
+        'editing.comments' => 'required|string',
+    ];
+
     protected function validationAttributes()
     {
         return [
-            'editing.media_id' => 'media_id',
+            'editing.movie_id' => 'movie_id',
             'editing.document_type' => 'document type',
             'editing.filename' => 'filename',
             'editing.file' => 'file',
@@ -46,9 +58,17 @@ class TableEditMovieFinancingPlan extends TableEditBase
         ];
     }
 
+    public function messages()
+    {
+      return [            
+        'editing.file.required' => "You must use the 'Choose file' button to select which file you wish to upload",
+        'editing.file.mimetypes' => "Only PDF or spreadsheet files are allowed",
+      ];
+    }
+
     private function load()
     {
-        $this->items = FilmFinancingPlan::where('media_id', $this->movie->media->id)->get()->toArray();
+        $this->items = Document::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
     }
 
@@ -62,7 +82,7 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-financing-plan');
+        return view('livewire.table-edit-movie-documents');
     }
 
     public function saveItem()
@@ -71,21 +91,13 @@ class TableEditMovieFinancingPlan extends TableEditBase
         $item = $this->getItemByKey($this->editing['key']);
         if (empty($item['file'])) {
             // new item, required to upload new file
-            $this->validate([
-                'editing.document_type' => 'required|string',
-                'editing.file' => 'required|mimetypes:application/pdf|max:10000',
-                'editing.comments' => 'required|string',
-            ]);
+            $this->validate($this->upload_rules);
             $do_file_upload = true;
         } else {
             // existing item with file
             // can upload new file, can save without changing file
             if (is_a($this->editing['file'], 'Livewire\TemporaryUploadedFile')) {
-                $this->validate([
-                    'editing.document_type' => 'required|string',
-                    'editing.file' => 'required|mimetypes:application/pdf|max:10000',
-                    'editing.comments' => 'required|string',
-                ]);
+                $this->validate($this->upload_rules);
                 $do_file_upload = true;
             }
         }
@@ -98,12 +110,12 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-film-financing-plans', $this->items);
+        $this->emitUp('update-movie-documents', $this->items);
     }
 
     public function can_download($file)
     {
-        if (FilmFinancingPlan::where('file', $file)->first()) {
+        if (Document::where('file', $file)->first()) {
             return true;
         }
         return false;
@@ -111,7 +123,11 @@ class TableEditMovieFinancingPlan extends TableEditBase
 
     public function download(Request $request)
     {
-        $file = FilmFinancingPlan::where('file', $request->input('file'))->first();
+        $file = Document::where('file', $request->input('file'))->first();
         return response()->download(storage_path('files/' . $file->file), $file->filename);
+    }
+
+    public function filesErrorMessage($message) {
+        $this->filesErrorMessage = $message;
     }
 }

@@ -86,8 +86,6 @@ Route::get('/dossiers/{dossier:project_ref_id}/movie-wizard', MovieWizard::class
     ->middleware('cas.auth')
     ->name('movie-wizard');
 
-Route::get('film-financing-plan-download', [App\Http\Livewire\TableEditMovieFinancingPlan::class, 'download'])->middleware('cas.auth')->name('film-financing-plan-download');
-
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
@@ -96,9 +94,8 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/vg-p
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
-Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
-
 
 //Pending
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
@@ -109,6 +106,7 @@ Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name
 Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
 //Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
 Route::view('/demo', 'demo');
@@ -131,7 +129,9 @@ Route::resource('audience', 'App\Http\Controllers\AudienceController')->only('in
 Route::resource('genre', 'App\Http\Controllers\GenreController')->only('index');
 Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('index');
 Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
-Route::resource('film-financing-plan', 'App\Http\Controllers\FilmFinancingPlanController')->only('index');
+Route::resource('document', 'App\Http\Controllers\DocumentController')->only('index');
+
+Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
 //Data Tables
 Route::get('/tables/dossiers', function () {

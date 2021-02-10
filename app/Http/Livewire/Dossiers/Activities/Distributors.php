@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dossiers\Activities;
 
 use App\Models\Dossier;
 use App\Models\Distributor;
+use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -11,8 +12,10 @@ use Livewire\Component;
 
 class Distributors extends Component
 {
-    public $coordinatorCount = 0;
-    public $participantCount = 0;
+    // public $coordinatorCount = 0;
+    // public $participantCount = 0;
+
+    public $isBackoffice = false;
 
     public $showAddModal = false;
     public $showDeleteModal = false;
@@ -23,49 +26,53 @@ class Distributors extends Component
 
     // The authenticated user
     public User $user;
-    public $isBackoffice = false;
 
-    public $dists = [];
     public Distributor $currentDistributor;
 
-    public Dossier $dossier;
-    public Movie $movie;
+    public ?Movie $movie = null;
 
     protected $rules = [
         'currentDistributor.country_id' => 'required|integer',
         'currentDistributor.name' => 'required|string',
         'currentDistributor.role' => 'string',
         'currentDistributor.forecast_release_date' => 'required|date:d.m.Y',
+        'currentDistributor.pa_costs' => 'integer',
         'currentDistributor.forecast_grant' => 'integer',
     ];
 
-    public function mount()
+    public function mount(Dossier $dossier)
     {
         $this->user = Auth::user();
         $this->isBackoffice = $this->user->hasAnyRole(['editor', 'admin']);
         $this->currentDistributor = new Distributor();
-        $this->movie = new Movie();
 
-        $movieId = request('movie_id');
-        $fiche = $this->dossier->fiches()->first();
+        $fiche = $dossier->fiches()->first();
 
         if ($fiche) {
-            $this->movie = $fiche->media->grantable;
-        } else if ($movieId) {
-            $this->movie = Movie::find($movieId);
+            $this->movie = $fiche->movie;
+        } else {
+            $id = request()->query('movie_id', null);
+            if ($id) {
+                $this->movie = Movie::find($id);
+            }
         }
+    }
+
+    public function getFicheProperty()
+    {
+        return $this->dossier->fiches()->first();
     }
 
     public function showAdd($id = null)
     {
-        if (! $this->movie->id) {
+        if (! $this->movie) {
             $this->showNoMovieModal = true;
             return;
         }
 
         if ($id) {
             $this->editId = $id;
-            $this->currentDistributor = $this->movie->media
+            $this->currentDistributor = $this->movie
                 ->distributors()
                 ->find($id);
         } else {
@@ -86,14 +93,14 @@ class Distributors extends Component
     {
         $this->validate();
 
-        $this->currentDistributor->created_by = $this->user->id;
+        // $this->currentDistributor->created_by = $this->user->id;
         if ($this->editId) {
-            $this->movie->media
+            $this->movie
                 ->distributors()
                 ->find($this->editId)
                 ->update($this->currentDistributor->toArray());
         } else {
-            $this->movie->media
+            $this->movie
                 ->distributors()
                 ->save($this->currentDistributor);
         }
@@ -104,8 +111,7 @@ class Distributors extends Component
 
     public function deleteDistributor()
     {
-        // unset($this->distributors[$this->deleteId]);
-        $this->movie->media->distributors()
+        $this->movie->distributors()
             ->find($this->deleteId)
             ->delete();
         $this->deleteId = null;
@@ -116,8 +122,8 @@ class Distributors extends Component
     {
         $distributors = collect([]);
 
-        if ($this->movie->id) {
-            $distributors = $this->movie->media->distributors();
+        if ($this->movie) {
+            $distributors = $this->movie->distributors();
         }
 
         return view('livewire.dossiers.activities.distributors', [

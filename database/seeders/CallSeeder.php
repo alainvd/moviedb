@@ -14,6 +14,6 @@ class CallSeeder extends Seeder
      */
     public function run()
     {
-        Call::factory()->count(20)->create();
+        Call::factory()->count(50)->create();
     }
 }

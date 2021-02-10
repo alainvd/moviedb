@@ -3,9 +3,6 @@
 namespace App\Http\Livewire\Dossiers;
 
 use App\Models\Dossier;
-use App\Media;
-use App\Models\Activity;
-use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +19,6 @@ class MovieWizard extends Component
     // Fields
     public $originalTitle;
     public $director;
-    // public $selectedMovie;
 
     protected $rules = [
         'originalTitle' => 'required_without:director',
@@ -77,7 +73,7 @@ class MovieWizard extends Component
 
     public function selectMovie($id)
     {
-        $this->movie = Media::find($id)->grantable;
+        $this->movie = Movie::find($id);
     }
 
     public function render()
@@ -85,17 +81,12 @@ class MovieWizard extends Component
         $results = collect([]);
         $hasSearch = false;
 
-        $query = Media::where('grantable_type', 'App\Models\Movie')
-            ->join('movies', 'media.grantable_id', '=', 'movies.id')
-            ->join('fiches', 'fiches.media_id', '=', 'media.id')
+        $query = Movie::join('fiches', 'fiches.movie_id', '=', 'movies.id')
             ->whereNotIn('fiches.status_id', function ($query) {
                 $query->select('id')
                     ->from('statuses')
                     ->whereIn('name', ['Duplicated']);
-            })
-            ->with('grantable')
-            ->with('fiche')
-            ->with('people');
+            });
 
         if ($this->originalTitle) {
             $hasSearch = true;
@@ -109,8 +100,9 @@ class MovieWizard extends Component
                     ->from('crews')
                     ->join('people', 'people.id', '=', 'crews.person_id')
                     ->join('titles', 'titles.id', '=', 'crews.title_id')
-                    ->whereColumn('crews.media_id', 'media.id')
-                    ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$this->director}%'");
+                    ->whereColumn('crews.movie_id', 'movies.id')
+                    ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$this->director}%'")
+                    ->limit(1);
             }, 'DIRECTOR');
         }
 
@@ -125,7 +117,7 @@ class MovieWizard extends Component
             ])
             ->layout($layout, [
                 'title' => 'Films on the move',
-                'style' => 'background: url(\'' . asset('images/dossier/dots-side-1.png') . '\') right 30% no-repeat',
+                'class' => 'wizard-page',
             ]);
     }
 }

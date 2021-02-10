@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Movie;
 use App\Models\Producer;
-use App\Media;
 use App\Models\Country;
 use App\Models\Language;
 

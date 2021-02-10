@@ -1,7 +1,7 @@
 models:
 
   SalesAgent:
-    media_id: integer
+    movie_id: integer
     name: string
     country_id: integer
     contact_person: string
