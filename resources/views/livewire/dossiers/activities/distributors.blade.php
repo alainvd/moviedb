@@ -25,10 +25,10 @@
                     {{ $distributor->forecast_release_date }}
                 </x-table.cell>
                 <x-table.cell class="text-center">
-                    {{ 'p&a costs' }}
+                    {{ $distributor->pa_costs }} EURO
                 </x-table.cell>
                 <x-table.cell class="text-center">
-                    {{ $distributor->forecast_grant }}
+                    {{ $distributor->forecast_grant }} EURO
                 </x-table.cell>
                 <x-table.cell class="text-center space-x-2">
                     <a
@@ -47,7 +47,7 @@
             @empty
 
             <x-table.row>
-                <x-table.cell class="text-center" colspan="5">No distributors yet</x-table.cell>
+                <x-table.cell class="text-center" colspan="100%">No distributors yet</x-table.cell>
             </x-table.row>
 
             @endforelse
@@ -81,7 +81,7 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="my-4">
+            <div class="my-4 md:w-1/2">
                 <x-form.input
                     :id="'company-name'"
                     :label="'Company Name'"
@@ -110,7 +110,7 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="my-4">
+            <div class="my-4 md:w-1/2">
                 <x-form.datepicker
                     :id="'release-date'"
                     :label="'Forecast Release Date'"
@@ -122,13 +122,25 @@
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="my-4">
-                <x-form.input
+            <div class="my-4 md:w-1/2">
+                <x-form.simple-currency
+                    :id="'pa-costs'"
+                    :label="'P&A Costs'"
+                    :hasError="$errors->has('currentDistributor.pa_costs')"
+                    wire:model="currentDistributor.pa_costs">
+                </x-form.simple-currency>
+
+                @error ('currentDistributor.pa_costs')
+                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="my-4 md:w-1/2">
+                <x-form.simple-currency
                     :id="'forecast-grant'"
                     :label="'Forecast Grant'"
                     :hasError="$errors->has('currentDistributor.forecast_grant')"
                     wire:model="currentDistributor.forecast_grant">
-                </x-form.input>
+                </x-form.simple-currency>
 
                 @error ('currentDistributor.forecast_grant')
                     <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>

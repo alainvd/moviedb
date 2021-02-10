@@ -101,7 +101,8 @@ class MovieWizard extends Component
                     ->join('people', 'people.id', '=', 'crews.person_id')
                     ->join('titles', 'titles.id', '=', 'crews.title_id')
                     ->whereColumn('crews.movie_id', 'movies.id')
-                    ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$this->director}%'");
+                    ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$this->director}%'")
+                    ->limit(1);
             }, 'DIRECTOR');
         }
 
