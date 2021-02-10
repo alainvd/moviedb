@@ -115,7 +115,7 @@ class ProjectController extends Controller
 
         $dossier->company = $params['company'];
         if ($movie) {
-            $dossier->fiches()->save($movie->media->fiche);
+            $dossier->fiches()->save($movie->fiche);
         }
         $dossier->save();
 

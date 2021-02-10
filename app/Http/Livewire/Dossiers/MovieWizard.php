@@ -3,9 +3,6 @@
 namespace App\Http\Livewire\Dossiers;
 
 use App\Models\Dossier;
-use App\Media;
-use App\Models\Activity;
-use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +19,6 @@ class MovieWizard extends Component
     // Fields
     public $originalTitle;
     public $director;
-    // public $selectedMovie;
 
     protected $rules = [
         'originalTitle' => 'required_without:director',
@@ -91,7 +87,6 @@ class MovieWizard extends Component
                     ->from('statuses')
                     ->whereIn('name', ['Duplicated']);
             });
-            // ->with('people');
 
         if ($this->originalTitle) {
             $hasSearch = true;
@@ -105,7 +100,7 @@ class MovieWizard extends Component
                     ->from('crews')
                     ->join('people', 'people.id', '=', 'crews.person_id')
                     ->join('titles', 'titles.id', '=', 'crews.title_id')
-                    ->whereColumn('crews.media_id', 'media.id')
+                    ->whereColumn('crews.movie_id', 'movies.id')
                     ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$this->director}%'");
             }, 'DIRECTOR');
         }
