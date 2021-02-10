@@ -1,7 +1,7 @@
 <x-dynamic-component
     :component="$layout"
     :title="'Films on the Move'"
-    :style="'background: url(\'' . asset('images/dossier/dots-vertical-1.png') . '\') 2% 12% no-repeat'">
+    :class="'dossier-page'">
     <div class="px-4 bg-white">
         <!-- Title -->
 
@@ -76,6 +76,7 @@
             </x-layout.section>
 
             <div x-data class="flex items-center justify-end mt-32 space-x-3">
+                <x-button.download></x-button.download>
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
         </form>

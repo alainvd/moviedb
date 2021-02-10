@@ -19,15 +19,15 @@ class CrewSeeder extends Seeder
         Movie::all()->each(function ($movie) {
             // Add one director
             Crew::factory()
-                ->for(Title::factory()->state([
-                    'code' => 'DIRECTOR',
-                ]))
+                ->for(Title::where('code', 'DIRECTOR')->first())
                 ->create([
                     'movie_id' => $movie->id,
                 ]);
 
             // Add random crews
-            Crew::factory()->count(rand(3, 12))
+            Crew::factory()
+                ->count(rand(3, 12))
+                ->for(Title::where('code', '!=', 'DIRECTOR')->get()->random())
                 ->create([
                     'movie_id' => $movie->id
                 ]);

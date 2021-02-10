@@ -52,7 +52,7 @@ class CallFactory extends BaseFactory
             $this->faker->randomDigitNotNull()
         );
 
-        $action = Action::where('name', $this->faker->randomElement($codes))->first();
+        $action = $this->getRelation(Action::class);
 
         return [
             // H2020-LC-GD-2020-3

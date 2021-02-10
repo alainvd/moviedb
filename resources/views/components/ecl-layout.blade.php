@@ -15,7 +15,7 @@
     @livewireStyles
 </head>
 
-<body style="{{ $style ?? '' }}">
+<body class="{{ $class ?? '' }}">
 
 @include('impersonate')
 <div id="ec-globan"></div>
