@@ -90,6 +90,12 @@ class TableEditMovieCrews extends TableEditBase
         ];
     }
 
+    private function loadItems()
+    {
+        $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+        $this->addUniqueKeys();
+    }
+
     public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
@@ -98,11 +104,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
-            $this->addUniqueKeys();
-        } else {
-            $this->items = Crew::newMovieCrew();
-            $this->addUniqueKeys();
+            $this->loadItems();
         }
         $this->isApplicant = $isApplicant;
         $this->isEditor = $isEditor;

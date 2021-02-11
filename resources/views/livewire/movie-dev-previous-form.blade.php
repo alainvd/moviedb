@@ -77,7 +77,7 @@
             <div class="flex items-center justify-end mt-12 space-x-3">
                 <span>
                     <span x-data="{ open: false }" x-init="
-                            @this.on('notify-saved', () => {
+                            @this.on('notifySaved', () => {
                                 setTimeout(() => { open = false }, 2500);
                                 open = true;
                             })

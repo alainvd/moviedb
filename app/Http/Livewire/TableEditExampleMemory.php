@@ -53,7 +53,7 @@ class TableEditExampleMemory extends TableEditBase
         ];
     }
 
-    private function load()
+    private function loadItems()
     {
         $this->items = Producer::where('movie_id', $this->movie_id)->get()->toArray();
         $this->addUniqueKeys();
@@ -65,7 +65,7 @@ class TableEditExampleMemory extends TableEditBase
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie_id = $movie_id;
-            $this->load();
+            $this->loadItems();
         }
     }
 

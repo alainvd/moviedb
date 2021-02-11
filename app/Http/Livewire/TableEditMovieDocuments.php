@@ -66,7 +66,7 @@ class TableEditMovieDocuments extends TableEditBase
       ];
     }
 
-    private function load()
+    private function loadItems()
     {
         $this->items = Document::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
@@ -76,7 +76,7 @@ class TableEditMovieDocuments extends TableEditBase
     {
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->load();
+            $this->loadItems();
         }
     }
 

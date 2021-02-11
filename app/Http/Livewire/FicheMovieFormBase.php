@@ -57,13 +57,15 @@ class FicheMovieFormBase extends FicheFormBase
             $this->isNew = true;
             $this->fiche = new Fiche;
             $this->movie = new Movie(Movie::defaultsMovie());
-            $this->crews = Crew::newMovieCrew();
         } else {
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
             ));
-            // Load them all even if we don't need them on all forms
+            // Load them all even if we don't need them on all forms.
+            // If TableEdit classes emits items on mount, listeners on this class 
+            // are not yet ready to receive them.
+            // Therefore init values need to be loaded here.
             $this->crews = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
             $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
@@ -92,7 +94,7 @@ class FicheMovieFormBase extends FicheFormBase
                 'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
-            $this->emit('notify-saved');
+            $this->emit('notifySaved');
         } else {
             // When saving existing fiche
             $this->movie->save();
@@ -102,7 +104,7 @@ class FicheMovieFormBase extends FicheFormBase
                 )
             );
             $this->fiche->save();
-            $this->emit('notify-saved');
+            $this->emit('notifySaved');
         }
     }
 

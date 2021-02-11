@@ -143,7 +143,8 @@ class TableEditBase extends Component
 
     protected function sendItems()
     {
-        $this->emitUp('update-items', $this->items);
+        // Implement this in each subclass
+        // $this->emitUp('updateItemTypeItems', $this->items);
     }
 
 }

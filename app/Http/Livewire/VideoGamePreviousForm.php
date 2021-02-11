@@ -168,7 +168,7 @@ class VideoGamePreviousForm extends Component
                 'created_by' => 1,
             ])->save();
 
-            $this->emit('notify-saved');
+            $this->emit('notifySaved');
         } else { // When editing
             $this->movie->save();
             // $this->movie->languages()->attach(
@@ -180,7 +180,7 @@ class VideoGamePreviousForm extends Component
             $this->media->title = $this->movie->original_title;
             $this->media->save();
             $this->fiche->save();
-            $this->emit('notify-saved');
+            $this->emit('notifySaved');
         }
 
         // crew, producers, sales agents

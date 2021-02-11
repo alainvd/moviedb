@@ -51,7 +51,7 @@ class TableEditMovieSalesAgents extends TableEditBase
         ];
     }
 
-    private function load()
+    private function loadItems()
     {
         $this->items = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
@@ -63,7 +63,7 @@ class TableEditMovieSalesAgents extends TableEditBase
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->load();
+            $this->loadItems();
         }
     }
 
