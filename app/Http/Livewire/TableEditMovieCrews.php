@@ -30,7 +30,10 @@ class TableEditMovieCrews extends TableEditBase
 
     public $crewErrorMessages;
 
-    protected $listeners = ['crewErrorMessages'];
+    protected $listeners = [
+        'crewErrorMessages',
+        'movieCrewsAddRequired'
+    ];
 
     protected function defaults()
     {
@@ -93,6 +96,9 @@ class TableEditMovieCrews extends TableEditBase
     private function loadItems()
     {
         $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+        if ($this->movie) {
+            $this->movieCrewsAddRequired($this->movie->genre_id);
+        }
         $this->addUniqueKeys();
     }
 
@@ -144,5 +150,34 @@ class TableEditMovieCrews extends TableEditBase
 
     public function crewErrorMessages($messages) {
         $this->crewErrorMessages = $messages;
+    }
+
+    public function movieCrewsAddRequired($genre_id) {
+        $req_items = Crew::newMovieCrew($genre_id);
+        $req_items_title_ids = array_column($req_items, 'title_id');
+        foreach ($req_items as $req_item) {
+            if (!array_filter(
+                $this->items,
+                function ($item) use ($req_item) {
+                    return $item['title_id'] == $req_item['title_id'];
+                }
+            ))
+            {
+                $this->items[] = $req_item;
+            }
+        }
+        $this->items = array_map(
+            function($item) use ($req_items, $req_items_title_ids) {
+                // mark as required or not
+                if (in_array($item['title_id'], $req_items_title_ids)) {
+                    $item['required'] = true;
+                } else {
+                    $item['required'] = false;
+                }
+                return $item;
+            },
+            $this->items
+        );
+        $this->addUniqueKeys();
     }
 }

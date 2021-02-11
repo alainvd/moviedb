@@ -74,6 +74,14 @@ class FicheMovieFormBase extends FicheFormBase
         parent::mount($request);
     }
 
+    public function updated($name, $value)
+    {
+        if ($name == 'movie.genre_id') {
+            // Update the crews livewire component
+            $this->emit('movieCrewsAddRequired', $value);
+        }
+    }
+
     public function submit()
     {
         $this->movie->shooting_language = $this->shootingLanguages;

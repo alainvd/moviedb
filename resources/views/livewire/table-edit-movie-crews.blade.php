@@ -26,7 +26,10 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $titles[$item['title_id']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">
+                        @if(isset($item['required']) && $item['required'])<span class="text-red-500">*</span>@endif
+                        {{ $titles[$item['title_id']]['name'] }}
+                    </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['gender']) ? $genders[$item['person']['gender']] : '' }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_code[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
