@@ -26,8 +26,8 @@ class FormHelpers
         return $requiredFieldMessages;
     }
     
-    public static function requiredCrew($crews) {
-        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew())->get();
+    public static function requiredCrew($crews, $genre_id) {
+        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew($genre_id))->get();
         $requiredCrewMessages = [];
         foreach ($requiredTitles as $title) {
             if (!array_filter(
@@ -51,6 +51,8 @@ class FormHelpers
         return ['Film financing plan is required.'];
     }
 
+    // Will also return all "requiredIf" fields as required
+    // But those fields are always hidden in the frontend
     public static function isRequired($rules, $field) {
         if (isset($rules[$field])) {
             return Str::contains($rules[$field], 'required');

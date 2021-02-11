@@ -2,7 +2,7 @@
     <div class="col-span-1">
         <x-form.select
             :id="'film_country_of_origin'"
-            :label="'Country of Origin'"
+            :label="'MEDIA Film Nationality'"
             :hasError="$errors->has('movie.film_country_of_origin')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
@@ -21,7 +21,7 @@
     <div class="col-span-1">
         <x-form.input
             :id="'points-country_of_origin_points'"
-            :label="'Points for Country of Origin'"
+            :label="'Points for MEDIA Film Nationality'"
             :hasError="$errors->has('movie.country_of_origin_points')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.country_of_origin_points')"
             wire:model="movie.country_of_origin_points"

@@ -2,22 +2,23 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Crew;
-use App\Models\Document;
 use App\Models\Fiche;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Title;
-use App\Models\Country;
 use App\Models\Person;
+use App\Models\Country;
 use App\Models\Dossier;
+use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Audience;
+use App\Models\Document;
 use App\Models\Language;
 use App\Models\Producer;
 use App\Models\SalesAgent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class FicheMovieFormBase extends FicheFormBase
@@ -35,6 +36,19 @@ class FicheMovieFormBase extends FicheFormBase
     public $producers = [];
     public $sales_agents = [];
     public $documents = [];
+
+    public function validationAttributes()
+    {
+        // todo: finish for all fields
+        return [
+            'movie.rights_adapt_author_name' => 'Name of Author',
+            'movie.rights_adapt_original_title' => 'Start Date of the Ownership',
+            'movie.rights_adapt_contract_type' => 'Original Title',
+            'movie.rights_adapt_contract_start_date' => 'End Date of the Ownership',
+            'movie.rights_adapt_contract_end_date' => 'Type of contract with original Author',
+            'movie.rights_adapt_contract_signature_date' => 'Date of signature of the agreement',
+        ];
+    }
 
     public function mount(Request $request)
     {

@@ -37,7 +37,7 @@
     <div class="col-span-1">
         <x-form.select
             :id="'basic-film_country_of_origin'"
-            :label="'Country of Origin'"
+            :label="'MEDIA Film Nationality'"
             :hasError="$errors->has('movie.film_country_of_origin')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">

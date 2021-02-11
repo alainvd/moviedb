@@ -5,7 +5,7 @@
         Sales Agents
         @endif
         @if($fiche == 'devPrev')
-        Distribution
+        Countries of Distribution
         @endif
     </div>
 
@@ -22,7 +22,7 @@
                 <x-table.heading>Country</x-table.heading>
                 @if($fiche=='dist')<x-table.heading>Contact Person</x-table.heading>@endif
                 @if($fiche=='dist')<x-table.heading>Email</x-table.heading>@endif
-                @if($fiche=='devPrev')<x-table.heading>Date</x-table.heading>@endif
+                @if($fiche=='devPrev')<x-table.heading>Release/Broadcast Date</x-table.heading>@endif
                 <x-table.heading></x-table.heading>
             </x-slot>
             
@@ -132,7 +132,7 @@
                     <div class="col-span-1">
                         <x-form.datepicker
                             :id="'agents_distribution_date'"
-                            :label="'Date'"
+                            :label="'Release/Broadcast Date'"
                             :hasError="$errors->has('editing.distribution_date')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.distribution_date')"
                             wire:model.lazy="editing.distribution_date">

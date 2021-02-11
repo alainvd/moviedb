@@ -5,10 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Crew;
 use App\Models\Fiche;
 use App\Models\Movie;
-use App\Models\Document;
+use App\Models\Title;
+use App\Models\Person;
 use App\Models\Dossier;
 use App\Models\Activity;
-use App\Models\Person;
+use App\Models\Document;
 use App\Models\Producer;
 use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
@@ -98,7 +99,7 @@ class MovieDistForm extends FicheMovieFormBase
 
         // Validate subform
         $this->emit('crewErrorMessages', array_merge(
-            FormHelpers::requiredCrew($this->crews),
+            FormHelpers::requiredCrew($this->crews, $this->movie->genre_id),
             FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrews::class, function($crew) {return Title::find($crew['title_id'])->name;})
         ));
 

@@ -57,12 +57,12 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'movie.rights_contract_end_date' => 'required|date:d.m.Y',
         'movie.rights_contract_signature_date' => 'required|date:d.m.Y',
         // dependant fields
-        'movie.rights_adapt_author_name' => 'string',
-        'movie.rights_adapt_original_title' => 'string',
-        'movie.rights_adapt_contract_type' => 'string',
-        'movie.rights_adapt_contract_start_date' => 'date:d.m.Y',
-        'movie.rights_adapt_contract_end_date' => 'date:d.m.Y',
-        'movie.rights_adapt_contract_signature_date' => 'date:d.m.Y',
+        'movie.rights_adapt_author_name' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_original_title' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_type' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_start_date' => 'date:d.m.Y|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_end_date' => 'date:d.m.Y|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_signature_date' => 'date:d.m.Y|requiredIf:movie.rights_origin_of_work,ADAPTATION',
 
         'movie.total_budget_euro' => 'required|integer',
 
@@ -83,7 +83,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         // Validate subform
         $this->emit('crewErrorMessages', array_merge(
-            FormHelpers::requiredCrew($this->crews),
+            FormHelpers::requiredCrew($this->crews, $this->movie->genre_id),
             FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;})
         ));
 

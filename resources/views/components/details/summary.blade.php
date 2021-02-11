@@ -25,7 +25,7 @@
             :id="'isan'"
             :label="'ISAN'"
             :hasError="$errors->has('movie.isan')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_currency_amount')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.isan')"
             wire:model="movie.isan">
         </x-form.input>
 
@@ -39,7 +39,7 @@
             :id="'synopsis'"
             :label="'Synopsis'"
             :hasError="$errors->has('movie.synopsis')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_currency_amount')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.synopsis')"
             wire:model="movie.synopsis">
         </x-form.textarea>
 
