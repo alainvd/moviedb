@@ -22,11 +22,11 @@ class ActivitySeeder extends Seeder
             ],
             [
                 'name' => 'previous-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEEU', 'DEVSLATEEUMINI', 'EUCODEV'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'DEVCO'],
             ],
             [
                 'name' => 'current-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEEU', 'DEVSLATEEUMINI', 'EUCODEV'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'DEVCO'],
             ],
             [
                 'name' => 'distributors',
@@ -40,17 +40,17 @@ class ActivitySeeder extends Seeder
                 'min_current_works' => 3,
                 'max_current_works' => 5,
             ],
-            'DEVSLATEEU' => [
-                'min_previous_works' => 2,
-                'min_current_works' => 3,
-                'max_current_works' => 5,
-            ],
-            'DEVSLATEEUMINI' => [
+            // 'DEVSLATEEU' => [
+            //     'min_previous_works' => 2,
+            //     'min_current_works' => 3,
+            //     'max_current_works' => 5,
+            // ],
+            'DEVSLATEMINI' => [
                 'min_previous_works' => 2,
                 'min_current_works' => 2,
                 'max_current_works' => 3,
             ],
-            'EUCODEV' => [
+            'DEVCO' => [
                 'min_previous_works' => 1,
                 'min_current_works' => 1,
                 'max_current_works' => 1,

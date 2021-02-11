@@ -16,6 +16,15 @@ class ProjectController extends Controller
         'film_title' => 'required',
     ];
 
+    protected $pageTitles = [
+        'DISTSEL' => 'Films on the Move',
+        'DISTSAG' => 'European Sales Support',
+        'DEVSLATE' => 'European Slate Development',
+        'DEVSLATEMINI' => 'European Mini-slate Development',
+        'DEVCO' => 'European Co-development',
+        'TV' => 'TV and Online Content',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -28,13 +37,7 @@ class ProjectController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * What do I need?
-     * * call_id
-     * * project_ref_id ? (might create a new project)
-     * *
-     *
-     * Keep in mind: call deadline
+     * @TODO Keep in mind: call deadline
      *
      * @return \Illuminate\Http\Response
      */
@@ -58,8 +61,9 @@ class ProjectController extends Controller
         ]);
 
         $layout = $this->getLayout();
+        $pageTitles = $this->pageTitles;
 
-        return view('dossiers.create', compact('dossier', 'layout'));
+        return view('dossiers.create', compact('dossier', 'layout', 'pageTitles'));
     }
 
     /**
@@ -82,8 +86,9 @@ class ProjectController extends Controller
     public function show(Dossier $dossier)
     {
         $layout = $this->getLayout();
+        $pageTitles = $this->pageTitles;
 
-        return view('dossiers.create', compact('dossier', 'layout'));
+        return view('dossiers.create', compact('dossier', 'layout', 'pageTitles'));
     }
 
     /**

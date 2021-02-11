@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * @todo determine what type of dossier this is
+ * - if distsel, simply save the fiche
+ * - if devslate, etc. save the fiche as part of the previous-work activity
+ */
 class MovieWizard extends Component
 {
     use WithPagination;
