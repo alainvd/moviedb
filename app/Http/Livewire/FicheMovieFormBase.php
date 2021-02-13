@@ -102,7 +102,7 @@ class FicheMovieFormBase extends FicheFormBase
                 'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
-            $this->emit('notifySaved');
+            $this->notify('Fiche is created');
         } else {
             // When saving existing fiche
             $this->movie->save();
@@ -112,7 +112,7 @@ class FicheMovieFormBase extends FicheFormBase
                 )
             );
             $this->fiche->save();
-            $this->emit('notifySaved');
+            $this->notify('Fiche is saved');
         }
     }
 

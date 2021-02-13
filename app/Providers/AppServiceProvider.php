@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use Livewire\Component;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Component::macro('notify', function ($text, $type = 'success') {
+            $this->dispatchBrowserEvent('notify', ['text'=>$text, 'type'=>$type]);
+        });
+
         Paginator::useTailwind();
     }
 }

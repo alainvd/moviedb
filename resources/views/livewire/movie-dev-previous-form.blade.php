@@ -78,25 +78,6 @@
 
             <!-- buttons -->
             <div class="flex items-center justify-end mt-12 space-x-3">
-                <span>
-                    <span x-data="{ open: false }" x-init="
-                            @this.on('notifySaved', () => {
-                                setTimeout(() => { open = false }, 2500);
-                                open = true;
-                            })
-                        " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-gray-600">
-                        Saved!
-                    </span>
-                    <span x-data="{ open: false }" x-init="
-                            @this.on('validation-errors', () => {
-                                setTimeout(() => { open = false }, 2500);
-                                open = true;
-                            })
-                        " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-red-600">
-                        Validation errors!
-                    </span>
-                </span>
-
                 <div x-data class="flex items-center justify-end space-x-3">
                     <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
                     <x-button.primary type="submit">Save</x-button.primary>

@@ -258,7 +258,7 @@ class VideoGamePreviousForm extends Component
     public function render()
     {
         if($this->getErrorBag()->any()){
-            $this->emit('validation-errors');
+            $this->notify('Validation errors', 'error');
         }
 
         return view('livewire.video-game-previous-form', ['rules' => $this->rules()])

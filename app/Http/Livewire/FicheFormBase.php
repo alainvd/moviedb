@@ -38,7 +38,7 @@ class FicheFormBase extends Component
     public function render()
     {
         if($this->getErrorBag()->any()){
-            $this->emit('validation-errors');
+            $this->notify('Validation errors', 'error');
         }
     }
 

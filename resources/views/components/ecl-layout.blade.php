@@ -26,6 +26,8 @@
     {{ $slot }}
 </main>
 
+<x-notification />
+
 @include('partials.ecl.footer')
 
 <script src="{{ asset('js/app.js') }}" defer></script>
