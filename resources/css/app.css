@@ -6,6 +6,7 @@
 
 @import '../../node_modules/pikaday/css/pikaday.css';
 @import './pikaday.css';
+@import '../../node_modules/tippy.js/dist/tippy.css';
 
 [x-cloak] {
     display: none;
@@ -35,9 +36,6 @@ main {
 #fdc-basic-dev-current:before {
     content: "basic-dev-current";
 }
-#fdc-basic-dev-prev:before {
-    content: "basic-dev-prev";
-}
 #fdc-basic:before {
     content: "basic";
 }
@@ -52,9 +50,6 @@ main {
 }
 #fdc-photography-dev-current:before {
     content: "photography-dev-current";
-}
-#fdc-photography-dev-prev:before {
-    content: "photography-dev-prev";
 }
 #fdc-photography:before {
     content: "photography";
