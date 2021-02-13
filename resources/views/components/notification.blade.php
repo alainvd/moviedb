@@ -6,7 +6,7 @@
             // ...
         },
     }"
-    @notify.window="console.log($event.detail); let message = $event.detail; messages.push(message); setTimeout(() => { remove(message) }, 250000)"
+    @notify.window="console.log($event.detail); let message = $event.detail; messages.push(message); setTimeout(() => { remove(message) }, 2500)"
     class="fixed inset-0 flex flex-col items-end justify-center px-4 py-6 space-y-4 pointer-events-none sm:p-6 sm:justify-start z-100"
 >
     <template x-for="(message, messageIndex) in messages" :key="messageIndex" hidden>
