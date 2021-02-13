@@ -9,6 +9,7 @@ class TableEditMovieSalesAgentsDevPrevious extends TableEditMovieSalesAgents
     {
         return [
             'editing.name' => 'required|string|max:255',
+            'editing.role' => 'required|string',
             'editing.country' => 'required|string',
             'editing.contact_person' => 'string',
             'editing.email' => 'string',

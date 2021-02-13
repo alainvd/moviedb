@@ -43,6 +43,7 @@ class MovieFactory extends BaseFactory
             'film_delivery_platform' => $this->faker->randomElement(['CINEMA', 'TV', 'DIGITAL']),
             'european_nationality_flag' => $this->faker->randomElement(['OK', 'Not OK', 'Under processing', 'Missing information']),
             'film_country_of_origin' => $country_code,
+            'film_country_of_origin_2014_2020' => $country_code,
             'country_of_origin_points' => $this->faker->randomFloat(2, 1, 2),
             'link_applicant_work' => $this->faker->randomElement(['WRKPRODAP', 'WRKPERS']),
             'link_applicant_work_person_name' => $this->faker->name,

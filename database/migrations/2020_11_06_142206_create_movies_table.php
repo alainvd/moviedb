@@ -27,6 +27,7 @@ class CreateMoviesTable extends Migration
             $table->integer('number_of_episodes')->nullable();
             $table->integer('length_of_episodes')->nullable();
             $table->string('film_country_of_origin')->nullable();
+            $table->string('film_country_of_origin_2014_2020')->nullable();
             $table->integer('year_of_copyright')->nullable();
             $table->string('film_delivery_platform')->nullable();
             $table->integer('directors_film')->nullable();

@@ -51,6 +51,19 @@ class FormHelpers
         return ['Film financing plan is required.'];
     }
 
+    public static function validateDistributorTerritories($salesAgents) {
+        $territories = [];
+        foreach($salesAgents as $salesAgent) {
+            if (!in_array($salesAgent['country'], $territories)) {
+                $territories[] = $salesAgent['country'];
+            }
+        }
+        if (count($territories) < 3) {
+            return ['3 territories are mandatory.'];
+        }
+        return [];
+    }
+
     // Will also return all "requiredIf" fields as required
     // But those fields are always hidden in the frontend
     public static function isRequired($rules, $field) {

@@ -19,6 +19,7 @@
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Company Name</x-table.heading>
+                @if($fiche=='devPrev')<x-table.heading>Role</x-table.heading>@endif
                 <x-table.heading>Country</x-table.heading>
                 @if($fiche=='dist')<x-table.heading>Contact Person</x-table.heading>@endif
                 @if($fiche=='dist')<x-table.heading>Email</x-table.heading>@endif
@@ -30,6 +31,7 @@
                 @foreach ($items as $item)
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
+                    @if($fiche=='devPrev')<x-table.cell class="text-center">{{ $distributorRoles[$item['role']] }}</x-table.cell>@endif
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>@endif
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>@endif
@@ -74,6 +76,24 @@
                         </x-form.input>
 
                         @error('editing.name')
+                            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <x-form.select
+                            :id="'agents_role'"
+                            :label="'Role'"
+                            :hasError="$errors->has('editing.role')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.role')"
+                            wire:model="editing.role">
+                
+                            @foreach ($distributorRoles as $key => $value)
+                                <option value="{{ $key }}">{{ $value }}</option>
+                            @endforeach
+                        </x-form.select>
+                
+                        @error('editing.role')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>

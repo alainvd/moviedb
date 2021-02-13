@@ -10,10 +10,12 @@
 
             <!-- basic -->
             <div class="my-8">
-                <x-details.basic-dev-prev
+                <x-details.basic
                     :rules="$rules"
                     :movie="$movie"
                     :isApplicant="$isApplicant"
+                    :isEditor="$isEditor"
+                    :audiences="$audiences"
                     :countries="$countries"
                     :filmTypes="$filmTypes"
                     :genres="$genres"
@@ -31,11 +33,12 @@
 
             <!-- photography -->
             <div class="my-8">
-                <x-details.photography-dev-prev
+                <x-details.photography
                     :rules="$rules"
                     :movie="$movie"
                     :filmFormats="$filmFormats"
-                    :audiences="$audiences"
+                    :isApplicant="$isApplicant"
+                    :isEditor="$isEditor"
                     :languages="$languages"
                     :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>

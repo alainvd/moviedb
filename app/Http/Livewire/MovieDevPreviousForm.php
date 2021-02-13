@@ -32,14 +32,19 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
+        'movie.film_delivery_platform' => 'string',
+        'movie.audience_id' => 'required|integer',
+        'movie.film_type' => 'string',
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string',
 
-        'movie.film_length' => 'required|integer',
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.audience_id' => 'required|integer',
+        'movie.film_length' => 'required|integer',
+        'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
         // dependant fields
@@ -68,9 +73,9 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         );
 
         // Validate subform
-        $this->emit('salesAgentErrorMessages',
-            FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];})
-        );
+        $errors1 = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];});
+        $errors2 = FormHelpers::validateDistributorTerritories($this->sales_agents);
+        $this->emit('salesAgentErrorMessages', array_merge($errors1, $errors2));
     }
 
     public function mount(Request $request)

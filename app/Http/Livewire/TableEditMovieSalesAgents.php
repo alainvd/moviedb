@@ -15,6 +15,8 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public $countries_by_code = [];
 
+    public $distributorRoles;
+
     public $salesAgentErrorMessages;
 
     protected $listeners = ['salesAgentErrorMessages'];
@@ -61,6 +63,11 @@ class TableEditMovieSalesAgents extends TableEditBase
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
+        $this->distributorRoles = [
+            'PLATFORM' => 'Platform',
+            'DISTRIBUTOR' => 'Distributor',
+            'BROADCASTER' => 'Broadcaster',
+        ];
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();

@@ -19,6 +19,26 @@
     </div>
 
     <div class="col-span-1">
+        <x-form.select
+            :id="'film_country_of_origin_2014_2020'"
+            :label="'MEDIA Film Nationality 2014-2020'"
+            :hasError="$errors->has('movie.film_country_of_origin_2014_2020')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin_2014_2020')"
+            :disabled="true"
+            wire:model="movie.film_country_of_origin_2014_2020">
+
+            @foreach($countries as $country)
+                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+            @endforeach
+
+        </x-form.select>
+
+        @error('movie.film_country_of_origin_2014_2020')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-span-1">
         <x-form.input
             :id="'points-country_of_origin_points'"
             :label="'Points for MEDIA Film Nationality'"

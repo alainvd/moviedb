@@ -121,7 +121,7 @@
     <div class="col-span-1">
         <x-form.select
             :id="'audience'"
-            :label="'Audience'"
+            :label="'Primary Audience'"
             :hasError="$errors->has('movie.audience_id')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.audience_id')"
             wire:model="movie.audience_id">

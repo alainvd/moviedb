@@ -19,6 +19,7 @@ class SalesAgent extends Model
     protected $fillable = [
         'movie_id',
         'name',
+        'role',
         'country',
         'contact_person',
         'email',
@@ -53,6 +54,7 @@ class SalesAgent extends Model
     {
         return [
             'name' => '',
+            'role' => '',
             'country' => '',
             'contact_person' => '',
             'email' => '',
