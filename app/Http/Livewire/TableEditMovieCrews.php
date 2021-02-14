@@ -135,6 +135,7 @@ class TableEditMovieCrews extends TableEditBase
                 $this->points_total += $item['points'];
             }
         }
+        $this->emit('totalPointsCrews', $this->points_total);
     }
 
     public function saveItem()

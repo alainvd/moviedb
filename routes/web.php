@@ -129,6 +129,7 @@ Route::resource('genre', 'App\Http\Controllers\GenreController')->only('index');
 Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('index');
 Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
 Route::resource('document', 'App\Http\Controllers\DocumentController')->only('index');
+Route::resource('location', 'App\Http\Controllers\LocationController')->only('index');
 
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
@@ -138,4 +139,3 @@ Route::get('/tables/dossiers', function () {
 Route::get('/tables/movies', function () {
     return view('livewire.movie-datatables');})->name('table_movies');
 
-//Unused Routes

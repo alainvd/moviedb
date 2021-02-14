@@ -15,6 +15,7 @@ use App\Models\Activity;
 use App\Models\Audience;
 use App\Models\Document;
 use App\Models\Language;
+use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class FicheMovieFormBase extends FicheFormBase
     public $shootingLanguages;
 
     public $crews = [];
+    public $locations = [];
     public $producers = [];
     public $sales_agents = [];
     public $documents = [];
@@ -67,6 +69,7 @@ class FicheMovieFormBase extends FicheFormBase
             // are not yet ready to receive them.
             // Therefore init values need to be loaded here.
             $this->crews = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+            $this->locations = Location::where('movie_id',$this->movie->id)->get()->toArray();
             $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
             $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
@@ -166,6 +169,11 @@ class FicheMovieFormBase extends FicheFormBase
     public function updateMovieCrews($items)
     {
         $this->crews = $items;
+    }
+
+    public function updateMovieLocations($items)
+    {
+        $this->locations = $items;
     }
 
     public function updateMovieProducers($items)

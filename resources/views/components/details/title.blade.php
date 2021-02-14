@@ -17,7 +17,6 @@
             });
         });
     </script>
-    </div>
 
     @if($fiche->updated_at)
     <div class="mt-3 text-xs tracking-tight text-gray-600 align-baseline">

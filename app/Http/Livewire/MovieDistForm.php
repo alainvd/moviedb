@@ -10,6 +10,7 @@ use App\Models\Person;
 use App\Models\Dossier;
 use App\Models\Activity;
 use App\Models\Document;
+use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
@@ -18,14 +19,21 @@ use Illuminate\Http\Request;
 class MovieDistForm extends FicheMovieFormBase
 {
 
+    public $totalPointsCrews = 0;
+    public $totalPointsLocations = 0;
+    public $totalPoints = 0;
+
     protected function getListeners()
     {
         return array_merge(
             parent::getListeners(), [
             'updateMovieCrews',
+            'updateMovieLocations',
             'updateMovieProducers',
             'updateMovieSalesAgents',
             'updateMovieDocuments',
+            'totalPointsCrews',
+            'totalPointsLocations',
         ]);
     }
 
@@ -106,6 +114,13 @@ class MovieDistForm extends FicheMovieFormBase
         ));
 
         // Validate subform
+        $this->emit('locationErrorMessages', array_merge(
+            // TODO: required locations
+            // FormHelpers::requiredCrew($this->crews, $this->movie->genre_id),
+            FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return $location['name'];})
+        ));
+
+        // Validate subform
         $this->emit('producerErrorMessages',
             FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];})
         );
@@ -121,9 +136,29 @@ class MovieDistForm extends FicheMovieFormBase
         );
     }
 
+    public function totalPointsCrews($points)
+    {
+        $this->totalPointsCrews = $points;
+        $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
+    }
+
+    public function totalPointsLocations($points)
+    {
+        $this->totalPointsLocations = $points;
+        $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
+    }
+
     public function mount(Request $request)
     {
         parent::mount($request);
+        // init points value
+        foreach($this->crews as $crew) {
+            $this->totalPointsCrews += $crew['points'];
+        }
+        foreach($this->locations as $location) {
+            $this->totalPointsLocations += $location['points'];
+        }
+        $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
     }
 
     public function reject()
@@ -136,8 +171,9 @@ class MovieDistForm extends FicheMovieFormBase
     {
         parent::submit();
 
-        // crew, producers, sales agents, documents
+        // crew, location, producers, sales agents, documents
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
+        $this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);

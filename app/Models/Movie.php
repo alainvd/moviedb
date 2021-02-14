@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Crew;
+use App\Models\Location;
 use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Audience;
@@ -63,6 +64,11 @@ class Movie extends Model
     public function crew()
     {
         return $this->hasMany(Crew::class, 'movie_id', 'id');
+    }
+
+    public function location()
+    {
+        return $this->hasMany(Location::class, 'movie_id', 'id');
     }
 
     public function genre()

@@ -6,7 +6,7 @@ models:
     filename: string
     comments: string
     relationships:
-      belongsTo: Media
+      belongsTo: Movie
 
 controllers:
 

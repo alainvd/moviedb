@@ -46,11 +46,6 @@
         </x-table>
 
         <div class="mt-5 text-right">
-            @if ($isEditor && $fiche=='dist')
-            <span class="mr-4">
-                TOTAL SCORE: <span class="font-bold" x-text="points_total"></span>
-            </span>
-            @endif
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>

@@ -36,6 +36,19 @@
                 @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
+            <!-- location -->
+            <div class="my-8" id="table-location">
+                @livewire('table-edit-movie-locations', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+            </div>
+
+            @if ($isEditor)
+            <div class="mt-5 text-right" x-data="{points: @entangle('totalPoints')}">
+                <span class="mr-4">
+                    TOTAL SCORE: <span class="font-bold" x-text="points"></span>
+                </span>
+            </div>
+            @endif
+
             <!-- points -->
             @if($isEditor)
             <div class="my-8">

@@ -9,7 +9,7 @@ models:
     share: integer
     budget: integer
     relationships:
-      belongsTo: Country, Media
+      belongsTo: Country, Movie
 
 controllers:
 

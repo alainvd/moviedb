@@ -1,0 +1,19 @@
+models:
+
+  Location:
+    movie_id: integer
+    type: string
+    name: string
+    country: string
+    points: decimal
+    relationships:
+      belongsTo: Movie
+
+controllers:
+  Location:
+    index:
+      query: all
+      render: location.index with:locations
+
+
+seeders: Location
