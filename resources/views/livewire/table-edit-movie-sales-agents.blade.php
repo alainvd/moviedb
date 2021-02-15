@@ -14,7 +14,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", function(event) { 
                 window.tippy('#title-info', {
-                    content: 'In order to be eligible, the recent work must fulfil minimum conditions in terms of having been commercially distributed. Please consult the Call’s eligibility criteria for the conditions that apply, and complete the table. If a distributor released or broadcasted the work in more than one country, add a line per country. The date to be provided is the one of the actual official release in cinema or the broadcast date.',
+                    content: 'In order to be eligible, the recent work must fulfil minimum conditions in terms of having been commercially distributed. Please consult the Call’s eligibility criteria for the conditions that apply, and complete the table. The date to be provided is the one of the actual official release in cinema or the broadcast date.',
                     placement: 'bottom',
                 });
             });
