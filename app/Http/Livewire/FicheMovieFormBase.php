@@ -101,10 +101,12 @@ class FicheMovieFormBase extends FicheFormBase
             );
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
-                'dossier_id' => $this->dossier->id,
-                'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
+            $this->dossier->fiches()->attach(
+                $this->fiche->id,
+                ['activity_id' => $this->activity->id]
+            );
             $this->notify('Fiche is created');
         } else {
             // When saving existing fiche

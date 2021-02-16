@@ -38,6 +38,7 @@ class FicheFormBase extends Component
     public function render()
     {
         if($this->getErrorBag()->any()){
+            // TODO: figure out why this is repeating all the time
             $this->notify('Validation errors', 'error');
         }
     }
