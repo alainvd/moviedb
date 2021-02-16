@@ -106,6 +106,7 @@ Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name
 Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
 //Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
 Route::view('/demo', 'demo');

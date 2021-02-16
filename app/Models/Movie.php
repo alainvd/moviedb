@@ -120,8 +120,7 @@ class Movie extends Model
         $director = $this->people()->where(function ($query) {
             $query->select('code')
                 ->from('titles')
-                ->whereColumn('titles.id', 'crews.title_id')
-                ->limit(1);
+                ->whereColumn('titles.id', 'crews.title_id');
         }, 'DIRECTOR')->first();
 
         if ($director) {

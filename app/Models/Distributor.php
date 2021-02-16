@@ -10,14 +10,6 @@ class Distributor extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'forecast_release_date' => 'date:d.m.Y',
-    ];
-
-    protected $dates = [
-        'forecast_release_date',
-    ];
-
     protected $fillable = [
         'country_id',
         'name',
@@ -38,5 +30,10 @@ class Distributor extends Model
     public function movie()
     {
         return $this->belongsToMany(Movie::class);
+    }
+
+    public function getForecastReleaseDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }
