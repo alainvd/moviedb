@@ -26,7 +26,6 @@ class FicheFactory extends BaseFactory
     {
         return [
             'movie_id' => $this->getRelationId(Movie::class),
-            'dossier_id' => $this->getRelationId(Dossier::class),
             'status_id' => $this->getRelationId(Status::class),
             'created_by' => $this->getRelationId(User::class),
             'comments' => $this->faker->text(),

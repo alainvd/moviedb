@@ -3,10 +3,8 @@
 
 namespace Database\Seeders;
 
-
 use App\Models\Dossier;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DossierSeeder extends Seeder
 {
@@ -17,7 +15,6 @@ class DossierSeeder extends Seeder
      */
     public function run()
     {
-        Dossier::factory(40)->create();
-
+        Dossier::factory()->count(40)->create();
     }
 }

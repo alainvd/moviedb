@@ -1,16 +1,13 @@
 <x-dynamic-component
     :component="$layout"
-    :title="'Films on the Move'"
+    :title="$pageTitles[$dossier->action->name]"
     :class="'dossier-page'">
     <div class="px-4 bg-white">
-        <!-- Title -->
 
-        @if (Auth::user()->hasRole('applicant'))
-            @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
-                @include('dossiers.instructions.dist')
-            @endif
-        @else
-            <h1 class="mt-8 text-3xl font-light leading-tight">Films on the Move</h1>
+        @include('dossiers.instructions.index', ['dossier' => $dossier])
+
+        @if (! Auth::user()->hasRole('applicant'))
+
         @endif
 
         <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
@@ -61,9 +58,11 @@
             <x-layout.section>
                 @foreach ($dossier->action->activities as $activity)
 
-                    @foreach($activity->pivot->rules as $ruleName => $rule)
-                        <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
-                    @endforeach
+                    @if ($activity->pivot->rules)
+                        @foreach($activity->pivot->rules as $ruleName => $rule)
+                            <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
+                        @endforeach
+                    @endif
 
                     @livewire(
                         "dossiers.activities.$activity->name",
