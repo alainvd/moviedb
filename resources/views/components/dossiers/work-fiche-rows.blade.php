@@ -2,16 +2,16 @@
 
 <x-table.row>
     <x-table.cell class="text-center font-md tracking-tight">
-        {{ $fiche->media->title }}
+        {{ $fiche->movie->original_title }}
     </x-table.cell>
     <x-table.cell class="text-center font-md tracking-tight">
-        {{ $fiche->media->genre->name }}
+        {{ $fiche->movie->genre->name }}
     </x-table.cell>
     <x-table.cell class="text-center font-md tracking-tight">
-        {{ $fiche->media->grantable->year_of_copyright }}
+        {{ $fiche->movie->year_of_copyright }}
     </x-table.cell>
     <x-table.cell class="text-center font-md tracking-tight">
-        {{ $fiche->media->grantable->id }}
+        {{ $fiche->movie->id }}
     </x-table.cell>
     <x-table.cell class="text-center space-x-2">
         <a href="{{ url(

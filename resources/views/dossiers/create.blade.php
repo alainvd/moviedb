@@ -58,9 +58,11 @@
             <x-layout.section>
                 @foreach ($dossier->action->activities as $activity)
 
-                    @foreach($activity->pivot->rules as $ruleName => $rule)
-                        <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
-                    @endforeach
+                    @if ($activity->pivot->rules)
+                        @foreach($activity->pivot->rules as $ruleName => $rule)
+                            <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
+                        @endforeach
+                    @endif
 
                     @livewire(
                         "dossiers.activities.$activity->name",

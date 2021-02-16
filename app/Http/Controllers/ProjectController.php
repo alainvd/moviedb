@@ -116,12 +116,8 @@ class ProjectController extends Controller
         $params = $request->only(['company', 'movie_id']);
 
         $dossier = Dossier::findOrFail($id);
-        $movie = Movie::findOrFail($params['movie_id']);
 
         $dossier->company = $params['company'];
-        if ($movie) {
-            $dossier->fiches()->save($movie->fiche);
-        }
         $dossier->save();
 
         return redirect()->route('dossiers.show', $dossier);
