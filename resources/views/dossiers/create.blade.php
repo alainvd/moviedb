@@ -6,10 +6,6 @@
 
         @include('dossiers.instructions.index', ['dossier' => $dossier])
 
-        @if (! Auth::user()->hasRole('applicant'))
-
-        @endif
-
         <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf
             {{ method_field('PATCH') }}

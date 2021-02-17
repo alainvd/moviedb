@@ -14,12 +14,14 @@
 
         <x-slot name="body">
 
-            @if ($dossier->fiches()->forActivity($activity->id)->count())
+            @if ($results->count())
 
                 <x-dossiers.work-fiche-rows
-                    :fiches="$dossier->fiches()->forActivity($activity->id)->get()"
+                    :type="'current'"
+                    :fiches="$results"
                     :dossier="$dossier"
-                    :activity="$activity"></x-dossiers.work-fiche-rows>
+                    :activity="$activity">
+                </x-dossiers.work-fiche-rows>
 
             @else
 
@@ -33,12 +35,30 @@
     </x-table>
 
     @error('current_works')
-    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
     @enderror
 
     <div class="mt-5 text-right">
-        <x-anchors.secondary :url="url(sprintf('dossiers/%s/activities/%s/fiches/dist',$dossier->id, $activity->id))">
+        <x-anchors.secondary :url="route('dev-current', compact('dossier', 'activity'))">
             Add
         </x-anchors.secondary>
     </div>
+
+    <x-modal.confirmation wire:model.defer="showDeleteModal">
+        <x-slot name="title">Remove Current Work</x-slot>
+
+        <x-slot name="content">
+            <div class="py-8 text-xl">
+                Are you sure you want to remove this current work from the dossier?
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <div class="flex justify-end items-center space-x-3">
+                <x-button.primary wire:click="deleteCurrentWork">Yes</x-button>
+
+                <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
+            </div>
+        </x-slot>
+    </x-modal.confirmation>
 </div>
