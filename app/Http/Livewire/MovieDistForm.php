@@ -44,7 +44,7 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.film_country_of_origin_2014_2020' => 'string',
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
-        'movie.film_delivery_platform' => 'required|string',
+        'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string',
 
@@ -69,7 +69,7 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.film_country_of_origin_2014_2020' => 'string',
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
-        'movie.film_delivery_platform' => 'required|string',
+        'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string',
 

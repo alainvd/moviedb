@@ -32,7 +32,7 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
-        'movie.film_delivery_platform' => 'string',
+        'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'string',
 

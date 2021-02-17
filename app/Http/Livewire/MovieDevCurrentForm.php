@@ -36,7 +36,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'movie.film_country_of_origin' => 'string',
         'movie.audience_id' => 'required|integer',
         'movie.genre_id' => 'required|integer',
-        'movie.film_delivery_platform' => 'required|string',
+        'movie.delivery_platform' => 'required|string',
         'movie.user_experience' => 'required|string',
         'movie.film_type' => 'required|string',
 

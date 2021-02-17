@@ -40,7 +40,7 @@ class MovieFactory extends BaseFactory
             'shooting_start' => $this->faker->date(),
             'shooting_end' => $this->faker->date(),
             'year_of_copyright' => $this->faker->numberBetween(2000, 2020),
-            'film_delivery_platform' => $this->faker->randomElement(['CINEMA', 'TV', 'DIGITAL']),
+            'delivery_platform' => $this->faker->randomElement(['CINEMA', 'TV', 'DIGITAL']),
             'european_nationality_flag' => $this->faker->randomElement(['OK', 'Not OK', 'Under processing', 'Missing information']),
             'film_country_of_origin' => $country_code,
             'film_country_of_origin_2014_2020' => $country_code,

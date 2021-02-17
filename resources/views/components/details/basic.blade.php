@@ -101,11 +101,11 @@
 
     <div class="col-span-1">
         <x-form.select
-            :id="'film_delivery_platform'"
+            :id="'delivery_platform'"
             :label="'Film Delivery Platform'"
-            :hasError="$errors->has('movie.film_delivery_platform')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.film_delivery_platform')"
-            wire:model="movie.film_delivery_platform">
+            :hasError="$errors->has('movie.delivery_platform')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.delivery_platform')"
+            wire:model="movie.delivery_platform">
 
             @foreach($platforms as $key => $value)
                 <option value="{{$key}}">{{$value}}</option>
@@ -113,7 +113,7 @@
 
         </x-form.select>
 
-        @error('movie.film_delivery_platform')
+        @error('movie.delivery_platform')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
