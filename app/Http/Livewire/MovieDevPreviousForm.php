@@ -105,9 +105,11 @@ class MovieDevPreviousForm extends FicheMovieFormBase
     public function render()
     {
         parent::render();
+
+        $title = 'Films - Previous work';
         
         return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-            ->layout('components.layout');
+            ->layout('components.layout', ['title' => $title]);
     }
 
 }

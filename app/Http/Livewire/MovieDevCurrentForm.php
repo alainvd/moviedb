@@ -121,9 +121,11 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     public function render()
     {
         parent::render();
+
+        $title = 'Films - Current work';
         
         return view('livewire.movie-dev-current-form', ['rules' => $this->rules()])
-            ->layout('components.layout');
+            ->layout('components.layout', ['title' => $title]);
     }
 
 }
