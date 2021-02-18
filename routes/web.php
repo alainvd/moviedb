@@ -5,6 +5,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\VideoGamePreviousForm;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
@@ -101,11 +102,21 @@ Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 Route::view('/reports', 'coming-soon');
 
+
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
+
+Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
+
+Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
+
+Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+
 //Test Routes
 Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');
 Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
 //Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+
 
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
