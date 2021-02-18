@@ -37,10 +37,12 @@ class FicheFormBase extends Component
 
     public function render()
     {
-        if($this->getErrorBag()->any()){
-            // TODO: figure out why this is repeating all the time
-            $this->notify('Validation errors', 'error');
-        }
+        // if($this->getErrorBag()->any()){
+        //     // TODO: figure out why this is repeating all the time
+        //     $this->notify('Validation errors', 'error');
+        // }
+        // How do I limit that it would only show when I click validate button
+        // Instead of when changing every field
     }
 
     public function addItem($data)
