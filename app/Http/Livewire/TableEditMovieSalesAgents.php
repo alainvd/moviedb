@@ -11,6 +11,10 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public Movie $movie;
 
+    public $isApplicant = false;
+
+    public $isEditor = false;
+
     public $countries = [];
 
     public $countries_by_code = [];

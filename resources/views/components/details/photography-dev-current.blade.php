@@ -1,4 +1,9 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-photography-dev-current">
+
+    <div class="col-span-2 mb-4 text-lg md:col-span-3">
+        Technical information
+    </div>
+
     <div class="col-span-1">
         <x-form.datepicker
             :id="'photography_start'"

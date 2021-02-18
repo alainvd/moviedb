@@ -1,10 +1,8 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-photography">
 
-    @if($isEditor)
     <div class="col-span-2 mb-4 text-lg">
         Technical information
     </div>
-    @endif
 
     <div class="col-span-1 col-start-1">
         <x-form.datepicker

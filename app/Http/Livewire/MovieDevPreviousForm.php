@@ -108,8 +108,13 @@ class MovieDevPreviousForm extends FicheMovieFormBase
 
         $title = 'Films - Previous work';
         
-        return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-            ->layout('components.layout', ['title' => $title]);
+        if ($this->isApplicant) {
+            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
+                ->layout('components.ecl-layout', ['title' => $title]);
+        } else {
+            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
+                ->layout('components.layout', ['title' => $title]);
+        }
     }
 
 }

@@ -124,8 +124,14 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         $title = 'Films - Current work';
         
-        return view('livewire.movie-dev-current-form', ['rules' => $this->rules()])
-            ->layout('components.layout', ['title' => $title]);
+        // TODO: is there applicant view for dev-current fiche?
+        if ($this->isApplicant) {
+            return view('livewire.movie-dev-current-form', ['rules' => $this->rules()])
+            ->layout('components.ecl-layout', ['title' => $title]);
+        } else {
+            return view('livewire.movie-dev-current-form', ['rules' => $this->rules()])
+                ->layout('components.layout', ['title' => $title]);
+        }
     }
 
 }
