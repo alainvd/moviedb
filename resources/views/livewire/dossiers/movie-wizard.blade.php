@@ -161,7 +161,7 @@
                         Film delivery platform
                     </label>
                     <div class="border-b-2 border-indigo-600 pb-2" id="original-title">
-                        {{ $platforms[$movie->delivery_platform_id] }}
+                        {{ $platforms[$movie->delivery_platform] }}
                     </div>
                 </div>
                 <div class="col-span-1">

@@ -4,6 +4,7 @@
             :id="'original_title'"
             :label="'Original Title'"
             :hasError="$errors->has('movie.original_title')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.original_title')"
             wire:model="movie.original_title">
 
         </x-form.input>
@@ -19,6 +20,7 @@
             :label="'Status'"
             :disabled="$isApplicant"
             :hasError="$errors->has('fiche.status_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'fiche.status_id')"
             wire:model="fiche.status_id">
 
             @foreach ($statuses as $status)
@@ -35,8 +37,9 @@
     <div class="col-span-1">
         <x-form.select
             :id="'basic-film_country_of_origin'"
-            :label="'Country of Origin'"
+            :label="'MEDIA Film Nationality'"
             :hasError="$errors->has('movie.film_country_of_origin')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
@@ -53,8 +56,9 @@
     <div class="col-span-1">
         <x-form.select
             :id="'copyright'"
-            :label="'Copyright'"
+            :label="'Year of copyright'"
             :hasError="$errors->has('movie.year_of_copyright')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.year_of_copyright')"
             wire:model="movie.year_of_copyright">
 
             @foreach($years as $year)
@@ -73,6 +77,7 @@
             :id="'film_genre'"
             :label="'Film Genre'"
             :hasError="$errors->has('media.genre_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.genre_id')"
             wire:model="media.genre_id">
 
             @foreach($genres as $genre)

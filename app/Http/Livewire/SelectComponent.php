@@ -9,6 +9,7 @@ class SelectComponent extends Component
 
     public $domId;
     public $label;
+    public $isRequired;
     public $name;
     public $options;
     public $items;

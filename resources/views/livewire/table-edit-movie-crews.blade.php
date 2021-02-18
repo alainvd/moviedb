@@ -26,7 +26,10 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $titles[$item['title_id']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">
+                        @if(isset($item['required']) && $item['required'])<span class="text-red-500">*</span>@endif
+                        {{ $titles[$item['title_id']]['name'] }}
+                    </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['gender']) ? $genders[$item['person']['gender']] : '' }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_code[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
@@ -43,11 +46,6 @@
         </x-table>
 
         <div class="mt-5 text-right">
-            @if ($isEditor && $fiche=='dist')
-            <span class="mr-4">
-                TOTAL SCORE: <span class="font-bold" x-text="points_total"></span>
-            </span>
-            @endif
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
@@ -68,6 +66,7 @@
                             :id="'crews_title_id'"
                             :label="'Role'"
                             :hasError="$errors->has('editing.title_id')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.title_id')"
                             wire:model="editing.title_id">
 
                             @foreach ($titles as $id => $title)
@@ -85,6 +84,7 @@
                             :id="'crews_firstname'"
                             :label="'First name'"
                             :hasError="$errors->has('editing.person.firstname')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.person.firstname')"
                             wire:model="editing.person.firstname">
                         </x-form.input>
 
@@ -98,6 +98,7 @@
                             :id="'crews_lastname'"
                             :label="'Last name'"
                             :hasError="$errors->has('editing.person.lastname')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.person.lastname')"
                             wire:model="editing.person.lastname">
                         </x-form.input>
 
@@ -111,6 +112,7 @@
                             :id="'crews_gender'"
                             :label="'Gender'"
                             :hasError="$errors->has('editing.person.gender')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.person.gender')"
                             wire:model="editing.person.gender">
 
                             @foreach ($genders as $key => $name)
@@ -128,6 +130,7 @@
                             :id="'crews_nationality1'"
                             :label="'Nationality 1'"
                             :hasError="$errors->has('editing.person.nationality1')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality1')"
                             wire:model="editing.person.nationality1">
 
                             @foreach ($countries as $country)
@@ -146,6 +149,7 @@
                             :id="'crews_nationality2'"
                             :label="'Nationality 2'"
                             :hasError="$errors->has('editing.person.nationality2')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality2')"
                             wire:model="editing.person.nationality2">
 
                             @foreach ($countries as $country)
@@ -165,6 +169,7 @@
                             :id="'crews_country_of_residence'"
                             :label="'Country of residence'"
                             :hasError="$errors->has('editing.person.country_of_residence')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.person.country_of_residence')"
                             wire:model="editing.person.country_of_residence">
 
                             @foreach ($countries as $country)
@@ -184,6 +189,7 @@
                             :id="'crews_points'"
                             :label="'Points'"
                             :hasError="$errors->has('editing.points')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.points')"
                             wire:model="editing.points"
                             placeholder="0.00">
                         </x-form.input>

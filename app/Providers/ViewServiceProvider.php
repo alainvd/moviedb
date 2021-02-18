@@ -32,16 +32,25 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
+            'livewire.table-edit-example-memory',
+            MovieFicheFormComposer::class,
+        );
+        View::composer(
+            'livewire.table-edit-example-simple',
+            MovieFicheFormComposer::class,
+        );
+
+        View::composer(
             'livewire.movie-dist-form',
-            'App\Http\View\Composers\MovieFicheFormComposer',
+            MovieFicheFormComposer::class,
         );
         View::composer(
             'livewire.movie-dev-previous-form',
-            'App\Http\View\Composers\MovieFicheFormComposer',
+            MovieFicheFormComposer::class,
         );
         View::composer(
             'livewire.movie-dev-current-form',
-            'App\Http\View\Composers\MovieFicheFormComposer',
+            MovieFicheFormComposer::class,
         );
         View::composer(
             'livewire.movie-tv-form',
@@ -49,13 +58,16 @@ class ViewServiceProvider extends ServiceProvider
         );
         View::composer(
             'livewire.video-game-previous-form',
-            'App\Http\View\Composers\MovieFicheFormComposer',
+            MovieFicheFormComposer::class,
         );
         View::composer(
             'livewire.dossiers.activities.distributors',
             DistributorsComposer::class
         );
-
+        View::composer(
+            'livewire.table-edit-movie-producers',
+            MovieFicheFormComposer::class
+        );
         View::composer(
             'livewire.dossiers.movie-wizard',
             MovieFicheFormComposer::class

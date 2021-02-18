@@ -102,18 +102,22 @@ Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 Route::view('/reports', 'coming-soon');
 
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
 
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
 
 Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
 
 Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 
 Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+
+//Test Routes
+Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');
+Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
+Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
+//Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
+
+
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
 Route::view('/demo', 'demo');
@@ -137,6 +141,7 @@ Route::resource('genre', 'App\Http\Controllers\GenreController')->only('index');
 Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('index');
 Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
 Route::resource('document', 'App\Http\Controllers\DocumentController')->only('index');
+Route::resource('location', 'App\Http\Controllers\LocationController')->only('index');
 
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
@@ -146,4 +151,3 @@ Route::get('/tables/dossiers', function () {
 Route::get('/tables/movies', function () {
     return view('livewire.movie-datatables');})->name('table_movies');
 
-//Unused Routes

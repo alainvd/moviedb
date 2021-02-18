@@ -5,6 +5,7 @@
             :id="'synopsis'"
             :label="'Synopsis'"
             :hasError="$errors->has('movie.synopsis')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.synopsis')"
             wire:model="movie.synopsis">
         </x-form.textarea>
 

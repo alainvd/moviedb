@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Crew;
+use App\Models\Location;
 use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Audience;
@@ -69,6 +70,11 @@ class Movie extends Model
         return $this->hasMany(Crew::class, 'movie_id', 'id');
     }
 
+    public function location()
+    {
+        return $this->hasMany(Location::class, 'movie_id', 'id');
+    }
+
     public function genre()
     {
         return $this->belongsTo(Genre::class);
@@ -118,8 +124,7 @@ class Movie extends Model
         $director = $this->people()->where(function ($query) {
             $query->select('code')
                 ->from('titles')
-                ->whereColumn('titles.id', 'crews.title_id')
-                ->limit(1);
+                ->whereColumn('titles.id', 'crews.title_id');
         }, 'DIRECTOR')->first();
 
         if ($director) {
@@ -127,5 +132,12 @@ class Movie extends Model
         }
 
         return '';
+    }
+
+    static function defaultsMovie()
+    {
+        return [
+            'total_budget_currency_code' => 'EUR',
+        ];
     }
 }

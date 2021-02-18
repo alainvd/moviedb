@@ -58,6 +58,7 @@ class Dossier extends Model
 
     public function fiches()
     {
-        return $this->hasMany(Fiche::class);
+        return $this->belongsToMany(Fiche::class)
+            ->withPivot('activity_id');
     }
 }

@@ -7,6 +7,7 @@
             :id="'audience'"
             :label="'Audience'"
             :hasError="$errors->has('media.audience_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.audience_id')"
             wire:model="media.audience_id">
 
             @foreach ($audiences as $audience)

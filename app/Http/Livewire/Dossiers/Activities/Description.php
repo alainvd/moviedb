@@ -18,7 +18,8 @@ class Description extends Component
         'movie.original_title' => 'required',
         'movie.film_country_of_origin' => 'required',
         'movie.year_of_copyright' => 'required',
-        'movie.id' => 'required'
+        'movie.id' => 'required',
+        'movie.director' => 'required',
     ];
 
     public function mount()
@@ -28,7 +29,7 @@ class Description extends Component
         $fiche = $this->dossier->fiches()->first();
 
         if ($fiche) {
-            $this->movie = $fiche->media->grantable;
+            $this->movie = $fiche->movie;
         } else if ($movieId) {
             $found = Movie::find($movieId)->first();
 

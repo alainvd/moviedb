@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activity;
 use App\Models\Dossier;
 use App\Models\Fiche;
 use App\Models\Movie;
@@ -16,11 +17,16 @@ class FicheSeeder extends Seeder
      */
     public function run()
     {
-        Movie::all()->each(function ($movie) {
-            Fiche::factory()->create([
-                'movie_id' => $movie->id,
-                'dossier_id' => Dossier::all()->random()->id,
-            ]);
+        Dossier::all()->each(function ($dossier) {
+            $dossier->fiches()->attach(
+                Fiche::factory()->count(rand(1, 3))
+                    ->create(),
+                ['activity_id' => Activity::all()->random()->id]
+            );
         });
     }
 }
+
+/**
+ * dossier > fiche > movie
+ */

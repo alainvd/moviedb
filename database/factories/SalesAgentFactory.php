@@ -33,6 +33,7 @@ class SalesAgentFactory extends BaseFactory
         return [
             'movie_id' => $this->getRelationId(Movie::class),
             'name' => $this->faker->name,
+            'role' => $this->faker->randomElement(['PLATFORM', 'DISTRIBUTOR', 'BROADCASTER']),
             'country' => $country_code1,
             'contact_person' => $this->faker->name,
             'email' => $this->faker->safeEmail,

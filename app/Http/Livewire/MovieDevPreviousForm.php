@@ -2,49 +2,29 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Audience;
 use App\Models\Crew;
-use App\Models\Dossier;
-use App\Models\Genre;
-use Livewire\Component;
-use App\Models\Movie;
-use App\Models\Activity;
-use App\Models\Country;
 use App\Models\Fiche;
-use App\Models\Language;
+use App\Models\Movie;
+use App\Models\Document;
+use App\Models\Dossier;
+use App\Models\Activity;
 use App\Models\Person;
 use App\Models\Producer;
 use App\Models\SalesAgent;
-use Illuminate\Support\Facades\Auth;
+use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
 
-
-class MovieDevPreviousForm extends Component
+class MovieDevPreviousForm extends FicheMovieFormBase
 {
 
-    public $isNew = false;
-    public $isApplicant = false;
-    public $isEditor = false;
-
-    // Movie data for Livewire
-    public Dossier $dossier;
-    public Activity $activity;
-    public ?Fiche $fiche = null;
-    public ?Movie $movie = null;
-
-    public $movie_original = [];
-
-    public $shootingLanguages;
-
-    public $producers = [];
-    public $sales_agents = [];
-
-    protected $listeners = [
-        'update-movie-producers' => 'updateMovieProducers',
-        'update-movie-sales-agents' => 'updateMovieSalesAgents',
-        'addItem' => 'addShootingLanguage',
-        'removeItem' => 'removeShootingLanguage'
-    ];
+    protected function getListeners()
+    {
+        return array_merge(
+            parent::getListeners(), [
+            'updateMovieProducers',
+            'updateMovieSalesAgents',
+        ]);
+    }
 
     protected $rules = [
         'movie.original_title' => 'required|string|max:255',
@@ -52,81 +32,55 @@ class MovieDevPreviousForm extends Component
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
+        'movie.film_delivery_platform' => 'string',
+        'movie.audience_id' => 'required|integer',
+        'movie.film_type' => 'string',
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string',
 
-        'movie.film_length' => 'required|integer',
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.audience_id' => 'required|integer',
+        'movie.film_length' => 'required|integer',
+        'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
-        'movie.link_applicant_work_person_name' => 'string',
-        'movie.link_applicant_work_person_position' => 'string',
-        'movie.link_applicant_work_person_credit' => 'string',
+        // dependant fields
+        'movie.link_applicant_work_person_name' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
+        'movie.link_applicant_work_person_position' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
+        'movie.link_applicant_work_person_credit' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
 
         'fiche.comments' => 'string',
     ];
 
-    protected function movieDefaults() {
-        return [
-            'total_budget_currency_code' => 'EUR',
-        ];
-    }
-
-    public function mount(Request $request)
+    protected function rules()
     {
-        $this->shootingLanguages = collect([]);
-        if (! $this->fiche) {
-            $this->isNew = true;
-            $this->fiche = new Fiche;
-            $this->movie = new Movie($this->movieDefaults());
-        } else {
-            $this->movie = $this->fiche->movie;
-            $this->shootingLanguages = collect($this->movie->languages->map(
-                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
-            ));
-            $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
-            $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
-        }
-
-        if (Auth::user()->hasRole('applicant')) {
-            $this->isApplicant = true;
-        }
-        if (Auth::user()->hasRole('editor')) {
-            $this->isEditor = true;
-        }
-
-        if($request->input('editor')) {
-            $this->isApplicant = false;
-            $this->isEditor = true;
-        }
-
-        if ($this->isApplicant && $this->isNew) {
-            $this->fiche->status_id = 1;
-        }
-
-    }
-
-    public function addShootingLanguage($lang)
-    {
-        // @todo build listener names using select name
-        $this->shootingLanguages->push($lang[1]);
-    }
-
-    public function removeShootingLanguage($lang)
-    {
-        $this->shootingLanguages = $this->shootingLanguages->reject(
-            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-        );
+        return $this->rules;
     }
 
     public function callValidate()
     {
+        // Validate form itself
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
+
+        // Validate subform
+        $this->emit('producerErrorMessages',
+            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'];})
+        );
+
+        // Validate subform
+        $errors1 = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];});
+        $errors2 = FormHelpers::validateDistributorTerritories($this->sales_agents);
+        $this->emit('salesAgentErrorMessages', array_merge($errors1, $errors2));
+    }
+
+    public function mount(Request $request)
+    {
+        parent::mount($request);
     }
 
     public function reject()
@@ -137,35 +91,7 @@ class MovieDevPreviousForm extends Component
 
     public function submit()
     {
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
-        if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
-        if ($this->isNew) {
-            $this->movie->save();
-            $this->movie->languages()->sync(
-                $this->shootingLanguages->map(
-                    fn ($lang) => $lang['value']
-                )
-            );
-            $this->fiche->fill([
-                'movie_id' => $this->movie->id,
-                'dossier_id' => $this->dossier->id,
-                'activity_id' => $this->activity->id,
-                'created_by' => 1,
-            ])->save();
-            $this->emit('notify-saved');
-        } else {
-            // When editing
-            $this->movie->save();
-            $this->movie->languages()->sync(
-                $this->shootingLanguages->map(
-                    fn ($lang) => $lang['value']
-                )
-            );
-            $this->fiche->save();
-            $this->emit('notify-saved');
-        }
+        parent::submit();
 
         // producers, sales agents
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
@@ -176,70 +102,11 @@ class MovieDevPreviousForm extends Component
         // }
     }
 
-    public function updateMovieProducers($items)
-    {
-        $this->producers = $items;
-    }
-
-    public function updateMovieSalesAgents($items)
-    {
-        $this->sales_agents = $items;
-    }
-
-    public function saveItems($existing_items, $saving_items, $saving_class)
-    {
-        // delete first
-        foreach($existing_items as $existing_item) {
-            $missing = true;
-            foreach($saving_items as $item) {
-                if (isset($item['id'])) {
-                    if ($existing_item->id == $item['id']) {
-                        $missing = false;
-                    }
-                }
-            }
-            if ($missing) {
-                if ($saving_class=='person_crew') {
-                    Person::find($existing_item->person_id)->delete();
-                    $existing_item->delete();
-                } else {
-                    $existing_item->delete();
-                }
-            }
-        }
-        // create/update
-        foreach ($saving_items as $item) {
-            unset($item['key']);
-            unset($item['created_at']);
-            unset($item['updated_at']);
-            $item['movie_id'] = $this->movie->id;
-            if (isset($item['id'])) {
-                if ($saving_class == 'person_crew') {
-                    // TODO: is there an 'update with' thing?
-                    Crew::find($item['id'])->update($item);
-                    Person::find($item['person_id'])->update($item['person']);
-                } else {
-                    $saving_class::find($item['id'])->update($item);
-                }
-            } else {
-                if ($saving_class == 'person_crew') {
-                    // TODO: is there an 'create with' thing?
-                    $person = Person::create($item['person']);
-                    Crew::create($item + ['person_id' => $person->id]);
-                } else {
-                    $saving_class::create($item);
-                }
-            }
-        }
-    }
-
     public function render()
     {
-        if($this->getErrorBag()->any()){
-            $this->emit('validation-errors');
-        }
-
-        return view('livewire.movie-dev-previous-form')
+        parent::render();
+        
+        return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
             ->layout('components.layout');
     }
 

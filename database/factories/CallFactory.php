@@ -21,26 +21,6 @@ class CallFactory extends BaseFactory
      */
     public function definition()
     {
-        $codes = [
-            "DEVSLATE",
-            "DEVSLATEEU",
-            "DEVSLATEEUMINI",
-            "EUCODEV",
-            // "DEVSPANI",
-            // "DEVSPDOC",
-            // "DEVSPFIC",
-            "DEVVG",
-            // "DISTAUTOG",
-            // "DISTAUTOR1",
-            // "DISTAUTOR2",
-            // "DISTAUTOR3",
-            "DISTSAG",
-            // "DISTSAR1",
-            // "DISTSAR2",
-            "DISTSEL",
-            "TV"
-        ];
-
         // Call name in the format: 'H2020-LC-GD-2020-3';
         $name = sprintf(
             '%s%d-%s-%s-%d-%d',
@@ -52,7 +32,7 @@ class CallFactory extends BaseFactory
             $this->faker->randomDigitNotNull()
         );
 
-        $action = Action::where('name', $this->faker->randomElement($codes))->first();
+        $action = $this->getRelation(Action::class);
 
         return [
             // H2020-LC-GD-2020-3

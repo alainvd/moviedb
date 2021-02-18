@@ -18,9 +18,14 @@ class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
         ] + TableEditBase::rules();
     }
 
+    public function tableEditRules($isEditor)  {
+        $rules = $this->rules() + TableEditBase::rules();
+        return parent::rulesCleanup($rules);
+    }
+    
     public function render()
     {
-        return view('livewire.table-edit-movie-producers', ['fiche' => 'devPrev']);
+        return view('livewire.table-edit-movie-producers', ['fiche' => 'devPrev', 'rules' => $this->rules()]);
     }
 
     public function mount($movie_id = null)

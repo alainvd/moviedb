@@ -19,7 +19,7 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $countries_by_code[$item['country']]['name'] }}</x-table.cell>
@@ -57,6 +57,7 @@
                             :id="'role'"
                             :label="'Role'"
                             :hasError="$errors->has('editing.role')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.role')"
                             wire:model="editing.role">
 
                             <option value="producer">Producer</option>
@@ -73,6 +74,7 @@
                             :id="'name'"
                             :label="'Name'"
                             :hasError="$errors->has('editing.name')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
@@ -86,6 +88,7 @@
                             :id="'city'"
                             :label="'City'"
                             :hasError="$errors->has('editing.city')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.city')""
                             wire:model="editing.city">
                         </x-form.input>
 
@@ -99,6 +102,7 @@
                             :id="'country'"
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
                             wire:model="editing.country">
 
                             @foreach ($countries as $country)
@@ -117,6 +121,7 @@
                             :label="'Share'"
                             :trailing="'%'"
                             :hasError="$errors->has('editing.share')"
+                            :isRequired="FormHelpers::isRequired($rules, '')"
                             wire:model="editing.share"
                         >
                         </x-form.input>
@@ -131,6 +136,7 @@
                             :label="'Budget'"
                             :trailing="'€'"
                             :hasError="$errors->has('editing.budget')"
+                            :isRequired="FormHelpers::isRequired($rules, '')"
                             wire:model="editing.budget"
                         >
                         </x-form.input>

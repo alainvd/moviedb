@@ -15,7 +15,7 @@
     @livewireStyles
 </head>
 
-<body style="{{ $style ?? '' }}">
+<body class="{{ $class ?? '' }}">
 
 @include('impersonate')
 <div id="ec-globan"></div>
@@ -25,6 +25,8 @@
 <main class="relative z-0 flex-1 px-1 py-2 overflow-y-auto focus:outline-none" tabindex="0">
     {{ $slot }}
 </main>
+
+<x-notification />
 
 @include('partials.ecl.footer')
 

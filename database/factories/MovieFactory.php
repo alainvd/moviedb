@@ -43,6 +43,7 @@ class MovieFactory extends BaseFactory
             'film_delivery_platform' => $this->faker->randomElement(['CINEMA', 'TV', 'DIGITAL']),
             'european_nationality_flag' => $this->faker->randomElement(['OK', 'Not OK', 'Under processing', 'Missing information']),
             'film_country_of_origin' => $country_code,
+            'film_country_of_origin_2014_2020' => $country_code,
             'country_of_origin_points' => $this->faker->randomFloat(2, 1, 2),
             'link_applicant_work' => $this->faker->randomElement(['WRKPRODAP', 'WRKPERS']),
             'link_applicant_work_person_name' => $this->faker->name,
@@ -54,9 +55,9 @@ class MovieFactory extends BaseFactory
             'production_costs_currency' => $this->faker->randomElement(['EUR','USD','GBP','SEK','RON','CZK','PLN','DKK','HUF','HRK','BGN']),
             'production_costs' => $this->faker->unique()->numberBetween(100000, 100000000),
             'production_costs_in_euro' => $this->faker->unique()->numberBetween(100000, 100000000),
-            'film_type' => $this->faker->randomElement(['One-off', 'Series']),
+            'film_type' => $this->faker->randomElement(['ONEOFF', 'SERIES']),
             'film_length' => $this->faker->numberBetween(61, 134),
-            'film_format' => $this->faker->randomElement(['35mm', 'Digital', 'Other']),
+            'film_format' => $this->faker->randomElement(['35MM', 'DIGITAL', 'OTHER']),
             'film_score' => $this->faker->numberBetween(1, 20),
             'synopsis' => $this->faker->paragraph(12, true),
             'total_budget_currency_amount' => $this->faker->numberBetween(1000, 1000000),
@@ -68,6 +69,7 @@ class MovieFactory extends BaseFactory
             'user_experience' => $this->faker->randomElement(['LINEAR', 'INTERACTIVE']),
             'genre_id' => $this->getRelationId(Genre::class),
             'audience_id' => $this->getRelationId(Audience::class),
+            'delivery_platform' => $this->faker->randomElement(['CINEMA', 'TV', 'DIGITAL']),
         ];
     }
 }

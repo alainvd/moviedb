@@ -4,7 +4,7 @@ models:
     name: string
     type: string
     relationships:
-      belongsTo: Media
+      belongsTo: Movie
 
 controllers:
   Genre:

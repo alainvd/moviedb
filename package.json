@@ -25,9 +25,11 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@popperjs/core": "^2.6.0",
         "alpinejs": "^2.7.3",
         "moment": "^2.29.1",
         "pikaday": "^1.8.2",
-        "tailwindcss": "^1.9.6"
+        "tailwindcss": "^1.9.6",
+        "tippy.js": "^6.2.7"
     }
 }

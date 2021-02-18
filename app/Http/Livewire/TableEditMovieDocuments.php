@@ -16,9 +16,9 @@ class TableEditMovieDocuments extends TableEditBase
 
     public $documentTypes;
 
-    public $filesErrorMessage;
+    public $filesErrorMessages;
 
-    protected $listeners = ['filesErrorMessage'];
+    protected $listeners = ['filesErrorMessages'];
 
     protected function defaults()
     {
@@ -36,7 +36,7 @@ class TableEditMovieDocuments extends TableEditBase
             'editing.movie_id' => '',
             'editing.document_type' => 'required|string',
             'editing.filename' => 'required|string',
-            'editing.file' => '',
+            'editing.file' => 'required',
             'editing.comments' => 'required|string',
         ] + parent::rules();
     }
@@ -66,7 +66,7 @@ class TableEditMovieDocuments extends TableEditBase
       ];
     }
 
-    private function load()
+    private function loadItems()
     {
         $this->items = Document::where('movie_id', $this->movie->id)->get()->toArray();
         $this->addUniqueKeys();
@@ -76,13 +76,13 @@ class TableEditMovieDocuments extends TableEditBase
     {
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->load();
+            $this->loadItems();
         }
     }
 
     public function render()
     {
-        return view('livewire.table-edit-movie-documents');
+        return view('livewire.table-edit-movie-documents', ['rules' => $this->rules()]);
     }
 
     public function saveItem()
@@ -110,7 +110,7 @@ class TableEditMovieDocuments extends TableEditBase
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-documents', $this->items);
+        $this->emitUp('updateMovieDocuments', $this->items);
     }
 
     public function can_download($file)
@@ -127,7 +127,7 @@ class TableEditMovieDocuments extends TableEditBase
         return response()->download(storage_path('files/' . $file->file), $file->filename);
     }
 
-    public function filesErrorMessage($message) {
-        $this->filesErrorMessage = $message;
+    public function filesErrorMessages($message) {
+        $this->filesErrorMessages = $message;
     }
 }

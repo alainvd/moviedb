@@ -13,6 +13,7 @@
             :id="'gameplay_options'"
             :label="'Gameplay Options'"
             :hasError="$errors->has('movie.gameplay_options')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.gameplay_options')"
             wire:model="movie.gameplay_options">
 
         </x-form.input>
@@ -27,6 +28,7 @@
             :id="'game_modes'"
             :label="'Game Modes'"
             :hasError="$errors->has('movie.game_modes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.game_modes')"
             wire:model="movie.game_modes">
 
         </x-form.input>
@@ -41,6 +43,7 @@
             :id="'gaming_platform'"
             :label="'Gaming Platform'"
             :hasError="$errors->has('movie.gaming_platform')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.gaming_platform')"
             wire:model="movie.gaming_platform">
 
         </x-form.input>
@@ -55,6 +58,7 @@
             :id="'production_languages'"
             :label="'Production Languages'"
             :hasError="$errors->has('movie.production_languages')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.production_languages')"
             wire:model="movie.production_languages">
 
         </x-form.input>
@@ -69,6 +73,7 @@
             :id="'localisation_languages'"
             :label="'Localisation Languages'"
             :hasError="$errors->has('movie.localisation_languages')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.localisation_languages')"
             wire:model="movie.localisation_languages">
 
         </x-form.input>
@@ -83,6 +88,7 @@
             :id="'game_delivery_media'"
             :label="'Game Delivery Media'"
             :hasError="$errors->has('movie.game_delivery_media')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.game_delivery_media')"
             wire:model="movie.game_delivery_media">
 
         </x-form.input>

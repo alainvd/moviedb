@@ -4,6 +4,7 @@
             :id="'website'"
             :label="'Web site deidicated to the work'"
             :hasError="$errors->has('movie.imdb_url')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.imdb_url')"
             wire:model="movie.imdb_url">
 
             &nbsp;&nbsp;
@@ -24,6 +25,7 @@
             :id="'isan'"
             :label="'ISAN'"
             :hasError="$errors->has('movie.isan')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.isan')"
             wire:model="movie.isan">
         </x-form.input>
 

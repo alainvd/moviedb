@@ -6,6 +6,7 @@
 
 @import '../../node_modules/pikaday/css/pikaday.css';
 @import './pikaday.css';
+@import '../../node_modules/tippy.js/dist/tippy.css';
 
 [x-cloak] {
     display: none;
@@ -35,9 +36,6 @@ main {
 #fdc-basic-dev-current:before {
     content: "basic-dev-current";
 }
-#fdc-basic-dev-prev:before {
-    content: "basic-dev-prev";
-}
 #fdc-basic:before {
     content: "basic";
 }
@@ -53,9 +51,6 @@ main {
 #fdc-photography-dev-current:before {
     content: "photography-dev-current";
 }
-#fdc-photography-dev-prev:before {
-    content: "photography-dev-prev";
-}
 #fdc-photography:before {
     content: "photography";
 }
@@ -69,3 +64,25 @@ main {
     content: "ownership";
 }
 */
+
+@media (min-width: 640px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 1024px) {
+    body.wizard-page {
+        background: url('../images/dossier/dots-side-1.png') right 35% no-repeat;
+    }
+}
+
+@media (min-width: 1280px) {
+    body.dossier-page {
+        background: url('../images/dossier/dots-vertical-1.png') 2% 305px no-repeat;
+    }
+}
+
+

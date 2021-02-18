@@ -5,6 +5,7 @@
             :id="'link_applicant_work'"
             :label="'Link between Applicant company and Work'"
             :hasError="$errors->has('movie.link_applicant_work')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work')"
             wire:model="movie.link_applicant_work">
 
             @foreach ($linkApplicantWork as $id=>$value)
@@ -28,6 +29,7 @@
             :id="'link_applicant_work_person_name'"
             :label="'Name of the Person for the Personal Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_name')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_name')"
             wire:model="movie.link_applicant_work_person_name">
 
         </x-form.input>
@@ -43,6 +45,7 @@
             :id="'link_applicant_work_person_position'"
             :label="'Position of the Person of Personal Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_position')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_position')"
             wire:model="movie.link_applicant_work_person_position">
 
         </x-form.input>
@@ -58,6 +61,7 @@
             :id="'link_applicant_work_person_credit'"
             :label="'Personal on-screen Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_credit')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_credit')"
             wire:model="movie.link_applicant_work_person_credit">
 
         </x-form.input>

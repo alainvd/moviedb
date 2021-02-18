@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Crew;
 use App\Models\Movie;
 use App\Models\Title;
-use App\Models\Crew;
 use App\Models\Person;
 use App\Models\Country;
+use Illuminate\Support\Facades\Log;
 
 class TableEditMovieCrews extends TableEditBase
 {
@@ -29,7 +30,10 @@ class TableEditMovieCrews extends TableEditBase
 
     public $crewErrorMessages;
 
-    protected $listeners = ['crewErrorMessages'];
+    protected $listeners = [
+        'crewErrorMessages',
+        'movieCrewsAddRequired'
+    ];
 
     protected function defaults()
     {
@@ -66,7 +70,7 @@ class TableEditMovieCrews extends TableEditBase
         }
     }
 
-    public function crewRules($isEditor)  {
+    public function tableEditRules($isEditor)  {
         if ($isEditor) {
             $rules = $this->rulesEditor + TableEditBase::rules();
         } else {
@@ -89,6 +93,15 @@ class TableEditMovieCrews extends TableEditBase
         ];
     }
 
+    private function loadItems()
+    {
+        $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+        if ($this->movie) {
+            $this->movieCrewsAddRequired($this->movie->genre_id);
+        }
+        $this->addUniqueKeys();
+    }
+
     public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
@@ -97,11 +110,7 @@ class TableEditMovieCrews extends TableEditBase
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
-            $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
-            $this->addUniqueKeys();
-        } else {
-            $this->items = Crew::newMovieCrew();
-            $this->addUniqueKeys();
+            $this->loadItems();
         }
         $this->isApplicant = $isApplicant;
         $this->isEditor = $isEditor;
@@ -110,12 +119,12 @@ class TableEditMovieCrews extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-movie-crews', ['fiche' => 'dist']);
+        return view('livewire.table-edit-movie-crews', ['fiche' => 'dist', 'rules' => $this->rules()]);
     }
 
     protected function sendItems()
     {
-        $this->emitUp('update-movie-crews', $this->items);
+        $this->emitUp('updateMovieCrews', $this->items);
     }
 
     protected function recalculatePoints()
@@ -126,6 +135,7 @@ class TableEditMovieCrews extends TableEditBase
                 $this->points_total += $item['points'];
             }
         }
+        $this->emit('totalPointsCrews', $this->points_total);
     }
 
     public function saveItem()
@@ -141,5 +151,34 @@ class TableEditMovieCrews extends TableEditBase
 
     public function crewErrorMessages($messages) {
         $this->crewErrorMessages = $messages;
+    }
+
+    public function movieCrewsAddRequired($genre_id) {
+        $req_items = Crew::newMovieCrew($genre_id);
+        $req_items_title_ids = array_column($req_items, 'title_id');
+        foreach ($req_items as $req_item) {
+            if (!array_filter(
+                $this->items,
+                function ($item) use ($req_item) {
+                    return $item['title_id'] == $req_item['title_id'];
+                }
+            ))
+            {
+                $this->items[] = $req_item;
+            }
+        }
+        $this->items = array_map(
+            function($item) use ($req_items, $req_items_title_ids) {
+                // mark as required or not
+                if (in_array($item['title_id'], $req_items_title_ids)) {
+                    $item['required'] = true;
+                } else {
+                    $item['required'] = false;
+                }
+                return $item;
+            },
+            $this->items
+        );
+        $this->addUniqueKeys();
     }
 }
