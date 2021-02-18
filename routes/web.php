@@ -5,6 +5,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPreviousForm;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\VideoGamePreviousForm;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
@@ -101,10 +102,10 @@ Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->name('table_edit_examples');
 Route::view('/reports', 'coming-soon');
 
-<<<<<<< HEAD
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
+Route::get('/dossiers/{dossier}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
 Route::get('/dossiers/{dossier}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
 
 
@@ -113,13 +114,6 @@ Route::get('select', [\App\Http\Controllers\TestController::class,'select']);
 Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 
 Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
-=======
-//Test Routes
-Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');
-Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
-Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
-//Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
->>>>>>> c437ab0a99bb0baee715e1ca67bcac763a560473
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience']);
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew']);
 Route::view('/demo', 'demo');

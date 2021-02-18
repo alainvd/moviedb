@@ -35,6 +35,8 @@ class Movie extends Model
     protected $dates = [
         'photography_start',
         'photography_end',
+        'delivery_date',
+        'broadcast_date',
         'rights_contract_start_date',
         'rights_contract_end_date',
         'rights_contract_signature_date',
@@ -52,6 +54,8 @@ class Movie extends Model
         'id' => 'integer',
         'photography_start' => 'date:d.m.Y',
         'photography_end' => 'date:d.m.Y',
+        'delivery_date' => 'date:d.m.Y',
+        'broadcast_date' => 'date:d.m.Y',
         'rights_contract_start_date' => 'date:d.m.Y',
         'rights_contract_end_date' => 'date:d.m.Y',
         'rights_contract_signature_date' => 'date:d.m.Y',
