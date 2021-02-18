@@ -103,7 +103,10 @@ class FicheMovieFormBase extends FicheFormBase
                 'movie_id' => $this->movie->id,
                 'created_by' => 1,
             ])->save();
-            $this->dossier->fiches()->attach(
+
+            // In which context you can have only one fiche:
+            // ...
+            $this->dossier->fiches()->sync(
                 $this->fiche->id,
                 ['activity_id' => $this->activity->id]
             );
