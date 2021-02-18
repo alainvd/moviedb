@@ -11,6 +11,10 @@ class Dossier extends Model
 {
     use HasFactory;
 
+    protected $attributes = [
+        'status_id' => Status::DRAFT, // Defaults to DRAFT
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,5 +64,10 @@ class Dossier extends Model
     {
         return $this->belongsToMany(Fiche::class)
             ->withPivot('activity_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

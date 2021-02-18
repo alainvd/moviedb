@@ -11,6 +11,7 @@
             {{ method_field('PATCH') }}
             <!-- Dossier details section -->
             <x-layout.section :title="'Application Information'">
+                Status:{{ $dossier->status->name }}
                 <div class="grid grid-cols-2 gap-4 my-4">
                     <div class="col-span-1">
                         <x-form.input
@@ -75,13 +76,5 @@
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
         </form>
-
-        @if ($errors->has('film_title'))
-            <div class="mt-1 text-red-500 text-sm">
-                You must select a movie
-            </div>
-        @endif
     </div>
-
-
 </x-dynamic-component>

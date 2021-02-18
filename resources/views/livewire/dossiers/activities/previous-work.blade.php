@@ -1,9 +1,9 @@
 <div class="my-8">
-    <input type="hidden" name="previous_works" value="{{ $dossier->fiches()->forActivity($activity->id)->count() }}">
+    <input type="hidden" name="previous_works" wire:model="current">
     <h3 class="text-lg leading-tight font-normal my-4">
         Audiovisual Work - Development - Recent work / previous experience
     </h3>
-    <x-table class="{{ $errors->has('current_works') ? 'border border-red-500' : '' }}">
+    <x-table class="{{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">
             <x-table.heading>TITLE</x-table.heading>
             <x-table.heading>GENRE</x-table.heading>
@@ -38,7 +38,9 @@
     @enderror
 
     <div class="mt-5 text-right">
-        <x-anchors.secondary :url="route('dev-previous', compact('dossier', 'activity'))">
+        <x-anchors.secondary
+            :url="route('dev-previous', compact('dossier', 'activity'))"
+            :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>
@@ -54,7 +56,7 @@
 
         <x-slot name="footer">
             <div class="flex justify-end items-center space-x-3">
-                <x-button.primary wire:click="deletePreviousWork">Yes</x-button>
+                <x-button.primary wire:click="delete">Yes</x-button>
 
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
             </div>

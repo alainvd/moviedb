@@ -4,7 +4,7 @@
     </div>
     <div class="col-span-1 text-gray-800 text-md">
         Create and add the audiovisual work in development for <strong>which a grant is requested</strong> within the application. As specified in the call, 3 to 5 audiovisual works in development and one short film (optional) can be added to the application.
-        <span class="text-red-500">Please make sure these works fulfil the requirements set out in the Eligibility criteria of the call.</span>
+        Please make sure these works fulfil the requirements set out in the Eligibility criteria of the call.
     </div>
     <div class="col-span-1 text-gray-800 text-md">
         Once all works have been created and added in the current page, download the PDF.

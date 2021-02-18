@@ -37,6 +37,7 @@ class ActivitySeeder extends Seeder
         $rules = [
             'DEVSLATE' => [
                 'min_previous_works' => 2,
+                'max_previous_works' => 2,
                 'min_current_works' => 3,
                 'max_current_works' => 5,
             ],
@@ -46,12 +47,14 @@ class ActivitySeeder extends Seeder
             //     'max_current_works' => 5,
             // ],
             'DEVSLATEMINI' => [
-                'min_previous_works' => 2,
+                'min_previous_works' => 1,
+                'max_previous_works' => 1,
                 'min_current_works' => 2,
                 'max_current_works' => 3,
             ],
             'DEVCO' => [
                 'min_previous_works' => 1,
+                'max_previous_works' => 1,
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],

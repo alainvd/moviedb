@@ -1,5 +1,5 @@
 <div class="my-8">
-    <input type="hidden" name="current_works" value="{{ $dossier->fiches()->forActivity($activity->id)->count() }}">
+    <input type="hidden" name="current_works" wire:model="current">
     <h3 class="text-lg leading-tight font-normal my-4">
         Audiovisual Work - Development - For grant request
     </h3>
@@ -7,8 +7,8 @@
         <x-slot name="head">
             <x-table.heading>TITLE</x-table.heading>
             <x-table.heading>GENRE</x-table.heading>
-            <x-table.heading>PRODUCTION YEAR</x-table.heading>
-            <x-table.heading>FILM ID</x-table.heading>
+            <x-table.heading>FILM TYPE</x-table.heading>
+            <x-table.heading>BUDGET</x-table.heading>
             <x-table.heading>&nbsp;</x-table.heading>
         </x-slot>
 
@@ -39,7 +39,9 @@
     @enderror
 
     <div class="mt-5 text-right">
-        <x-anchors.secondary :url="route('dev-current', compact('dossier', 'activity'))">
+        <x-anchors.secondary
+            :url="route('dev-current', compact('dossier', 'activity'))"
+            :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>
@@ -55,7 +57,7 @@
 
         <x-slot name="footer">
             <div class="flex justify-end items-center space-x-3">
-                <x-button.primary wire:click="deleteCurrentWork">Yes</x-button>
+                <x-button.primary wire:click="delete">Yes</x-button>
 
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
             </div>

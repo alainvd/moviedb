@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Call;
 use App\Models\Dossier;
 use App\Models\Movie;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,7 +64,7 @@ class ProjectController extends Controller
         $layout = $this->getLayout();
         $pageTitles = $this->pageTitles;
 
-        return view('dossiers.create', compact('dossier', 'layout', 'pageTitles'));
+        return redirect()->route('dossiers.show', $dossier);
     }
 
     /**
@@ -113,11 +114,14 @@ class ProjectController extends Controller
     {
         $this->validate($request, $this->buildValidator($request));
 
-        $params = $request->only(['company', 'movie_id']);
+        $params = $request->only(['company']);
 
         $dossier = Dossier::findOrFail($id);
 
-        $dossier->company = $params['company'];
+        $dossier->fill([
+            'company' => $params['company'],
+            'status_id' => Status::NEW,
+        ]);
         $dossier->save();
 
         return redirect()->route('dossiers.show', $dossier);
