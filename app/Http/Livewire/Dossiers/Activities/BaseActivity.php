@@ -22,12 +22,12 @@ class BaseActivity extends Component
     {
         $this->current = $this->dossier->fiches()->forActivity($this->activity->id)->count();
         $rules = $this->activity->pivot->rules;
-        $activity = Str::of($this->activity->name)->camel()->snake();
+        $activity = Str::of($this->activity->name)->camel()->snake()->plural();
 
         // Add button disabled prop by checking for max number of works
         // and comparing to current number of works
-        if (array_key_exists("max_{$activity}s", $rules)) {
-            $this->max = $rules["max_{$activity}s"];
+        if (array_key_exists("max_{$activity}", $rules)) {
+            $this->max = $rules["max_{$activity}"];
             if ($this->current === $this->max) {
                 $this->isAddDisabled = true;
             }

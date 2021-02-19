@@ -84,7 +84,7 @@ class MovieWizard extends Component
                 break;
             case 'DEVSLATE':
             case 'DEVSLATEMINI':
-            case 'DEVCO':
+            case 'CODEVELOPMENT':
                 // Attach fiche for previous-work activity
                 $this->dossier->fiches()->attach(
                     $this->movie->fiche->id,

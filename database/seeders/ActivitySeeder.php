@@ -22,16 +22,20 @@ class ActivitySeeder extends Seeder
             ],
             [
                 'name' => 'previous-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'DEVCO'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT'],
             ],
             [
                 'name' => 'current-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'DEVCO'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT'],
             ],
             [
                 'name' => 'distributors',
                 'actions' => ['DISTSEL'],
             ],
+            [
+                'name' => 'short-films',
+                'actions' => ['DEVSLATE', 'DEVSLATEMINI']
+            ]
         ];
 
         $rules = [
@@ -40,19 +44,18 @@ class ActivitySeeder extends Seeder
                 'max_previous_works' => 2,
                 'min_current_works' => 3,
                 'max_current_works' => 5,
+                'min_short_films' => 1,
+                'max_short_films' => 1,
             ],
-            // 'DEVSLATEEU' => [
-            //     'min_previous_works' => 2,
-            //     'min_current_works' => 3,
-            //     'max_current_works' => 5,
-            // ],
             'DEVSLATEMINI' => [
                 'min_previous_works' => 1,
                 'max_previous_works' => 1,
                 'min_current_works' => 2,
                 'max_current_works' => 3,
+                'min_short_films' => 1,
+                'max_short_films' => 1,
             ],
-            'DEVCO' => [
+            'CODEVELOPMENT' => [
                 'min_previous_works' => 1,
                 'max_previous_works' => 1,
                 'min_current_works' => 1,

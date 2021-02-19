@@ -22,7 +22,7 @@ class ProjectController extends Controller
         'DISTSAG' => 'European Sales Support',
         'DEVSLATE' => 'European Slate Development',
         'DEVSLATEMINI' => 'European Mini-slate Development',
-        'DEVCO' => 'European Co-development',
+        'CODEVELOPMENT' => 'European Co-development',
         'TV' => 'TV and Online Content',
     ];
 
@@ -154,6 +154,10 @@ class ProjectController extends Controller
 
         if ($request->has('current_works')) {
             $rules['current_works'] = $this->getMinMaxRule('current_works');
+        }
+
+        if ($request->has('short_films')) {
+            $rules['short_films'] = $this->getMinMaxRule('short_films');
         }
 
         // if ($request->has('film_id')) {
