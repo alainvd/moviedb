@@ -1,4 +1,9 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-photography-dev-current">
+
+    <div class="col-span-2 mb-4 text-lg md:col-span-3">
+        Technical information
+    </div>
+
     <div class="col-span-1">
         <x-form.datepicker
             :id="'photography_start'"
@@ -22,6 +27,7 @@
         )"
         class="col-span-1 col-start-3 sm:col-span-1">
         @livewire('select-component', [
+            'ref' => 'choices_shooting_lang',
             'domId' => 'shooting-language',
             'label' => 'Shooting languages',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),

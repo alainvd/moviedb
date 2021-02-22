@@ -20,6 +20,13 @@ class MovieFicheFormComposer
         $countries = Country::where('active', true)
             ->get()
             ->toArray();
+        $countries_value_label = Country::where('active', true)
+            ->get()
+            ->map(fn ($country) => [
+                'value' => $country->id,
+                'label' => $country->name,
+            ])
+            ->toArray();
         $genres = Genre::where('type', 'Movie')->get()->toArray();
         $languages = Language::where('active', true)
             ->get()
@@ -89,6 +96,7 @@ class MovieFicheFormComposer
 
         $view->with('audiences', $audiences->where('type', 'App\Models\Movie')->toArray());
         $view->with('countries', $countries);
+        $view->with('countries_value_label', $countries_value_label);
         $view->with('filmFormats', $filmFormats);
         $view->with('filmTypes', $filmTypes);
         $view->with('genres', $genres);

@@ -1,4 +1,9 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-ownership">
+
+    <div class="col-span-2 mb-4 text-lg">
+        Ownership of Rights
+    </div>
+
     <div class="col-span-1 col-start-1">
         <x-form.select
             :id="'rights_origin_of_work'"

@@ -1,6 +1,6 @@
 <div x-data wire:ignore x-init="() => {
-
-	var choices = new Choices($refs.mySelect, {
+	
+	var choices = new Choices($refs.{{ $ref }}, {
 		removeItemButton: true,
 		duplicateItemsAllowed: false,
 		choices: {{ $options }},
@@ -29,5 +29,5 @@
 		{{ $label }}
 		<span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
 	</label>
-	<select multiple id="{{ $domId }}" x-ref="mySelect"></select>
+	<select multiple id="{{ $domId }}" x-ref="{{ $ref }}"></select>
 </div>

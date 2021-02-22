@@ -24,7 +24,7 @@
         @endif
     </div>
 
-    @if($fiche == 'devPrev')
+    @if($fiche == 'devPrev' && $isApplicant == true)
     <div class="grid grid-cols-4 gap-8 p-8 my-4 bg-blue-200 border-t-2 border-b-2 border-blue-400">
         <div class="col-span-4 text-gray-800 text-md">
             In order to be eligible, the recent work must fulfil minimum conditions in terms of having been commercially distributed. Please consult the Call’s eligibility criteria for the conditions that apply, and complete the table. The date to be provided is the one of the actual official release in cinema or the broadcast date.

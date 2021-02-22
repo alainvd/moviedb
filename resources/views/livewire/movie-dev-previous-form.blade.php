@@ -37,6 +37,14 @@
                     :movie="$movie"></x-details.summary>
             </div>
 
+            <!-- link applicant work-->
+            <div class="my-8">
+                <x-details.link-applicant-work
+                    :rules="$rules"
+                    :movie="$movie"
+                    :linkApplicantWork="$linkApplicantWork"></x-details>
+            </div>
+
             <!-- photography -->
             <div class="my-8">
                 <x-details.photography
@@ -49,22 +57,14 @@
                     :languagesSelected="$shootingLanguages"></x-details.photography>
             </div>
 
-            <!-- link applicant work-->
-            <div class="my-8">
-                <x-details.link-applicant-work
-                    :rules="$rules"
-                    :movie="$movie"
-                    :linkApplicantWork="$linkApplicantWork"></x-details>
-            </div>
-
             <!-- producers-dev-previous -->
             <div class="my-8" id="table-producers">
                 @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
-            <!-- agents-dev-previous -->
+            <!-- distributors -->
             <div class="my-8" id="table-agents">
-                @livewire('table-edit-movie-sales-agents-dev-previous', ['movie_id' => $movie->id])
+                @livewire('table-edit-movie-sales-distributors', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
             <!-- comments -->
@@ -87,7 +87,7 @@
                 <div x-data class="flex items-center justify-end space-x-3">
                     <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
                     <x-button.primary type="submit">Save</x-button.primary>
-                    <x-button.secondary wire:click="reject()">Reject</x-button.secondary>
+                    <!-- <x-button.secondary wire:click="reject()">Reject</x-button.secondary> -->
                 </div>
             </div>
         </div>

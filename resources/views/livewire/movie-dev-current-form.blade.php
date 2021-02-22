@@ -92,7 +92,7 @@
                 <div x-data class="flex items-center justify-end space-x-3">
                     <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
                     <x-button.primary type="submit">Save</x-button.primary>
-                    <x-button.secondary wire:click="reject()">Reject</x-button.secondary>
+                    <!-- <x-button.secondary wire:click="reject()">Reject</x-button.secondary> -->
                 </div>
             </div>
         </div>

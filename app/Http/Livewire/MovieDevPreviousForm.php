@@ -5,14 +5,15 @@ namespace App\Http\Livewire;
 use App\Models\Crew;
 use App\Models\Fiche;
 use App\Models\Movie;
-use App\Models\Document;
+use App\Models\Person;
 use App\Models\Dossier;
 use App\Models\Activity;
-use App\Models\Person;
+use App\Models\Document;
 use App\Models\Producer;
 use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
+use App\Models\SalesDistributor;
 
 class MovieDevPreviousForm extends FicheMovieFormBase
 {
@@ -23,6 +24,7 @@ class MovieDevPreviousForm extends FicheMovieFormBase
             parent::getListeners(), [
             'updateMovieProducers',
             'updateMovieSalesAgents',
+            'updateMovieSalesDistributors',
         ]);
     }
 
@@ -73,9 +75,9 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         );
 
         // Validate subform
-        $errors1 = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgentsDevPrevious::class, function($sales_agent) {return $sales_agent['name'];});
-        $errors2 = FormHelpers::validateDistributorTerritories($this->sales_agents);
-        $this->emit('salesAgentErrorMessages', array_merge($errors1, $errors2));
+        $errors1 = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesDistributor::class, function($sales_distributor) {return $sales_distributor['name'];});
+        $errors2 = FormHelpers::validateSalesDistributorTerritories($this->sales_distributors);
+        $this->emit('salesDistributorErrorMessages', array_merge($errors1, $errors2));
     }
 
     public function mount(Request $request)
@@ -93,9 +95,9 @@ class MovieDevPreviousForm extends FicheMovieFormBase
     {
         parent::submit();
 
-        // producers, sales agents
+        // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
-        $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
+        $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
 
         // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
         //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
@@ -108,8 +110,13 @@ class MovieDevPreviousForm extends FicheMovieFormBase
 
         $title = 'Films - Previous work';
         
-        return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-            ->layout('components.layout', ['title' => $title]);
+        if ($this->isApplicant) {
+            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
+                ->layout('components.ecl-layout', ['title' => $title]);
+        } else {
+            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
+                ->layout('components.layout', ['title' => $title]);
+        }
     }
 
 }

@@ -51,16 +51,17 @@ class FormHelpers
         return ['Film financing plan is required.'];
     }
 
-    public static function validateDistributorTerritories($salesAgents) {
-        $territories = [];
-        foreach($salesAgents as $salesAgent) {
-            if (!in_array($salesAgent['country'], $territories)) {
-                $territories[] = $salesAgent['country'];
-            }
-        }
-        if (count($territories) < 3) {
-            return ['3 territories are mandatory.'];
-        }
+    public static function validateSalesDistributorTerritories($salesDistributors) {
+        // TODO: new implementation
+        // $territories = [];
+        // foreach($salesDistributors as $salesDistributor) {
+        //     if (!in_array($salesDistributor['country'], $territories)) {
+        //         $territories[] = $salesDistributor['country'];
+        //     }
+        // }
+        // if (count($territories) < 3) {
+        //     return ['3 territories are mandatory.'];
+        // }
         return [];
     }
 

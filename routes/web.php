@@ -140,6 +140,7 @@ Route::resource('audience', 'App\Http\Controllers\AudienceController')->only('in
 Route::resource('genre', 'App\Http\Controllers\GenreController')->only('index');
 Route::resource('producer', 'App\Http\Controllers\ProducerController')->only('index');
 Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->only('index');
+Route::resource('sales-distributor', 'App\Http\Controllers\SalesDistributorController')->only('index');
 Route::resource('document', 'App\Http\Controllers\DocumentController')->only('index');
 Route::resource('location', 'App\Http\Controllers\LocationController')->only('index');
 
@@ -150,4 +151,3 @@ Route::get('/tables/dossiers', function () {
     return view('livewire.dossier-datatables');})->name('table_dossiers');
 Route::get('/tables/movies', function () {
     return view('livewire.movie-datatables');})->name('table_movies');
-

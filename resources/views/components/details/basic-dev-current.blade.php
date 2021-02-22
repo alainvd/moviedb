@@ -1,4 +1,9 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic-dev-current">
+
+    <div class="col-span-2 mb-4 text-lg">
+        General information
+    </div>
+
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
         <x-form.input
             :id="'original_title'"
