@@ -11,7 +11,6 @@
             {{ method_field('PATCH') }}
             <!-- Dossier details section -->
             <x-layout.section :title="'Application Information'">
-                Status:{{ $dossier->status->name }}
                 <div class="grid grid-cols-2 gap-4 my-4">
                     <div class="col-span-1">
                         <x-form.input

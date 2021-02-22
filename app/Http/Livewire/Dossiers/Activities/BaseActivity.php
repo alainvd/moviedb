@@ -28,9 +28,7 @@ class BaseActivity extends Component
         // and comparing to current number of works
         if (array_key_exists("max_{$activity}", $rules)) {
             $this->max = $rules["max_{$activity}"];
-            if ($this->current === $this->max) {
-                $this->isAddDisabled = true;
-            }
+            $this->isAddDisabled = $this->current === $this->max;
         }
     }
 
@@ -41,6 +39,8 @@ class BaseActivity extends Component
             $this->dossier->fiches()->detach($this->deletingId);
             $this->deletingId = null;
             $this->showDeleteModal = false;
+            $this->current--;
+            $this->isAddDisabled = $this->max ? $this->current === $this->max : false;
         }
     }
 

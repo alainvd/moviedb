@@ -156,9 +156,9 @@ class ProjectController extends Controller
             $rules['current_works'] = $this->getMinMaxRule('current_works');
         }
 
-        if ($request->has('short_films')) {
-            $rules['short_films'] = $this->getMinMaxRule('short_films');
-        }
+        // if ($request->has('short_films')) {
+        //     $rules['short_films'] = $this->getMinMaxRule('short_films');
+        // }
 
         // if ($request->has('film_id')) {
         //     $rules['film_id'] = 'required|integer';
