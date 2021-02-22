@@ -18,7 +18,9 @@ use App\Models\Language;
 use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
+use App\Models\SalesDistributor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,6 +39,7 @@ class FicheMovieFormBase extends FicheFormBase
     public $locations = [];
     public $producers = [];
     public $sales_agents = [];
+    public $sales_distributors = [];
     public $documents = [];
 
     public function validationAttributes()
@@ -62,7 +65,7 @@ class FicheMovieFormBase extends FicheFormBase
         } else {
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
-                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
+                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
             ));
             // Load them all even if we don't need them on all forms.
             // If TableEdit classes emits items on mount, listeners on this class 
@@ -72,6 +75,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->locations = Location::where('movie_id',$this->movie->id)->get()->toArray();
             $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
+            $this->sales_distributors = SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get()->toArray();
             $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
         }
         parent::mount($request);
@@ -140,6 +144,11 @@ class FicheMovieFormBase extends FicheFormBase
                 if ($saving_class=='person_crew') {
                     Person::find($existing_item->person_id)->delete();
                     $existing_item->delete();
+                } elseif ($saving_class == 'sales_distributor_country') {
+                    DB::table('sales_distributor_country')
+                        ->where('sales_distributor_id', '=', $existing_item['id'])
+                        ->delete();
+                    $existing_item->delete();
                 } else {
                     $existing_item->delete();
                 }
@@ -156,6 +165,11 @@ class FicheMovieFormBase extends FicheFormBase
                     // TODO: is there an 'update with' thing?
                     Crew::find($item['id'])->update($item);
                     Person::find($item['person_id'])->update($item['person']);
+                } elseif ($saving_class == 'sales_distributor_country') {
+                    // update salesDistributor with countries
+                    $salesDist = SalesDistributor::find($item['id']);
+                    $salesDist->update($item);
+                    $salesDist->countries()->sync(collect($item['countries'])->pluck('id'));
                 } else {
                     $saving_class::find($item['id'])->update($item);
                 }
@@ -164,6 +178,10 @@ class FicheMovieFormBase extends FicheFormBase
                     // TODO: is there an 'create with' thing?
                     $person = Person::create($item['person']);
                     Crew::create($item + ['person_id' => $person->id]);
+                } elseif ($saving_class == 'sales_distributor_country') {
+                    // create salesDistributor with countries
+                    $salesDist = SalesDistributor::create($item);
+                    $salesDist->countries()->sync(collect($item['countries'])->pluck('id'));
                 } else {
                     $saving_class::create($item);
                 }
@@ -189,6 +207,11 @@ class FicheMovieFormBase extends FicheFormBase
     public function updateMovieSalesAgents($items)
     {
         $this->sales_agents = $items;
+    }
+
+    public function updateMovieSalesDistributors($items)
+    {
+        $this->sales_distributors = $items;
     }
 
     public function updateMovieDocuments($items)

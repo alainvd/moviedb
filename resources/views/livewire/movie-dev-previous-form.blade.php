@@ -62,9 +62,9 @@
                 @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
-            <!-- agents-dev-previous -->
+            <!-- distributors -->
             <div class="my-8" id="table-agents">
-                @livewire('table-edit-movie-sales-agents-dev-previous', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+                @livewire('table-edit-movie-sales-distributors', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
             </div>
 
             <!-- comments -->

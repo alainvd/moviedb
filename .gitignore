@@ -28,3 +28,4 @@ public/mix-manifest.json
 /storage/framework/
 /bin/
 /storage/files/
+.DS_Store

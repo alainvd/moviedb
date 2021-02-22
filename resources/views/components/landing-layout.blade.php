@@ -27,9 +27,9 @@
 
 <body>
 
-@include('impersonate')
+@include('partials.scripts.impersonate')
 @include('partials.landing.header')
-<main class="w-full relative z-0 flex-1 px-24 py-6 overflow-y-auto focus:outline-none" tabindex="0" style="background: url('{{ asset('images/dossier/dots-side-1.png') }}') right 250px no-repeat">
+<main class="relative flex-1 w-full px-24 py-6 overflow-y-auto z-75 focus:outline-none" tabindex="0" style="background: url('{{ asset('images/dossier/dots-side-1.png') }}') right 250px no-repeat">
     {{ $slot }}
 </main>
 
