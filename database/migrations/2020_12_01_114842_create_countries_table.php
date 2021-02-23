@@ -17,6 +17,8 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code', 3);
+            $table->string('continent', 2);
+            $table->integer('position');
             $table->boolean('active')->default(true);
         });
     }
