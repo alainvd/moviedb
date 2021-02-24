@@ -108,25 +108,8 @@ class TableEditMovieSalesDistributors extends TableEditBase
     public function showModalEdit($key = null)
     {
         parent::showModalEdit($key);
-        // dd($this->editing['countries']);
-        // $this->editing['countries_ids'] = collect($this->editing['countries'])->pluck('id')->toArray();
-        // dd($this->editing['countries_ids']);
 
-        // AHHHHHHHHH!
-        // Choices need to be updated here (when edit form is opened):
-        //  - setChoices (can be the same)
-        //  - setValue (has to be from ...)
-        //  - and generally reset the Choices thing. or even restart from scratch.
-        //    - any way to init from zero?
-
-        // how to reach choices component from livewire?
-        // how to call choices functions? no way to do that!
-
-        // can I fire an event???
-        // or update a property and alpine/JS would react to that property
-        //  - wire?
-        //  - entangle? and then react to changes somehow
-
+        // Reinit Choices widget with different country values
         $editing_countries_ids = collect($this->editing['countries'])->pluck('id')->toArray();
         $countries_values = collect($this->countries_value_label)->filter(
             function ($c) use ($editing_countries_ids) {
@@ -134,31 +117,25 @@ class TableEditMovieSalesDistributors extends TableEditBase
             }
         )->values();
         $this->emit('showModalInit', $countries_values);
-        Log::Info('running edit');
     }
 
     public function showModalAdd()
     {
         parent::showModalAdd();
         $this->emit('showModalInit', []);
-        Log::Info('running add');
     }
 
     public function addCountry($id) {
-        // Log::info('addCountry:before', [$this->editing['countries']]);
         $current_countries = collect($this->editing['countries'])->pluck('id')->toArray();
         if (!in_array($id, $current_countries)) {
             $this->editing['countries'][] = ['id' => $id];
         }
-        Log::info('addCountry:after', [$this->editing['countries']]);
     }
 
     public function removeCountry($id) {
-        // Log::info('removeCountry:before', [$this->editing['countries']]);
         $this->editing['countries'] = array_filter(
             $this->editing['countries'],
             function ($c) use ($id) {return $c['id'] !== $id;}
         );
-        Log::info('removeCountry:after', [$this->editing['countries']]);
     }
 }
