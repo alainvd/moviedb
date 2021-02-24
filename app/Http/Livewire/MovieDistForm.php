@@ -201,7 +201,7 @@ class MovieDistForm extends FicheMovieFormBase
             'title' => 'Edit fiche'
         ];
         
-        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dist-form', [
                 'rules' => $this->rules(),

@@ -125,7 +125,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         $title = 'Films - Current work';
         
-        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-current-form', [
                 'rules' => $this->rules(),
