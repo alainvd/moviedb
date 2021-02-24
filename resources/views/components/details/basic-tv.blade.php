@@ -4,6 +4,7 @@
             :id="'original_title'"
             :label="'Original Title'"
             :hasError="$errors->has('movie.original_title')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.original_title')"
             wire:model="movie.original_title">
 
         </x-form.input>
@@ -19,6 +20,7 @@
             :label="'Status'"
             :disabled="$isApplicant"
             :hasError="$errors->has('fiche.status_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'fiche.status_id')"
             wire:model="fiche.status_id">
 
             @foreach ($statuses as $status)
@@ -33,10 +35,13 @@
     </div>
 
     <div class="col-span-1">
+        <!--todo set country value to company country-->
         <x-form.select
             :id="'basic-film_country_of_origin'"
             :label="'Country of Origin'"
+            :disabled="$isApplicant"
             :hasError="$errors->has('movie.film_country_of_origin')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin">
 
             @foreach($countries as $country)
@@ -55,6 +60,7 @@
             :id="'audience'"
             :label="'Target audience'"
             :hasError="$errors->has('movie.audience_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.audience_id')"
             wire:model="movie.audience_id">
 
             @foreach ($audiences as $audience)
@@ -75,6 +81,7 @@
             :id="'film_genre'"
             :label="'Film Genre'"
             :hasError="$errors->has('movie.genre_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.genre_id')"
             wire:model="movie.genre_id">
 
             @foreach($genres as $genre)
@@ -93,13 +100,12 @@
             :id="'film_delivery_platform'"
             :label="'Film Delivery Platform'"
             :hasError="$errors->has('movie.film_delivery_platform')"
-            :disabled=TRUE
-            :default="'TV'"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_delivery_platform')"
             wire:model="movie.film_delivery_platform">
-
             
-                <option value="TV">TV</option>
-            
+            @foreach($platforms as $key => $value)
+                <option value="{{$key}}">{{$value}}</option>
+            @endforeach
 
         </x-form.select>
 
@@ -114,6 +120,7 @@
             :id="'film_type'"
             :label="'Film Type'"
             :hasError="$errors->has('movie.film_type')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_type')"
             wire:model="movie.film_type">
 
             @foreach ($filmTypes as $key => $value)
