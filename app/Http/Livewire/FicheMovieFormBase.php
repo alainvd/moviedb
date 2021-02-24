@@ -68,7 +68,7 @@ class FicheMovieFormBase extends FicheFormBase
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
             ));
             // Load them all even if we don't need them on all forms.
-            // If TableEdit classes emits items on mount, listeners on this class 
+            // If TableEdit classes emits items on mount, listeners on this class
             // are not yet ready to receive them.
             // Therefore init values need to be loaded here.
             $this->crews = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
@@ -110,7 +110,7 @@ class FicheMovieFormBase extends FicheFormBase
 
             // In which context you can have only one fiche:
             // ...
-            $this->dossier->fiches()->sync(
+            $this->dossier->fiches()->attach(
                 $this->fiche->id,
                 ['activity_id' => $this->activity->id]
             );
