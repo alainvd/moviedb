@@ -10,6 +10,7 @@
             :id="'photography_start'"
             :label="'Start Date of Principal Photography'"
             :hasError="$errors->has('movie.photography_start')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.photography_start')"
             wire:model.lazy="movie.photography_start">
         </x-form.datepicker>
 
@@ -25,11 +26,12 @@
             wire:model.lazy="movie.photography_end">
         </x-form.datepicker>   
     </div>
-
+    <br>
     <div class="col-span-1">
         <x-form.datepicker
             :id="'delivery_date'"
             :label="'Date of First Delivery'"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.delivery_date')"
             wire:model.lazy="movie.delivery_date">
         </x-form.datepicker>    
     </div>
@@ -38,6 +40,7 @@
         <x-form.datepicker
             :id="'broadcast_date'"
             :label="'Date of First Broadcast'"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.broadcast_date')"
             wire:model.lazy="movie.broadcast_date">
         </x-form.datepicker> 
     </div>
@@ -53,7 +56,8 @@
         @livewire('select-component', [
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
-            'name' => 'shootingLanguage',
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
+            'name' => 'shootingLanguages',
             'options' => json_encode($languages),
             'items' => json_encode($languagesSelected),
         ])
@@ -68,6 +72,7 @@
             :label="'Development cost'"
             :trailing="'€'"
             :hasError="$errors->has('movie.development_costs_in_euro')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.development_costs_in_euro')"
             wire:model="movie.development_costs_in_euro">
         </x-form.input>
 
