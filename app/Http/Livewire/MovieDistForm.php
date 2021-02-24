@@ -200,14 +200,17 @@ class MovieDistForm extends FicheMovieFormBase
         $crumbs[] = [
             'title' => 'Edit fiche'
         ];
+        
+        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
 
-        if ($this->isApplicant) {
-            return view('livewire.movie-dist-form', ['rules' => $this->rules()])
-                ->layout('components.ecl-layout', ['title' => $title, 'crumbs' => $crumbs]);
-        } else {
-            return view('livewire.movie-dist-form', ['rules' => $this->rules()])
-                ->layout('components.layout', ['title' => $title, 'crumbs' => $crumbs, 'rules' => $this->rules()]);
-        }
+        return view('livewire.movie-dist-form', [
+                'rules' => $this->rules(),
+            ])
+            ->layout($layout, [
+                'title' => $title,
+                'crumbs' => $crumbs,
+            ]);
+
     }
 
 }

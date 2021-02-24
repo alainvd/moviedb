@@ -111,13 +111,16 @@ class MovieDevPreviousForm extends FicheMovieFormBase
 
         $title = 'Films - Previous work';
         
-        if ($this->isApplicant) {
-            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-                ->layout('components.ecl-layout', ['title' => $title]);
-        } else {
-            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-                ->layout('components.layout', ['title' => $title]);
-        }
+        $layout = 'components.' . ($this->user->hasRole('applicant') ? 'ecl-layout' : 'layout');
+
+        return view('livewire.movie-dev-previous-form', [
+                'rules' => $this->rules(),
+            ])
+            ->layout($layout, [
+                'title' => $title,
+            ]);
+
+
     }
 
 }
