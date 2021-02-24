@@ -81,7 +81,7 @@
         </form>
 
         @if ($errors->has('film_title'))
-            <div class="mt-1 text-red-500 text-sm">
+            <div class="mt-1 text-sm text-red-500">
                 You must select a movie
             </div>
         @endif

@@ -1,17 +1,20 @@
 <?php
 
+use App\Http\Controllers\CreateFicheController;
 use App\Models\Call;
-use App\Http\Controllers\MovieController;
-use App\Http\Livewire\MovieDistForm;
-use App\Http\Livewire\MovieDevPreviousForm;
-use App\Http\Livewire\MovieDevCurrentForm;
+use App\Models\Action;
+use Illuminate\Http\Request;
 use App\Http\Livewire\MovieTVForm;
-use App\Http\Livewire\VideoGamePreviousForm;
+use App\Http\Livewire\MovieDistForm;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\MovieDatatables;
+use App\Http\Controllers\MovieController;
+use App\Http\Livewire\MovieDevCurrentForm;
+use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
-use App\Http\Livewire\MovieDatatables;
-use App\Models\Action;
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\MovieDevPreviousForm;
+use App\Http\Livewire\VideoGamePreviousForm;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,15 +86,22 @@ Route::resource('/dossiers', ProjectController::class)
     ])
     ->middleware('cas.auth');
 
-Route::get('/dossiers/{dossier:project_ref_id}/movie-wizard', MovieWizard::class)
+Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
     ->middleware('cas.auth')
     ->name('movie-wizard');
 
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
+// One path that redirects to correct fiche form based on activity
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fiche?}', function($dossier, $activity, $fiche = null) {
+    if ($activity == 1) return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity == 2) return redirect()->route('dev-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity == 3) return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+})->middleware('cas.auth')->name('dossier-create-fiche');
+
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth')->name('dev-prev-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('dev-current-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('tv-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
 
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
