@@ -1,5 +1,6 @@
 <x-dynamic-component
     :component="$layout"
+    :crumbs="$crumbs"
     :title="$pageTitles[$dossier->action->name]"
     :class="'dossier-page'">
     <div class="px-4 bg-white">

@@ -33,14 +33,15 @@ class CallFactory extends BaseFactory
         );
 
         $action = $this->getRelation(Action::class);
+        $publishedAt = $this->faker->dateTimeBetween('-3 years', 'now');
 
         return [
             // H2020-LC-GD-2020-3
             'name' => $name . '-' . $action->name,
             'action_id' => $action->id,
             'description' => $this->faker->text,
-            'published_at' => $this->faker->dateTime(),
-            'status' => $this->faker->randomElement(["open","closed"]),
+            'published_at' => $publishedAt,
+            'status' => in_array($publishedAt->format('Y'), [date('Y') - 1, date('Y')]) ? 'open' : 'closed',
         ];
     }
 }

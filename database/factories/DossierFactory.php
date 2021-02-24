@@ -6,6 +6,7 @@ use App\Models\Call;
 use App\Models\Dossier;
 use App\Models\Action;
 use App\Models\Status;
+use App\Models\User;
 
 class DossierFactory extends BaseFactory
 {
@@ -33,6 +34,7 @@ class DossierFactory extends BaseFactory
             'call_id' => $this->getRelationId(Call::class),
             'contact_person' => $this->faker->safeEmail,
             'company' => $this->faker->company,
+            'created_by' => $this->getRelationId(User::class),
         ];
     }
 }

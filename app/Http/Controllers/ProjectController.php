@@ -8,13 +8,14 @@ use App\Models\Movie;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class ProjectController extends Controller
 {
 
     protected $dossierRules = [
-        'company' => 'required|string|min:3',
-        'film_title' => 'required',
+        'company' => 'required_without:film_title|string|min:3',
+        'film_title' => 'required_without:company',
     ];
 
     protected $pageTitles = [
@@ -34,6 +35,11 @@ class ProjectController extends Controller
     public function index()
     {
         // Display all projects
+        $layout = $this->getLayout();
+        // $dossiers = Dossier::forUser()->orderBy('updated_at', 'desc')->get();
+        $crumbs = $this->getCrumbs();
+
+        return view('dossiers.index', compact('crumbs', 'layout'));
     }
 
     /**
@@ -59,6 +65,7 @@ class ProjectController extends Controller
             'status_id' => 1,
             'year' => date('Y'),
             'contact_person' => Auth::user()->email,
+            'created_by' => Auth::user()->id,
         ]);
 
         $layout = $this->getLayout();
@@ -88,8 +95,9 @@ class ProjectController extends Controller
     {
         $layout = $this->getLayout();
         $pageTitles = $this->pageTitles;
+        $crumbs = $this->getCrumbs();
 
-        return view('dossiers.create', compact('dossier', 'layout', 'pageTitles'));
+        return view('dossiers.create', compact('crumbs', 'dossier', 'layout', 'pageTitles'));
     }
 
     /**
@@ -121,10 +129,11 @@ class ProjectController extends Controller
         $dossier->fill([
             'company' => $params['company'],
             'status_id' => Status::NEW,
+            'updated_by' => Auth::user()->id,
         ]);
         $dossier->save();
 
-        return redirect()->route('dossiers.show', $dossier);
+        return redirect()->route('dossiers.index');
     }
 
     /**
@@ -204,5 +213,28 @@ class ProjectController extends Controller
         }
 
         return 'layout';
+    }
+
+    protected function getCrumbs()
+    {
+        $currentRoute = Route::getCurrentRoute()->action['as'];
+
+        if ($currentRoute === 'dossiers.show') {
+            return [
+                [
+                    'url' => route('dossiers.index'),
+                    'title' => 'My dossiers',
+                ],
+                [
+                    'title' => 'Edit dossier',
+                ],
+            ];
+        } else {
+            return [
+                [
+                    'title' => 'My dossiers'
+                ],
+            ];
+        }
     }
 }

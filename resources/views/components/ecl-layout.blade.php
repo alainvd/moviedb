@@ -32,7 +32,7 @@
 
 <script src="{{ asset('js/app.js') }}" defer></script>
 @include('partials.scripts.ecl-footer')
-@include('partials.scripts.ec-global')
+@include('partials.scripts.ec-globan')
 @livewireScripts
 @yield('scripts')
 </body>
