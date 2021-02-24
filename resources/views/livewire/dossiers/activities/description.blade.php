@@ -1,14 +1,14 @@
 <div class="my-16">
-    <h3 class="text-lg leading-tight font-normal my-4">
+    <h3 class="my-4 text-lg font-normal leading-tight">
         Film selection
     </h3>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7">
         <input type="hidden" name="movie_id" wire:model="movie.id">
         <div class="col-span-1">
             <x-anchors.primary
                 class="mt-6"
-                :url="route('movie-wizard', ['dossier' => $dossier])">
+                :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])">
                 Search and Select
             </x-anchors.primary>
         </div>
@@ -23,7 +23,7 @@
             </x-form.input>
 
             @error('film_title')
-                <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
             @enderror
         </div>
         <div class="col-span-1">

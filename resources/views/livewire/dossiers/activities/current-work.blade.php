@@ -1,6 +1,6 @@
 <div class="my-8">
     <input type="hidden" name="current_works" value="{{ $dossier->fiches()->forActivity($activity->id)->count() }}">
-    <h3 class="text-lg leading-tight font-normal my-4">
+    <h3 class="my-4 text-lg font-normal leading-tight">
         Audiovisual Work - Development - For grant request
     </h3>
     <x-table class="{{ $errors->has('current_works') ? 'border border-red-500' : '' }}">
@@ -33,11 +33,11 @@
     </x-table>
 
     @error('current_works')
-    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
     @enderror
 
     <div class="mt-5 text-right">
-        <x-anchors.secondary :url="url(sprintf('dossiers/%s/activities/%s/fiches/dist',$dossier->id, $activity->id))">
+        <x-anchors.secondary :url="url(sprintf('dossiers/%s/activities/%d/fiches',$dossier->project_ref_id, $activity->id))">
             Add
         </x-anchors.secondary>
     </div>
