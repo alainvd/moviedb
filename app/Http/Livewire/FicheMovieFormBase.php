@@ -103,17 +103,35 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            switch ($this->activity->id) {
+                case 1:
+                    $type = 'dist';
+                    break;
+                case 2:
+                    $type = 'dev-prev';
+                    break;
+                case 3:
+                    $type = 'dev-current';
+                    break;
+            }
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
+                'type' => $type,
                 'created_by' => 1,
             ])->save();
 
-            // In which context you can have only one fiche:
-            // ...
-            $this->dossier->fiches()->attach(
-                $this->fiche->id,
-                ['activity_id' => $this->activity->id]
-            );
+            // TODO: code dublication with MovieWizard.php
+            $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
+            if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+            } else {
+                $this->dossier->fiches()->attach(
+                    $this->movie->fiche->id,
+                    ['activity_id' => $this->activity->id]
+                );
+            }
+
+            // TODO: this will not show if we redirect away
             $this->notify('Fiche is created');
         } else {
             // When saving existing fiche
@@ -123,7 +141,9 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->fiche->save();
+            $this->fiche->fill([
+                'updated_by' => 1,
+            ])->save();
             $this->notify('Fiche is saved');
         }
     }

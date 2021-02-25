@@ -113,9 +113,10 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        // }
+        // go back to dossier
+        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+        }
     }
 
     public function render()
@@ -124,14 +125,14 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         $title = 'Films - Current work';
         
-        // TODO: is there applicant view for dev-current fiche?
-        if ($this->isApplicant) {
-            return view('livewire.movie-dev-current-form', ['rules' => $this->rules()])
-            ->layout('components.ecl-layout', ['title' => $title]);
-        } else {
-            return view('livewire.movie-dev-current-form', ['rules' => $this->rules()])
-                ->layout('components.layout', ['title' => $title]);
-        }
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+
+        return view('livewire.movie-dev-current-form', [
+                'rules' => $this->rules(),
+            ])
+            ->layout($layout, [
+                'title' => $title,
+            ]);
     }
 
 }

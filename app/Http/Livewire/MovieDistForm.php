@@ -178,6 +178,7 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
 
+        // go back to dossier
         if ($this->dossier->call_id && $this->dossier->project_ref_id) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
         }
@@ -199,14 +200,17 @@ class MovieDistForm extends FicheMovieFormBase
         $crumbs[] = [
             'title' => 'Edit fiche'
         ];
+        
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
-        if ($this->isApplicant) {
-            return view('livewire.movie-dist-form', ['rules' => $this->rules()])
-                ->layout('components.ecl-layout', ['title' => $title, 'crumbs' => $crumbs]);
-        } else {
-            return view('livewire.movie-dist-form', ['rules' => $this->rules()])
-                ->layout('components.layout', ['title' => $title, 'crumbs' => $crumbs, 'rules' => $this->rules()]);
-        }
+        return view('livewire.movie-dist-form', [
+                'rules' => $this->rules(),
+            ])
+            ->layout($layout, [
+                'title' => $title,
+                'crumbs' => $crumbs,
+            ]);
+
     }
 
 }

@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Dossiers;
 
-use App\Models\Activity;
-use App\Models\Dossier;
-use App\Models\Movie;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Movie;
+use App\Models\Dossier;
 use Livewire\Component;
+use App\Models\Activity;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class MovieWizard extends Component
 {
@@ -31,11 +32,14 @@ class MovieWizard extends Component
 
     public User $user;
 
-    public function mount(Dossier $dossier)
+    public Activity $activity;
+
+    public function mount(Dossier $dossier, Activity $activity)
     {
         $this->dossier = $dossier;
         $this->movie = new Movie();
         $this->user = Auth::user();
+        $this->activity = $activity;
     }
 
     public function updatingOriginalTitle()
@@ -80,16 +84,23 @@ class MovieWizard extends Component
         switch ($action) {
             case 'DISTSEL':
             case 'DISTSAG':
-                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
-                break;
             case 'DEVSLATE':
             case 'DEVSLATEMINI':
             case 'CODEVELOPMENT':
-                // Attach fiche for previous-work activity
-                $this->dossier->fiches()->attach(
-                    $this->movie->fiche->id,
-                    ['activity_id' => Activity::where('name', 'previous-work')->first()->id]
-                );
+            case 'TV':
+                // Attach fiche for activity
+                $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
+                Log::info('rules', ['rules' => $rules]);
+                if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                    Log::info('rules', ['saving' => 'replacing single movie']);
+                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                } else {
+                    Log::info('rules', ['saving' => 'attaching new movie']);
+                    $this->dossier->fiches()->attach(
+                        $this->movie->fiche->id,
+                        ['activity_id' => $this->activity->id]
+                    );
+                }
             default:
                 break;
         }

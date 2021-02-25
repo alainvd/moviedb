@@ -99,9 +99,10 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
 
-        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        // }
+        // go back to dossier
+        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+        }
     }
 
     public function render()
@@ -110,13 +111,16 @@ class MovieDevPreviousForm extends FicheMovieFormBase
 
         $title = 'Films - Previous work';
         
-        if ($this->isApplicant) {
-            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-                ->layout('components.ecl-layout', ['title' => $title]);
-        } else {
-            return view('livewire.movie-dev-previous-form', ['rules' => $this->rules()])
-                ->layout('components.layout', ['title' => $title]);
-        }
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+
+        return view('livewire.movie-dev-previous-form', [
+                'rules' => $this->rules(),
+            ])
+            ->layout($layout, [
+                'title' => $title,
+            ]);
+
+
     }
 
 }

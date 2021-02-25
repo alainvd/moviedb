@@ -1,17 +1,20 @@
 <?php
 
+use App\Http\Controllers\CreateFicheController;
 use App\Models\Call;
-use App\Http\Controllers\MovieController;
-use App\Http\Livewire\MovieDistForm;
-use App\Http\Livewire\MovieDevPreviousForm;
-use App\Http\Livewire\MovieDevCurrentForm;
+use App\Models\Action;
+use Illuminate\Http\Request;
 use App\Http\Livewire\MovieTVForm;
-use App\Http\Livewire\VideoGamePreviousForm;
+use App\Http\Livewire\MovieDistForm;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\MovieDatatables;
+use App\Http\Controllers\MovieController;
+use App\Http\Livewire\MovieDevCurrentForm;
+use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
-use App\Http\Livewire\MovieDatatables;
-use App\Models\Action;
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\MovieDevPreviousForm;
+use App\Http\Livewire\VideoGamePreviousForm;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,20 +86,32 @@ Route::resource('/dossiers', ProjectController::class)
     ])
     ->middleware('cas.auth');
 
-Route::get('/dossiers/{dossier:project_ref_id}/movie-wizard', MovieWizard::class)
+Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
     ->middleware('cas.auth')
     ->name('movie-wizard');
 
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth')->name('dev-previous');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('dev-current');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth');
+// One path that redirects to correct fiche form based on activity
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fiche?}', function($dossier, $activity, $fiche = null) {
+    if ($activity == 1) return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity == 2) return redirect()->route('dev-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity == 3) return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+})->middleware('cas.auth')->name('dossier-create-fiche');
+
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth')->name('dev-prev-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('dev-current-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('tv-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
 
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
-Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist-1');
+
+Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
+Route::get('/movie-dev-prev/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-prev');
+Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
+Route::get('/movie-tv/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-tv');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
 
 //Pending
@@ -125,7 +140,7 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 Route::view('/demo', 'demo');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 Route::get('/browse/movies', [MovieController::class,'index'])->name('movies');
-Route::get('/browse/movies/{movie}', [MovieController::class,'show'])->name('movie_show');
+Route::get('/browse/movies/{movie}', [MovieController::class,'edit'])->name('movie_show');
 
 
 Route::get('/landing/SEP', [\App\Http\Controllers\SEPController::class,'index'])->middleware(['cas.auth'])->name('SEP');
@@ -149,7 +164,8 @@ Route::resource('location', 'App\Http\Controllers\LocationController')->only('in
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
 //Data Tables
-Route::get('/tables/dossiers', function () {
-    return view('livewire.dossier-datatables');})->name('table_dossiers');
-Route::get('/tables/movies', function () {
-    return view('livewire.movie-datatables');})->name('table_movies');
+Route::get('dossiers', function () {
+    return view('livewire.dossier-datatables',['title' => "Search Dossier"]);});
+Route::get('movies', function () {
+    return view('livewire.movie-datatables',['title' => "Search Movies"]);});
+
