@@ -194,14 +194,17 @@ class MovieTVForm extends FicheMovieFormBase
         $crumbs[] = [
             'title' => 'Edit fiche'
         ];
+                
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
-        if ($this->isApplicant) {
-            return view('livewire.movie-tv-form', ['rules' => $this->rules()])
-                ->layout('components.ecl-layout', ['title' => $title, 'crumbs' => $crumbs]);
-        } else {
-            return view('livewire.movie-tv-form', ['rules' => $this->rules()])
-                ->layout('components.layout', ['title' => $title, 'crumbs' => $crumbs, 'rules' => $this->rules()]);
-        }
+        return view('livewire.movie-tv-form', [
+                'rules' => $this->rules(),
+            ])
+            ->layout($layout, [
+                'title' => $title,
+                'crumbs' => $crumbs,
+            ]);
+        
     }
 
 }
