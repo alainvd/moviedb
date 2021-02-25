@@ -35,7 +35,7 @@
     @enderror
 
     <div class="mt-5 text-right">
-        <x-anchors.secondary :url="route('dev-current', compact('dossier', 'activity'))" :disabled="$isAddDisabled">
+        <x-anchors.secondary :url="route('dev-current-fiche-form', compact('dossier', 'activity'))" :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>

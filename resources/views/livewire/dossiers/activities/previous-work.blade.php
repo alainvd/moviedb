@@ -39,7 +39,7 @@
 
     <div class="mt-5 text-right">
         <x-anchors.secondary
-            :url="route('dev-previous', compact('dossier', 'activity'))"
+            :url="route('dev-prev-fiche-form', compact('dossier', 'activity'))"
             :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>

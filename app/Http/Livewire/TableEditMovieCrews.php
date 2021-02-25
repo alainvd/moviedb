@@ -108,6 +108,8 @@ class TableEditMovieCrews extends TableEditBase
         $this->genders = Person::GENDERS;
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
+        $this->movie = new Movie();
+
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();
