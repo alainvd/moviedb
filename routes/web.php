@@ -106,7 +106,12 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-pr
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
-Route::get('/movie/{fiche?}', MovieDistForm::class)->middleware('cas.auth');
+Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist-1');
+
+Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
+Route::get('/movie-dev-prev/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-prev');
+Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
+Route::get('/movie-tv/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-tv');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
 
 //Pending
@@ -135,7 +140,7 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 Route::view('/demo', 'demo');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 Route::get('/browse/movies', [MovieController::class,'index'])->name('movies');
-Route::get('/browse/movies/{movie}', [MovieController::class,'show'])->name('movie_show');
+Route::get('/browse/movies/{movie}', [MovieController::class,'edit'])->name('movie_show');
 
 
 Route::get('/landing/SEP', [\App\Http\Controllers\SEPController::class,'index'])->middleware(['cas.auth'])->name('SEP');
@@ -159,7 +164,8 @@ Route::resource('location', 'App\Http\Controllers\LocationController')->only('in
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
 //Data Tables
-Route::get('/tables/dossiers', function () {
-    return view('livewire.dossier-datatables');})->name('table_dossiers');
-Route::get('/tables/movies', function () {
-    return view('livewire.movie-datatables');})->name('table_movies');
+Route::get('dossiers', function () {
+    return view('livewire.dossier-datatables',['title' => "Search Dossier"]);});
+Route::get('movies', function () {
+    return view('livewire.movie-datatables',['title' => "Search Movies"]);});
+

@@ -103,8 +103,22 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            //$action=$this->dossier->action->id;
+            //if(in_array($action, array(1,2,3))) {
+            //    if($this->activity->id == 2){
+            //        $type='dev-prev';
+            //    }
+            //    else{
+            //        $type='dev-current';
+            //    }
+            //}
+            //else {
+            //    $type='dist';
+            //};
+            $type='dist';
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
+                //'type' => $type,
                 'created_by' => 1,
             ])->save();
 
