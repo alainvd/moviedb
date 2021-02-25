@@ -114,6 +114,7 @@ class FicheMovieFormBase extends FicheFormBase
                     $type = 'dev-prev';
                     break;
                 case 3:
+                case 5:
                     $type = 'dev-current';
                     break;
             }
