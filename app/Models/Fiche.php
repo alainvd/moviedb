@@ -20,6 +20,7 @@ class Fiche extends Model
         'created_by',
         'updated_by',
         'comments',
+        'type',
     ];
 
     public function movie()
