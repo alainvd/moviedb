@@ -4,13 +4,14 @@ namespace App\Http\Livewire\Dossiers\Activities;
 
 use Livewire\Component;
 
-class PreviousWork extends Component
+class PreviousWork extends BaseActivity
 {
-    public $activity;
-    public $dossier;
-
     public function render()
     {
-        return view('livewire.dossiers.activities.previous-work');
+        $results = $this->dossier->fiches()->forActivity($this->activity->id)->get();
+        return view(
+            'livewire.dossiers.activities.previous-work',
+            compact('results')
+        );
     }
 }

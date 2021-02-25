@@ -29,9 +29,9 @@
                     </button>
                 </div>
                 <!-- The page content -->
-                <main class="relative flex-1 overflow-y-auto z-75 focus:outline-none" tabindex="0">
-                    @if ($title)
-                        <h1 class="mx-4 mt-8 text-3xl font-light leading-tight">
+                <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none" tabindex="0">
+                    @if (isset($title))
+                        <h1 class="mt-8 text-3xl font-light leading-tight">
                             {{ $title }}
                         </h1>
                     @endif

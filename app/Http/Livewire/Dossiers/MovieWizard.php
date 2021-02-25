@@ -86,7 +86,7 @@ class MovieWizard extends Component
             case 'DISTSAG':
             case 'DEVSLATE':
             case 'DEVSLATEMINI':
-            case 'DEVCO':
+            case 'CODEVELOPMENT':
             case 'TV':
                 // Attach fiche for activity
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
