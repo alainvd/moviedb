@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Dossier;
+use App\Http\Livewire\MovieDistForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class MovieController extends Controller
 {
@@ -50,11 +53,27 @@ class MovieController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Support\Facades\Route
      */
     public function edit(Movie $movie)
     {
-        //
+        if($movie->fiche->type === 'dist')
+        {
+           return redirect()->route('movie-dist', ['fiche' => $movie]);
+        }
+        elseif($movie->fiche->type === 'dev-prev')
+        {
+            return redirect()->route('movie-dev-prev', ['fiche' => $movie]);
+         }
+        elseif($movie->fiche->type === 'dev-current')
+        {
+             return redirect()->route('movie-dev-current', ['fiche' => $movie]);
+          }
+
+        else
+        {
+            return view('movies.show', compact(['movie']));
+        }    
     }
 
     /**

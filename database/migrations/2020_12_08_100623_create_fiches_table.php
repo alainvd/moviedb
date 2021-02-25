@@ -20,6 +20,7 @@ class CreateFichesTable extends Migration
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->text('comments')->nullable();
+            $table->text('type')->nullable();
             $table->timestamps();
 
             $table->foreign('movie_id')->references('id')->on('movies');

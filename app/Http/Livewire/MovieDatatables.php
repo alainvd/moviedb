@@ -13,6 +13,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class MovieDatatables extends LivewireDatatable
 {
 
+    public $title = 'Films - Distribution';
     public $hideable = 'select';
     public $countries = Country::class;
     public $model = Movie::class;
@@ -31,14 +32,17 @@ class MovieDatatables extends LivewireDatatable
             //  ->label('MEDIA ID'),
             Column::name('id')
                 ->label('ID')
+                ->filterable()
                 ->linkTo('browse/movies'),
             Column::name('original_title')
-                ->label('TITLE'),
+                ->label('TITLE')
+                ->filterable(),
             Column::name('year_of_copyright')
                 ->label('YEAR OF COPYRIGHT')
                 ->filterable($this->copyrightYears),
             Column::callback('id','getDirectorName')
-                ->label('DIRECTOR'),
+                ->label('DIRECTOR')
+                ->filterable(),
             Column::name('film_country_of_origin')
                 ->label('COUNTRY')
                 ->filterable($this->countryoforigin),
