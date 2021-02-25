@@ -101,6 +101,7 @@ class MovieWizard extends Component
                         ['activity_id' => $this->activity->id]
                     );
                 }
+                $this->notify('Movie added/updated');
             default:
                 break;
         }

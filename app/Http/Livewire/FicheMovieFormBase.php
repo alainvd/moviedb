@@ -89,12 +89,15 @@ class FicheMovieFormBase extends FicheFormBase
         }
     }
 
-    public function submit()
+    public function saveFiche()
     {
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
+        // save fiche as is, without full validation
+        // Bare bones validation
+        $this->validate([
+            'movie.original_title' => 'required',
+            'movie.genre_id' => 'required',
+        ]);
         unset($this->movie->shooting_language);
-
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
             $this->movie->save();
@@ -121,6 +124,7 @@ class FicheMovieFormBase extends FicheFormBase
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
+            // TODO: only in dossier context
             $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
             if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
                 $this->dossier->fiches()->sync([$this->movie->fiche->id]);
@@ -146,6 +150,17 @@ class FicheMovieFormBase extends FicheFormBase
             ])->save();
             $this->notify('Fiche is saved');
         }
+    }
+
+    function submitFiche()
+    {
+        // validate and save as new (or which state?)
+        $this->movie->shooting_language = $this->shootingLanguages;
+        $this->validate();
+        unset($this->movie->shooting_language);
+
+        $this->fiche->status_id = 2;
+        $this->saveFiche();
     }
 
     public function saveItems($existing_items, $saving_items, $saving_class)

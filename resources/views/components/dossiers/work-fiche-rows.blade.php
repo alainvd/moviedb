@@ -1,5 +1,5 @@
 @foreach ($fiches as $fiche)
-
+{{-- dd($fiche->movie) --}}
 <x-table.row>
     <x-table.cell class="tracking-tight text-center font-md">
         {{ $fiche->movie->original_title }}
