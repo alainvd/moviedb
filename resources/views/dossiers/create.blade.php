@@ -80,7 +80,7 @@
 
     <script>
         const form = document.getElementById('dossier-form');
-        if ({{ $errors->count }}) {
+        if ({{ $errors->count() }}) {
             form.scrollIntoView();
         }
     </script>
