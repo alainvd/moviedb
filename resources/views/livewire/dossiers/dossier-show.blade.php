@@ -7,7 +7,7 @@
 
         @include('dossiers.instructions.index', ['dossier' => $dossier])
 
-        <form id="dossier-form" action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
+        <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf
             {{ method_field('PATCH') }}
             <!-- Dossier details section -->
@@ -19,7 +19,7 @@
                             :label="'Call / Topic reference'"
                             :disabled="true"
                             name="call_name"
-                            value="{{ $dossier->call->name  }}"></x-form.input>
+                            wire:model="dossier.call.name"></x-form.input>
                     </div>
                     <div class="col-span-1">
                         <x-form.input
@@ -27,7 +27,7 @@
                             :label="'SEP Project ID'"
                             name="project_ref_id"
                             :disabled="true"
-                            value="{{ $dossier->project_ref_id }}"></x-form.input>
+                            wire:model="dossier.project_ref_id"></x-form.input>
                     </div>
                     <div class="col-span-1">
                         <x-form.input
@@ -35,7 +35,7 @@
                             :label="'Company Name'"
                             :hasError="$errors->has('company')"
                             name="company"
-                            value="{{$dossier->company}}"></x-form.input>
+                            wire:model="dossier.company"></x-form.input>
 
                         @error('company')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -47,7 +47,7 @@
                             :label="'Contact Person'"
                             :disabled="true"
                             name="contact_person"
-                            value="{{ $dossier->contact_person }}"></x-form.input>
+                            wire:model="dossier.contact_person"></x-form.input>
                     </div>
                 </div>
             </x-layout.section>
@@ -77,11 +77,4 @@
             </div>
         </form>
     </div>
-
-    <script>
-        const form = document.getElementById('dossier-form');
-        if ({{ $errors->count }}) {
-            form.scrollIntoView();
-        }
-    </script>
 </x-dynamic-component>

@@ -55,6 +55,7 @@ class MovieFicheFormComposer
         $filmTypes = [
             'ONEOFF' => 'One-off',
             'SERIES' => 'Series',
+            'SHORT' => 'Short film',
         ];
         $statuses = Status::all()->toArray();
         $years = range(date('Y'), 1940);

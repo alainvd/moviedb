@@ -12,7 +12,7 @@
             @include('dossiers.instructions.devslate')
         @elseif ($dossier->action->name === 'DEVSLATEMINI')
             @include('dossiers.instructions.devslatemini')
-        @elseif ($dossier->action->name === 'DEVCO')
+        @elseif ($dossier->action->name === 'CODEVELOPMENT')
             @include('dossiers.instructions.devco')
         @endif
     @endif

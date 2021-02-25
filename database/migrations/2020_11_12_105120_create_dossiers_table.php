@@ -22,7 +22,12 @@ class CreateDossiersTable extends Migration
             $table->integer('call_id');
             $table->string('contact_person');
             $table->string('company')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

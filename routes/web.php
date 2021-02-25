@@ -80,7 +80,7 @@ Route::get('dossiers-public', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
 })->name('dossiers-public');
 
-Route::resource('/dossiers', ProjectController::class)
+Route::resource('dossiers', ProjectController::class)
     ->scoped([
         'dossier' => 'project_ref_id'
     ])
@@ -164,7 +164,7 @@ Route::resource('location', 'App\Http\Controllers\LocationController')->only('in
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
 //Data Tables
-Route::get('dossiers', function () {
+Route::get('dossiers-datatables', function () {
     return view('livewire.dossier-datatables',['title' => "Search Dossier"]);});
 Route::get('movies', function () {
     return view('livewire.movie-datatables',['title' => "Search Movies"]);});

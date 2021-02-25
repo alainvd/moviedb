@@ -1,9 +1,9 @@
 <div class="my-8">
-    <input type="hidden" name="current_works" wire:model="current">
+    <input type="hidden" name="short_films" wire:model="current">
     <h3 class="text-lg leading-tight font-normal my-4">
-        Audiovisual Work - Development - For grant request
+        Audiovisual work - Short film - for grant request (optional)
     </h3>
-    <x-table class="{{ $errors->has('current_works') ? 'border border-red-500' : '' }}">
+    <x-table class="{{ $errors->has('short_films') ? 'border border-red-500' : '' }}">
         <x-slot name="head">
             <x-table.heading>TITLE</x-table.heading>
             <x-table.heading>GENRE</x-table.heading>
@@ -16,12 +16,8 @@
 
             @if ($results->count())
 
-                <x-dossiers.work-fiche-rows
-                    :type="'current'"
-                    :fiches="$results"
-                    :dossier="$dossier"
-                    :activity="$activity">
-                </x-dossiers.work-fiche-rows>
+            <x-dossiers.work-fiche-rows :type="'short'" :fiches="$results" :dossier="$dossier" :activity="$activity">
+            </x-dossiers.work-fiche-rows>
 
             @else
 
@@ -34,14 +30,12 @@
         </x-slot>
     </x-table>
 
-    @error('current_works')
+    @error('short_films')
         <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
     @enderror
 
     <div class="mt-5 text-right">
-        <x-anchors.secondary
-            :url="route('dev-current-fiche-form', compact('dossier', 'activity'))"
-            :disabled="$isAddDisabled">
+        <x-anchors.secondary :url="route('dev-current-fiche-form', compact('dossier', 'activity'))" :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>
@@ -59,7 +53,7 @@
             <div class="flex justify-end items-center space-x-3">
                 <x-button.primary wire:click="delete">Yes</x-button>
 
-                <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
+                    <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
             </div>
         </x-slot>
     </x-modal.confirmation>

@@ -19,7 +19,7 @@ class ActionSeeder extends Seeder
             "DEVSLATE",
             // "DEVSLATEEU",
             "DEVSLATEMINI",
-            "DEVCO",
+            "CODEVELOPMENT",
             // "DEVSPANI",
             // "DEVSPDOC",
             // "DEVSPFIC",
