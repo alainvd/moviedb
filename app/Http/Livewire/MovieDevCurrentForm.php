@@ -74,6 +74,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         return $this->rules;
     }
     
+    // TODO: incorporate this in the main validation
     public function callValidate()
     {
         // Validate form itself
@@ -104,9 +105,9 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $this->movie = new Movie;
     }
 
-    public function submit()
+    public function saveFiche()
     {
-        parent::submit();
+        parent::saveFiche();
 
         // crew, producers, sales agents
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');

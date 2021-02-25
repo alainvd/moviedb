@@ -132,13 +132,6 @@ class VideoGamePreviousForm extends Component
         $this->validate();
     }
 
-    public function reject()
-    {
-        $this->fiche = new Fiche;
-        $this->media = new Media;
-        $this->movie = new Movie;
-    }
-
     public function submit()
     {
         $this->validate();

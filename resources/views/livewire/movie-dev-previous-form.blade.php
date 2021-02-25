@@ -85,9 +85,9 @@
             <!-- buttons -->
             <div class="flex items-center justify-end mt-12 space-x-3">
                 <div x-data class="flex items-center justify-end space-x-3">
-                    <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
-                    <x-button.primary type="submit">Save</x-button.primary>
-                    <!-- <x-button.secondary wire:click="reject()">Reject</x-button.secondary> -->
+                    <x-button.primary wire:click="saveFiche()" x-show="($wire.fiche.status_id==1 || $wire.isEditor==1)">Save (no validation)</x-button.primary>
+                    {{-- TODO: only in dossier context: --}}
+                    <x-button.primary wire:click="submitFiche()">Submit (validate and submit)</x-button.primary>
                 </div>
             </div>
         </div>
