@@ -157,12 +157,6 @@ class MovieTVForm extends FicheMovieFormBase
         $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
     }
 
-    public function reject()
-    {
-        $this->fiche = new Fiche;
-        $this->movie = new Movie;
-    }
-
     public function submit()
     {
         parent::submit();

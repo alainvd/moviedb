@@ -99,12 +99,6 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         parent::mount($request);
     }
 
-    public function reject()
-    {
-        $this->fiche = new Fiche;
-        $this->movie = new Movie;
-    }
-
     public function saveFiche()
     {
         parent::saveFiche();
