@@ -14,6 +14,9 @@
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->total_budget_euro }} &nbsp; EURO
             </x-table.cell>
+            <x-table.cell class="tracking-tight text-center font-md uppercase text-red-600">
+                {{ $fiche->status->name }}
+            </x-table.cell>
             <x-table.cell class="space-x-2 text-center">
                 <a href="{{ route("dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
                     class="text-purple-600 cursor-pointer">
