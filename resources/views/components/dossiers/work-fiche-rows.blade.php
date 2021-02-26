@@ -41,6 +41,9 @@
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->id }}
             </x-table.cell>
+            <x-table.cell class="tracking-tight text-center font-md {{ $fiche->status->name === 'Draft' ?  'text-red-600' : '' }}">
+                {{ $fiche->status->name }}
+            </x-table.cell>
             <x-table.cell class="space-x-2 text-center">
                 <a href="{{ route("dev-prev-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
                     class="text-purple-600 cursor-pointer">
