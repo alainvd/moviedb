@@ -4,7 +4,13 @@
     :crumbs="$crumbs"
     :class="'dossier-page'">
     <div class="px-4 bg-white">
-        <div class="w-full mb-16 lg:flex">
+        @if (session()->has('success'))
+            <x-alerts.success>
+                {{ session()->get('success')}}
+            </x-alerts.success>
+        @endif
+
+        <div class="w-full mt-4 mb-16 lg:flex">
             <div class="text-lg text-gray-600 pr-8">
                 In order to link films, TV movies, series, video games or shorts in an application for funding of a specific Creative Europe call for proposals, the detailed information on the works needs to be inserted in the Creative Europe MEDIA database.
                 <br><br>
