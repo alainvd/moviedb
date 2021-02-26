@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class MyDossiers extends Component
 {
-    public $showClosed = true;
+    public $showClosed = false;
 
     public ?User $user;
 

@@ -9,6 +9,7 @@
             <x-table.heading>GENRE</x-table.heading>
             <x-table.heading>PRODUCTION YEAR</x-table.heading>
             <x-table.heading>FILM ID</x-table.heading>
+            <x-table.heading>STATUS</x-table.heading>
             <x-table.heading>&nbsp;</x-table.heading>
         </x-slot>
 
