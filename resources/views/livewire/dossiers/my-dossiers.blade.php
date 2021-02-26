@@ -39,7 +39,7 @@
                 <x-table.cell class="text-center uppercase">
                     {{ $dossier->call->status }}
                 </x-table.cell>
-                <x-table.cell class="text-center uppercase">
+                <x-table.cell class="text-center uppercase {{ $dossier->status->name === 'DRAFT' ? 'text-red-600' : '' }}">
                     {{ $dossier->status->name }}
                 </x-table.cell>
                 <x-table.cell class="text-center">

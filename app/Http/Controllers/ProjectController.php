@@ -134,6 +134,11 @@ class ProjectController extends Controller
         ]);
         $dossier->save();
 
+        $request->session()
+            ->flash(
+                'success',
+                "Dossier {$dossier->project_ref_id} saved successfully"
+            );
         return redirect()->route('dossiers.index');
     }
 

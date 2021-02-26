@@ -14,7 +14,7 @@
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->total_budget_euro }} &nbsp; EURO
             </x-table.cell>
-            <x-table.cell class="tracking-tight text-center font-md uppercase text-red-600">
+            <x-table.cell class="tracking-tight text-center font-md uppercase {{ $fiche->status->name === 'DRAFT' ?  'text-red-600' : '' }}">
                 {{ $fiche->status->name }}
             </x-table.cell>
             <x-table.cell class="space-x-2 text-center">

@@ -10,7 +10,7 @@ class StatusSeeder extends Seeder
 {
     public $statuses = [
         ['name' => 'Draft', 'public' => false],
-        ['name' => 'New', 'public' => false],
+        ['name' => 'Complete', 'public' => false],
         ['name' => 'Accepted', 'public' => false],
         ['name' => 'Rejected', 'public' => false],
         ['name' => 'Duplicated', 'public' => false],
