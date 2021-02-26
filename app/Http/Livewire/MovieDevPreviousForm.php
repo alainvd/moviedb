@@ -62,6 +62,12 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         return $this->rules;
     }
 
+    public function mount(Request $request)
+    {
+        parent::mount($request);
+    }
+
+    /*
     public function callValidate()
     {
         // Validate form itself
@@ -79,16 +85,22 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         $errors2 = FormHelpers::validateSalesDistributorTerritories($this->sales_distributors);
         $this->emit('salesDistributorErrorMessages', array_merge($errors1, $errors2));
     }
+    */
 
-    public function mount(Request $request)
+    public function saveFiche()
     {
-        parent::mount($request);
+        parent::saveFiche();
+
     }
 
-    public function submit()
+    public function submitFiche()
     {
-        parent::submit();
+        parent::submitFiche();
 
+    }
+
+    public function fichePostSave()
+    {
         // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
@@ -96,7 +108,7 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         // go back to dossier
         if ($this->dossier->call_id && $this->dossier->project_ref_id) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }
+        }        
     }
 
     public function render()

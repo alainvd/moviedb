@@ -89,9 +89,9 @@ class FicheMovieFormBase extends FicheFormBase
         }
     }
 
+    // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
-        // save fiche as is, without full validation
         // Bare bones validation
         $this->validate([
             'movie.original_title' => 'required',
@@ -151,17 +151,23 @@ class FicheMovieFormBase extends FicheFormBase
             ])->save();
             $this->notify('Fiche is saved');
         }
+        $this->fichePostSave();
     }
 
+    // Fully validate and change status
     function submitFiche()
     {
-        // validate and save as new (or which state?)
         $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
         unset($this->movie->shooting_language);
 
         $this->fiche->status_id = 2;
         $this->saveFiche();
+    }
+
+    function fichePostSave()
+    {
+        // post save operations
     }
 
     public function saveItems($existing_items, $saving_items, $saving_class)
