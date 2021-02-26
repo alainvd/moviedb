@@ -68,7 +68,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         'fiche.comments' => 'string',
     ];
-    
+
     protected function rules()
     {
         return $this->rules;
@@ -78,7 +78,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     {
         parent::mount($request);
     }
-    
+
     // TODO: incorporate this in the main validation
     /*
     public function callValidate()
@@ -121,9 +121,11 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
 
         // go back to dossier
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+        if ($this->dossier && $this->dossier->call_id && $this->dossier->project_ref_id) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }        
+        } else {
+            return back();
+        }
     }
 
     public function render()
@@ -131,7 +133,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Current work';
-        
+
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-current-form', [
