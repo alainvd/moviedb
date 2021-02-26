@@ -104,6 +104,19 @@ class MovieTVForm extends FicheMovieFormBase
         }
     }
 
+    public function mount(Request $request)
+    {
+        parent::mount($request);
+        // init points value
+        foreach($this->crews as $crew) {
+            $this->totalPointsCrews += $crew['points'];
+        }
+        foreach($this->locations as $location) {
+            $this->totalPointsLocations += $location['points'];
+        }
+        $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
+    }
+
     public function callValidate()
     {
         // Validate form itself
@@ -144,38 +157,29 @@ class MovieTVForm extends FicheMovieFormBase
         $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
     }
 
-    public function mount(Request $request)
+    public function saveFiche()
     {
-        parent::mount($request);
-        // init points value
-        foreach($this->crews as $crew) {
-            $this->totalPointsCrews += $crew['points'];
-        }
-        foreach($this->locations as $location) {
-            $this->totalPointsLocations += $location['points'];
-        }
-        $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
+        parent::saveFiche();
+
     }
 
-    public function reject()
+    public function submitFiche()
     {
-        $this->fiche = new Fiche;
-        $this->movie = new Movie;
+        parent::submitFiche();
+
     }
 
-    public function submit()
+    public function fichePostSave()
     {
-        parent::submit();
-
         // crew, location, producers, sales agents, documents
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
         //$this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
 
-
-        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        // }
+        // go back to dossier
+        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+        }        
     }
 
     public function render()

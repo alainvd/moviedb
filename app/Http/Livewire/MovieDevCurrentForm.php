@@ -73,8 +73,14 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     {
         return $this->rules;
     }
+
+    public function mount(Request $request)
+    {
+        parent::mount($request);
+    }
     
     // TODO: incorporate this in the main validation
+    /*
     public function callValidate()
     {
         // Validate form itself
@@ -93,22 +99,22 @@ class MovieDevCurrentForm extends FicheMovieFormBase
             FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];})
         );
     }
-
-    public function mount(Request $request)
-    {
-        parent::mount($request);
-    }
-
-    public function reject()
-    {
-        $this->fiche = new Fiche;
-        $this->movie = new Movie;
-    }
+    */
 
     public function saveFiche()
     {
         parent::saveFiche();
 
+    }
+
+    public function submitFiche()
+    {
+        parent::submitFiche();
+
+    }
+
+    public function fichePostSave()
+    {
         // crew, producers, sales agents
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
@@ -117,7 +123,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         // go back to dossier
         if ($this->dossier->call_id && $this->dossier->project_ref_id) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }
+        }        
     }
 
     public function render()
