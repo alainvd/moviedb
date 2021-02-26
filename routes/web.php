@@ -109,9 +109,9 @@ Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::cl
 Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist-1');
 
 Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
-Route::get('/movie-dev-prev/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-prev');
+Route::get('/movie-dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth')->name('movie-dev-prev');
 Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
-Route::get('/movie-tv/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-tv');
+Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('movie-tv');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
 
 //Pending

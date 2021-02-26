@@ -6,6 +6,7 @@ use App\Models\Call;
 use App\Models\Dossier;
 use App\Models\Movie;
 use App\Models\Status;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ class ProjectController extends Controller
         'DEVSLATEMINI' => 'European Mini-slate Development',
         'CODEVELOPMENT' => 'European Co-development',
         'TV' => 'TV and Online Content',
+        'DEVVG' => 'Videogame development'
     ];
 
     /**
@@ -58,18 +60,23 @@ class ProjectController extends Controller
 
         $call = Call::find($params['call_id']);
 
-        $dossier = Dossier::firstOrCreate([
+        $dossier = Dossier::firstOrNew([
+            'project_ref_id' => $params['project_ref_id']
+        ]);
+
+        if ($dossier->id) {
+            return redirect()->route('dossiers.show', $dossier);
+        }
+
+        $dossier->fill([
             'call_id' => $params['call_id'],
-            'project_ref_id' => $params['project_ref_id'],
             'action_id' => $call->action_id,
             'status_id' => 1,
             'year' => date('Y'),
             'contact_person' => Auth::user()->email,
             'created_by' => Auth::user()->id,
         ]);
-
-        $layout = $this->getLayout();
-        $pageTitles = $this->pageTitles;
+        $dossier->save();
 
         return redirect()->route('dossiers.show', $dossier);
     }
@@ -133,6 +140,11 @@ class ProjectController extends Controller
         ]);
         $dossier->save();
 
+        $request->session()
+            ->flash(
+                'success',
+                "Dossier {$dossier->project_ref_id} saved successfully"
+            );
         return redirect()->route('dossiers.index');
     }
 

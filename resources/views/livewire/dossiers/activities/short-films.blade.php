@@ -9,6 +9,7 @@
             <x-table.heading>GENRE</x-table.heading>
             <x-table.heading>FILM TYPE</x-table.heading>
             <x-table.heading>BUDGET</x-table.heading>
+            <x-table.heading>STATUS</x-table.heading>
             <x-table.heading>&nbsp;</x-table.heading>
         </x-slot>
 
