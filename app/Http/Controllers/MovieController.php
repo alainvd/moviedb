@@ -69,6 +69,10 @@ class MovieController extends Controller
         {
              return redirect()->route('movie-dev-current', ['fiche' => $movie]);
           }
+          elseif($movie->fiche->type === 'tv')
+          {
+               return redirect()->route('movie-tv', ['fiche' => $movie]);
+            }
 
         else
         {

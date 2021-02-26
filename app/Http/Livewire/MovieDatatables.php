@@ -30,7 +30,7 @@ class MovieDatatables extends LivewireDatatable
         return [
             //Column::name('id')
             //  ->label('MEDIA ID'),
-            Column::name('id')
+            Column::name('fiche.id')
                 ->label('ID')
                 ->filterable()
                 ->linkTo('browse/movies'),
