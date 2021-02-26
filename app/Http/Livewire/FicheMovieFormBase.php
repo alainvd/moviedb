@@ -28,7 +28,7 @@ class FicheMovieFormBase extends FicheFormBase
 {
 
     // Movie data for Livewire
-    public Dossier $dossier;
+    public $dossier;
     public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
