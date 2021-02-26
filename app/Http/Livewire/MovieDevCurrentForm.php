@@ -121,11 +121,11 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
 
         // go back to dossier
-        if ($this->dossier && $this->dossier->call_id && $this->dossier->project_ref_id) {
+        //if ($this->dossier && $this->dossier->call_id && $this->dossier->project_ref_id) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        } else {
-            return back();
-        }
+        //} else {
+          //  return back();
+        //}
     }
 
     public function render()
