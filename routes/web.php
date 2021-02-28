@@ -140,7 +140,7 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 Route::view('/demo', 'demo');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 Route::get('/browse/movies', [MovieController::class,'index'])->name('movies');
-Route::get('/browse/movies/{movie}', [MovieController::class,'edit'])->name('movie_show');
+Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])->name('movie_show');
 
 
 Route::get('/landing/SEP', [\App\Http\Controllers\SEPController::class,'index'])->middleware(['cas.auth'])->name('SEP');

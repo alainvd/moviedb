@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\Dossier;
-use App\Http\Livewire\MovieDistForm;
 use Illuminate\Http\Request;
+use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Route;
 
 class MovieController extends Controller
@@ -55,28 +56,27 @@ class MovieController extends Controller
      * @param  \App\Models\Movie  $movie
      * @return Illuminate\Support\Facades\Route
      */
-    public function edit(Movie $movie)
+    public function edit(Fiche $fiche)
     {
-        if($movie->fiche->type === 'dist')
+        if($fiche->type === 'dist')
         {
-           return redirect()->route('movie-dist', ['fiche' => $movie]);
+           return redirect()->route('movie-dist', ['fiche' => $fiche]);
         }
-        elseif($movie->fiche->type === 'dev-prev')
+        elseif($fiche->type === 'dev-prev')
         {
-            return redirect()->route('movie-dev-prev', ['fiche' => $movie]);
-         }
-        elseif($movie->fiche->type === 'dev-current')
+            return redirect()->route('movie-dev-prev', ['fiche' => $fiche]);
+        }
+        elseif($fiche->type === 'dev-current')
         {
-             return redirect()->route('movie-dev-current', ['fiche' => $movie]);
-          }
-          elseif($movie->fiche->type === 'tv')
-          {
-               return redirect()->route('movie-tv', ['fiche' => $movie]);
-            }
-
+             return redirect()->route('movie-dev-current', ['fiche' => $fiche]);
+        }
+        elseif($fiche->type === 'tv')
+        {
+               return redirect()->route('movie-tv', ['fiche' => $fiche]);
+        }
         else
         {
-            return view('movies.show', compact(['movie']));
+            return view('movies.show', ['movie' => $fiche->movie]);
         }    
     }
 
