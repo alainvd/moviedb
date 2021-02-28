@@ -175,11 +175,8 @@ class MovieTVForm extends FicheMovieFormBase
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
         //$this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
-
-        // go back to dossier
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }        
+        // back
+        return redirect()->to($this->previous);   
     }
 
     public function render()

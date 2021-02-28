@@ -183,11 +183,8 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
-
-        // go back to dossier
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }        
+        // back
+        return redirect()->to($this->previous);
     }
 
     public function render()

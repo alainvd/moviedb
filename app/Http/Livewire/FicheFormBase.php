@@ -2,9 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Helpers\FormHelpers;
 use Livewire\Component;
+use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 
 class FicheFormBase extends Component
@@ -13,6 +14,7 @@ class FicheFormBase extends Component
     public $isNew = false;
     public $isApplicant = false;
     public $isEditor = false;
+    public $previous;
 
     protected function getListeners()
     {
@@ -33,6 +35,7 @@ class FicheFormBase extends Component
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }
+        $this->previous = URL::previous();
     }
 
     public function render()
