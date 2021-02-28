@@ -119,13 +119,8 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
-
-        // go back to dossier
-        if ($this->dossier && $this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        } else {
-            return back();
-        }
+        // back
+        return redirect()->to($this->previous);
     }
 
     public function render()

@@ -104,11 +104,8 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
-
-        // go back to dossier
-        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }        
+        // back
+        return redirect()->to($this->previous);
     }
 
     public function render()
