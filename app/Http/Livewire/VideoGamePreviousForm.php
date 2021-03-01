@@ -64,7 +64,7 @@ class VideoGamePreviousForm extends Component
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'required|string',
 
         // 'shootingLanguage' => 'required|integer',
         'shootingLanguage' => 'integer',

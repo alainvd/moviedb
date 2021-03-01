@@ -48,7 +48,7 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'required|string',
 
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
@@ -77,7 +77,7 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'required|string',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
