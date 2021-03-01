@@ -1,6 +1,12 @@
 <form wire:submit.prevent="submit">
     <div>
-        <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
+        <!-- TODO: should be based on layout, not role -->
+        @if ($isApplicant)
+        <div class="w-full p-4 mx-auto my-4 bg-white rounded-md shadow-md md:px-8 lg:px-16">
+        @elseif ($isEditor)
+        <div class="w-full p-4 mx-auto my-4 bg-white rounded-md shadow-md">
+        @endif
+        
             <!-- title -->
             <div class="my-8">
                 <x-details.title
@@ -33,8 +39,6 @@
                     :movie="$movie"></x-details.summary>
             </div>
 
-           
-
             <!-- cast/crew -->
             <div class="my-8" id="table-crews">
                 @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
@@ -52,7 +56,6 @@
                     :languagesSelected="$shootingLanguages"></x-details.tech-tv>
             </div>
           
-
             <!-- producers-tv -->
             <div class="my-8" id="table-producers">
                 @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])

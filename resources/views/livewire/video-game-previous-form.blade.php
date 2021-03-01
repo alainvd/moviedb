@@ -1,11 +1,17 @@
 <form wire:submit.prevent="submit">
-    <div class="md:py-6">
-        <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
-        <!-- @todo display "Viewing as: Applicant / ECEA -->
-        <!-- <div class="text-xs leading-tight">Applicant form</div> -->
+    <div>
+        <!-- TODO: should be based on layout, not role -->
+        @if ($isApplicant)
+        <div class="w-full p-4 mx-auto my-4 bg-white rounded-md shadow-md md:px-8 lg:px-16">
+        @elseif ($isEditor)
+        <div class="w-full p-4 mx-auto my-4 bg-white rounded-md shadow-md">
+        @endif
+
             <!-- title -->
             <div class="my-8">
-                <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>
+                <x-details.title
+                    :movie="$movie"
+                    :fiche="$fiche"></x-details.title>
             </div>
 
             <!-- basic -->
@@ -42,7 +48,6 @@
                 <x-details.tech-vg :movie="$movie"></x-details.tech-vg>
             </div>
 
-
             <!-- cast/crew -->
             <div class="my-8" id="table-crews">
                 @livewire('table-edit-movie-crews-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
@@ -58,6 +63,7 @@
                 @livewire('table-edit-movie-sales-agents-dev-previous', ['movie_id' => $movie->id])
             </div>
 
+            @if($isEditor)
             <div class="my-8">
                 <x-form.textarea
                     :id="'comments'"
@@ -70,6 +76,7 @@
                     <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
+            @endif
 
             <!-- buttons -->
             <div class="flex items-center justify-end mt-12 space-x-3">

@@ -68,6 +68,7 @@
             </div>
 
             <!-- comments -->
+            @if($isEditor)
             <div class="my-8">
                 <x-form.textarea
                     :id="'comments'"
@@ -81,6 +82,7 @@
                     <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
+            @endif
 
             <!-- buttons -->
             <div class="flex items-center justify-end mt-12 space-x-3">
