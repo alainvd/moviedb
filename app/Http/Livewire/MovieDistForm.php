@@ -13,6 +13,7 @@ use App\Models\Document;
 use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
+use Illuminate\Support\Str;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
 
@@ -184,7 +185,13 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
         // back
-        return redirect()->to($this->previous);
+        // if coming from wizard, go to dossier
+        if (Str::endsWith($this->previous, 'movie-wizard')) {
+            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+        } else {
+            return redirect()->to($this->previous);
+        }
+
     }
 
     public function render()
@@ -208,6 +215,7 @@ class MovieDistForm extends FicheMovieFormBase
 
         return view('livewire.movie-dist-form', [
                 'rules' => $this->rules(),
+                'layout' => $layout,
             ])
             ->layout($layout, [
                 'title' => $title,
