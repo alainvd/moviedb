@@ -11,8 +11,8 @@
             <!-- buttons -->
             <div class="flex items-center justify-end mt-12 space-x-3">
                 <div x-data class="flex items-center justify-end space-x-3">
-                    <x-button.primary wire:click="saveFiche()" x-show="($wire.fiche.status_id==1 || $wire.isEditor==1)">Save</x-button.primary>
-                    <x-button.primary wire:click="submitFiche()">Submit</x-button.primary>
+                    <x-button.primary id="button-save" wire:click="saveFiche()" x-show="($wire.fiche.status_id==1 || $wire.isEditor==1)">Save</x-button.primary>
+                    <x-button.primary id="button-submit" wire:click="submitFiche()">Submit</x-button.primary>
                 </div>
             </div>
         </div>
