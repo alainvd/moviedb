@@ -118,6 +118,7 @@ class MovieDevPreviousForm extends FicheMovieFormBase
 
         return view('livewire.movie-dev-previous-form', [
                 'rules' => $this->rules(),
+                'layout' => $layout,
             ])
             ->layout($layout, [
                 'title' => $title,

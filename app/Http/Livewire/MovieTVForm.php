@@ -200,6 +200,7 @@ class MovieTVForm extends FicheMovieFormBase
 
         return view('livewire.movie-tv-form', [
                 'rules' => $this->rules(),
+                'layout' => $layout,
             ])
             ->layout($layout, [
                 'title' => $title,

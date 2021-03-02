@@ -250,12 +250,30 @@ class VideoGamePreviousForm extends Component
 
     public function render()
     {
-        if($this->getErrorBag()->any()){
-            $this->notify('Validation errors', 'error');
-        }
 
-        return view('livewire.video-game-previous-form', ['rules' => $this->rules()])
-            ->layout('components.layout');
+        $title = 'Audiovisual Work - Production - Videogames';
+        $crumbs[] = [
+            'url' => route('dossiers-public'),
+            'title' => 'My dossiers'
+        ];
+        $crumbs[] = [
+            'url' => route('dossiers-public'),
+            'title' => 'Edit dossier'
+        ];
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
+
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+
+        return view('livewire.video-game-previous-form', [
+                'rules' => $this->rules(),
+                'layout' => $layout,
+            ])
+            ->layout($layout, [
+                'title' => $title,
+                'crumbs' => $crumbs,
+            ]);
     }
 
 }

@@ -133,6 +133,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         return view('livewire.movie-dev-current-form', [
                 'rules' => $this->rules(),
+                'layout' => $layout,
             ])
             ->layout($layout, [
                 'title' => $title,
