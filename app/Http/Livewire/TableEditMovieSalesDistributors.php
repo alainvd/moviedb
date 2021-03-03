@@ -24,10 +24,6 @@ class TableEditMovieSalesDistributors extends TableEditBase
 
     public $distributorRoles;
 
-    public $salesDistributorErrorMessages;
-
-    protected $listeners = ['salesDistributorErrorMessages'];
-
     protected function defaults()
     {
         return SalesDistributor::defaultsSalesDistributor() + parent::defaults();
@@ -67,7 +63,6 @@ class TableEditMovieSalesDistributors extends TableEditBase
     public function mount($movie_id = null)
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        // dd($this->countries);
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         $this->countries_value_label = Country::where('active', true)
             ->get()
@@ -95,14 +90,6 @@ class TableEditMovieSalesDistributors extends TableEditBase
     protected function sendItems()
     {
         $this->emitUp('updateMovieSalesDistributors', $this->items);
-    }
-
-    public function salesDistributorErrorMessages($messages) {
-        $this->salesDistributorErrorMessages = $messages;
-    }
-
-    public function updated() {
-        // dd($this->editing['countries']);
     }
 
     public function showModalEdit($key = null)
@@ -138,4 +125,5 @@ class TableEditMovieSalesDistributors extends TableEditBase
             function ($c) use ($id) {return $c['id'] !== $id;}
         );
     }
+    
 }

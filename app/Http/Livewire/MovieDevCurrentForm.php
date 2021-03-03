@@ -5,14 +5,16 @@ namespace App\Http\Livewire;
 use App\Models\Crew;
 use App\Models\Fiche;
 use App\Models\Movie;
-use App\Models\Document;
+use App\Models\Title;
+use App\Models\Person;
 use App\Models\Dossier;
 use App\Models\Activity;
-use App\Models\Person;
+use App\Models\Document;
 use App\Models\Producer;
 use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class MovieDevCurrentForm extends FicheMovieFormBase
 {
@@ -79,38 +81,32 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         parent::mount($request);
     }
 
-    // TODO: incorporate this in the main validation
-    /*
-    public function callValidate()
-    {
-        // Validate form itself
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
-
-        // Validate subform
-        $this->emit('crewErrorMessages', array_merge(
-            FormHelpers::requiredCrew($this->crews, $this->movie->genre_id),
-            FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;})
-        ));
-
-        // Validate subform
-        $this->emit('producerErrorMessages',
-            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];})
-        );
-    }
-    */
-
     public function saveFiche()
     {
         parent::saveFiche();
-
     }
 
     public function submitFiche()
     {
         parent::submitFiche();
+    }
 
+    public function specialValidation()
+    {
+        $specialErrors = new MessageBag;
+
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredCrew($this->crews, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;});
+        foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
+
+        // Validate subform
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];});
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
+
+        return $specialErrors;
     }
 
     public function fichePostSave()

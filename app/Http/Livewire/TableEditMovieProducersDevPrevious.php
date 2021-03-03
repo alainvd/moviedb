@@ -52,4 +52,5 @@ class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
         parent::deleteItem();
         $this->recalculateBudget();
     }
+    
 }

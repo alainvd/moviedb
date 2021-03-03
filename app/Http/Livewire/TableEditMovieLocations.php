@@ -23,9 +23,9 @@ class TableEditMovieLocations extends TableEditBase
 
     public $points_total = 0;
 
-    public $locationErrorMessages;
-
-    protected $listeners = ['locationErrorMessages'];
+    protected $listeners = [
+        'movieLocationsAddRequired'
+    ];
 
     protected function defaults()
     {
@@ -76,6 +76,9 @@ class TableEditMovieLocations extends TableEditBase
     private function loadItems()
     {
         $this->items = Location::where('movie_id',$this->movie->id)->get()->toArray();
+        if ($this->movie) {
+            $this->movieLocationsAddRequired($this->movie->genre_id);
+        }
         $this->addUniqueKeys();
     }
 
@@ -125,8 +128,34 @@ class TableEditMovieLocations extends TableEditBase
         $this->recalculatePoints();
     }
 
-    public function locationErrorMessages($messages) {
-        $this->locationErrorMessages = $messages;
+    public function movieLocationsAddRequired($genre_id) {
+        $req_items = Location::newMovieLocations($genre_id);
+        $req_items_types = array_column($req_items, 'type');
+        foreach ($req_items as $req_item) {
+            if (!array_filter(
+                $this->items,
+                function ($item) use ($req_item) {
+                    return $item['type'] == $req_item['type'];
+                }
+            ))
+            {
+                $this->items[] = $req_item;
+            }
+        }
+        $this->items = array_map(
+            function($item) use ($req_items, $req_items_types) {
+                // mark as required or not
+                if (in_array($item['type'], $req_items_types)) {
+                    $item['required'] = true;
+                } else {
+                    $item['required'] = false;
+                }
+                return $item;
+            },
+            $this->items
+        );
+        $this->addUniqueKeys();
+        $this->sendItems();
     }
 
 }

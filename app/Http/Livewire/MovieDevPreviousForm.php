@@ -14,6 +14,7 @@ use App\Models\SalesAgent;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
+use Illuminate\Support\MessageBag;
 
 class MovieDevPreviousForm extends FicheMovieFormBase
 {
@@ -67,26 +68,6 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         parent::mount($request);
     }
 
-    /*
-    public function callValidate()
-    {
-        // Validate form itself
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
-
-        // Validate subform
-        $this->emit('producerErrorMessages',
-            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'];})
-        );
-
-        // Validate subform
-        $errors1 = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesDistributor::class, function($sales_distributor) {return $sales_distributor['name'];});
-        $errors2 = FormHelpers::validateSalesDistributorTerritories($this->sales_distributors);
-        $this->emit('salesDistributorErrorMessages', array_merge($errors1, $errors2));
-    }
-    */
-
     public function saveFiche()
     {
         parent::saveFiche();
@@ -99,12 +80,31 @@ class MovieDevPreviousForm extends FicheMovieFormBase
 
     }
 
+    public function specialValidation()
+    {
+        $specialErrors = new MessageBag;
+
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'];});
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
+
+        // Validate subform: minimum territories
+        $messages = FormHelpers::validateSalesDistributorTerritories($this->sales_distributors);
+        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_distributors, TableEditMovieSalesDistributors::class, function($sales_distributor) {return $sales_distributor['name'];});
+        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);    
+
+        return $specialErrors;
+    }
+    
     public function fichePostSave()
     {
         // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
-        // back
+        
+        // only back, no wizard
         return redirect()->to($this->previous);
     }
 

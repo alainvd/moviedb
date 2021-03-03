@@ -16,6 +16,7 @@ use App\Models\SalesAgent;
 use Illuminate\Support\Str;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class MovieDistForm extends FicheMovieFormBase
 {
@@ -114,44 +115,6 @@ class MovieDistForm extends FicheMovieFormBase
         $this->totalPoints = $this->totalPointsCrews + $this->totalPointsLocations;
     }
 
-    /*
-    public function callValidate()
-    {
-        // Validate form itself
-        $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
-
-        // Validate subform
-        $this->emit('crewErrorMessages', array_merge(
-            FormHelpers::requiredCrew($this->crews, $this->movie->genre_id),
-            FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrews::class, function($crew) {return Title::find($crew['title_id'])->name;})
-        ));
-
-        // Validate subform
-        $this->emit('locationErrorMessages', array_merge(
-            // TODO: required locations
-            // FormHelpers::requiredCrew($this->crews, $this->movie->genre_id),
-            FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return $location['name'];})
-        ));
-
-        // Validate subform
-        $this->emit('producerErrorMessages',
-            FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];})
-        );
-
-        // Validate subform
-        $this->emit('salesAgentErrorMessages',
-            FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];})
-        );
-
-        // Validate subform
-        $this->emit('filesErrorMessages',
-            FormHelpers::validateDocumentsFinancingPlan($this->documents)
-        );
-    }
-    */
-
     public function totalPointsCrews($points)
     {
         $this->totalPointsCrews = $points;
@@ -167,13 +130,44 @@ class MovieDistForm extends FicheMovieFormBase
     public function saveFiche()
     {
         parent::saveFiche();
-
     }
 
     public function submitFiche()
     {
         parent::submitFiche();
+    }
 
+    public function specialValidation()
+    {
+        $specialErrors = new MessageBag;
+
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredCrew($this->crews, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrews::class, function($crew) {return Title::find($crew['title_id'])->name;});
+        foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
+
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredLocations($this->locations, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
+        foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);    
+
+        // Validate subform
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
+
+        // Validate subform
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];});
+        foreach ($messages as $message) $specialErrors->add('salesAgentErrorMessages', $message);
+
+        // Validate subform
+        $messages = FormHelpers::validateDocumentsFinancingPlan($this->documents);
+        foreach ($messages as $message) $specialErrors->add('filesErrorMessages', $message);
+
+        return $specialErrors;
     }
 
     public function fichePostSave()
@@ -184,6 +178,7 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
+
         // back
         // if coming from wizard, go to dossier
         if (Str::endsWith($this->previous, 'movie-wizard')) {
@@ -191,7 +186,6 @@ class MovieDistForm extends FicheMovieFormBase
         } else {
             return redirect()->to($this->previous);
         }
-
     }
 
     public function render()

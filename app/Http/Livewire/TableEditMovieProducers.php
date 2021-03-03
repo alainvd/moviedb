@@ -19,10 +19,6 @@ class TableEditMovieProducers extends TableEditBase
 
     public $budget_total = 0;
 
-    public $producerErrorMessages;
-
-    protected $listeners = ['producerErrorMessages'];
-
     protected function defaults()
     {
         return Producer::defaultsProducer() + parent::defaults();
@@ -85,8 +81,5 @@ class TableEditMovieProducers extends TableEditBase
     {
         $this->emitUp('updateMovieProducers', $this->items);
     }
-
-    public function producerErrorMessages($messages) {
-        $this->producerErrorMessages = $messages;
-    }
+    
 }

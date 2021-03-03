@@ -12,12 +12,6 @@
         @endif
     </div>
 
-    @if($producerErrorMessages)
-    @foreach ($producerErrorMessages as $message)
-        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-    @endforeach
-    @endif
-
     <div x-data="{ budget_total: {{ $budget_total }} }">
         <x-table>
             <x-slot name="head">
