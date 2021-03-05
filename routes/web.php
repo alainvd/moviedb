@@ -91,7 +91,8 @@ Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard'
     ->name('movie-wizard');
 
 // One path that redirects to correct fiche form based on activity
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fiche?}', function($dossier, $activity, $fiche = null) {
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fiche?}', function(App\Models\Dossier $dossier, $activity, $fiche = null) {
+    if ($activity == 1 && $dossier->action_id==7) return redirect()->route('tv-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity == 1) return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity == 2) return redirect()->route('dev-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity == 3) return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);

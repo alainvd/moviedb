@@ -4,8 +4,7 @@
     <div class="my-8">
         <x-details.title
             :movie="$movie"
-            :fiche="$fiche">
-        </x-details.title>
+            :fiche="$fiche"></x-details.title>
     </div>
 
     <!-- basic -->
@@ -22,7 +21,7 @@
             :genres="$genres"
             :platforms="$platforms"
             :statuses="$statuses"
-            :years="$years"></x-details.basic>
+            :years="$years"></x-details.basic-tv>
     </div>
 
     <!-- summary -->
@@ -37,10 +36,30 @@
         <div id="table-crews-wrapper" class="@if ($errors->has('crewErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
         @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
         </div>
+
         <div id="table-crews-messages">
         @foreach ($errors->get('crewErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
+
+    <!-- location -->
+    <div class="my-8" id="table-location">
+        <div id="table-location-wrapper" class="@if ($errors->has('locationErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
+            @livewire('table-edit-movie-locations', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+        </div>
+
+        <div id="table-location-messages">
+            @foreach ($errors->get('locationErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
+        </div>
+    </div>
+
+    @if ($isEditor)
+        <div class="mt-5 text-right" x-data="{points: @entangle('totalPoints')}">
+        <span class="mr-4">
+            TOTAL SCORE: <span class="font-bold" x-text="points"></span>
+        </span>
+        </div>
+    @endif
 
      <!-- technical info -->
      <div class="my-8">
@@ -60,7 +79,7 @@
             :rules="$rules"
             :movie="$movie"></x-details.prev-support-tv>
     </div>
-    
+
     <!-- producers-tv -->
     <div class="my-8" id="table-producers">
         <div id="table-producers-wrapper" class="@if ($errors->has('producerErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
@@ -72,14 +91,14 @@
         </div>
     </div>
 
-    <!-- budget-tv -->
+    <!-- budget-dev-current -->
     <div class="my-8">
         <x-details.budget-dev-current
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
             :rules="$rules"
             :currencies="$currencies"
-            ></x-details.budget>
+            ></x-details.budget-dev-current>
     </div>
 
     <!-- comments -->

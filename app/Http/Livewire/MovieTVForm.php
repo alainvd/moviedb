@@ -30,10 +30,10 @@ class MovieTVForm extends FicheMovieFormBase
         return array_merge(
             parent::getListeners(), [
             'updateMovieCrews',
-            //'updateMovieLocations',
+            'updateMovieLocations',
             'updateMovieProducers',
             'totalPointsCrews',
-            //'totalPointsLocations',
+            'totalPointsLocations',
         ]);
     }
 
@@ -41,10 +41,8 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
-        'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
-        'movie.film_delivery_platform' => 'required|string',
+        'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string',
 
@@ -57,26 +55,23 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.delivery_date' => 'required|date:d.m.Y',
         'movie.broadcast_date' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
-        'movie.film_format' => 'required|string',
         'movie.development_costs_in_euro' => 'required|integer',
-        'movie.total_budget_euro' => 'required|integer',
+        'movie.film_length' => 'required|integer',
+        'movie.number_of_episodes' => 'integer',
+        'movie.length_of_episodes' => 'integer',
 
-        'movie.dev_support_flag' => 'string',
-        'movie.dev_support_reference' => 'string',
+        'movie.dev_support_flag' => 'required|integer',
+        'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
-        'movie.total_budget_currency_amount' => 'required|integer',
-        'movie.total_budget_currency_code' => 'required|string',
+        'movie.total_budget_euro' => 'integer',
     ];
 
     protected $rulesEditor = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
-        'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
-        'movie.film_delivery_platform' => 'required|string',
+        'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
         'movie.film_type' => 'required|string',
 
@@ -90,16 +85,15 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.delivery_date' => 'required|date:d.m.Y',
         'movie.broadcast_date' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
+        'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer',
-        'movie.film_format' => 'required|string|max:255',
+        'movie.number_of_episodes' => 'integer',
+        'movie.length_of_episodes' => 'integer',
 
-        'movie.dev_support_flag' => 'string',
-        'movie.dev_support_reference' => 'string',
+        'movie.dev_support_flag' => 'required|integer',
+        'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
-        'movie.total_budget_currency_amount' => 'required|integer',
-        'movie.total_budget_currency_code' => 'required|string|max:255',
-        'movie.total_budget_currency_rate' => 'required|numeric',
-        'movie.total_budget_euro' => 'required|integer',
+        'movie.total_budget_euro' => 'integer',
 
         'fiche.comments' => 'string',
     ];
@@ -163,7 +157,7 @@ class MovieTVForm extends FicheMovieFormBase
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
-        foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);    
+        foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
 
         // Validate subform
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
@@ -174,9 +168,9 @@ class MovieTVForm extends FicheMovieFormBase
 
     public function fichePostSave()
     {
-        // crew, location, producers, sales agents, documents
+        // crew, location, producers
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
-        //$this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
+        $this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
 
         // back
@@ -204,7 +198,7 @@ class MovieTVForm extends FicheMovieFormBase
         $crumbs[] = [
             'title' => 'Edit fiche'
         ];
-                
+
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-tv-form', [
@@ -215,9 +209,8 @@ class MovieTVForm extends FicheMovieFormBase
                 'title' => $title,
                 'crumbs' => $crumbs,
             ]);
-        
+
     }
 
 }
 
- 

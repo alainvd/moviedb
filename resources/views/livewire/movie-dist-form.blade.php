@@ -51,7 +51,7 @@
         @foreach ($errors->get('locationErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
-    
+
     @if ($isEditor)
     <div class="mt-5 text-right" x-data="{points: @entangle('totalPoints')}">
         <span class="mr-4">
@@ -70,16 +70,16 @@
     </div>
     @endif
 
-    <!-- photography -->
+    <!-- tech -->
     <div class="my-8">
-        <x-details.photography
+        <x-details.tech
             :rules="$rules"
             :movie="$movie"
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
             :languages="$languages"
-            :languagesSelected="$shootingLanguages"></x-details.photography>
+            :languagesSelected="$shootingLanguages"></x-details.tech>
     </div>
 
     <!-- producers -->
@@ -92,7 +92,7 @@
         @foreach ($errors->get('producerErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
-    
+
     <!-- Total budget -->
     <div class="my-8">
         <x-details.budget
@@ -123,7 +123,7 @@
         @foreach ($errors->get('filesErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
-    
+
     <!-- comments -->
     @if($isEditor)
     <div class="my-8">

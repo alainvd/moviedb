@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Crew;
 use App\Models\Fiche;
+use App\Models\Location;
 use App\Models\Movie;
 use App\Models\Title;
 use App\Models\Person;
@@ -24,6 +25,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         return array_merge(
             parent::getListeners(), [
             'updateMovieCrews',
+            'updateMovieLocations',
             'updateMovieProducers',
             'updateMovieSalesAgents',
         ]);
@@ -102,6 +104,13 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;});
         foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
 
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredLocations($this->locations, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
+        foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
+
         // Validate subform
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
@@ -111,8 +120,9 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
     public function fichePostSave()
     {
-        // crew, producers, sales agents
+        // crew, location, producers, sales agents
         $this->saveItems(Crew::with('person')->where('movie_id',$this->movie->id)->get(), $this->crews, 'person_crew');
+        $this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         // back

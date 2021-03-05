@@ -27,7 +27,7 @@ class FormHelpers
         }
         return $requiredFieldMessages;
     }
-    
+
     // Check if the required crew members are present
     public static function requiredCrew($crews, $genre_id) {
         $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew($genre_id))->get();

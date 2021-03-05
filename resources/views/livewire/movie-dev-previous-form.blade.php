@@ -35,19 +35,19 @@
         <x-details.link-applicant-work
             :rules="$rules"
             :movie="$movie"
-            :linkApplicantWork="$linkApplicantWork"></x-details>
+            :linkApplicantWork="$linkApplicantWork"></x-details.link-applicant-work>
     </div>
 
-    <!-- photography -->
+    <!-- tech -->
     <div class="my-8">
-        <x-details.photography
+        <x-details.tech
             :rules="$rules"
             :movie="$movie"
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
             :languages="$languages"
-            :languagesSelected="$shootingLanguages"></x-details.photography>
+            :languagesSelected="$shootingLanguages"></x-details.tech>
     </div>
 
     <!-- producers-dev-previous -->
@@ -60,7 +60,7 @@
         @foreach ($errors->get('producerErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
-    
+
     <!-- sales distributors -->
     <div class="my-8" id="table-sales-distributors">
         <div id="table-sales-distributors-wrapper" class="@if ($errors->has('salesDistributorErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
@@ -71,7 +71,7 @@
         @foreach ($errors->get('salesDistributorErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
-    
+
     <!-- comments -->
     @if($isEditor)
     <div class="my-8">

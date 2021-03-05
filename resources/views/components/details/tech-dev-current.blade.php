@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-photography-dev-current">
+<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-tech-dev-current">
 
     <div class="col-span-2 mb-4 text-lg md:col-span-3">
         Technical information
@@ -20,9 +20,9 @@
 
     <div
         x-data="{ error: {{ $errors->has('movie.shooting_language') ? 1 : 0 }} }"
-        x-init="$watch('error', value => error == 1 ? 
+        x-init="$watch('error', value => error == 1 ?
         document.getElementById('shooting-language').parentElement.classList.add('border', 'rounded-md', 'border-red-500')
-        : 
+        :
         document.getElementById('shooting-language').parentElement.classList.remove('border', 'rounded-md', 'border-red-500')
         )"
         class="col-span-1 col-start-3 sm:col-span-1">

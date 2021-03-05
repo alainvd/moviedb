@@ -1,4 +1,9 @@
-<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic-dev-current">
+<div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic-tv">
+
+    <div class="col-span-2 mb-4 text-lg">
+        General information
+    </div>
+
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
         <x-form.input
             :id="'original_title'"
@@ -97,19 +102,19 @@
 
     <div class="col-span-1">
         <x-form.select
-            :id="'film_delivery_platform'"
+            :id="'delivery_platform'"
             :label="'Film Delivery Platform'"
-            :hasError="$errors->has('movie.film_delivery_platform')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.film_delivery_platform')"
-            wire:model="movie.film_delivery_platform">
-            
+            :hasError="$errors->has('movie.delivery_platform')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.delivery_platform')"
+            wire:model="movie.delivery_platform">
+
             @foreach($platforms as $key => $value)
                 <option value="{{$key}}">{{$value}}</option>
             @endforeach
 
         </x-form.select>
 
-        @error('movie.film_delivery_platform')
+        @error('movie.delivery_platform')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>

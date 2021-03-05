@@ -10,7 +10,7 @@
             wire:model="movie.total_budget_euro"
             placeholder="0">
 
-        </x-form.input>
+        </x-form.input-trailing>
 
         @error('movie.total_budget_euro')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>

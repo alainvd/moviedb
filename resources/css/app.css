@@ -39,6 +39,9 @@ main {
 #fdc-basic:before {
     content: "basic";
 }
+#fdc-basic-tv:before {
+    content: "basic tv";
+}
 #fdc-budget:before {
     content: "budget";
 }
@@ -48,11 +51,14 @@ main {
 #fdc-link-applicant-work:before {
     content: "link-applicant-work";
 }
-#fdc-photography-dev-current:before {
-    content: "photography-dev-current";
+#fdc-tech-dev-current:before {
+    content: "tech-dev-current";
 }
-#fdc-photography:before {
-    content: "photography";
+#fdc-tech:before {
+    content: "tech";
+}
+#fdc-tech-tv:before {
+    content: "tech-tv";
 }
 #fdc-points:before {
     content: "points";
@@ -62,6 +68,9 @@ main {
 }
 #fdc-ownership:before {
     content: "ownership";
+}
+#fdc-prev-support-tv:before{
+    content: "prev-support-tv";
 }
 */
 
