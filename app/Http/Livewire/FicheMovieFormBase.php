@@ -101,6 +101,7 @@ class FicheMovieFormBase extends FicheFormBase
         // Bare bones validation
         $this->validate([
             'movie.original_title' => 'required',
+            'fiche.status_id' => 'required',
             'movie.genre_id' => 'required',
         ]);
         unset($this->movie->shooting_language);
@@ -112,15 +113,21 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            switch ($this->activity->id) {
-                case 1:
+            switch ($this->activity->name) {
+                case 'description':
                     $type = 'dist';
                     break;
-                case 2:
+                case 'previous-work':
                     $type = 'dev-prev';
                     break;
-                case 3:
-                case 5:
+                case 'current-work':
+                    if ($this->dossier->action->name == 'TV') {
+                        $type = 'tv';
+                    } else {
+                        $type = 'dev-current';
+                    }
+                    break;
+                case 'short-firm':
                     $type = 'dev-current';
                     break;
             }

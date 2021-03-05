@@ -48,7 +48,7 @@
             :hasError="$errors->has('movie.development_costs_in_euro')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.development_costs_in_euro')"
             wire:model="movie.development_costs_in_euro">
-        </x-form.input>
+        </x-form.input-trailing>
 
         @error('movie.development_costs_in_euro')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -63,7 +63,7 @@
             :hasError="$errors->has('movie.film_length')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_length')"
             wire:model="movie.film_length">
-        </x-form.input>
+        </x-form.input-trailing>
 
         @error('movie.film_length')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -94,7 +94,7 @@
             :hasError="$errors->has('movie.length_of_episodes')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.length_of_episodes')"
             wire:model="movie.length_of_episodes">
-        </x-form.input>
+        </x-form.input-trailing>
 
         @error('movie.length_of_episodes')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>

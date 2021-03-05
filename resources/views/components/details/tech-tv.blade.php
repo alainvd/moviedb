@@ -104,6 +104,7 @@
             :label="'Total duration'"
             :trailing="'Minutes'"
             :hasError="$errors->has('movie.film_length')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.film_length')"
             wire:model="movie.film_length">
         </x-form.input-trailing>
 
@@ -118,6 +119,7 @@
             :id="'number_of_episodes'"
             :label="'Number of episodes'"
             :hasError="$errors->has('movie.number_of_episodes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.number_of_episodes')"
             wire:model="movie.number_of_episodes">
         </x-form.input>
 
@@ -133,6 +135,7 @@
             :label="'Average duration of episode'"
             :trailing="'Minutes'"
             :hasError="$errors->has('movie.length_of_episodes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.length_of_episodes')"
             wire:model="movie.length_of_episodes">
         </x-form.input-trailing>
 
