@@ -28,10 +28,7 @@ class TableEditMovieCrews extends TableEditBase
 
     public $points_total = 0;
 
-    public $crewErrorMessages;
-
     protected $listeners = [
-        'crewErrorMessages',
         'movieCrewsAddRequired'
     ];
 
@@ -151,10 +148,6 @@ class TableEditMovieCrews extends TableEditBase
         $this->recalculatePoints();
     }
 
-    public function crewErrorMessages($messages) {
-        $this->crewErrorMessages = $messages;
-    }
-
     public function movieCrewsAddRequired($genre_id) {
         $req_items = Crew::newMovieCrew($genre_id);
         $req_items_title_ids = array_column($req_items, 'title_id');
@@ -182,5 +175,7 @@ class TableEditMovieCrews extends TableEditBase
             $this->items
         );
         $this->addUniqueKeys();
+        $this->sendItems();
     }
+    
 }

@@ -52,4 +52,48 @@ class Location extends Model
             'points' => null,
         ];
     }
+
+    static function newMovieLocations($genre_id)
+    {
+        $location = [];
+        // Fiction
+        if ($genre_id == 1) {
+            $location[] = array_merge(Location::defaultsLocation(), ['type' => 'SHOOT']);
+            $location[] = array_merge(Location::defaultsLocation(), ['type' => 'POST']);
+        }
+        // Creative Documentary
+        if ($genre_id == 2) {
+            $location[] = array_merge(Location::defaultsLocation(), ['type' => 'SHOOT']);
+            $location[] = array_merge(Location::defaultsLocation(), ['type' => 'POST']);
+        }
+        // Animation
+        if ($genre_id == 3) {
+            $location[] = array_merge(Location::defaultsLocation(), ['type' => 'POST']);
+            $location[] = array_merge(Location::defaultsLocation(), ['type' => 'STUDIO']);
+        }
+        return $location;
+    }
+
+    static function requiredMovieLocations($genre_id)
+    {
+        if ($genre_id == 1) {
+            return [
+                'SHOOT',
+                'POST',
+            ];
+        }
+        if ($genre_id == 2) {
+            return [
+                'SHOOT',
+                'POST',
+            ];
+        }
+        if ($genre_id == 3) {
+            return [
+                'POST',
+                'STUDIO',
+            ];
+        }
+        return [];
+    }
 }

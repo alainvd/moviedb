@@ -90,12 +90,9 @@ class MovieWizard extends Component
             case 'TV':
                 // Attach fiche for activity
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
-                Log::info('rules', ['rules' => $rules]);
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
-                    Log::info('rules', ['saving' => 'replacing single movie']);
                     $this->dossier->fiches()->sync([$this->movie->fiche->id]);
                 } else {
-                    Log::info('rules', ['saving' => 'attaching new movie']);
                     $this->dossier->fiches()->attach(
                         $this->movie->fiche->id,
                         ['activity_id' => $this->activity->id]

@@ -4,12 +4,6 @@
         Locations
     </div>
 
-    @if($locationErrorMessages)
-    @foreach ($locationErrorMessages as $message)
-        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-    @endforeach
-    @endif
-
     <div x-data="{ points_total: {{ $points_total }} }">
         <x-table>
             <x-slot name="head">
@@ -23,7 +17,10 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ !empty($item['type']) ? $locationTypes[$item['type']] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">
+                        @if(isset($item['required']) && $item['required'])<span class="text-red-500">*</span>@endif
+                        {{ !empty($item['type']) ? $locationTypes[$item['type']] : '' }}
+                    </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif

@@ -18,11 +18,12 @@ use App\Models\Language;
 use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
-use App\Models\SalesDistributor;
 use Illuminate\Http\Request;
+use App\Models\SalesDistributor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class FicheMovieFormBase extends FicheFormBase
 {
@@ -41,6 +42,9 @@ class FicheMovieFormBase extends FicheFormBase
     public $sales_agents = [];
     public $sales_distributors = [];
     public $documents = [];
+
+    public $crewErrorMessages;
+    public $producerErrorMessages;
 
     public function validationAttributes()
     {
@@ -86,6 +90,8 @@ class FicheMovieFormBase extends FicheFormBase
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
             $this->emit('movieCrewsAddRequired', $value);
+            // Update the locations livewire component
+            $this->emit('movieLocationsAddRequired', $value);
         }
     }
 
@@ -125,7 +131,6 @@ class FicheMovieFormBase extends FicheFormBase
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
-            // TODO: only in dossier context
             $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
             if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
                 $this->dossier->fiches()->sync([$this->movie->fiche->id]);
@@ -157,12 +162,33 @@ class FicheMovieFormBase extends FicheFormBase
     // Fully validate and change status
     function submitFiche()
     {
+
         $this->movie->shooting_language = $this->shootingLanguages;
-        $this->validate();
-        unset($this->movie->shooting_language);
+
+        // 1. REGULAR VALIDATION
+        try{
+            $this->validate();
+        }
+        catch (ValidationException $e){
+            $errors = $e->validator->getMessageBag();
+        }
+
+        // 2. SPECIAL VALIDATION
+        $specialErrors = $this->specialValidation();
+        $errors->merge($specialErrors);
+
+        if($errors) {
+            $this->setErrorBag($errors);
+            return;
+        }
 
         $this->fiche->status_id = 2;
         $this->saveFiche();
+    }
+
+    function specialValidation()
+    {
+        // perform validation and return message bag
     }
 
     function fichePostSave()

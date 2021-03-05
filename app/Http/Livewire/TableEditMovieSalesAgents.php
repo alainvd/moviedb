@@ -21,10 +21,6 @@ class TableEditMovieSalesAgents extends TableEditBase
 
     public $distributorRoles;
 
-    public $salesAgentErrorMessages;
-
-    protected $listeners = ['salesAgentErrorMessages'];
-
     protected function defaults()
     {
         return SalesAgent::defaultsSalesAgent() + parent::defaults();
@@ -88,7 +84,4 @@ class TableEditMovieSalesAgents extends TableEditBase
         $this->emitUp('updateMovieSalesAgents', $this->items);
     }
 
-    public function salesAgentErrorMessages($messages) {
-        $this->salesAgentErrorMessages = $messages;
-    }
 }

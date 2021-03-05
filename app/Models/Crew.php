@@ -18,10 +18,10 @@ class Crew extends Model
      * @var array
      */
     protected $fillable = [
-        'points',
+        'movie_id',
         'person_id',
         'title_id',
-        'movie_id',
+        'points',
     ];
 
     /**
@@ -52,7 +52,6 @@ class Crew extends Model
     static function defaultsCrew()
     {
         return [
-            'points' => null,
             'person' => [
                 'firstname' => '',
                 'lastname' => '',
@@ -62,6 +61,7 @@ class Crew extends Model
                 'country_of_residence' => '',
             ],
             'title_id' => null,
+            'points' => null,
         ];
     }
 
