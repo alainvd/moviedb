@@ -37,14 +37,13 @@
         <div id="table-crews-wrapper" class="@if ($errors->has('crewErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
         @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
         </div>
-
         <div id="table-crews-messages">
         @foreach ($errors->get('crewErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
 
-    <!-- technical info -->
-    <div class="my-8">
+     <!-- technical info -->
+     <div class="my-8">
         <x-details.tech-tv
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
@@ -53,6 +52,13 @@
             :filmFormats="$filmFormats"
             :languages="$languages"
             :languagesSelected="$shootingLanguages"></x-details.tech-tv>
+    </div>
+
+    <!-- summary -->
+    <div class="my-8">
+        <x-details.prev-support-tv
+            :rules="$rules"
+            :movie="$movie"></x-details.prev-support-tv>
     </div>
     
     <!-- producers-tv -->
