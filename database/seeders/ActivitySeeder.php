@@ -30,7 +30,7 @@ class ActivitySeeder extends Seeder
             ],
             [
                 'name' => 'distributors',
-                'actions' => ['DISTSEL'],
+                'actions' => ['DISTSEL', 'DISTSAG'],
             ],
             [
                 'name' => 'short-films',
