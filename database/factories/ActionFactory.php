@@ -23,7 +23,15 @@ class ActionFactory extends BaseFactory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->randomElement([
+                'DISTSEL',
+                'DISTSAG',
+                'DEVSLATE',
+                'DEVSLATEMINI',
+                'CODEVELOPMENT',
+                'TV',
+                'DEVVG',
+            ]),
         ];
     }
 }
