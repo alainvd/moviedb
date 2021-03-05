@@ -52,8 +52,9 @@
         : 
         document.getElementById('shooting-language').parentElement.classList.remove('border', 'rounded-md', 'border-red-500')
         )"
-        class="col-span-1 col-start-3 sm:col-span-1">
+        class=" ">
         @livewire('select-component', [
+            'ref' => 'choices_shooting_lang',
             'domId' => 'shooting-language',
             'label' => 'Shooting language',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),

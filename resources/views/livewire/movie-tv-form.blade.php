@@ -51,6 +51,13 @@
                     :languages="$languages"
                     :languagesSelected="$shootingLanguages"></x-details.tech-tv>
             </div>
+
+            <!-- summary -->
+            <div class="my-8">
+                <x-details.prev-support-tv
+                    :rules="$rules"
+                    :movie="$movie"></x-details.prev-support-tv>
+            </div>
           
 
             <!-- producers-tv -->

@@ -60,6 +60,9 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.development_costs_in_euro' => 'required|integer',
         'movie.total_budget_euro' => 'required|integer',
 
+        'movie.dev_support_flag' => 'string',
+        'movie.dev_support_reference' => 'string',
+
         'movie.total_budget_currency_amount' => 'required|integer',
         'movie.total_budget_currency_code' => 'required|string',
     ];
@@ -87,6 +90,9 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer',
         'movie.film_format' => 'required|string|max:255',
+
+        'movie.dev_support_flag' => 'string',
+        'movie.dev_support_reference' => 'string',
 
         'movie.total_budget_currency_amount' => 'required|integer',
         'movie.total_budget_currency_code' => 'required|string|max:255',
