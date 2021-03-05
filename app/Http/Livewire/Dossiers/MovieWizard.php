@@ -145,6 +145,19 @@ class MovieWizard extends Component
                 'results' => $results,
             ])
             ->layout($layout, [
+                'crumbs' => [
+                    [
+                        'url' => route('dossiers.index'),
+                        'title' => 'My dossiers',
+                    ],
+                    [
+                        'title' => 'Edit dossier',
+                        'url' => route('dossiers.show', $this->dossier)
+                    ],
+                    [
+                        'title' => 'Select work'
+                    ]
+                ],
                 'title' => 'Films on the move',
                 'class' => 'wizard-page',
             ]);

@@ -18,7 +18,7 @@ class ActivitySeeder extends Seeder
         $activities =[
             [
                 'name' => 'description',
-                'actions' => ['DISTSEL', 'DISTSAG', 'TV'],
+                'actions' => ['DISTSEL', 'DISTSAG'],
             ],
             [
                 'name' => 'previous-work',
@@ -26,11 +26,11 @@ class ActivitySeeder extends Seeder
             ],
             [
                 'name' => 'current-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT', 'TV'],
             ],
             [
                 'name' => 'distributors',
-                'actions' => ['DISTSEL'],
+                'actions' => ['DISTSEL', 'DISTSAG'],
             ],
             [
                 'name' => 'short-films',
@@ -75,7 +75,10 @@ class ActivitySeeder extends Seeder
             'DISTSAG' => [
                 'movie_count' => 1,
             ],
-            'TV' => null,
+            'TV' => [
+                'min_current_works' => 1,
+                'max_current_works' => 1,
+            ],
         ];
 
         foreach ($activities as $activity) {
