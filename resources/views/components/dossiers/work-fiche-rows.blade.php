@@ -18,7 +18,7 @@
                 {{ $fiche->status->name }}
             </x-table.cell>
             <x-table.cell class="space-x-2 text-center">
-                <a href="{{ route("dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
+                <a href="{{ route($dossier->action->name === 'TV' ? "tv-fiche-form" : "dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
                     class="text-purple-600 cursor-pointer">
                     Edit
                 </a>

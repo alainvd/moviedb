@@ -14,6 +14,8 @@
             @include('dossiers.instructions.devslatemini')
         @elseif ($dossier->action->name === 'CODEVELOPMENT')
             @include('dossiers.instructions.devco')
+        @elseif ($dossier->action->name === 'TV')
+            @include('dossiers.instructions.tv')
         @endif
     @endif
 </div>

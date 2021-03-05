@@ -41,7 +41,7 @@
 
     <div class="mt-5 text-right">
         <x-anchors.secondary
-            :url="route('dev-current-fiche-form', compact('dossier', 'activity'))"
+            :url="$this->url"
             :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
