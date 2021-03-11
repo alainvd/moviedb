@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dossier;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\App;
 
 class DossierController extends Controller
 {
@@ -51,6 +52,26 @@ class DossierController extends Controller
 
         // dompdf
         $pdf = PDF::loadView('dossiers.create', $this->prepareDossier($dossier));
+        return $pdf->stream();
+
+    }
+
+    public function downloadFullDossier(Dossier $dossier) {
+
+        $output = $this->printDossier($dossier);
+
+        // get related fiches
+        $fiches = $dossier->fiches;
+        foreach ($fiches as $fiche) {
+            $output .= FicheController::printFiche($fiche);
+        }
+        
+        // html output
+        // return $output;
+
+        // pdf output
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($output);
         return $pdf->stream();
 
     }

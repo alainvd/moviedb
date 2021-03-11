@@ -91,7 +91,7 @@ class FicheController extends Controller
         return redirect()->back();
     }
 
-    public function prepareFiche(Fiche $fiche) {
+    public static function prepareFiche(Fiche $fiche) {
 
         // TODO: complete this
         switch ($fiche->type) {
@@ -129,20 +129,20 @@ class FicheController extends Controller
 
     }
 
-    public function template(Fiche $fiche) {
+    public static function template(Fiche $fiche) {
         return 'livewire.movie-'.$fiche->type.'-form-with-layout';
     }
 
-    public function printFiche(Fiche $fiche) {
+    public static function printFiche(Fiche $fiche) {
 
-        return view($this->template($fiche), $this->prepareFiche($fiche));
+        return view(self::template($fiche), self::prepareFiche($fiche));
 
     }
 
-    public function downloadFiche(Fiche $fiche) {
+    public static function downloadFiche(Fiche $fiche) {
 
         // dompdf
-        $pdf = PDF::loadView($this->template($fiche), $this->prepareFiche($fiche));
+        $pdf = PDF::loadView(self::template($fiche), self::prepareFiche($fiche));
         return $pdf->stream();
 
     }
