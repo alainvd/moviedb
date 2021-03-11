@@ -29,7 +29,7 @@
             :hasError="$errors->has('fiche.status_id')"
             :isRequired="FormHelpers::isRequired($rules, 'fiche.status_id')"
             wire:model="fiche.status_id"
-            value="{{ $statusesById[$fiche->status_id]['name'] }}"
+            value="{{ isset($statusesById[$fiche->status_id]) ? $statusesById[$fiche->status_id]['name'] : '' }}"
         >
 
             @foreach ($statuses as $status)
