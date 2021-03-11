@@ -3,6 +3,7 @@
     :crumbs="$crumbs"
     :title="$pageTitles[$dossier->action->name]"
     :class="'dossier-page'">
+
     <div class="px-4 bg-white">
 
         @include('dossiers.instructions.index', ['dossier' => $dossier])
@@ -15,14 +16,16 @@
                 <div class="grid grid-cols-2 gap-4 my-4">
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'call-reference'"
                             :label="'Call / Topic reference'"
                             :disabled="true"
                             name="call_name"
-                            value="{{ $dossier->call->name  }}"></x-form.input>
+                            value="{{ $dossier->call->name }}"></x-form.input>
                     </div>
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'sep-id'"
                             :label="'SEP Project ID'"
                             name="project_ref_id"
@@ -31,6 +34,7 @@
                     </div>
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'company-name'"
                             :label="'Company Name'"
                             :hasError="$errors->has('company')"
@@ -43,6 +47,7 @@
                     </div>
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'contact-person'"
                             :label="'Contact Person'"
                             :disabled="true"
@@ -51,6 +56,8 @@
                     </div>
                 </div>
             </x-layout.section>
+
+
 
             <x-layout.section>
                 @foreach ($dossier->action->activities as $activity)
@@ -66,15 +73,21 @@
                         [
                             'activity' => $activity,
                             'dossier' => $dossier,
+                            'print' => $print,
                         ]
                     )
                 @endforeach
             </x-layout.section>
 
-            <div x-data class="flex items-center justify-end mt-32 space-x-3">
-                <x-button.download></x-button.download>
+            @if(empty($print))
+            <div x-data class="flex items-center justify-end mt-32 space-x-3 print:hidden">
+                <x-button.download :dossier="$dossier"></x-button.download>
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
+            <div x-data class="flex items-center justify-end mt-2 space-x-3 print:hidden">
+                <a href="{{ url('fiche/65/download') }}">Download fiche</a>
+            </div>
+            @endif
         </form>
     </div>
 

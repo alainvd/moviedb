@@ -21,9 +21,10 @@ class CurrentWork extends BaseActivity
     public function render()
     {
         $results = $this->dossier->fiches()->forActivity($this->activity->id)->get();
+        $print = $this->print;
         return view(
             'livewire.dossiers.activities.current-work',
-            compact('results')
+            compact('results', 'print')
         );
     }
 }

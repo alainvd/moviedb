@@ -1,6 +1,6 @@
 <div class="my-8">
     <input type="hidden" name="previous_works" wire:model="current">
-    <h3 class="text-lg leading-tight font-normal my-4">
+    <h3 class="my-4 text-lg font-normal leading-tight">
         Audiovisual Work - Development - Recent work / previous experience
     </h3>
     <x-table class="{{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
@@ -10,7 +10,7 @@
             <x-table.heading>PRODUCTION YEAR</x-table.heading>
             <x-table.heading>FILM ID</x-table.heading>
             <x-table.heading>STATUS</x-table.heading>
-            <x-table.heading>&nbsp;</x-table.heading>
+            @if(empty($print))<x-table.heading>&nbsp;</x-table.heading>@endif
         </x-slot>
 
         <x-slot name="body">
@@ -21,7 +21,9 @@
                     :type="'previous'"
                     :fiches="$results"
                     :dossier="$dossier"
-                    :activity="$activity"></x-dossiers.work-fiche-rows>
+                    :activity="$activity"
+                    :print="$print">
+                </x-dossiers.work-fiche-rows>
 
             @else
 
@@ -35,16 +37,18 @@
     </x-table>
 
     @error('previous_works')
-        <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
     @enderror
 
-    <div class="mt-5 text-right">
+    @if(empty($print))
+    <div class="mt-5 text-right print:hidden">
         <x-anchors.secondary
             :url="route('dev-prev-fiche-form', compact('dossier', 'activity'))"
             :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>
+    @endif
 
     <x-modal.confirmation wire:model.defer="showDeleteModal">
         <x-slot name="title">Remove Previous Work</x-slot>
@@ -56,7 +60,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <div class="flex justify-end items-center space-x-3">
+            <div class="flex items-center justify-end space-x-3">
                 <x-button.primary wire:click="delete">Yes</x-button>
 
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>

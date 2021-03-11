@@ -10,7 +10,7 @@
                 <x-table.heading>Document Type</x-table.heading>
                 <x-table.heading>Filename</x-table.heading>
                 <x-table.heading>Comments</x-table.heading>
-                <x-table.heading></x-table.heading>
+                @if(empty($print))<x-table.heading></x-table.heading>@endif
             </x-slot>
             
             <x-slot name="body">
@@ -23,20 +23,22 @@
                     <x-table.cell class="text-center">{{ $item['filename'] }}</a></x-table.cell>
                     @endif
                     <x-table.cell class="text-center">{{ $item['comments'] }}</x-table.cell>
-                    <x-table.cell class="space-x-2 text-center">
-                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer">Edit</a>
-                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer">Delete</a>
-                    </x-table.cell>
+                    @if(empty($print))<x-table.cell class="space-x-2 text-center">
+                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
+                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>
+                    </x-table.cell>@endif
                 </x-table.row>
                 @endforeach
             </x-slot>
         </x-table>
 
-        <div class="mt-5 text-right">
+        @if(empty($print))
+        <div class="mt-5 text-right print:hidden">
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
         </div>
+        @endif
     </div>
 
     <form class="space-y-2">

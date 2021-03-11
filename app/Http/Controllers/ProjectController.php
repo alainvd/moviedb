@@ -103,8 +103,9 @@ class ProjectController extends Controller
         $layout = $this->getLayout();
         $pageTitles = $this->pageTitles;
         $crumbs = $this->getCrumbs();
+        $print = false;
 
-        return view('dossiers.create', compact('crumbs', 'dossier', 'layout', 'pageTitles'));
+        return view('dossiers.create', compact('crumbs', 'dossier', 'layout', 'pageTitles', 'print'));
     }
 
     /**

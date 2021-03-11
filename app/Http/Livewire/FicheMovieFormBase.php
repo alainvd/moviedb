@@ -127,7 +127,7 @@ class FicheMovieFormBase extends FicheFormBase
                         $type = 'dev-current';
                     }
                     break;
-                case 'short-firm':
+                case 'short-films':
                     $type = 'dev-current';
                     break;
             }

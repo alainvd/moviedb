@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 
-class VideoGamePreviousForm extends Component
+class VideoGamePrevForm extends Component
 {
 
     public $isNew = false;
@@ -266,14 +266,18 @@ class VideoGamePreviousForm extends Component
 
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
-        return view('livewire.video-game-previous-form', [
+        return view('livewire.video-game-prev-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,
                 'crumbs' => $crumbs,
             ]);
+
     }
 
 }

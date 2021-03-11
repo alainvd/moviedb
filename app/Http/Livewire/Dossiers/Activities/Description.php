@@ -41,6 +41,7 @@ class Description extends Component
 
     public function render()
     {
-        return view('livewire.dossiers.activities.description');
+        $print = $this->print;
+        return view('livewire.dossiers.activities.description', compact('print'));
     }
 }

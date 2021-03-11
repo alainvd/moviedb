@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CreateFicheController;
 use App\Models\Call;
 use App\Models\Action;
 use Illuminate\Http\Request;
@@ -8,13 +7,16 @@ use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MovieDatatables;
+use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDevCurrentForm;
 use Symfony\Component\Console\Input\Input;
+use App\Http\Controllers\DossierController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
-use App\Http\Livewire\MovieDevPreviousForm;
-use App\Http\Livewire\VideoGamePreviousForm;
+use App\Http\Livewire\MovieDevPrevForm;
+use App\Http\Livewire\VideoGamePrevForm;
+use App\Http\Controllers\CreateFicheController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,10 +101,10 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fic
 })->middleware('cas.auth')->name('dossier-create-fiche');
 
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche-form');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth')->name('dev-prev-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('dev-prev-fiche-form');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('dev-current-fiche-form');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('tv-fiche-form');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePreviousForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
 
 Route::get('/imporsonate/{id}/impersonate', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate');
 Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
@@ -110,7 +112,7 @@ Route::get('/imporsonate/stop', [\App\Http\Controllers\ImpersonateController::cl
 Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist-1');
 
 Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
-Route::get('/movie-dev-prev/{fiche?}', MovieDevPreviousForm::class)->middleware('cas.auth')->name('movie-dev-prev');
+Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('movie-dev-prev');
 Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
 Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('movie-tv');
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
@@ -170,3 +172,7 @@ Route::get('dossiers-datatables', function () {
 Route::get('movies', function () {
     return view('livewire.movie-datatables',['title' => "Search Movies"]);});
 
+Route::get('/dossiers/{dossier:project_ref_id}/print', [DossierController::class, 'printDossier'])->middleware('cas.auth');
+Route::get('/dossiers/{dossier:project_ref_id}/download', [DossierController::class, 'downloadDossier'])->middleware('cas.auth');
+Route::get('/fiche/{fiche}/print', [FicheController::class, 'printFiche'])->middleware('cas.auth');
+Route::get('/fiche/{fiche}/download', [FicheController::class, 'downloadFiche'])->middleware('cas.auth');

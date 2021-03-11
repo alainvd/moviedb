@@ -10,6 +10,7 @@ class BaseActivity extends Component
 
     public $activity;
     public $dossier;
+    public $print = false;
 
     public $deletingId = null;
     public $showDeleteModal = false;

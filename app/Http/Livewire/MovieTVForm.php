@@ -98,7 +98,7 @@ class MovieTVForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
-    protected function rules() {
+    public function rules() {
         if ($this->isEditor) {
             return $this->rulesEditor;
         } else {
@@ -204,6 +204,9 @@ class MovieTVForm extends FicheMovieFormBase
         return view('livewire.movie-tv-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,

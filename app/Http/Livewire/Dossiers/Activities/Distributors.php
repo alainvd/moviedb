@@ -128,6 +128,7 @@ class Distributors extends Component
 
         return view('livewire.dossiers.activities.distributors', [
             'distributors' => $distributors->count() ? $distributors->get() : collect([]),
+            'print' => $this->print,
         ]);
     }
 }

@@ -16,18 +16,27 @@ class MovieFicheFormComposer
      */
     public function compose(View $view)
     {
-        $audiences = Audience::all();
+        $movieAudiences = Audience::all()->where('type', 'App\Models\Movie')->toArray();
+        $gameAudiences = Audience::all()->where('type', 'App\Models\VideoGame')->toArray();
+        $allAudiencesById = Audience::all()->keyBy('id')->toArray();
         $countries = Country::where('active', true)
             ->get()
             ->toArray();
-        $countries_value_label = Country::where('active', true)
+        $countriesByCode = Country::where('active', true)
+            ->orderBy('name')
+            ->get()
+            ->keyBy('code')
+            ->toArray();
+        $countriesValueLabel = Country::where('active', true)
             ->get()
             ->map(fn ($country) => [
                 'value' => $country->id,
                 'label' => $country->name,
             ])
             ->toArray();
-        $genres = Genre::where('type', 'Movie')->get()->toArray();
+        $movieGenres = Genre::where('type', 'Movie')->get()->toArray();
+        $gameGenres = Genre::where('type', 'VideoGame')->get()->toArray();
+        $allGenresById = Genre::get()->keyBy('id')->toArray();
         $languages = Language::where('active', true)
             ->get()
             ->map(fn ($lang) => [
@@ -35,7 +44,7 @@ class MovieFicheFormComposer
                 'label' => $lang->name,
             ])
             ->toArray();
-        $languages_with_code = Language::where('active', true)
+        $languagesWithCode = Language::where('active', true)
             ->get()
             ->map(fn ($lang) => [
                 'code' => $lang->code,
@@ -58,6 +67,7 @@ class MovieFicheFormComposer
             'SHORT' => 'Short film',
         ];
         $statuses = Status::all()->toArray();
+        $statusesById = Status::all()->keyBy('id')->toArray();
         $years = range(date('Y'), 1940);
         $currencies = [
             'EUR' => 'Euro',
@@ -95,16 +105,22 @@ class MovieFicheFormComposer
             'COPRODUCER' => 'Coproducer',
         ];
 
-        $view->with('audiences', $audiences->where('type', 'App\Models\Movie')->toArray());
+        $view->with('movieAudiences', $movieAudiences);
+        $view->with('gameAudiences', $gameAudiences);
+        $view->with('allAaudiencesById', $allAudiencesById);
         $view->with('countries', $countries);
-        $view->with('countries_value_label', $countries_value_label);
+        $view->with('countriesByCode', $countriesByCode);
+        $view->with('countriesValueLabel', $countriesValueLabel);
         $view->with('filmFormats', $filmFormats);
         $view->with('filmTypes', $filmTypes);
-        $view->with('genres', $genres);
+        $view->with('movieGenres', $movieGenres);
+        $view->with('gameGenres', $gameGenres);
+        $view->with('allGenresById', $allGenresById);
         $view->with('languages', $languages);
-        $view->with('languages_with_code', $languages_with_code);
+        $view->with('languagesWithCode', $languagesWithCode);
         $view->with('platforms', $platforms);
         $view->with('statuses', $statuses);
+        $view->with('statusesById', $statusesById);
         $view->with('years', $years);
         $view->with('currencies', $currencies);
         $view->with('linkApplicantWork', $linkApplicantWork);

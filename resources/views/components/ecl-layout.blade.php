@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>MovieDB - Landing page</title>
+    <title>Creative Europe MEDIA database</title>
     <meta content="width=device-width,initial-scale=1" name="viewport"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,7 +18,7 @@
 <body class="{{ $class ?? '' }}">
 
 @include('partials.scripts.impersonate')
-<div id="ec-globan"></div>
+<div id="ec-globan" class="print:hidden"></div>
 @include('partials.ecl.site-header')
 @include('partials.ecl.page-header', ['title' => $title ?? null, 'crumbs' => $crumbs ?? []])
 

@@ -2,6 +2,9 @@
     {{ $label }}
     <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
 </label>
+
+<!-- Output for screen -->
+@if (empty($print))
 <div
     x-data=""
     x-init="new Pikaday({
@@ -28,3 +31,9 @@
         </svg>
     </div>
 </div>
+@endif
+
+<!-- Output for print -->
+@if (!empty($print) && !empty($value))
+<span class="inline-block">{{ $value }}</span>
+@endif
