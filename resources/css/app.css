@@ -4,9 +4,12 @@
 
 @tailwind utilities;
 
-@import '../../node_modules/pikaday/css/pikaday.css';
 @import './pikaday.css';
-@import '../../node_modules/tippy.js/dist/tippy.css';
+
+@import '../../node_modules/pikaday/css/pikaday.css';
+
+/* looks like these can go away */
+/* @import '../../node_modules/tippy.js/dist/tippy.css'; */
 
 [x-cloak] {
     display: none;
@@ -41,6 +44,9 @@ main {
 }
 #fdc-basic-tv:before {
     content: "basic tv";
+}
+#fdc-basic-vg-prev:before {
+    content: "basic vg prev";
 }
 #fdc-budget:before {
     content: "budget";

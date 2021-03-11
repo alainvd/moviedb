@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Movie DB</title>
+    <title>Creative Europe MEDIA database</title>
     <meta content="width=device-width,initial-scale=1" name="viewport" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta name="csrf-token" content="{{ csrf_token() }}">

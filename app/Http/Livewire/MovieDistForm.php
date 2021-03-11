@@ -94,7 +94,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
-    protected function rules() {
+    public function rules() {
         if ($this->isEditor) {
             return $this->rulesEditor;
         } else {
@@ -193,27 +193,19 @@ class MovieDistForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Distribution';
-        $crumbs[] = [
-            'url' => route('dossiers-public'),
-            'title' => 'My dossiers'
-        ];
-        $crumbs[] = [
-            'url' => route('dossiers-public'),
-            'title' => 'Edit dossier'
-        ];
-        $crumbs[] = [
-            'title' => 'Edit fiche'
-        ];
         
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dist-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $this->crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,
-                'crumbs' => $crumbs,
+                'crumbs' => $this->crumbs,
             ]);
 
     }

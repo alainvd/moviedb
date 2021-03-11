@@ -73,7 +73,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
-    protected function rules()
+    public function rules()
     {
         return $this->rules;
     }
@@ -134,15 +134,30 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Current work';
+        $crumbs[] = [
+            'url' => route('dossiers-public'),
+            'title' => 'My dossiers'
+        ];
+        $crumbs[] = [
+            'url' => route('dossiers-public'),
+            'title' => 'Edit dossier'
+        ];
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
 
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-current-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $this->crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,
+                'crumbs' => $this->crumbs,
             ]);
     }
 

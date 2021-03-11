@@ -17,15 +17,17 @@
             <x-table.cell class="tracking-tight text-center font-md uppercase {{ $fiche->status->name === 'Draft' ?  'text-red-600' : '' }}">
                 {{ $fiche->status->name }}
             </x-table.cell>
+            @if(empty($print))
             <x-table.cell class="space-x-2 text-center">
                 <a href="{{ route($dossier->action->name === 'TV' ? "tv-fiche-form" : "dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
-                    class="text-purple-600 cursor-pointer">
+                    class="text-purple-600 cursor-pointer print:hidden">
                     Edit
                 </a>
-                <a class="ml-8 text-red-600 cursor-pointer" wire:click="showDelete({{ $fiche->id }})">
+                <a class="ml-8 text-red-600 cursor-pointer print:hidden" wire:click="showDelete({{ $fiche->id }})">
                     Remove
                 </a>
             </x-table.cell>
+            @endif
         </x-table.row>
     @else
         <x-table.row>
@@ -44,15 +46,17 @@
             <x-table.cell class="tracking-tight text-center font-md {{ $fiche->status->name === 'Draft' ?  'text-red-600' : '' }}">
                 {{ $fiche->status->name }}
             </x-table.cell>
+            @if(empty($print))
             <x-table.cell class="space-x-2 text-center">
                 <a href="{{ route("dev-prev-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
-                    class="text-purple-600 cursor-pointer">
+                    class="text-purple-600 cursor-pointer print:hidden">
                     Edit
                 </a>
-                <a class="ml-8 text-red-600 cursor-pointer" wire:click="showDelete({{ $fiche->id }})">
+                <a class="ml-8 text-red-600 cursor-pointer print:hidden" wire:click="showDelete({{ $fiche->id }})">
                     Remove
                 </a>
             </x-table.cell>
+            @endif
         </x-table.row>
     @endif
 

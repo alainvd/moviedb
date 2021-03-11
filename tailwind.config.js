@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       colors: {
         'ec-blue': '#004593'
+      },
+      screens: {
+        'print': {'raw': 'print'},
       }
     },
     zIndex: {

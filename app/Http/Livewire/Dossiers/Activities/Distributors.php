@@ -31,6 +31,8 @@ class Distributors extends Component
 
     public ?Movie $movie = null;
 
+    public $print = false;
+
     protected $rules = [
         'currentDistributor.country_id' => 'required|integer',
         'currentDistributor.name' => 'required|string',
@@ -128,6 +130,7 @@ class Distributors extends Component
 
         return view('livewire.dossiers.activities.distributors', [
             'distributors' => $distributors->count() ? $distributors->get() : collect([]),
+            'print' => $this->print,
         ]);
     }
 }

@@ -14,10 +14,6 @@ class TableEditMovieCrews extends TableEditBase
 
     public Movie $movie;
 
-    public $isApplicant = false;
-
-    public $isEditor = false;
-
     public $titles = [];
 
     public $genders = [];
@@ -103,6 +99,7 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->titles = Title::all()->keyBy('id')->toArray();
         $this->genders = Person::GENDERS;
+        // TODO: Can remove?
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
         $this->movie = new Movie();

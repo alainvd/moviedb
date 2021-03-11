@@ -19,6 +19,12 @@ class TableEditBase extends Component
 
     public $editing;
 
+    public $isApplicant = false;
+
+    public $isEditor = false;
+
+    public $print = false;
+
     /**
      * Livewire works better if form fields have a value set.
      * Create default values for all fields:
