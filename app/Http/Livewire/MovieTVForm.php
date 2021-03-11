@@ -98,7 +98,7 @@ class MovieTVForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
-    protected function rules() {
+    public function rules() {
         if ($this->isEditor) {
             return $this->rulesEditor;
         } else {
@@ -187,27 +187,19 @@ class MovieTVForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Audiovisual Work - Production - TV and Online';
-        $crumbs[] = [
-            'url' => route('dossiers-public'),
-            'title' => 'My dossiers'
-        ];
-        $crumbs[] = [
-            'url' => route('dossiers-public'),
-            'title' => 'Edit dossier'
-        ];
-        $crumbs[] = [
-            'title' => 'Edit fiche'
-        ];
 
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-tv-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $this->crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,
-                'crumbs' => $crumbs,
+                'crumbs' => $this->crumbs,
             ]);
 
     }

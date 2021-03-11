@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +37,7 @@ class FicheFormBase extends Component
             $this->fiche->status_id = 1;
         }
         $this->previous = URL::previous();
+        $this->crumbs = $this->getCrumbs();
     }
 
     public function render()
@@ -58,6 +60,41 @@ class FicheFormBase extends Component
         $this->{$data[0]} = $this->{$data[0]}->reject(
             fn ($item) => $item['value'] === $data[1]['value']
         );
+    }
+
+    protected function getCrumbs()
+    {
+        $currentRoute = Route::getCurrentRoute()->action['as'];
+
+        $ficheFormRoutes = [
+            'dist-fiche-form',
+            'dev-prev-fiche-form',
+            'dev-current-fiche-form',
+            'tv-fiche-form',
+            'vg-prev-fiche-form',
+        ];
+
+        if (in_array($currentRoute, $ficheFormRoutes)) {
+            return [
+                [
+                    'url' => route('dossiers.index'),
+                    'title' => 'My dossiers',
+                ],
+                [
+                    'url' => url('dossiers/'.$this->dossier->project_ref_id),
+                    'title' => 'Edit dossier',
+                ],
+                [
+                    'title' => 'Edit fiche'
+                ],        
+            ];
+        } else {
+            return [
+                [
+                    'title' => 'My dossiers'
+                ],
+            ];
+        }
     }
 
 }

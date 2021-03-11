@@ -16,6 +16,7 @@ bios.sql
 public/js
 public/js/app.js
 public/css/app.css
+public/css/download.css
 !app/Nova
 auth.json
 composer.lock

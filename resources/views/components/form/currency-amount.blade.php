@@ -3,6 +3,9 @@
         {{ $labelAmount }}
         <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
     </label>
+
+    <!-- Output for screen -->
+    @if (empty($print))
     <div class="relative mt-1 rounded-md shadow-sm">
         <input 
             type="text"
@@ -28,4 +31,10 @@
             </select>
         </div>
     </div>
+    @endif
+
+    <!-- Output for print -->
+    @if (!empty($print) && !empty($value))
+    <span class="inline-block">{{ $value }}</span>
+    @endif
 </div>                  

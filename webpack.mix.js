@@ -22,6 +22,8 @@ mix.js('resources/js/app.js', 'public/js')
   })
   .purgeCss();
 
+mix.postCss('resources/css/download.css', 'public/css');
+
 if (mix.inProduction()) {
   mix.version();
 }

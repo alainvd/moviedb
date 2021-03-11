@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
 use Illuminate\Support\MessageBag;
 
-class MovieDevPreviousForm extends FicheMovieFormBase
+class MovieDevPrevForm extends FicheMovieFormBase
 {
 
     protected function getListeners()
@@ -58,7 +58,7 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
-    protected function rules()
+    public function rules()
     {
         return $this->rules;
     }
@@ -116,14 +116,17 @@ class MovieDevPreviousForm extends FicheMovieFormBase
         
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
-        return view('livewire.movie-dev-previous-form', [
+        return view('livewire.movie-dev-prev-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $this->crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,
+                'crumbs' => $this->crumbs,
             ]);
-
 
     }
 

@@ -1,5 +1,5 @@
 <div class="my-16">
-    <h3 class="text-lg leading-tight font-normal my-4">
+    <h3 class="my-4 text-lg font-normal leading-tight">
         Distributors Participating in the Grouping
     </h3>
     <x-table>
@@ -10,7 +10,7 @@
             <x-table.heading>FORECAST RELEASE DATE</x-table.heading>
             <x-table.heading>P&A Costs</x-table.heading>
             <x-table.heading>FORECAST GRANT</x-table.heading>
-            <x-table.heading>&nbsp;</x-table.heading>
+            @if(empty($print))<x-table.heading>&nbsp;</x-table.heading>@endif
         </x-slot>
 
         <x-slot name="body">
@@ -30,35 +30,39 @@
                 <x-table.cell class="text-center">
                     {{ $distributor->forecast_grant }} EURO
                 </x-table.cell>
-                <x-table.cell class="text-center space-x-2">
+                @if(empty($print))
+                <x-table.cell class="space-x-2 text-center">
                     <a
                         wire:click="showAdd({{ $distributor->id }})"
-                        class="cursor-pointer text-indigo-600 hover:text-indigo-900">
+                        class="text-indigo-600 cursor-pointer hover:text-indigo-900 print:hidden">
                         Edit
                     </a>
                     <a
                         wire:click="showDelete({{ $distributor->id }})"
-                        class="cursor-pointer text-red-600 hover:text-red-900">
+                        class="text-red-600 cursor-pointer hover:text-red-900 print:hidden">
                         Delete
                     </a>
                 </x-table.cell>
+                @endif
             </x-table.row>
 
             @empty
 
             <x-table.row>
-                <x-table.cell class="text-center" colspan="100%">No distributors yet</x-table.cell>
+                <x-table.cell class="text-center" colspan="7">No distributors yet</x-table.cell>
             </x-table.row>
 
             @endforelse
         </x-slot>
     </x-table>
 
-    <div class="mt-5 text-right">
+    @if(empty($print))
+    <div class="mt-5 text-right print:hidden">
         <x-button.secondary wire:click="showAdd" wire:loading.attr="disabled">
             Add
         </x-button.secondary>
     </div>
+    @endif
 
     <x-modal.dialog wire:model="showAddModal">
         <x-slot name="title">Add / Edit Distributor</x-slot>
@@ -78,7 +82,7 @@
                 </x-form.select>
 
                 @error ('currentDistributor.country_id')
-                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
@@ -90,7 +94,7 @@
                 </x-form.input>
 
                 @error ('currentDistributor.name')
-                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
             <div class="my-4">
@@ -107,7 +111,7 @@
                 </x-form.select>
 
                 @error ('currentDistributor.role')
-                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
@@ -119,7 +123,7 @@
                 </x-form.datepicker>
 
                 @error ('currentDistributor.forecast_release_date')
-                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
@@ -131,7 +135,7 @@
                 </x-form.simple-currency>
 
                 @error ('currentDistributor.pa_costs')
-                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
@@ -143,13 +147,13 @@
                 </x-form.simple-currency>
 
                 @error ('currentDistributor.forecast_grant')
-                    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                 @enderror
             </div>
         </x-slot>
 
         <x-slot name="footer">
-            <div class="flex justify-end items-center space-x-3 mt-4">
+            <div class="flex items-center justify-end mt-4 space-x-3">
                 <x-button.primary wire:click="addDistributor">
                     Save
                 </x-button.primary>
@@ -172,7 +176,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <div class="flex justify-end items-center space-x-3">
+            <div class="flex items-center justify-end space-x-3">
                 <x-button.primary wire:click="deleteDistributor()">Yes</x-button>
 
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
@@ -190,7 +194,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <div class="flex justify-end items-center space-x-3">
+            <div class="flex items-center justify-end space-x-3">
                 <x-button.primary wire:click="$set('showNoMovieModal', false)">OK</x-button>
             </div>
         </x-slot>

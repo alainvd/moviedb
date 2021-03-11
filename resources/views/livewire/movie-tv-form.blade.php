@@ -1,40 +1,49 @@
-<x-fiche-form :layout="$layout">
+<x-fiche-form :layout="$layout" :print="$print">
 
     <!-- title -->
     <div class="my-8">
         <x-details.title
             :movie="$movie"
-            :fiche="$fiche"></x-details.title>
+            :fiche="$fiche"
+        ></x-details.title>
     </div>
 
-    <!-- basic -->
+    <!-- basic-tv -->
     <div class="my-8">
         <x-details.basic-tv
+            :print="$print"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
             :rules="$rules"
             :movie="$movie"
-            :isApplicant="$isApplicant"
-            :audiences="$audiences"
+            :fiche="$fiche"
+            :movieAudiences="$movieAudiences"
+            :allAaudiencesById="$allAaudiencesById"
             :countries="$countries"
+            :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
-            :genres="$genres"
+            :movieGenres="$movieGenres"
+            :allGenresById="$allGenresById"
             :platforms="$platforms"
             :statuses="$statuses"
-            :years="$years"></x-details.basic-tv>
+            :statusesById="$statusesById"
+            :years="$years"
+        ></x-details.basic-tv>
     </div>
 
     <!-- summary -->
     <div class="my-8">
         <x-details.summary
+            :print="$print"
             :rules="$rules"
-            :movie="$movie"></x-details.summary>
+            :movie="$movie"
+        ></x-details.summary>
     </div>
 
     <!-- cast/crew -->
     <div class="my-8" id="table-crews">
         <div id="table-crews-wrapper" class="@if ($errors->has('crewErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
-        @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+        @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
         </div>
 
         <div id="table-crews-messages">
@@ -45,7 +54,7 @@
     <!-- location -->
     <div class="my-8" id="table-location">
         <div id="table-location-wrapper" class="@if ($errors->has('locationErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
-            @livewire('table-edit-movie-locations', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+            @livewire('table-edit-movie-locations', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
         </div>
 
         <div id="table-location-messages">
@@ -61,29 +70,33 @@
         </div>
     @endif
 
-     <!-- technical info -->
+     <!-- tech-tv -->
      <div class="my-8">
         <x-details.tech-tv
-            :isApplicant="$isApplicant"
-            :isEditor="$isEditor"
+            :print="$print"
             :rules="$rules"
             :movie="$movie"
             :filmFormats="$filmFormats"
+            :isApplicant="$isApplicant"
+            :isEditor="$isEditor"
             :languages="$languages"
-            :languagesSelected="$shootingLanguages"></x-details.tech-tv>
+            :languagesSelected="$shootingLanguages"
+        ></x-details.tech-tv>
     </div>
 
-    <!-- summary -->
+    <!-- prev-support-tv -->
     <div class="my-8">
         <x-details.prev-support-tv
+            :print="$print"
             :rules="$rules"
-            :movie="$movie"></x-details.prev-support-tv>
+            :movie="$movie"
+        ></x-details.prev-support-tv>
     </div>
 
     <!-- producers-tv -->
     <div class="my-8" id="table-producers">
         <div id="table-producers-wrapper" class="@if ($errors->has('producerErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
-        @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
+        @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
         </div>
 
         <div id="table-producers-messages">
@@ -94,22 +107,27 @@
     <!-- budget-dev-current -->
     <div class="my-8">
         <x-details.budget-dev-current
+            :print="$print"
+            :rules="$rules"
+            :movie="$movie"
+            :currencies="$currencies"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
-            :rules="$rules"
-            :currencies="$currencies"
-            ></x-details.budget-dev-current>
+        ></x-details.budget-dev-current>
     </div>
 
     <!-- comments -->
     @if($isEditor)
     <div class="my-8">
         <x-form.textarea
+            :print="$print"
             :id="'comments'"
             :label="'EACEA Comments'"
             :hasError="$errors->has('fiche.comments')"
             :isRequired="FormHelpers::isRequired($rules, 'fiche.comments')"
-            wire:model="fiche.comments"></x-form.textarea>
+            wire:model="fiche.comments"
+            value="{{ $fiche->comments }}"
+        ></x-form.textarea>
 
         @error('fiche.comments')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
