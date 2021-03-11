@@ -65,7 +65,7 @@
     @if ($isEditor)
         <div class="mt-5 text-right" x-data="{points: @entangle('totalPoints')}">
         <span class="mr-4">
-            TOTAL SCORE: <span class="font-bold" x-text="points"></span>
+            TOTAL SCORE: <span class="font-bold" x-text="points.toFixed(2)"></span>
         </span>
         </div>
     @endif

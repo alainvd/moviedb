@@ -15,10 +15,10 @@ class CreateCrewsTable extends Migration
     {
         Schema::create('crews', function (Blueprint $table) {
             $table->id();
-            $table->integer('points')->nullable();
             $table->integer('person_id');
             $table->integer('title_id');
             $table->integer('movie_id');
+            $table->decimal('points')->nullable();
             $table->timestamps();
         });
     }
