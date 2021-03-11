@@ -17,6 +17,7 @@ class CreateCallsTable extends Migration
             $table->id();
             $table->string('name', 400);
             $table->unsignedBigInteger('action_id');
+            $table->integer('year');
             $table->longText('description')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->enum('status', ["open","closed"]);

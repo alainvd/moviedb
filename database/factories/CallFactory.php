@@ -39,6 +39,7 @@ class CallFactory extends BaseFactory
             // H2020-LC-GD-2020-3
             'name' => $name . '-' . $action->name,
             'action_id' => $action->id,
+            'year' => $this->faker->numberBetween(1990, 2020),
             'description' => $this->faker->text,
             'published_at' => $publishedAt,
             'status' => in_array($publishedAt->format('Y'), [date('Y') - 1, date('Y')]) ? 'open' : 'closed',

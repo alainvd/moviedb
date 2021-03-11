@@ -134,6 +134,28 @@ class Movie extends Model
         return '';
     }
 
+    public function scopeGroupedDirectorNames($query, $alias)
+    {
+        $query->addSelect([
+            $alias => Person::selectRaw('GROUP_CONCAT(firstname, " ", lastname SEPARATOR " , ")')
+                ->leftJoin('crews', 'crews.person_id', 'people.id')
+                ->whereColumn('crews.movie_id', 'movies.id')
+                ->where('crews.title_id', '=', 1)       
+        ]);
+    }
+
+    public function scopeFilterGroupedDirectorNames($query, $value)
+    {
+        $query->whereHas('crew', function ($query) use ($value) {
+            /*$query->where('people.id', $value);*/
+            $query
+            ->leftJoin('crews', 'crews.person_id', 'people.id')
+            ->whereRaw("CONCAT(crew.people.firstname,'',crew.people.lastname) = '$value'");
+            dd($query);
+        });
+    }
+
+
     static function defaultsMovie()
     {
         return [
