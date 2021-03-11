@@ -84,9 +84,6 @@
                 <x-button.download :dossier="$dossier"></x-button.download>
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
-            <div x-data class="flex items-center justify-end mt-2 space-x-3 print:hidden">
-                <a href="{{ url('fiche/65/download') }}">Download fiche</a>
-            </div>
             @endif
         </form>
     </div>

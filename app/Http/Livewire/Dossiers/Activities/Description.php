@@ -14,6 +14,8 @@ class Description extends Component
 
     public Movie $movie;
 
+    public $print = false;
+
     protected $rules = [
         'movie.original_title' => 'required',
         'movie.film_country_of_origin' => 'required',

@@ -11,7 +11,7 @@
             <!-- buttons -->
             @if(empty($print))
             <div id="fiche-form-buttons" class="flex items-center justify-end mt-12 space-x-3 print:hidden">
-                <x-button.primary id="button-save" wire:click="saveFiche">Save</x-button.primary>
+                <x-button.primary id="button-save" wire:click="saveFiche">Save as Draft</x-button.primary>
                 <x-button.primary id="button-submit" type="submit">Submit</x-button.primary>
             </div>
             @endif

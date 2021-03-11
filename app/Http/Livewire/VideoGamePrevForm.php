@@ -252,17 +252,6 @@ class VideoGamePrevForm extends Component
     {
 
         $title = 'Audiovisual Work - Production - Videogames';
-        $crumbs[] = [
-            'url' => route('dossiers-public'),
-            'title' => 'My dossiers'
-        ];
-        $crumbs[] = [
-            'url' => route('dossiers-public'),
-            'title' => 'Edit dossier'
-        ];
-        $crumbs[] = [
-            'title' => 'Edit fiche'
-        ];
 
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
@@ -271,11 +260,11 @@ class VideoGamePrevForm extends Component
                 'layout' => $layout,
                 'print' => false,
                 'title' => $title,
-                'crumbs' => $crumbs,
+                'crumbs' => $this->crumbs,
             ])
             ->layout($layout, [
                 'title' => $title,
-                'crumbs' => $crumbs,
+                'crumbs' => $this->crumbs,
             ]);
 
     }

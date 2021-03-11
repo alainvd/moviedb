@@ -46,6 +46,8 @@ class FicheMovieFormBase extends FicheFormBase
     public $crewErrorMessages;
     public $producerErrorMessages;
 
+    public $crumbs = [];
+
     public function validationAttributes()
     {
         // todo: finish for all fields
@@ -182,7 +184,11 @@ class FicheMovieFormBase extends FicheFormBase
 
         // 2. SPECIAL VALIDATION
         $specialErrors = $this->specialValidation();
-        $errors->merge($specialErrors);
+        if (isset($errors)) {
+            $errors->merge($specialErrors);
+        } else {
+            $errors = $specialErrors;
+        }
 
         if($errors) {
             $this->setErrorBag($errors);

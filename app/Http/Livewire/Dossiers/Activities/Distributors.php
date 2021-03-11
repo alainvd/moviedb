@@ -31,6 +31,8 @@ class Distributors extends Component
 
     public ?Movie $movie = null;
 
+    public $print = false;
+
     protected $rules = [
         'currentDistributor.country_id' => 'required|integer',
         'currentDistributor.name' => 'required|string',
