@@ -18,7 +18,7 @@
                 @foreach ($items as $item)
                 <x-table.row>
                     <x-table.cell class="text-center">
-                        @if(isset($item['required']) && $item['required'])<span class="text-red-500">*</span>@endif
+                        @if($item['required'])<span class="text-red-500">*</span>@endif
                         {{ !empty($item['type']) ? $locationTypes[$item['type']] : '' }}
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
@@ -26,7 +26,11 @@
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
+                        @if(!$item['required'])
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>
+                        @else
+                        <span class="text-gray-400 print:hidden">Delete</span>
+                        @endif
                     </x-table.cell>@endif
                 </x-table.row>
                 @endforeach

@@ -35,7 +35,10 @@ class TableEditBase extends Component
      */
     protected function defaults()
     {
-        return ['key' => Str::random(10)];
+        return [
+            'key' => Str::random(10),
+            'required' => false,
+        ];
     }
 
     /**
