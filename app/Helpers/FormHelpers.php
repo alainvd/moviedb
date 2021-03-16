@@ -48,7 +48,7 @@ class FormHelpers
 
     // Check if the required locations are present
     public static function requiredLocations($locations, $genre_id) {
-        $requiredLocs = Location::whereIn('type', Location::requiredMovieLocations($genre_id))->get();
+        $requiredLocs = Location::whereIn('type', Location::requiredMovieLocationTypes($genre_id))->get();
         $requiredLocationsMessages = [];
         foreach ($requiredLocs as $loc) {
             if (!array_filter(
@@ -62,6 +62,16 @@ class FormHelpers
             }
         }
         return $requiredLocationsMessages;
+    }
+
+    // Check if producer is present
+    public static function requiredProducers($producers) {
+        foreach ($producers as $producer) {
+            if ($producer['role'] == 'PRODUCER') {
+                return [];
+            }
+        }
+        return ['One producer is required.'];
     }
 
     // Check if financing plan document is present

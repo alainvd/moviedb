@@ -35,7 +35,6 @@ class Location extends Model
         'SHOOT' => 'Shooting Location',
         'POST' => 'Post Production Location',
         'STUDIO' => 'Studio Location',
-        'LAB' => 'Laboratory / Post Production'
     ];
 
     public function movie()

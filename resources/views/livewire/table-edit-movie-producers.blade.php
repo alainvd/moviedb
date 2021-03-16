@@ -7,7 +7,7 @@
         @if($fiche=='devPrev')
         Production Structure and Financing
         @endif
-        @if($fiche=='devCurrent')
+        @if($fiche == 'devCurrent' || $fiche == 'tv' )
         Estimated Production Structure and Financing
         @endif
     </div>
@@ -19,7 +19,7 @@
                 <x-table.heading>Company Name</x-table.heading>
                 @if($fiche == 'dist')<x-table.heading>City</x-table.heading>@endif
                 <x-table.heading>Country</x-table.heading>
-                @if($fiche == 'devCurrent')<x-table.heading>Language</x-table.heading>@endif
+                @if($fiche == 'devCurrent' || $fiche == 'tv' )<x-table.heading>Language</x-table.heading>@endif
                 @if(in_array($fiche, ['dist', 'devPrev']))<x-table.heading>Share in %</x-table.heading>@endif
                 @if($fiche == 'devPrev')<x-table.heading>Budget</x-table.heading>@endif
                 @if(empty($print))<x-table.heading></x-table.heading>@endif
@@ -32,7 +32,7 @@
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     @if($fiche == 'dist')<x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>@endif
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
-                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages_with_code, function($lang)use($item){return $lang['code']==$item['language'];})['name'] : '' }}</x-table.cell>@endif
+                    @if($fiche == 'devCurrent' || $fiche == 'tv' )<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages_with_code, function($lang)use($item){return $lang['code']==$item['language'];})['name'] : '' }}</x-table.cell>@endif
                     @if(in_array($fiche, ['dist', 'devPrev']))<x-table.cell class="text-center">{{ !empty($item['share']) ? $item['share'].'%' : '' }}</x-table.cell>@endif
                     @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ isset($item['budget']) ? $item['budget'].'€' : '' }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
@@ -133,7 +133,7 @@
                         @enderror
                     </div>
 
-                    @if($fiche == 'devCurrent')
+                    @if($fiche == 'devCurrent' || $fiche == 'tv' )
                     <div class="col-span-3 sm:col-span-1">
                         <x-form.select
                             :id="'language'"
@@ -221,4 +221,3 @@
     </form>
 
 </div>
-

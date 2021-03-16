@@ -33,7 +33,7 @@ class LocationFactory extends BaseFactory
 
         return [
             'movie_id' => $this->getRelationId(Movie::class),
-            'type' => $this->faker->randomElement(['SHOOT', 'POST', 'STUDIO', 'LAB']),
+            'type' => $this->faker->randomElement(['SHOOT', 'POST', 'STUDIO']),
             'name' => $this->faker->name,
             'country' => $country_code,
             'points' => $this->faker->randomFloat(2, 0, 10),

@@ -159,8 +159,11 @@ class MovieTVForm extends FicheMovieFormBase
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
 
-        // Validate subform
-        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredProducers($this->producers);
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersTv::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
 
         return $specialErrors;
