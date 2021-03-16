@@ -25,7 +25,7 @@ class TableEditMovieCrews extends TableEditBase
     public $points_total = 0;
 
     protected $listeners = [
-        'movieCrewsAddRequired'
+        'movieCrewsAddDefault'
     ];
 
     protected function defaults()
@@ -90,7 +90,7 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
         if ($this->movie) {
-            $this->movieCrewsAddRequired($this->movie->genre_id);
+            $this->movieCrewsAddDefault($this->movie->genre_id);
         }
         $this->addUniqueKeys();
     }
@@ -145,10 +145,10 @@ class TableEditMovieCrews extends TableEditBase
         $this->recalculatePoints();
     }
 
-    public function movieCrewsAddRequired($genre_id) {
-        $req_items = Crew::newMovieCrew($genre_id);
-        $req_items_title_ids = array_column($req_items, 'title_id');
-        foreach ($req_items as $req_item) {
+    public function movieCrewsAddDefault($genre_id) {
+        // defaults
+        $def_items = Crew::newMovieCrew($genre_id);
+        foreach ($def_items as $req_item) {
             if (!array_filter(
                 $this->items,
                 function ($item) use ($req_item) {
@@ -159,8 +159,10 @@ class TableEditMovieCrews extends TableEditBase
                 $this->items[] = $req_item;
             }
         }
+        // required (the same in this case)
+        $req_items_title_ids = array_column($def_items, 'title_id');
         $this->items = array_map(
-            function($item) use ($req_items, $req_items_title_ids) {
+            function($item) use ($req_items_title_ids) {
                 // mark as required or not
                 if (in_array($item['title_id'], $req_items_title_ids)) {
                     $item['required'] = true;

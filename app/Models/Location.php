@@ -74,7 +74,7 @@ class Location extends Model
         return $location;
     }
 
-    static function requiredMovieLocations($genre_id)
+    static function requiredMovieLocationTypes($genre_id)
     {
         if ($genre_id == 1) {
             return [
@@ -84,14 +84,12 @@ class Location extends Model
         }
         if ($genre_id == 2) {
             return [
-                'SHOOT',
                 'POST',
             ];
         }
         if ($genre_id == 3) {
             return [
                 'POST',
-                'STUDIO',
             ];
         }
         return [];

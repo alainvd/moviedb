@@ -30,7 +30,7 @@ class FormHelpers
 
     // Check if the required crew members are present
     public static function requiredCrew($crews, $genre_id) {
-        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew($genre_id))->get();
+        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrewTypes($genre_id))->get();
         $requiredCrewMessages = [];
         foreach ($requiredTitles as $title) {
             if (!array_filter(

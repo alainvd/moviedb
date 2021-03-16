@@ -80,7 +80,7 @@
         @livewire('select-component', [
             'ref' => 'choices_shooting_lang',
             'domId' => 'shooting-language',
-            'label' => 'Shooting language',
+            'label' => 'Shooting languages',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
             'options' => json_encode($languages),

@@ -63,7 +63,7 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
-        'movie.total_budget_euro' => 'integer',
+        'movie.total_budget_euro' => 'required|integer',
     ];
 
     protected $rulesEditor = [
@@ -93,7 +93,7 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
-        'movie.total_budget_euro' => 'integer',
+        'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
     ];

@@ -91,9 +91,9 @@ class FicheMovieFormBase extends FicheFormBase
     {
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
-            $this->emit('movieCrewsAddRequired', $value);
+            $this->emit('movieCrewsAddDefault', $value);
             // Update the locations livewire component
-            $this->emit('movieLocationsAddRequired', $value);
+            $this->emit('movieLocationsAddDefault', $value);
         }
     }
 

@@ -20,7 +20,7 @@ class TableEditMovieLocations extends TableEditBase
     public $points_total = 0;
 
     protected $listeners = [
-        'movieLocationsAddRequired'
+        'movieLocationsAddDefault'
     ];
 
     protected function defaults()
@@ -73,7 +73,7 @@ class TableEditMovieLocations extends TableEditBase
     {
         $this->items = Location::where('movie_id',$this->movie->id)->get()->toArray();
         if ($this->movie) {
-            $this->movieLocationsAddRequired($this->movie->genre_id);
+            $this->movieLocationsAddDefault($this->movie->genre_id);
         }
         $this->addUniqueKeys();
     }
@@ -124,22 +124,24 @@ class TableEditMovieLocations extends TableEditBase
         $this->recalculatePoints();
     }
 
-    public function movieLocationsAddRequired($genre_id) {
-        $req_items = Location::newMovieLocations($genre_id);
-        $req_items_types = array_column($req_items, 'type');
-        foreach ($req_items as $req_item) {
+    public function movieLocationsAddDefault($genre_id) {
+        // default
+        $default_items = Location::newMovieLocations($genre_id);
+        foreach ($default_items as $def_item) {
             if (!array_filter(
                 $this->items,
-                function ($item) use ($req_item) {
-                    return $item['type'] == $req_item['type'];
+                function ($item) use ($def_item) {
+                    return $item['type'] == $def_item['type'];
                 }
             ))
             {
-                $this->items[] = $req_item;
+                $this->items[] = $def_item;
             }
         }
+        // required
+        $req_items_types = Location::requiredMovieLocationTypes($genre_id);
         $this->items = array_map(
-            function($item) use ($req_items, $req_items_types) {
+            function($item) use ($req_items_types) {
                 // mark as required or not
                 if (in_array($item['type'], $req_items_types)) {
                     $item['required'] = true;
