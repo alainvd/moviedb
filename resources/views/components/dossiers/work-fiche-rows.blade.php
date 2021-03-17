@@ -9,7 +9,7 @@
                 {{ $fiche->movie->genre->name }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
-                {{ $fiche->movie->film_type }}
+                {{ App\Models\Movie::FILM_TYPES[$fiche->movie->film_type] }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->total_budget_euro }} &nbsp; EURO
