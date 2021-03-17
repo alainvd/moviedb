@@ -102,6 +102,8 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->crews, TableEditMovieCrewsDevCurrent::class, function($crew) {return Title::find($crew['title_id'])->name;});
+        // Additional message before missing field messages
+        if ($messages) {$specialErrors->add('crewErrorMessages', 'Please input TBC for mandatory roles not defined.');}
         foreach ($messages as $message) $specialErrors->add('crewErrorMessages', $message);
 
         // Validate subform: if required items are added
