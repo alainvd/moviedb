@@ -12,7 +12,7 @@
                 {{ App\Models\Movie::FILM_TYPES[$fiche->movie->film_type] }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
-                {{ $fiche->movie->total_budget_euro }} &nbsp; EURO
+                @euro($fiche->movie->total_budget_euro)
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md uppercase {{ $fiche->status->name === 'Draft' ?  'text-red-600' : '' }}">
                 {{ $fiche->status->name }}

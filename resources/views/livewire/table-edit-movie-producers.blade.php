@@ -34,7 +34,7 @@
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
                     @if($fiche == 'devCurrent' || $fiche == 'tv' )<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages_with_code, function($lang)use($item){return $lang['code']==$item['language'];})['name'] : '' }}</x-table.cell>@endif
                     @if(in_array($fiche, ['dist', 'devPrev']))<x-table.cell class="text-center">{{ !empty($item['share']) ? $item['share'].'%' : '' }}</x-table.cell>@endif
-                    @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ isset($item['budget']) ? $item['budget'].'€' : '' }}</x-table.cell>@endif
+                    @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ isset($item['budget']) ? euro($item['budget']) : '' }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>

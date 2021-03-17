@@ -25,10 +25,10 @@
                     {{ $distributor->forecast_release_date }}
                 </x-table.cell>
                 <x-table.cell class="text-center">
-                    {{ $distributor->pa_costs }} EURO
+                    @euro($distributor->pa_costs)
                 </x-table.cell>
                 <x-table.cell class="text-center">
-                    {{ $distributor->forecast_grant }} EURO
+                    @euro($distributor->forecast_grant)
                 </x-table.cell>
                 @if(empty($print))
                 <x-table.cell class="space-x-2 text-center">
