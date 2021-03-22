@@ -134,6 +134,7 @@ Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movie
 Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');
 Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select']);
+Route::get('/pic', [\App\Http\Controllers\PICController::class,'index'])->name('pic');
 //Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 
 
