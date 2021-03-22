@@ -136,7 +136,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
                 'type' => $type,
-                'created_by' => 1,
+                'created_by' => $this->user->id,
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
@@ -161,7 +161,7 @@ class FicheMovieFormBase extends FicheFormBase
                 )
             );
             $this->fiche->fill([
-                'updated_by' => 1,
+                'updated_by' => $this->user->id,
             ])->save();
             $this->notify('Fiche is saved');
         }

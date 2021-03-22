@@ -7,10 +7,11 @@ use App\Models\Movie;
 use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Fiche extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'movie_id',
@@ -22,6 +23,8 @@ class Fiche extends Model
         'comments',
         'type',
     ];
+
+    protected static $logFillable = true;
 
     public function movie()
     {
@@ -41,12 +44,6 @@ class Fiche extends Model
 
     public function scopeForActivity($query, $activityId)
     {
-        // return $query->where(function ($query) {
-        //     $query->select('activity_id')
-        //         ->from('dossier_fiche')
-        //         ->whereColumn('fiche_id', 'fiches.id')
-        //         ->get();
-        // }, $activityId);
         return $query->where('dossier_fiche.activity_id', $activityId);
     }
 }

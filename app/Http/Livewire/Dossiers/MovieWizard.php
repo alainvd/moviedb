@@ -10,6 +10,7 @@ use App\Models\Activity;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class MovieWizard extends Component
 {
@@ -98,6 +99,18 @@ class MovieWizard extends Component
                         ['activity_id' => $this->activity->id]
                     );
                 }
+                $hasMovie = ActivityLog::forSubject($this->dossier)
+                    ->whereJsonContains('properties', 'model')
+                    ->where('properties->model', 'Movie')
+                    ->count();
+                activity()->on($this->dossier)
+                    ->by($this->user)
+                    ->withProperties([
+                        'model' => 'Movie',
+                        'operation' => $hasMovie ? 'attached' : 'replaced',
+                        'fiche' => $this->movie->fiche->toArray(),
+                    ])
+                    ->log('updated');
                 $this->notify('Movie added/updated');
             default:
                 break;

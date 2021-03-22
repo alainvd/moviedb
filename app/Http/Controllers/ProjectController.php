@@ -10,7 +10,12 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
+/**
+ * @todo change to DossierController
+ * @todo handle unique project_ref_id exception
+ */
 class ProjectController extends Controller
 {
 
@@ -104,8 +109,9 @@ class ProjectController extends Controller
         $pageTitles = $this->pageTitles;
         $crumbs = $this->getCrumbs();
         $print = false;
+        $hasHistory = ActivityLog::forSubject($dossier)->count() > 0;
 
-        return view('dossiers.create', compact('crumbs', 'dossier', 'layout', 'pageTitles', 'print'));
+        return view('dossiers.create', compact('crumbs', 'dossier', 'hasHistory', 'layout', 'pageTitles', 'print'));
     }
 
     /**

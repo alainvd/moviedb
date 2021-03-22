@@ -7,10 +7,11 @@ use App\Models\Fiche;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Dossier extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $attributes = [
         'status_id' => Status::DRAFT, // Defaults to DRAFT
@@ -33,6 +34,13 @@ class Dossier extends Model
         'updated_by',
     ];
 
+    // protected static $logFillable = true;
+    protected static $logAttributes = [
+        'status_id',
+        'company',
+    ];
+    protected static $logOnlyDirty = true;
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -51,11 +59,6 @@ class Dossier extends Model
     public function call()
     {
         return $this->belongsTo(Call::class);
-    }
-
-    public function movie()
-    {
-        return $this->belongsToMany(\App\Models\Movie::class);
     }
 
     public function checklists()

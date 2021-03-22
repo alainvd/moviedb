@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Dossier;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\App;
+=======
+use Illuminate\Support\Facades\Auth;
+>>>>>>> 78e23f3 (Activity log and dossier history page)
 
 class DossierController extends Controller
 {
@@ -39,7 +43,7 @@ class DossierController extends Controller
         $print = true;
 
         return compact('crumbs', 'dossier', 'layout', 'pageTitles', 'print');
-        
+
     }
 
     public function printDossier(Dossier $dossier) {
@@ -50,6 +54,10 @@ class DossierController extends Controller
 
     public function downloadDossier(Dossier $dossier) {
 
+        activity()->on($dossier)
+            ->by(Auth::user())
+            ->withProperty('use_description', true)
+            ->log('PDF Downloaded');
         // dompdf
         $pdf = PDF::loadView('dossiers.create', $this->prepareDossier($dossier));
         return $pdf->stream();
@@ -65,7 +73,7 @@ class DossierController extends Controller
         foreach ($fiches as $fiche) {
             $output .= FicheController::printFiche($fiche);
         }
-        
+
         // html output
         // return $output;
 
@@ -75,5 +83,5 @@ class DossierController extends Controller
         return $pdf->stream();
 
     }
-    
+
 }

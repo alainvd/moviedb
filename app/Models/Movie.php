@@ -13,10 +13,11 @@ use App\Models\Language;
 use App\Models\Distributor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Movie extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
 
     /**
@@ -25,6 +26,8 @@ class Movie extends Model
      * @var array
      */
     protected $guarded = [];
+
+    protected $logUnguarded = true;
 
     /**
      * Default attribute values
