@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 class StatusSeeder extends Seeder
 {
     public $statuses = [
-        ['name' => 'New', 'public' => false],
+        ['name' => 'Draft', 'public' => false],
+        ['name' => 'Complete', 'public' => false],
         ['name' => 'Accepted', 'public' => false],
         ['name' => 'Rejected', 'public' => false],
         ['name' => 'Duplicated', 'public' => false],

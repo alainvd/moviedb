@@ -1,10 +1,8 @@
-<x-layout>
+<x-layout 
+:title="$title">
     <div class="">
             <br>
             <br>
-            <div>
-                <h2 class="text-black text-4xl leading-10">Search Movies</h2>
-            </div>
             <br>
             <br>
 

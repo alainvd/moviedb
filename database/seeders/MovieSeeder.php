@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Audience;
+use App\Models\Fiche;
 use App\Models\Genre;
 use App\Models\Language;
 use App\Models\Movie;
@@ -17,9 +18,11 @@ class MovieSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()
-            ->count(10)->create();
-
+        Fiche::all()->each(function ($fiche) {
+            $movie = Movie::factory()->create();
+            $fiche->movie_id = $movie->id;
+            $fiche->save();
+        });
 
     }
 }

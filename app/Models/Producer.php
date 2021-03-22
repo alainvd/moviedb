@@ -46,8 +46,16 @@ class Producer extends Model
         return $this->belongsTo(Movie::class);
     }
 
-    const ROLES = [
-        'PRODUCER' => 'Producer',
-        'COPRODUCER' => 'Coproducer',
-    ];
+    static function defaultsProducer()
+    {
+        return [
+            'role' => '',
+            'name' => '',
+            'city' => '',
+            'country' => '',
+            'language' => '',
+            'share' => null,
+            'budget' => null,
+        ];
+    }
 }

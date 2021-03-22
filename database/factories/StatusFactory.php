@@ -21,7 +21,7 @@ class StatusFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->randomElement(['New', 'Accepted', 'Rejected', 'Duplicated', 'Distinct', 'Missing information', 'Validated', 'OK', 'Not OK', 'Qualified AO']);
+        $name = $this->faker->randomElement(['Draft', 'Complete', 'Accepted', 'Rejected', 'Duplicated', 'Distinct', 'Missing information', 'Validated', 'OK', 'Not OK', 'Qualified AO']);
 
         return [
             'name' => $name,

@@ -4,7 +4,7 @@ models:
     action: string:20
     year: integer
     relationships:
-      belongsToMany: Media
+      belongsToMany: Movie
 
 
 controllers:

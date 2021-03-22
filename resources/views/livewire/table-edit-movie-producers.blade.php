@@ -2,13 +2,13 @@
     
     <div class="mb-8 text-lg">
         @if($fiche=='dist')
-        Production Structure
+        Production Structure and Financing
         @endif
         @if($fiche=='devPrev')
-        Production Structure
+        Production Structure and Financing
         @endif
         @if($fiche=='devCurrent')
-        Estimated Production Structure
+        Estimated Production Structure and Financing
         @endif
     </div>
 
@@ -16,43 +16,45 @@
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Role</x-table.heading>
-                <x-table.heading>Name</x-table.heading>
+                <x-table.heading>Company Name</x-table.heading>
                 @if($fiche == 'dist')<x-table.heading>City</x-table.heading>@endif
                 <x-table.heading>Country</x-table.heading>
                 @if($fiche == 'devCurrent')<x-table.heading>Language</x-table.heading>@endif
-                @if(in_array($fiche, ['dist', 'devPrev']))<x-table.heading>Share</x-table.heading>@endif
+                @if(in_array($fiche, ['dist', 'devPrev']))<x-table.heading>Share in %</x-table.heading>@endif
                 @if($fiche == 'devPrev')<x-table.heading>Budget</x-table.heading>@endif
-                <x-table.heading></x-table.heading>
+                @if(empty($print))<x-table.heading></x-table.heading>@endif
             </x-slot>
             
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     @if($fiche == 'dist')<x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>@endif
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
-                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages, function($lang)use($item){return $lang['code']==$item['language'];})['name'] : '' }}</x-table.cell>@endif
+                    @if($fiche == 'devCurrent')<x-table.cell class="text-center">{{ !empty($item['language']) ? Arr::first($languages_with_code, function($lang)use($item){return $lang['code']==$item['language'];})['name'] : '' }}</x-table.cell>@endif
                     @if(in_array($fiche, ['dist', 'devPrev']))<x-table.cell class="text-center">{{ !empty($item['share']) ? $item['share'].'%' : '' }}</x-table.cell>@endif
                     @if($fiche == 'devPrev')<x-table.cell class="text-center">{{ isset($item['budget']) ? $item['budget'].'€' : '' }}</x-table.cell>@endif
-                    <x-table.cell class="space-x-2 text-center">
-                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer">Edit</a>
-                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer">Delete</a>
-                    </x-table.cell>
+                    @if(empty($print))<x-table.cell class="space-x-2 text-center">
+                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
+                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>
+                    </x-table.cell>@endif
                 </x-table.row>
                 @endforeach
             </x-slot>
         </x-table>
 
-        <div class="mt-5 text-right">
+        <div class="mt-5 text-right print:hidden">
             @if($fiche == 'devPrev')
             <span class="mr-4">
-                TOTAL BUDGET: <span class="font-bold" x-text="budget_total"></span>€
+                TOTAL PRODUCTION BUDGET: <span class="font-bold" x-text="budget_total"></span>€
             </span>
             @endif
+            @if(empty($print))
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
+            @endif
         </div>
     </div>
 
@@ -70,9 +72,10 @@
                             :id="'producer_role'"
                             :label="'Role'"
                             :hasError="$errors->has('editing.role')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.role')"
                             wire:model="editing.role">
                 
-                            @foreach($producer_roles as $key => $name)
+                            @foreach($producerRoles as $key => $name)
                                 <option value="{{ $key }}">{{ $name }}</option>
                             @endforeach
                         </x-form.select>
@@ -85,8 +88,9 @@
                     <div>
                         <x-form.input
                             :id="'producer_name'"
-                            :label="'Name'"
+                            :label="'Company Name'"
                             :hasError="$errors->has('editing.name')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
@@ -101,6 +105,7 @@
                             :id="'producer_city'"
                             :label="'City'"
                             :hasError="$errors->has('editing.city')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.city')"
                             wire:model="editing.city">
                         </x-form.input>
 
@@ -115,6 +120,7 @@
                             :id="'producer_country'"
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
                             wire:model="editing.country">
                 
                             @foreach ($countries as $country)
@@ -133,9 +139,10 @@
                             :id="'language'"
                             :label="'Language'"
                             :hasError="$errors->has('editing.language')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.language')"
                             wire:model="editing.language">
                 
-                            @foreach ($languages as $language)
+                            @foreach ($languages_with_code as $language)
                                 <option value="{{ $language['code'] }}">{{$language['name']}}</option>
                             @endforeach
                 
@@ -151,9 +158,10 @@
                     <div>
                         <x-form.input-trailing
                             :id="'producer_share'"
-                            :label="'Share'"
+                            :label="'Share in %'"
                             :trailing="'%'"
                             :hasError="$errors->has('editing.share')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.share')"
                             wire:model="editing.share"
                         > 
                         </x-form.input>
@@ -170,6 +178,7 @@
                             :label="'Budget'"
                             :trailing="'€'"
                             :hasError="$errors->has('editing.budget')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.budget')"
                             wire:model="editing.budget"
                         > 
                         </x-form.input>

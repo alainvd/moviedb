@@ -1,0 +1,20 @@
+models:
+
+  SalesDistributor:
+    movie_id: integer
+    name: string
+    role: string
+    release_date: date
+    relationships:
+      belongsTo: Movie
+      belongsToMany: Country
+
+controllers:
+
+  SalesDistributor:
+    index:
+      query: all
+      render: sales_distributor.index with salesDistributors
+
+
+seeders: SalesDistributor

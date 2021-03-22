@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Dossiers;
 
-use App\Models\Dossier;
-use App\Models\Movie;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Movie;
+use App\Models\Dossier;
 use Livewire\Component;
+use App\Models\Activity;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class MovieWizard extends Component
 {
@@ -30,11 +32,14 @@ class MovieWizard extends Component
 
     public User $user;
 
-    public function mount(Dossier $dossier)
+    public Activity $activity;
+
+    public function mount(Dossier $dossier, Activity $activity)
     {
         $this->dossier = $dossier;
         $this->movie = new Movie();
         $this->user = Auth::user();
+        $this->activity = $activity;
     }
 
     public function updatingOriginalTitle()
@@ -55,12 +60,8 @@ class MovieWizard extends Component
         }
 
         if ($this->currentStep === 3) {
-            // @todo - instead of a get variable, save the corresponding fiche
-            // on the dossier
-            return redirect(route('dossiers.show', [
-                'dossier' => $this->dossier,
-                'movie_id' => $this->movie->id
-            ]));
+            $this->saveMovie();
+            return redirect(route('dossiers.show', $this->dossier));
         }
 
         $this->currentStep++;
@@ -76,16 +77,44 @@ class MovieWizard extends Component
         $this->movie = Movie::find($id);
     }
 
+    protected function saveMovie()
+    {
+        $action = $this->dossier->action->name;
+
+        switch ($action) {
+            case 'DISTSEL':
+            case 'DISTSAG':
+            case 'DEVSLATE':
+            case 'DEVSLATEMINI':
+            case 'CODEVELOPMENT':
+            case 'TV':
+                // Attach fiche for activity
+                $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
+                if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                } else {
+                    $this->dossier->fiches()->attach(
+                        $this->movie->fiche->id,
+                        ['activity_id' => $this->activity->id]
+                    );
+                }
+                $this->notify('Movie added/updated');
+            default:
+                break;
+        }
+    }
+
     public function render()
     {
         $results = collect([]);
         $hasSearch = false;
 
-        $query = Movie::join('fiches', 'fiches.movie_id', '=', 'movies.id')
-            ->whereNotIn('fiches.status_id', function ($query) {
-                $query->select('id')
-                    ->from('statuses')
-                    ->whereIn('name', ['Duplicated']);
+        $query = Movie::whereHas('fiche', function ($query) {
+                $query->whereNotIn('status_id', function ($query) {
+                    $query->select('id')
+                        ->from('statuses')
+                        ->whereIn('name', ['Duplicated']);
+                });
             });
 
         if ($this->originalTitle) {
@@ -116,6 +145,19 @@ class MovieWizard extends Component
                 'results' => $results,
             ])
             ->layout($layout, [
+                'crumbs' => [
+                    [
+                        'url' => route('dossiers.index'),
+                        'title' => 'My dossiers',
+                    ],
+                    [
+                        'title' => 'Edit dossier',
+                        'url' => route('dossiers.show', $this->dossier)
+                    ],
+                    [
+                        'title' => 'Select work'
+                    ]
+                ],
                 'title' => 'Films on the move',
                 'class' => 'wizard-page',
             ]);

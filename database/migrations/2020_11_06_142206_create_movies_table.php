@@ -15,6 +15,9 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('genre_id')->nullable();
+            $table->unsignedInteger('audience_id')->nullable();
+            $table->string('delivery_platform')->nullable();
             $table->integer('legacy_id')->nullable()->index();
             $table->string('original_title', 255);
             $table->string('logline', 4000)->nullable();
@@ -23,12 +26,14 @@ class CreateMoviesTable extends Migration
             $table->string('eidr', 255)->nullable();
             $table->date('shooting_start')->nullable();
             $table->date('shooting_end')->nullable();
+            $table->date('delivery_date')->nullable();
+            $table->date('broadcast_date')->nullable();
             $table->string('film_length')->nullable();
             $table->integer('number_of_episodes')->nullable();
             $table->integer('length_of_episodes')->nullable();
             $table->string('film_country_of_origin')->nullable();
+            $table->string('film_country_of_origin_2014_2020')->nullable();
             $table->integer('year_of_copyright')->nullable();
-            $table->string('film_delivery_platform')->nullable();
             $table->integer('directors_film')->nullable();
             $table->string('european_nationality_flag',255)->nullable();
             $table->longText('european_nationality_basis')->nullable();
@@ -43,9 +48,8 @@ class CreateMoviesTable extends Migration
             $table->string('total_budget_currency_code')->nullable();
             $table->decimal('total_budget_currency_rate')->nullable();
             $table->integer('total_budget_euro')->nullable();
-            $table->boolean('flag_video')->default(false); // ???
-            $table->boolean('flag_2')->default(false); // ???
-            $table->boolean('flag_not_use')->default(false); // ???
+            $table->boolean('dev_support_flag')->nullable();
+            $table->string('dev_support_reference')->nullable();
             $table->integer('source_film_id')->default(false); // ???
             $table->string('username')->nullable();
             $table->date('audit_date')->nullable();
@@ -74,11 +78,6 @@ class CreateMoviesTable extends Migration
             $table->date('rights_adapt_contract_start_date')->nullable();
             $table->date('rights_adapt_contract_end_date')->nullable();
             $table->date('rights_adapt_contract_signature_date')->nullable();
-
-            //Moved From Media
-            $table->unsignedInteger('genre_id')->nullable();
-            $table->unsignedInteger('audience_id')->nullable();
-            $table->string('delivery_platform')->nullable();
 
             $table->timestamps();
         });

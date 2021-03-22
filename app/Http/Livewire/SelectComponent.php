@@ -7,8 +7,10 @@ use Livewire\Component;
 class SelectComponent extends Component
 {
 
+    public $ref;
     public $domId;
     public $label;
+    public $isRequired;
     public $name;
     public $options;
     public $items;

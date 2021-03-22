@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Dossier;
 use App\Models\Action;
+use App\Models\Call;
 use App\Models\Status;
 use Illuminate\Support\Str;
 use Mediconesystems\LivewireDatatables\Column;
@@ -30,23 +31,24 @@ class DossierDatatables extends LivewireDatatable
     public function columns()
     {
         return [
-            Column::name('id')
+            Column::name('project_ref_id')
                 ->label('ID')
+                ->filterable()
                 ->linkTo('dossiers', 6),
             Column::name('action.name')
                 ->label('ACTION')
-                ->filterable(['DEVSLATE','DEVSLATEEUMINI','DISTAUTOG','DISTSAG','DISTSEL','EUCODEV','TV']), //todo link action filter values to DB
+                ->filterable($this->actions), //todo link action filter values to DB
             NumberColumn::name('year')
                 ->label('YEAR')
-                ->filterable(['2021','2020','2019','2018','2017','2016','2015','2014']),
-            Column::name('project_ref_id')
-                ->label('ID'),
+                ->filterable($this->years),
+            
             Column::name('company')
                 ->label('Company')
                 ->filterable()
                 ->searchable(),
-            // Column::name('status_id')
-            //     ->label('Status'),
+            Column::name('status.name')
+                 ->label('Status')
+                 ->filterable($this->status),
             Column::name('updated_at')
                 ->label('LAST UPDATE')
                 ->defaultSort('desc')
@@ -54,6 +56,26 @@ class DossierDatatables extends LivewireDatatable
 
         ];
     }
+
+    public function getActionsProperty()
+    {
+        $sortedActions = ACTION::pluck('name')->sort()->unique()->values()->all();
+        return $sortedActions;
+    }
+
+    public function getYearsProperty()
+    {
+        $sortedYears = CALL::pluck('year')->sortdesc()->unique()->values()->all();
+        return $sortedYears;
+    }
+
+    public function getStatusProperty()
+    {
+        $sortedStatus = Status::pluck('name')->sortdesc()->values()->all();
+        return $sortedStatus;
+    }
+
+    
 
 
 }

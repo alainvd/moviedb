@@ -21,26 +21,6 @@ class CallFactory extends BaseFactory
      */
     public function definition()
     {
-        $codes = [
-            "DEVSLATE",
-            "DEVSLATEEU",
-            "DEVSLATEEUMINI",
-            "EUCODEV",
-            // "DEVSPANI",
-            // "DEVSPDOC",
-            // "DEVSPFIC",
-            "DEVVG",
-            // "DISTAUTOG",
-            // "DISTAUTOR1",
-            // "DISTAUTOR2",
-            // "DISTAUTOR3",
-            "DISTSAG",
-            // "DISTSAR1",
-            // "DISTSAR2",
-            "DISTSEL",
-            "TV"
-        ];
-
         // Call name in the format: 'H2020-LC-GD-2020-3';
         $name = sprintf(
             '%s%d-%s-%s-%d-%d',
@@ -52,15 +32,17 @@ class CallFactory extends BaseFactory
             $this->faker->randomDigitNotNull()
         );
 
-        $action = Action::where('name', $this->faker->randomElement($codes))->first();
+        $action = $this->getRelation(Action::class);
+        $publishedAt = $this->faker->dateTimeBetween('-3 years', 'now');
 
         return [
             // H2020-LC-GD-2020-3
             'name' => $name . '-' . $action->name,
             'action_id' => $action->id,
+            'year' => $this->faker->numberBetween(1990, 2020),
             'description' => $this->faker->text,
-            'published_at' => $this->faker->dateTime(),
-            'status' => $this->faker->randomElement(["open","closed"]),
+            'published_at' => $publishedAt,
+            'status' => in_array($publishedAt->format('Y'), [date('Y') - 1, date('Y')]) ? 'open' : 'closed',
         ];
     }
 }

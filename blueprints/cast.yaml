@@ -21,7 +21,7 @@ models:
     title_id: integer
     movie_id: integer
     relationships:
-      belongsTo: Title, Person, Media
+      belongsTo: Title, Person, Movie
 
 controllers:
   Person:

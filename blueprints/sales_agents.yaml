@@ -7,7 +7,7 @@ models:
     contact_person: string
     email: string
     relationships:
-      belongsTo: Country, Media
+      belongsTo: Country, Movie
 
 controllers:
 

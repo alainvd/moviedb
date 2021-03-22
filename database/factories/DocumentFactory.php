@@ -25,7 +25,7 @@ class DocumentFactory extends BaseFactory
     {
         return [
             'movie_id' => $this->getRelationId(Movie::class),
-            'document_type' => $this->faker->word,
+            'document_type' => $this->faker->randomElement(['FINANCING', 'OTHER']),
             'filename' => $this->faker->word,
             'comments' => $this->faker->sentence,
         ];

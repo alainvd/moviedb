@@ -7,9 +7,9 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        @foreach($links as $link)
-                            <a href="/{{$link}}" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-white focus:bg-gray-700 {{ $link === $active ? 'bg-gray-900' : '' }}">
-                                {{ ucfirst($link) }}
+                        @foreach($links as $label => $url)
+                            <a href="/{{$url}}" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-white focus:bg-gray-700 {{ $url === $active ? 'bg-gray-900' : '' }}">
+                                {{ ucfirst($label) }}
                             </a>
                         @endforeach
                     </div>

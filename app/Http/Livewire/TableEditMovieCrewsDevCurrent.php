@@ -27,7 +27,7 @@ class TableEditMovieCrewsDevCurrent extends TableEditMovieCrews
 
     public function render()
     {
-        return view('livewire.table-edit-movie-crews', ['fiche' => 'devCurrent']);
+        return view('livewire.table-edit-movie-crews', ['fiche' => 'devCurrent', 'rules' => $this->rules()]);
     }
 
 }

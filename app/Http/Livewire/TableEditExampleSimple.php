@@ -14,8 +14,6 @@ class TableEditExampleSimple extends TableEditBase
 
     public $countries_by_code = [];
 
-    public $producer_roles = [];
-
     protected function defaults()
     {
         return [
@@ -53,7 +51,7 @@ class TableEditExampleSimple extends TableEditBase
         ];
     }
 
-    private function load()
+    private function loadItems()
     {
         $this->items = Producer::where('movie_id', $this->movie_id)->get()->toArray();
         $this->addUniqueKeys();
@@ -63,10 +61,9 @@ class TableEditExampleSimple extends TableEditBase
     {
         $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
         $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->producer_roles = Producer::ROLES;
         if ($movie_id) {
             $this->movie_id = $movie_id;
-            $this->load();
+            $this->loadItems();
         }
     }
 
@@ -95,7 +92,7 @@ class TableEditExampleSimple extends TableEditBase
 
     public function render()
     {
-        return view('livewire.table-edit-example-simple');
+        return view('livewire.table-edit-example-simple', ['rules' => $this->rules()]);
     }
 
 }

@@ -2,10 +2,14 @@
 
     <div class="col-span-1">
         <x-form.select
+            :print="$print"
             :id="'link_applicant_work'"
             :label="'Link between Applicant company and Work'"
             :hasError="$errors->has('movie.link_applicant_work')"
-            wire:model="movie.link_applicant_work">
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work')"
+            wire:model="movie.link_applicant_work"
+            value="{{ isset($linkApplicantWork[$movie->link_applicant_work]) ? $linkApplicantWork[$movie->link_applicant_work] : '' }}"
+        >
 
             @foreach ($linkApplicantWork as $id=>$value)
                 <option value="{{ $id }}">{{ $value }}</option>
@@ -25,12 +29,14 @@
     <!-- link_applicant_work_person_name -->
     <div class="col-span-1">
         <x-form.input
+            :print="$print"
             :id="'link_applicant_work_person_name'"
             :label="'Name of the Person for the Personal Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_name')"
-            wire:model="movie.link_applicant_work_person_name">
-
-        </x-form.input>
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_name')"
+            wire:model="movie.link_applicant_work_person_name"
+            value="{{ $movie->link_applicant_work_person_name }}"
+        ></x-form.input>
 
         @error('movie.link_applicant_work_person_name')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -40,12 +46,14 @@
     <!-- link_applicant_work_person_position -->
     <div class="col-span-1">
         <x-form.input
+            :print="$print"
             :id="'link_applicant_work_person_position'"
             :label="'Position of the Person of Personal Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_position')"
-            wire:model="movie.link_applicant_work_person_position">
-
-        </x-form.input>
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_position')"
+            wire:model="movie.link_applicant_work_person_position"
+            value="{{ $movie->link_applicant_work_person_position }}"
+        ></x-form.input>
 
         @error('movie.link_applicant_work_person_position')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -55,12 +63,14 @@
     <!-- link_applicant_work_person_credit -->
     <div class="col-span-1">
         <x-form.input
+            :print="$print"
             :id="'link_applicant_work_person_credit'"
             :label="'Personal on-screen Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_credit')"
-            wire:model="movie.link_applicant_work_person_credit">
-
-        </x-form.input>
+            :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_credit')"
+            wire:model="movie.link_applicant_work_person_credit"
+            value="{{ $movie->link_applicant_work_person_credit }}"
+        ></x-form.input>
 
         @error('movie.link_applicant_work_person_credit')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>

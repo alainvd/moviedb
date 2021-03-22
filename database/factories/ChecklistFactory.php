@@ -3,11 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Dossier;
-use App\Media;
 use App\Models\Movie;
 use App\Models\Step;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Checklist;
 
 class ChecklistFactory extends BaseFactory
