@@ -100,14 +100,13 @@ class MovieWizard extends Component
                     );
                 }
                 $hasMovie = ActivityLog::forSubject($this->dossier)
-                    ->whereJsonContains('properties', 'model')
                     ->where('properties->model', 'Movie')
                     ->count();
                 activity()->on($this->dossier)
                     ->by($this->user)
                     ->withProperties([
                         'model' => 'Movie',
-                        'operation' => $hasMovie ? 'attached' : 'replaced',
+                        'operation' => $hasMovie ? 'replaced' : 'attached',
                         'fiche' => $this->movie->fiche->toArray(),
                     ])
                     ->log('updated');
