@@ -5,12 +5,17 @@
         @elseif ($layout=='components.layout')
         <div class="w-full p-4 mx-auto my-4 bg-white rounded-md shadow-md">
         @endif
-        
+
             {{ $slot }}
 
             <!-- buttons -->
             @if(empty($print))
             <div id="fiche-form-buttons" class="flex items-center justify-end mt-12 space-x-3 print:hidden">
+                @if ($hasHistory)
+                    <a href="{{ route('fiche-history', $fiche) }}" class="block text-md text-indigo-700 hover:text-indigo-400">
+                        View history
+                    </a>
+                @endif
                 <x-button.primary id="button-save" wire:click="saveFiche">Save as Draft</x-button.primary>
                 <x-button.primary id="button-submit" type="submit">Submit</x-button.primary>
             </div>

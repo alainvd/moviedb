@@ -15,13 +15,26 @@ class HistoryController extends Controller
 {
     public function index(Dossier $dossier)
     {
-        $logs = $this->getFormattedLogs($dossier);
+        $logs = self::getFormattedLogs($dossier);
 
         return view('dossiers.history', [
             'crumbs' => $this->getCrumbs($dossier),
             'layout' => $this->getLayout(),
             'type' => class_basename($dossier),
             'model' => $dossier,
+            'logs' => $logs
+        ]);
+    }
+
+    public function fiche(Fiche $fiche)
+    {
+        $logs = self::getFormattedLogs($fiche);
+
+        return view('dossiers.history', [
+            'crumbs' => $this->getCrumbs($fiche),
+            'layout' => $this->getLayout(),
+            'type' => class_basename($fiche),
+            'model' => $fiche,
             'logs' => $logs
         ]);
     }
@@ -36,7 +49,7 @@ class HistoryController extends Controller
      * - changes
      * - extra data: fiche, movie, ...
      */
-    protected function getFormattedLogs($model)
+    static public function getFormattedLogs($model)
     {
         $logs = ActivityLog::forSubject($model)->get();
 
@@ -59,11 +72,12 @@ class HistoryController extends Controller
                 }
 
                 return [
+                    'id' => $log->id,
                     'description' => $description,
                     'user' => $log->causer,
                     'log_date' => $log->created_at,
                     'status' => $newStatus ? $newStatus : $oldStatus,
-                    'changes' => property_exists('attributes', $log->properties) ? $log->properties['attributes'] : null,
+                    'changes' => $log->properties,
                     'extra' => []
                 ];
             });

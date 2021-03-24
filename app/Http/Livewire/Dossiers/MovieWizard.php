@@ -107,7 +107,8 @@ class MovieWizard extends Component
                     ->withProperties([
                         'model' => 'Movie',
                         'operation' => $hasMovie ? 'replaced' : 'attached',
-                        'fiche' => $this->movie->fiche->toArray(),
+                        // 'fiche' => $this->movie->fiche->toArray(),
+                        'movie' => $this->movie->toArray(),
                     ])
                     ->log('updated');
                 $this->notify('Movie added/updated');

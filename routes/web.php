@@ -97,6 +97,9 @@ Route::middleware('cas.auth')->group(function () {
         ])
         ->only('index')
         ->name('index', 'dossier-history');
+
+    Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
+        ->name('fiche-history');
 });
 
 Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)

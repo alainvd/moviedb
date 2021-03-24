@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class FicheMovieFormBase extends FicheFormBase
 {
@@ -48,6 +49,8 @@ class FicheMovieFormBase extends FicheFormBase
 
     public $crumbs = [];
 
+    public $hasHistory = false;
+
     public function validationAttributes()
     {
         // todo: finish for all fields
@@ -69,6 +72,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche = new Fiche;
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
+            $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]

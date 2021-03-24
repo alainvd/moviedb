@@ -1,4 +1,4 @@
-<x-fiche-form :layout="$layout" :print="$print">
+<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory">
 
     <!-- title -->
     <div class="my-8">
