@@ -14,10 +14,10 @@ class CreateDossierFicheTable extends Migration
     public function up()
     {
         Schema::create('dossier_fiche', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('fiche_id');
             $table->unsignedBigInteger('dossier_id');
             $table->unsignedBigInteger('activity_id')->nullable();
-            $table->timestamps();
         });
     }
 

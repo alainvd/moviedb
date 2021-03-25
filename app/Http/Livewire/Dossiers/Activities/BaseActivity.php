@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
+use App\Models\Fiche;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -18,6 +20,8 @@ class BaseActivity extends Component
     public $current = 0;
     public $max = 0;
     public $isAddDisabled = false;
+
+    protected $logModel = '';
 
     public function mount()
     {
@@ -38,6 +42,15 @@ class BaseActivity extends Component
         if ($this->deletingId) {
             // @todo implement remove in child component
             $this->dossier->fiches()->detach($this->deletingId);
+            // Add activity log
+            activity()
+                ->on($this->dossier)
+                ->by(Auth::user())
+                ->withProperties([
+                    'model' => $this->logModel,
+                    'operation' => 'removed',
+                    'movie' => Fiche::find($this->deletingId)->movie->toArray()
+                ])->log('removed');
             $this->deletingId = null;
             $this->showDeleteModal = false;
             $this->current--;

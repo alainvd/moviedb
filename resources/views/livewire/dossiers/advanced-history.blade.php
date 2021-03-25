@@ -14,7 +14,7 @@
                         {{ $log['description'] }}
                     </x-table.cell>
                     <x-table.cell class="text-center">
-                        {{ $log['user']->email }}
+                        {{ $log['user'] ? $log['user']->email : '' }}
                     </x-table.cell>
                     <x-table.cell class="text-center">
                         {{ $log['log_date']->format('d.m.Y H:i') }}

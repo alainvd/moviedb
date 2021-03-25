@@ -69,7 +69,8 @@ class Dossier extends Model
     public function fiches()
     {
         return $this->belongsToMany(Fiche::class)
-            ->withPivot('activity_id');
+            ->withPivot('activity_id')
+            ->using(DossierFiche::class);
     }
 
     public function status()

@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Fiche extends Model
@@ -34,7 +35,8 @@ class Fiche extends Model
     public function dossiers()
     {
         return $this->belongsToMany(Dossier::class)
-            ->withPivot('activity_id');
+            ->withPivot('activity_id')
+            ->using(DossierFiche::class);
     }
 
     public function status()

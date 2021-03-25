@@ -86,7 +86,7 @@ class FicheFormBase extends Component
                 ],
                 [
                     'title' => 'Edit fiche'
-                ],        
+                ],
             ];
         } else {
             return [

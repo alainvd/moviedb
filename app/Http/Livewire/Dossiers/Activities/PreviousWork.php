@@ -6,6 +6,12 @@ use Livewire\Component;
 
 class PreviousWork extends BaseActivity
 {
+    public function mount()
+    {
+        $this->logModel = 'Previous Work';
+        parent::mount();
+    }
+
     public function render()
     {
         $results = $this->dossier->fiches()->forActivity($this->activity->id)->get();

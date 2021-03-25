@@ -23,7 +23,7 @@
                                     {{ $log['description'] }}
                                 </h3>
                                 <p class="text-md text-gray-600">
-                                    by {{ $log['user']->email }}
+                                    by {{ $log['user'] ? $log['user']->email : '' }}
                                 </p>
                             </div>
                         </div>
