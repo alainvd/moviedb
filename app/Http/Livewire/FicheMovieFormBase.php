@@ -95,6 +95,9 @@ class FicheMovieFormBase extends FicheFormBase
             // Update the locations livewire component
             $this->emit('movieLocationsAddDefault', $value);
         }
+        if ($name == 'movie.total_budget_euro') {
+            $this->movie->total_budget_euro = amount($value);
+        }
     }
 
     // Save fiche as is (draft), without full validation

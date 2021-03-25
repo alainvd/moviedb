@@ -173,6 +173,7 @@
                             :id="'producer_share'"
                             :label="'Share in %'"
                             :trailing="'%'"
+                            :isAmount="false"
                             :hasError="$errors->has('editing.share')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.share')"
                             wire:model="editing.share"

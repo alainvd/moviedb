@@ -6,6 +6,7 @@
             :id="'total_budget_euro'"
             :label="'Total Estimated Production Budget including Development'"
             :trailing="'€'"
+            :isAmount="true"
             :hasError="$errors->has('movie.total_budget_euro')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_euro')"
             wire:model="movie.total_budget_euro"

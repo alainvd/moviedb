@@ -1,10 +1,10 @@
+@if (empty($print))
+<!-- Output for screen -->
 <label for="{{ $id }}" class="block text-sm font-light leading-5 text-gray-800">
     {{ $label }}
     <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
 </label>
 
-<!-- Output for screen -->
-@if (empty($print))
 <div
     x-data=""
     x-init="new Pikaday({
@@ -33,7 +33,8 @@
 </div>
 @endif
 
-<!-- Output for print -->
 @if (!empty($print) && !empty($value))
-<span class="inline-block">{{ $value }}</span>
+<!-- Output for print -->
+<span class="font-bold">{{ $label }}</span>
+<span class="">{{ $value ? date('d.m.Y.', strtotime($value)) : '' }}</span>
 @endif

@@ -3,7 +3,12 @@
 if (!function_exists('amount'))
 {
     function amount($amount) {
-        return number_format($amount, 0, '', '.');
+        $amount = str_replace('.', '', $amount);
+        if ($amount !== '' && is_numeric($amount)) {
+            return number_format($amount, 0, '', '.');
+        } else {
+            return '';
+        }
     }
 }
 
