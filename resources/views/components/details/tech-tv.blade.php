@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 gap-4 fiche-details-component sm:grid-cols-2 md:grid-cols-3" id="fdc-photography-dev-current">
 
     <div class="col-span-1 mb-4 text-lg sm:col-span-2 md:col-span-3">
-        Technical Information
+        <h3>Technical Information</h3>
     </div>
 
     <div class="col-span-1 col-start-1 sm:col-start-1 md:col-start-1">
@@ -93,10 +93,9 @@
     </div>
     @endif
 
-    @if (!empty($print) && !empty($languagesSelected))
-    <div class="block">Shooting languages: 
-        {{ $languagesSelected->implode('name', ', ') }}
-    </div>
+    @if (!empty($print))
+    <span class="font-bold">Shooting languages</span>
+    <span>{{ $languagesSelected->implode('name', ', ') }}</span>
     @endif
 
     <div class="col-span-1 col-start-1 sm:col-start-1 md:col-start-1">

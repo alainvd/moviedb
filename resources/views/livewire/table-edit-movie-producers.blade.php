@@ -1,16 +1,24 @@
 <div>
     
-    <div class="mb-8 text-lg">
+    <div class="mb-4 text-lg">
+        <h3>
         @if($fiche=='dist')
         Production Structure and Financing
         @endif
         @if($fiche=='devPrev')
         Production Structure and Financing
         @endif
-        @if($fiche == 'devCurrent' || $fiche == 'tv' )
+        @if($fiche == 'devCurrent' || $fiche == 'tv')
         Estimated Production Structure and Financing
         @endif
+        </h3>
     </div>
+
+    @if($fiche == 'devCurrent')
+    @if(empty($print))
+    <div class="my-2 text-sm text-gray-600 print:hidden">If the Company name of the co-producter is not known yet, enter 'unknown'.</div>
+    @endif
+    @endif
 
     <div x-data="{ budget_total: {{ $budget_total }} }">
         <x-table>
@@ -47,7 +55,12 @@
         <div class="mt-5 text-right print:hidden">
             @if($fiche == 'devPrev')
             <span class="mr-4">
-                TOTAL PRODUCTION BUDGET: <span class="font-bold" x-text="budget_total"></span>€
+                TOTAL PRODUCTION BUDGET:
+                @if(empty($print))
+                <span class="font-bold" x-text="budget_total"></span> €
+                @else
+                {{ euro($budget_total) }}
+                @endif
             </span>
             @endif
             @if(empty($print))

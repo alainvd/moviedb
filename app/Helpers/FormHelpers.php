@@ -85,7 +85,6 @@ class FormHelpers
     public static function validateSalesDistributorTerritories($salesDistributors) {
         // TODO: new implementation
         $territories = [];
-        // dd($salesDistributors);
         foreach($salesDistributors as $salesDistributor) {
             foreach($salesDistributor['countries'] as $country)
             if (!in_array($country['id'], $territories)) {

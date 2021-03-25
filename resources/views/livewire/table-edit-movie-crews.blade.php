@@ -1,8 +1,12 @@
 <div>
 
-    <div class="mb-8 text-lg">
-        Cast and Crew
+    <div class="mb-4 text-lg">
+        <h3>Cast and Crew</h3>
     </div>
+
+    @if(empty($print))
+    <div class="my-2 text-sm text-gray-600 print:hidden">Please input TBC for mandatory roles not defined.</div>
+    @endif
 
     <div x-data="{ points_total: {{ $points_total }} }">
         <x-table>
@@ -20,9 +24,9 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">
-                        @if($item['required'])<span class="text-red-500">*</span>@endif
+                    <x-table.cell class="text-left">
                         {{ $titles[$item['title_id']]['name'] }}
+                        @if($item['required'])<span class="text-red-500">*</span>@endif
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['gender']) ? $genders[$item['person']['gender']] : '' }}</x-table.cell>

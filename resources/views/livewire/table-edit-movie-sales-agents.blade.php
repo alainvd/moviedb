@@ -1,6 +1,7 @@
 <div>
     
     <div class="mb-8 text-lg">
+        <h3>
         @if($fiche == 'dist')
         Sales Agents
         @endif
@@ -22,6 +23,7 @@
         </script>
         -->
         @endif
+        </h3>
     </div>
 
     @if($fiche == 'devPrev' && $isApplicant == true)

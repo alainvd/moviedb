@@ -1,7 +1,7 @@
 <div>
     
     <div class="mb-8 text-lg">
-        Countries of Distribution
+        <h3>Countries of Distribution</h3>
     </div>
 
     @if($isApplicant == true)
@@ -164,14 +164,25 @@
 
                 </div>
                 <div class="flex items-center justify-end mt-4 space-x-3">
-                    <x-button.primary wire:click="saveItem()">Save</x-button.primary>
+                    <x-button.primary wire:click="saveItem">Save</x-button.primary>
 
-                    <x-button.secondary wire:click="cancel()">Cancel</x-button.secondary>
+                    <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
                 </div>
             </x-slot>
 
             <x-slot name="footer">
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
             </x-slot>
+            
         </x-modal.dialog>
     </form>
 

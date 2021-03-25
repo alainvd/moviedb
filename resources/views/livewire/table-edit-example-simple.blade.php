@@ -1,7 +1,7 @@
 <div>
 
     <div class="mb-8 text-lg">
-        Producers
+        <h3>Producers</h3>
     </div>
 
     <div>

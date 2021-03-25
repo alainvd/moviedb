@@ -1,7 +1,7 @@
 <div>
 
     <div class="mb-8 text-lg">
-        Locations
+        <h3>Locations</h3>
     </div>
 
     <div x-data="{ points_total: {{ $points_total }} }">
@@ -17,9 +17,9 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">
-                        @if($item['required'])<span class="text-red-500">*</span>@endif
+                    <x-table.cell class="text-left">
                         {{ !empty($item['type']) ? $locationTypes[$item['type']] : '' }}
+                        @if($item['required'])<span class="text-red-500">*</span>@endif
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
