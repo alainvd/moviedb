@@ -20,6 +20,7 @@
             :movieAudiences="$movieAudiences"
             :allAaudiencesById="$allAaudiencesById"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
             :movieGenres="$movieGenres"
@@ -78,6 +79,7 @@
             :rules="$rules"
             :movie="$movie"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
         ></x-details.summary>
     </div>

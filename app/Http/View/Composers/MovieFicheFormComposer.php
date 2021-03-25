@@ -23,6 +23,24 @@ class MovieFicheFormComposer
         $countries = Country::where('active', true)
             ->get()
             ->toArray();
+        $countriesGrouped = Country::where('active', true)->get()
+            ->sortBy([
+                function ($a, $b) {
+                    if ($a['group'] == 'eu' && $b['group'] == 'eu') return 0;
+                    if ($a['group'] == 'eu' && $b['group'] == 'select') return -1;
+                    if ($a['group'] == 'eu' && $b['group'] == 'other') return -1;
+                    if ($a['group'] == 'select' && $b['group'] == 'eu') return 1;
+                    if ($a['group'] == 'select' && $b['group'] == 'select') return 0;
+                    if ($a['group'] == 'select' && $b['group'] == 'other') return -1;
+                    if ($a['group'] == 'other' && $b['group'] == 'eu') return 1;
+                    if ($a['group'] == 'other' && $b['group'] == 'select') return 1;
+                    if ($a['group'] == 'other' && $b['group'] == 'other') return 0;
+                },
+                fn ($a, $b) => $a['position'] <=> $b['position'],
+                fn ($a, $b) => $a['name'] <=> $b['name']
+            ])
+            ->groupBy('group')
+            ->toArray();
         $countriesByCode = Country::where('active', true)
             ->orderBy('name')
             ->get()
@@ -60,6 +78,7 @@ class MovieFicheFormComposer
         $view->with('gameAudiences', $gameAudiences);
         $view->with('allAaudiencesById', $allAudiencesById);
         $view->with('countries', $countries);
+        $view->with('countriesGrouped', $countriesGrouped);
         $view->with('countriesByCode', $countriesByCode);
         $view->with('countriesValueLabel', $countriesValueLabel);
         $view->with('filmFormats', Movie::FILM_FORMATS);

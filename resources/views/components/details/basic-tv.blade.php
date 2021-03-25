@@ -56,8 +56,12 @@
             value="{{ isset($countriesByCode[$movie->film_country_of_origin]) ? $countriesByCode[$movie->film_country_of_origin]['name'] : '' }}"
         >
 
-            @foreach($countries as $country)
-                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+            @foreach ($countriesGrouped as $group=>$countries)
+                <optgroup label="---">
+                    @foreach ($countries as $country)
+                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                    @endforeach
+                </optgroup>
             @endforeach
 
         </x-form.select>

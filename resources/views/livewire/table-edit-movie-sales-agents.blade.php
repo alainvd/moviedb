@@ -125,11 +125,17 @@
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
-                            wire:model="editing.country">
+                            wire:model="editing.country"
+                        >
                 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+
                         </x-form.select>
                 
                         @error('editing.country')

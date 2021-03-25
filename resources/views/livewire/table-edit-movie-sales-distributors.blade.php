@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="mb-8 text-lg">
         <h3>Countries of Distribution</h3>
     </div>
@@ -67,7 +67,7 @@
         var choices = new Choices(cc, {
             removeItemButton: true,
             duplicateItemsAllowed: false,
-            choices: {{ json_encode($countries_value_label) }},
+            choices: {{ json_encode($countries_grouped_value_label) }},
         });
 
         choices.setValue(countries_values);

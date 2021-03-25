@@ -135,11 +135,17 @@
                             :label="'Nationality 1'"
                             :hasError="$errors->has('editing.person.nationality1')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality1')"
-                            wire:model="editing.person.nationality1">
+                            wire:model="editing.person.nationality1"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+                        
                         </x-form.select>
 
                         @error('editing.person.nationality1')
@@ -154,11 +160,17 @@
                             :label="'Nationality 2'"
                             :hasError="$errors->has('editing.person.nationality2')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality2')"
-                            wire:model="editing.person.nationality2">
+                            wire:model="editing.person.nationality2"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+
                         </x-form.select>
 
                         @error('editing.person.nationality2')
@@ -174,11 +186,17 @@
                             :label="'Country of residence'"
                             :hasError="$errors->has('editing.person.country_of_residence')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.country_of_residence')"
-                            wire:model="editing.person.country_of_residence">
+                            wire:model="editing.person.country_of_residence"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
-                            @endforeach
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach                            
+
                         </x-form.select>
 
                         @error('editing.person.country_of_residence')

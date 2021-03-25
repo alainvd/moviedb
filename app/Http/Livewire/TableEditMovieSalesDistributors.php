@@ -18,6 +18,8 @@ class TableEditMovieSalesDistributors extends TableEditBase
 
     public $countries_value_label = [];
 
+    public $countries_grouped_value_label = [];
+
     public $distributorRoles;
 
     protected function defaults()
@@ -67,6 +69,39 @@ class TableEditMovieSalesDistributors extends TableEditBase
                 'label' => $country->name,
             ])
             ->toArray();
+        $countries_grouped = Country::where('active', true)
+            ->get()
+            ->sortBy([
+                function ($a, $b) {
+                    if ($a['group'] == 'eu' && $b['group'] == 'eu') return 0;
+                    if ($a['group'] == 'eu' && $b['group'] == 'select') return -1;
+                    if ($a['group'] == 'eu' && $b['group'] == 'other') return -1;
+                    if ($a['group'] == 'select' && $b['group'] == 'eu') return 1;
+                    if ($a['group'] == 'select' && $b['group'] == 'select') return 0;
+                    if ($a['group'] == 'select' && $b['group'] == 'other') return -1;
+                    if ($a['group'] == 'other' && $b['group'] == 'eu') return 1;
+                    if ($a['group'] == 'other' && $b['group'] == 'select') return 1;
+                    if ($a['group'] == 'other' && $b['group'] == 'other') return 0;
+                },
+                fn ($a, $b) => $a['position'] <=> $b['position'],
+                fn ($a, $b) => $a['name'] <=> $b['name']
+            ])
+            ->map(fn ($country) => [
+                'group' => $country->group,
+                'value' => $country->id,
+                'label' => $country->name,
+            ])
+            ->groupBy('group')
+            ->toArray();
+        $i = 0;
+        foreach ($countries_grouped as $group => $choices) {
+            $i++;
+            $this->countries_grouped_value_label[] = [
+                'label' => '---',
+                'id' => $i,
+                'choices' => $choices,
+            ];
+        }
         $this->distributorRoles = [
             'PLATFORM' => 'Platform',
             'DISTRIBUTOR' => 'Distributor',
