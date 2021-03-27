@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevious
+class TableEditMovieProducersTv extends TableEditMovieProducers
 {
 
     protected function rules()
@@ -10,11 +10,8 @@ class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevio
         return [
             'editing.role' => 'required|string',
             'editing.name' => 'required|string|max:255',
-            'editing.city' => 'string',
             'editing.country' => 'required|string',
             'editing.language' => 'string',
-            'editing.share' => '',
-            'editing.budget' => '',
         ] + TableEditBase::rules();
     }
 
@@ -22,10 +19,10 @@ class TableEditMovieProducersDevCurrent extends TableEditMovieProducersDevPrevio
         $rules = $this->rules() + TableEditBase::rules();
         return parent::rulesCleanup($rules);
     }
-
+    
     public function render()
     {
-        return view('livewire.table-edit-movie-producers', ['fiche' => 'devCurrent', 'rules' => $this->rules()]);
+        return view('livewire.table-edit-movie-producers', ['fiche' => 'tv', 'rules' => $this->rules()]);
     }
-
+    
 }

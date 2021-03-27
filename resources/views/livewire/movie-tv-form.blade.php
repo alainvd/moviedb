@@ -20,6 +20,7 @@
             :movieAudiences="$movieAudiences"
             :allAaudiencesById="$allAaudiencesById"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
             :movieGenres="$movieGenres"
@@ -79,7 +80,7 @@
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
-            :languages="$languages"
+            :languagesValueLabel="$languagesValueLabel"
             :languagesSelected="$shootingLanguages"
         ></x-details.tech-tv>
     </div>

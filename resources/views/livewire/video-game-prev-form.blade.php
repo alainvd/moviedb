@@ -20,6 +20,7 @@
             :gameAudiences="$gameAudiences"
             :allAaudiencesById="$allAaudiencesById"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
             :gameGenres="$gameGenres"

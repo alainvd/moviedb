@@ -3,22 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Movie;
-use App\Models\Country;
-use App\Models\Language;
 use App\Models\Producer;
 
 class TableEditMovieProducers extends TableEditBase
 {
 
     public Movie $movie;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
-
-    public $languages = [];
-
-    public $languages_with_code = [];
 
     public $budget_total = 0;
 
@@ -65,17 +55,10 @@ class TableEditMovieProducers extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->languages_with_code = Language::where('active', true)
-            ->get()
-            ->map(fn ($lang) => [
-                'code' => $lang->code,
-                'name' => $lang->name,
-            ])
-            ->toArray();
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();

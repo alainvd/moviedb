@@ -174,7 +174,6 @@ Route::get('movies', function () {
     return view('livewire.movie-datatables',['title' => "Search Movies"]);});
 
 Route::get('/dossiers/{dossier:project_ref_id}/print', [DossierController::class, 'printDossier'])->middleware('cas.auth')->name('dossier-print');
-Route::get('/dossiers/{dossier:project_ref_id}/download', [DossierController::class, 'downloadDossier'])->middleware('cas.auth')->name('dossier-download');
 Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierController::class, 'downloadFullDossier'])->middleware('cas.auth')->name('dossier-full-download');
 Route::get('/fiche/{fiche}/print', [FicheController::class, 'printFiche'])->middleware('cas.auth')->name('fiche-print');
 Route::get('/fiche/{fiche}/download', [FicheController::class, 'downloadFiche'])->middleware('cas.auth')->name('fiche-download');

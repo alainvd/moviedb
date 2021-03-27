@@ -1,11 +1,10 @@
+@if (empty($print))
+<!-- Output for screen -->
 <label for="{{ $id }}" class="block text-sm font-light leading-5 text-gray-700">
     {{ $label }}
-    {{ $slot }}
     <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
 </label>
 
-<!-- Output for screen -->
-@if (empty($print))
 <div class="relative mt-1 rounded-md shadow-sm">
     <input
         id="{{ $id }}"
@@ -18,7 +17,8 @@
 </div>
 @endif
 
-<!-- Output for print -->
 @if (!empty($print) && !empty($value))
-<span class="inline-block">{{ $value }} {{ $trailing }}</span>
+<!-- Output for print -->
+<span class="font-bold">{{ $label }}</span>
+<span class="">{{ $isAmount ? amount($value) : $value }} {{ $trailing }}</span>
 @endif

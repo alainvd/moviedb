@@ -1,7 +1,7 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-basic">
 
     <div class="col-span-2 mb-4 text-lg">
-        General information
+        <h3>General information</h3>
     </div>
 
     <div class="col-span-2 sm:col-span-1 md:col-span-2">
@@ -55,8 +55,12 @@
             value="{{ isset($countriesByCode[$movie->film_country_of_origin]) ? $countriesByCode[$movie->film_country_of_origin]['name'] : '' }}"
         >
 
-            @foreach($countries as $country)
-                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+            @foreach ($countriesGrouped as $group=>$countries)
+                <optgroup label="---">
+                    @foreach ($countries as $country)
+                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                    @endforeach
+                </optgroup>
             @endforeach
 
         </x-form.select>

@@ -2,19 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Models\Movie;
 use App\Models\Producer;
-use App\Models\Country;
-use Illuminate\Support\Str;
 
 class TableEditExampleMemory extends TableEditBase
 {
 
+    public Movie $movie;
+
     public $movie_id = null;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
 
     protected function defaults()
     {
@@ -59,10 +55,10 @@ class TableEditExampleMemory extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie_id = $movie_id;
             $this->loadItems();

@@ -1,6 +1,7 @@
 <div>
     
     <div class="mb-8 text-lg">
+        <h3>
         @if($fiche == 'dist')
         Sales Agents
         @endif
@@ -22,6 +23,7 @@
         </script>
         -->
         @endif
+        </h3>
     </div>
 
     @if($fiche == 'devPrev' && $isApplicant == true)
@@ -49,7 +51,7 @@
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     @if($fiche=='devPrev')<x-table.cell class="text-center">{{ $distributorRoles[$item['role']] }}</x-table.cell>@endif
-                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countriesByCode[$item['country']]['name'] : '' }}</x-table.cell>
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['contact_person'] }}</x-table.cell>@endif
                     @if($fiche=='dist')<x-table.cell class="text-center">{{ $item['email'] }}</x-table.cell>@endif
                     @if($fiche=='devPrev')<x-table.cell class="text-center">{{ $item['distribution_date'] }}</x-table.cell>@endif
@@ -123,11 +125,17 @@
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
-                            wire:model="editing.country">
+                            wire:model="editing.country"
+                        >
                 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+
                         </x-form.select>
                 
                         @error('editing.country')

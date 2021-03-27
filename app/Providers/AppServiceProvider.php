@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use Livewire\Component;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,15 @@ class AppServiceProvider extends ServiceProvider
             $this->dispatchBrowserEvent('notify', ['text'=>$text, 'type'=>$type]);
         });
 
+        Blade::directive('amount', function ($amount) {
+            return "<?php echo e(amount($amount)); ?>";
+        });
+
+        Blade::directive('euro', function ($amount) {
+            return "<?php echo e(euro($amount)); ?>";
+        });
+
         Paginator::useTailwind();
     }
+
 }

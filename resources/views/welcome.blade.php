@@ -5,7 +5,7 @@
     <a href="{{ url('browse/movies') }}">Movies Table</a><br />
     <a href="{{ url('dossiers-datatables') }}">Dossiers Table</a><br />
     <br />
-    <a href="{{ url('document-download') }}">Table edit samples</a><br />
+    <a href="{{ url('table-edit-example') }}">Table edit samples</a><br />
     <br />
     <a href="{{route('test_index')}}">Links to test pages</a><br />
     <br />

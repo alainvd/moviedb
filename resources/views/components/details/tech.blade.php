@@ -1,7 +1,7 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-tech">
 
     <div class="col-span-2 mb-4 text-lg">
-        Technical information
+        <h3>Technical information</h3>
     </div>
 
     <div class="col-span-1 col-start-1">
@@ -51,7 +51,7 @@
             'label' => 'Shooting languages',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
-            'options' => json_encode($languages),
+            'options' => json_encode($languagesValueLabel),
             'items' => json_encode($languagesSelected),
         ])
 
@@ -61,10 +61,9 @@
     </div>
     @endif
 
-    @if (!empty($print) && !empty($languagesSelected))
-    <div class="block">Shooting languages: 
-        {{ $languagesSelected->implode('name', ', ') }}
-    </div>
+    @if (!empty($print))
+    <span class="font-bold">Shooting languages</span>
+    <span>{{ $languagesSelected->implode('name', ', ') }}</span>
     @endif
 
     <div class="col-span-1 col-start-1">
