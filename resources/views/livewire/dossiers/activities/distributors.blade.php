@@ -74,10 +74,12 @@
                     :label="'Distribution Country'"
                     :hasError="$errors->has('currentDistributor.country_id')"
                     wire:model="currentDistributor.country_id">
-                    @foreach ($countries as $country)
-                        <option value="{{ $country['id'] }}">
-                            {{ $country['name'] }}
-                        </option>
+                    @foreach ($countriesGrouped as $group=>$countries)
+                        <optgroup label="---">
+                            @foreach ($countries as $country)
+                                <option value="{{ $country['id'] }}">{{ $country['name'] }}</option>
+                            @endforeach
+                        </optgroup>
                     @endforeach
                 </x-form.select>
 

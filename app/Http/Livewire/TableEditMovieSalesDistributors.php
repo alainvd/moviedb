@@ -72,7 +72,7 @@ class TableEditMovieSalesDistributors extends TableEditBase
 
         // Reinit Choices widget with different country values
         $editing_countries_ids = collect($this->editing['countries'])->pluck('id')->toArray();
-        $countries_values = collect($this->countries_value_label)->filter(
+        $countries_values = collect($this->countriesValueLabel)->filter(
             function ($c) use ($editing_countries_ids) {
                 return in_array($c['value'], $editing_countries_ids);
             }
