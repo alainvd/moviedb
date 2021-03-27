@@ -30,9 +30,9 @@
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['gender']) ? $genders[$item['person']['gender']] : '' }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_code[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
-                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countries_by_code[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
-                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countries_by_code[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
+                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countriesByCode[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countriesByCode[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countriesByCode[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
@@ -229,6 +229,7 @@
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
                 </div>
+                
             </x-slot>
 
             <x-slot name="footer">

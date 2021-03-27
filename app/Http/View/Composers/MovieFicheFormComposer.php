@@ -20,56 +20,15 @@ class MovieFicheFormComposer
         $movieAudiences = Audience::all()->where('type', 'App\Models\Movie')->toArray();
         $gameAudiences = Audience::all()->where('type', 'App\Models\VideoGame')->toArray();
         $allAudiencesById = Audience::all()->keyBy('id')->toArray();
-        $countries = Country::where('active', true)
-            ->get()
-            ->toArray();
-        $countriesGrouped = Country::where('active', true)->get()
-            ->sortBy([
-                function ($a, $b) {
-                    if ($a['group'] == 'eu' && $b['group'] == 'eu') return 0;
-                    if ($a['group'] == 'eu' && $b['group'] == 'select') return -1;
-                    if ($a['group'] == 'eu' && $b['group'] == 'other') return -1;
-                    if ($a['group'] == 'select' && $b['group'] == 'eu') return 1;
-                    if ($a['group'] == 'select' && $b['group'] == 'select') return 0;
-                    if ($a['group'] == 'select' && $b['group'] == 'other') return -1;
-                    if ($a['group'] == 'other' && $b['group'] == 'eu') return 1;
-                    if ($a['group'] == 'other' && $b['group'] == 'select') return 1;
-                    if ($a['group'] == 'other' && $b['group'] == 'other') return 0;
-                },
-                fn ($a, $b) => $a['position'] <=> $b['position'],
-                fn ($a, $b) => $a['name'] <=> $b['name']
-            ])
-            ->groupBy('group')
-            ->toArray();
-        $countriesByCode = Country::where('active', true)
-            ->orderBy('name')
-            ->get()
-            ->keyBy('code')
-            ->toArray();
-        $countriesValueLabel = Country::where('active', true)
-            ->get()
-            ->map(fn ($country) => [
-                'value' => $country->id,
-                'label' => $country->name,
-            ])
-            ->toArray();
+        $countries = Country::countries();
+        $countriesGrouped = Country::countriesGrouped();
+        $countriesByCode = Country::countriesByCode();
+        $countriesValueLabel = Country::countriesValueLabel();
         $movieGenres = Genre::where('type', 'Movie')->get()->toArray();
         $gameGenres = Genre::where('type', 'VideoGame')->get()->toArray();
         $allGenresById = Genre::get()->keyBy('id')->toArray();
-        $languages = Language::where('active', true)
-            ->get()
-            ->map(fn ($lang) => [
-                'value' => $lang->id,
-                'label' => $lang->name,
-            ])
-            ->toArray();
-        $languagesWithCode = Language::where('active', true)
-            ->get()
-            ->map(fn ($lang) => [
-                'code' => $lang->code,
-                'name' => $lang->name,
-            ])
-            ->toArray();
+        $languagesValueLabel = Language::languagesValueLabel();
+        $languagesCodeName = Language::languagesCodeName();
         $statuses = Status::all()->toArray();
         $statusesById = Status::all()->keyBy('id')->toArray();
         $years = range(date('Y'), 1940);
@@ -86,8 +45,8 @@ class MovieFicheFormComposer
         $view->with('movieGenres', $movieGenres);
         $view->with('gameGenres', $gameGenres);
         $view->with('allGenresById', $allGenresById);
-        $view->with('languages', $languages);
-        $view->with('languagesWithCode', $languagesWithCode);
+        $view->with('languagesValueLabel', $languagesValueLabel);
+        $view->with('languagesCodeName', $languagesCodeName);
         $view->with('platforms', Movie::PLATFORMS);
         $view->with('statuses', $statuses);
         $view->with('statusesById', $statusesById);

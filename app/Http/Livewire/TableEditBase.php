@@ -2,7 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Title;
+use App\Models\Person;
+use App\Models\Country;
+use App\Models\Language;
 use Livewire\Component;
+use App\Models\Location;
+use App\Models\SalesDistributor;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -24,6 +30,26 @@ class TableEditBase extends Component
     public $isEditor = false;
 
     public $print = false;
+
+    public $titles = [];
+
+    public $genders = [];
+
+    public $countries = [];
+
+    public $countriesGrouped = [];
+
+    public $countriesGroupedChoices = [];
+
+    public $countriesByCode = [];
+
+    public $countriesValueLabel = [];
+    
+    public $locationTypes = [];
+
+    public $languagesCodeName = [];
+
+    public $distributorRoles = [];
 
     /**
      * Livewire works better if form fields have a value set.
@@ -57,7 +83,24 @@ class TableEditBase extends Component
         ];
     }
 
-    public function rulesCleanup($rules = []) {
+    protected function mount($movie_id = null, $isApplicant = false, $isEditor = false)
+    {
+        $this->isApplicant = $isApplicant;
+        $this->isEditor = $isEditor;
+        $this->titles = Title::all()->keyBy('id')->toArray();
+        $this->genders = Person::GENDERS;
+        $this->countries = Country::countries();
+        $this->countriesGrouped = Country::countriesGrouped();
+        $this->countriesGroupedChoices = Country::countriesGroupedChoices();
+        $this->countriesByCode = Country::countriesByCode();
+        $this->countriesValueLabel = Country::countriesValueLabel();
+        $this->locationTypes = Location::LOCATION_TYPES;
+        $this->languagesCodeName = Language::languagesCodeName();
+        $this->distributorRoles = SalesDistributor::DISTRIBUTOR_ROLES;
+    }
+
+    public function rulesCleanup($rules = [])
+    {
         $rules_new = [];
         foreach ($rules as $name => $val) {
             // remove "editing." part

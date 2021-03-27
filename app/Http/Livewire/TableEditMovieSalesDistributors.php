@@ -3,24 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Movie;
-use App\Models\Country;
 use App\Models\SalesDistributor;
-use Illuminate\Support\Facades\Log;
 
 class TableEditMovieSalesDistributors extends TableEditBase
 {
 
     public Movie $movie;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
-
-    public $countries_value_label = [];
-
-    public $countries_grouped_value_label = [];
-
-    public $distributorRoles;
 
     protected function defaults()
     {
@@ -58,55 +46,10 @@ class TableEditMovieSalesDistributors extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->countries_value_label = Country::where('active', true)
-            ->get()
-            ->map(fn ($country) => [
-                'value' => $country->id,
-                'label' => $country->name,
-            ])
-            ->toArray();
-        $countries_grouped = Country::where('active', true)
-            ->get()
-            ->sortBy([
-                function ($a, $b) {
-                    if ($a['group'] == 'eu' && $b['group'] == 'eu') return 0;
-                    if ($a['group'] == 'eu' && $b['group'] == 'select') return -1;
-                    if ($a['group'] == 'eu' && $b['group'] == 'other') return -1;
-                    if ($a['group'] == 'select' && $b['group'] == 'eu') return 1;
-                    if ($a['group'] == 'select' && $b['group'] == 'select') return 0;
-                    if ($a['group'] == 'select' && $b['group'] == 'other') return -1;
-                    if ($a['group'] == 'other' && $b['group'] == 'eu') return 1;
-                    if ($a['group'] == 'other' && $b['group'] == 'select') return 1;
-                    if ($a['group'] == 'other' && $b['group'] == 'other') return 0;
-                },
-                fn ($a, $b) => $a['position'] <=> $b['position'],
-                fn ($a, $b) => $a['name'] <=> $b['name']
-            ])
-            ->map(fn ($country) => [
-                'group' => $country->group,
-                'value' => $country->id,
-                'label' => $country->name,
-            ])
-            ->groupBy('group')
-            ->toArray();
-        $i = 0;
-        foreach ($countries_grouped as $group => $choices) {
-            $i++;
-            $this->countries_grouped_value_label[] = [
-                'label' => '---',
-                'id' => $i,
-                'choices' => $choices,
-            ];
-        }
-        $this->distributorRoles = [
-            'PLATFORM' => 'Platform',
-            'DISTRIBUTOR' => 'Distributor',
-            'BROADCASTER' => 'Broadcaster',
-        ];
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();

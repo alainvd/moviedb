@@ -94,7 +94,7 @@
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
-            :languages="$languages"
+            :languagesValueLabel="$languagesValueLabel"
             :languagesSelected="$shootingLanguages"
         ></x-details.tech>
     </div>

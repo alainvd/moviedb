@@ -4,23 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Crew;
 use App\Models\Movie;
-use App\Models\Title;
-use App\Models\Person;
-use App\Models\Country;
-use Illuminate\Support\Facades\Log;
 
 class TableEditMovieCrews extends TableEditBase
 {
 
     public Movie $movie;
-
-    public $titles = [];
-
-    public $genders = [];
-
-    public $countries = [];
-
-    public $countries_by_code = [];
 
     public $points_total = 0;
 
@@ -97,19 +85,12 @@ class TableEditMovieCrews extends TableEditBase
 
     public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->titles = Title::all()->keyBy('id')->toArray();
-        $this->genders = Person::GENDERS;
-        // TODO: Can remove?
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
+        parent::mount($movie_id, $isApplicant, $isEditor);
         $this->movie = new Movie();
-
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();
         }
-        $this->isApplicant = $isApplicant;
-        $this->isEditor = $isEditor;
         $this->recalculatePoints();
     }
 

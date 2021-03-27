@@ -27,7 +27,7 @@
                 <x-table.row>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $distributorRoles[$item['role']] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['countries']) ? collect($countries_value_label)->filter(
+                    <x-table.cell class="text-center">{{ !empty($item['countries']) ? collect($countriesValueLabel)->filter(
                         function ($c) use ($item) {
                             return in_array($c['value'], collect($item['countries'])->pluck('id')->toArray());
                         }
@@ -67,7 +67,7 @@
         var choices = new Choices(cc, {
             removeItemButton: true,
             duplicateItemsAllowed: false,
-            choices: {{ json_encode($countries_grouped_value_label) }},
+            choices: {{ json_encode($countriesGroupedChoices) }},
         });
 
         choices.setValue(countries_values);

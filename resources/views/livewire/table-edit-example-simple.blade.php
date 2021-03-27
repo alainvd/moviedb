@@ -22,7 +22,7 @@
                     <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries_by_code[$item['country']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countriesByCode[$item['country']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['share'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['budget'] }}</x-table.cell>
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
@@ -90,7 +90,7 @@
                             :id="'city'"
                             :label="'City'"
                             :hasError="$errors->has('editing.city')"
-                            :isRequired="FormHelpers::isRequired($rules, 'editing.city')""
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.city')"
                             wire:model="editing.city">
                         </x-form.input>
 
@@ -134,6 +134,7 @@
                             wire:model="editing.share"
                         >
                         </x-form.input>
+                        
                         @error('editing.share')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror

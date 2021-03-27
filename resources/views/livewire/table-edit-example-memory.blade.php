@@ -22,7 +22,7 @@
                     <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries_by_code[$item['country']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countriesByCode[$item['country']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['share'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['budget'] }}</x-table.cell>
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">

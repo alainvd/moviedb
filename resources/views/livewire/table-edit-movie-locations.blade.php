@@ -22,7 +22,7 @@
                         @if($item['required'])<span class="text-red-500">*</span>@endif
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countriesByCode[$item['country']]['name'] : '' }}</x-table.cell>
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>

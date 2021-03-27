@@ -2,11 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Movie;
-use App\Models\Country;
-use App\Models\Language;
-use App\Models\Producer;
-
 class TableEditMovieProducersTv extends TableEditMovieProducers
 {
 

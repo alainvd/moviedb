@@ -4,18 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Location;
 use App\Models\Movie;
-use App\Models\Country;
 
 class TableEditMovieLocations extends TableEditBase
 {
 
     public Movie $movie;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
-
-    public $locationTypes = [];
 
     public $points_total = 0;
 
@@ -80,15 +73,12 @@ class TableEditMovieLocations extends TableEditBase
 
     public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->locationTypes = Location::LOCATION_TYPES;
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();
         }
-        $this->isApplicant = $isApplicant;
-        $this->isEditor = $isEditor;
         $this->recalculatePoints();
     }
 
