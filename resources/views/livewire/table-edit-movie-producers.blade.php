@@ -2,10 +2,10 @@
     
     <div class="mb-4 text-lg">
         <h3>
-        @if($fiche=='dist')
+        @if($fiche == 'dist')
         Production Structure and Financing
         @endif
-        @if($fiche=='devPrev')
+        @if($fiche == 'devPrev')
         Production Structure and Financing
         @endif
         @if($fiche == 'devCurrent' || $fiche == 'tv')

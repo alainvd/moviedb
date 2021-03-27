@@ -97,7 +97,7 @@
     <!-- producers-tv -->
     <div class="my-8" id="table-producers">
         <div id="table-producers-wrapper" class="@if ($errors->has('producerErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
-        @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+        @livewire('table-edit-movie-producers-tv', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
         </div>
 
         <div id="table-producers-messages">
