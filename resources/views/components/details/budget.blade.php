@@ -13,7 +13,7 @@
             :hasErrorCurrency="$errors->has('movie.total_budget_currency_code')"
             :modelCurrency="'movie.total_budget_currency_code'"
             :currencies="$currencies"
-            value="{{ $movie->total_budget_currency_amount }} {{ $movie->total_budget_currency_code }}"
+            value="{{ amount($movie->total_budget_currency_amount) }} {{ $movie->total_budget_currency_code }}"
         ></x-form.currency-amount>
 
         @error('movie.total_budget_currency_amount')

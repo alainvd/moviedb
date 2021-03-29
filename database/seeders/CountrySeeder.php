@@ -30,7 +30,7 @@ class CountrySeeder extends Seeder
             ["group" => "eu", "name" => "Croatia", "code" => "HR", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Hungary", "code" => "HU", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Ireland", "code" => "IE", "continent" => "EU", "position" => 0],
-            ["group" => "eu", "name" => "Iceland", "code" => "IS", "continent" => "EU", "position" => 0],
+            ["group" => "other", "name" => "Iceland", "code" => "IS", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Italy", "code" => "IT", "continent" => "EU", "position" => 10],
             ["group" => "eu", "name" => "Lithuania", "code" => "LT", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Luxembourg", "code" => "LU", "continent" => "EU", "position" => 10],

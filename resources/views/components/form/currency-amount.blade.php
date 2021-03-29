@@ -36,6 +36,6 @@
     @if (!empty($print) && !empty($value))
     <!-- Output for print -->
     <span class="font-bold">{{ $labelAmount }}</span>
-    <span class="">@amount($value)</span>
+    <span class="">{{ $value }}</span>
     @endif
 </div>                  

@@ -47,7 +47,7 @@
         <x-form.select
             :print="$print"
             :id="'basic-film_country_of_origin'"
-            :label="'MEDIA Film Nationality'"
+            :label="($fiche->type=='dist') ? 'MEDIA Film Nationality' : 'Country of Origin'"
             :disabled="$isApplicant"
             :hasError="$errors->has('movie.film_country_of_origin')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"

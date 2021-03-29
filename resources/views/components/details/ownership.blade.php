@@ -96,7 +96,7 @@
         @enderror
     </div>
 
-    <!-- dependant fields -->
+    <!-- dependent fields -->
     <div class="col-span-1 col-start-1" x-data="{ show: false }" x-show="$wire.movie.rights_origin_of_work == 'ADAPTATION'">
         <x-form.input
             :print="$print"
