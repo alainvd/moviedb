@@ -71,13 +71,11 @@ class MovieDevPrevForm extends FicheMovieFormBase
     public function saveFiche()
     {
         parent::saveFiche();
-
     }
 
     public function submitFiche()
     {
         parent::submitFiche();
-
     }
 
     public function specialValidation()
