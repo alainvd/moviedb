@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Crew;
+use App\Models\Location;
 use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Audience;
@@ -35,6 +36,8 @@ class Movie extends Model
     protected $dates = [
         'photography_start',
         'photography_end',
+        'delivery_date',
+        'broadcast_date',
         'rights_contract_start_date',
         'rights_contract_end_date',
         'rights_contract_signature_date',
@@ -52,6 +55,8 @@ class Movie extends Model
         'id' => 'integer',
         'photography_start' => 'date:d.m.Y',
         'photography_end' => 'date:d.m.Y',
+        'delivery_date' => 'date:d.m.Y',
+        'broadcast_date' => 'date:d.m.Y',
         'rights_contract_start_date' => 'date:d.m.Y',
         'rights_contract_end_date' => 'date:d.m.Y',
         'rights_contract_signature_date' => 'date:d.m.Y',
@@ -63,6 +68,11 @@ class Movie extends Model
     public function crew()
     {
         return $this->hasMany(Crew::class, 'movie_id', 'id');
+    }
+
+    public function location()
+    {
+        return $this->hasMany(Location::class, 'movie_id', 'id');
     }
 
     public function genre()
@@ -122,5 +132,34 @@ class Movie extends Model
         }
 
         return '';
+    }
+
+    public function scopeGroupedDirectorNames($query, $alias)
+    {
+        $query->addSelect([
+            $alias => Person::selectRaw('GROUP_CONCAT(firstname, " ", lastname SEPARATOR " , ")')
+                ->leftJoin('crews', 'crews.person_id', 'people.id')
+                ->whereColumn('crews.movie_id', 'movies.id')
+                ->where('crews.title_id', '=', 1)       
+        ]);
+    }
+
+    public function scopeFilterGroupedDirectorNames($query, $value)
+    {
+        $query->whereHas('crew', function ($query) use ($value) {
+            /*$query->where('people.id', $value);*/
+            $query
+            ->leftJoin('crews', 'crews.person_id', 'people.id')
+            ->whereRaw("CONCAT(crew.people.firstname,'',crew.people.lastname) = '$value'");
+            dd($query);
+        });
+    }
+
+
+    static function defaultsMovie()
+    {
+        return [
+            'total_budget_currency_code' => 'EUR',
+        ];
     }
 }

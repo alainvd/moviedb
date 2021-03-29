@@ -1,25 +1,29 @@
 <div class="my-8">
-    <input type="hidden" name="current_works" value="{{ $dossier->fiches()->forActivity($activity->id)->count() }}">
-    <h3 class="text-lg leading-tight font-normal my-4">
-        Audiovisual Work - Development - For grant request
+    <input type="hidden" name="previous_works" wire:model="current">
+    <h3 class="my-4 text-lg font-normal leading-tight">
+        Audiovisual Work - Development - Recent work / previous experience
     </h3>
-    <x-table class="{{ $errors->has('current_works') ? 'border border-red-500' : '' }}">
+    <x-table class="{{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">
             <x-table.heading>TITLE</x-table.heading>
             <x-table.heading>GENRE</x-table.heading>
             <x-table.heading>PRODUCTION YEAR</x-table.heading>
             <x-table.heading>FILM ID</x-table.heading>
-            <x-table.heading>&nbsp;</x-table.heading>
+            <x-table.heading>STATUS</x-table.heading>
+            @if(empty($print))<x-table.heading>&nbsp;</x-table.heading>@endif
         </x-slot>
 
         <x-slot name="body">
 
-            @if ($dossier->fiches()->forActivity($activity->id)->count())
+            @if ($results->count())
 
                 <x-dossiers.work-fiche-rows
-                    :fiches="$dossier->fiches()->forActivity($activity->id)->get()"
+                    :type="'previous'"
+                    :fiches="$results"
                     :dossier="$dossier"
-                    :activity="$activity"></x-dossiers.work-fiche-rows>
+                    :activity="$activity"
+                    :print="$print">
+                </x-dossiers.work-fiche-rows>
 
             @else
 
@@ -32,13 +36,35 @@
         </x-slot>
     </x-table>
 
-    @error('current_works')
-    <div class="mt-1 text-red-500 text-sm">{{ $message }}</div>
+    @error('previous_works')
+        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
     @enderror
 
-    <div class="mt-5 text-right">
-        <x-anchors.secondary :url="url(sprintf('dossiers/%s/activities/%s/fiches/dist',$dossier->id, $activity->id))">
+    @if(empty($print))
+    <div class="mt-5 text-right print:hidden">
+        <x-anchors.secondary
+            :url="route('dev-prev-fiche-form', compact('dossier', 'activity'))"
+            :disabled="$isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>
+    @endif
+
+    <x-modal.confirmation wire:model.defer="showDeleteModal">
+        <x-slot name="title">Remove Previous Work</x-slot>
+
+        <x-slot name="content">
+            <div class="py-8 text-xl">
+                Are you sure you want to remove this previous work from the dossier?
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <div class="flex items-center justify-end space-x-3">
+                <x-button.primary wire:click="delete">Yes</x-button>
+
+                <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
+            </div>
+        </x-slot>
+    </x-modal.confirmation>
 </div>

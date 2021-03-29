@@ -19,6 +19,12 @@ class TableEditBase extends Component
 
     public $editing;
 
+    public $isApplicant = false;
+
+    public $isEditor = false;
+
+    public $print = false;
+
     /**
      * Livewire works better if form fields have a value set.
      * Create default values for all fields:
@@ -143,7 +149,8 @@ class TableEditBase extends Component
 
     protected function sendItems()
     {
-        $this->emitUp('update-items', $this->items);
+        // Implement this in each subclass
+        // $this->emitUp('updateItemTypeItems', $this->items);
     }
 
 }

@@ -1,104 +1,133 @@
-<form wire:submit.prevent="submit">
-    <div>
-        <div class="w-full p-4 mx-auto bg-white rounded-md shadow-md md:px-8 lg:px-16 sm:w-11/12">
-            <!-- title -->
-            <div class="my-8">
-                <x-details.title :movie="$movie" :fiche="$fiche"></x-details.title>
-            </div>
+<x-fiche-form :layout="$layout" :print="$print">
 
-            <!-- basic -->
-            <div class="my-8">
-                <x-details.basic-dev-current
-                    :movie="$movie"
-                    :isApplicant="$isApplicant"
-                    :audiences="$audiences"
-                    :countries="$countries"
-                    :filmTypes="$filmTypes"
-                    :genres="$genres"
-                    :platforms="$platforms"
-                    :userExperiences="$userExperiences"
-                    :statuses="$statuses"
-                    :years="$years"></x-details.basic>
-            </div>
+    <!-- title -->
+    <div class="my-8">
+        <x-details.title
+            :movie="$movie"
+            :fiche="$fiche"
+        ></x-details.title>
+    </div>
 
-            <!-- summary -->
-            <div class="my-8">
-                <x-details.summary :movie="$movie"></x-details.summary>
-            </div>
+    <!-- basic-dev-current -->
+    <div class="my-8">
+        <x-details.basic-dev-current
+            :print="$print"
+            :isApplicant="$isApplicant"
+            :isEditor="$isEditor"
+            :rules="$rules"
+            :movie="$movie"
+            :fiche="$fiche"
+            :movieAudiences="$movieAudiences"
+            :allAaudiencesById="$allAaudiencesById"
+            :countries="$countries"
+            :countriesByCode="$countriesByCode"
+            :filmTypes="$filmTypes"
+            :movieGenres="$movieGenres"
+            :allGenresById="$allGenresById"
+            :platforms="$platforms"
+            :statuses="$statuses"
+            :statusesById="$statusesById"
+            :years="$years"
+            :userExperiences="$userExperiences"
+        ></x-details.basic-dev-current>
+    </div>
 
-            <!-- photography -->
-            <div class="my-8">
-                <x-details.photography-dev-current
-                    :movie="$movie"
-                    :filmFormats="$filmFormats"
-                    :languages="$languages"
-                    :languagesSelected="$shootingLanguages"></x-details.photography>
-            </div>
+    <!-- summary -->
+    <div class="my-8">
+        <x-details.summary
+            :print="$print"
+            :rules="$rules"
+            :movie="$movie"
+        ></x-details.summary>
+    </div>
 
-            <!-- cast/crew -->
-            <div class="my-8" id="table-crews">
-                @livewire('table-edit-movie-crews-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
-            </div>
+    <!-- tech-dev-current -->
+    <div class="my-8">
+        <x-details.tech-dev-current
+            :print="$print"
+            :rules="$rules"
+            :movie="$movie"
+            :filmFormats="$filmFormats"
+            :isApplicant="$isApplicant"
+            :isEditor="$isEditor"
+            :languages="$languages"
+            :languagesSelected="$shootingLanguages"
+        ></x-details.tech-dev-current>
+    </div>
 
-            <!-- Ownership -->
-            <div class="my-8">
-                <x-details.ownership
-                    :workOrigins="$workOrigins"
-                    :workContractTypes="$workContractTypes"
-                    :movie="$movie"></x-details.photography>
-            </div>
+    <!-- cast/crew -->
+    <div class="my-8" id="table-crews">
+        <div id="table-crews-wrapper" class="@if ($errors->has('crewErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
+        @livewire('table-edit-movie-crews-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+        </div>
 
-            <!-- producers-dev-current -->
-            <div class="my-8" id="table-producers">
-                @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor])
-            </div>
-
-            <!-- budget-dev-current -->
-            <div class="my-8">
-                <x-details.budget-dev-current></x-details.budget>
-            </div>
-
-            <!-- comments -->
-            <div class="my-8">
-                <x-form.textarea
-                    :id="'comments'"
-                    :label="'EACEA Comments'"
-                    :hasError="$errors->has('fiche.comments')"
-                    wire:model="fiche.comments">
-                </x-form.textarea>
-
-                @error('fiche.comments')
-                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- buttons -->
-            <div class="flex items-center justify-end mt-12 space-x-3">
-                <span>
-                    <span x-data="{ open: false }" x-init="
-                            @this.on('notify-saved', () => {
-                                setTimeout(() => { open = false }, 2500);
-                                open = true;
-                            })
-                        " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-gray-600">
-                        Saved!
-                    </span>
-                    <span x-data="{ open: false }" x-init="
-                            @this.on('validation-errors', () => {
-                                setTimeout(() => { open = false }, 2500);
-                                open = true;
-                            })
-                        " x-show.transition.out.duration.1000ms="open" style="display: none;" class="text-red-600">
-                        Validation errors!
-                    </span>
-                </span>
-
-                <div x-data class="flex items-center justify-end space-x-3">
-                    <x-button.primary wire:click="callValidate()">Validate</x-button.primary>
-                    <x-button.primary type="submit">Save</x-button.primary>
-                    <x-button.secondary wire:click="reject()">Reject</x-button.secondary>
-                </div>
-            </div>
+        <div id="table-crews-messages">
+        @foreach ($errors->get('crewErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
         </div>
     </div>
-</form>
+
+    <!-- location -->
+    <div class="my-8" id="table-location">
+        <div id="table-location-wrapper" class="@if ($errors->has('locationErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
+            @livewire('table-edit-movie-locations', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+        </div>
+
+        <div id="table-location-messages">
+            @foreach ($errors->get('locationErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
+        </div>
+    </div>
+
+    <!-- Ownership -->
+    <div class="my-8">
+        <x-details.ownership
+            :print="$print"
+            :rules="$rules"
+            :workOrigins="$workOrigins"
+            :workContractTypes="$workContractTypes"
+            :movie="$movie"
+        ></x-details.ownership>
+    </div>
+
+    <!-- producers-dev-current -->
+    <div class="my-8" id="table-producers">
+        <div id="table-producers-wrapper" class="@if ($errors->has('producerErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
+        @livewire('table-edit-movie-producers-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+        </div>
+
+        <div id="table-producers-messages">
+        @foreach ($errors->get('producerErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
+        </div>
+    </div>
+
+    <!-- budget-dev-current -->
+    <div class="my-8">
+        <x-details.budget-dev-current
+            :print="$print"
+            :rules="$rules"
+            :movie="$movie"
+            :currencies="$currencies"
+            :isApplicant="$isApplicant"
+            :isEditor="$isEditor"
+        ></x-details.budget-dev-current>
+    </div>
+
+    <!-- comments -->
+    @if($isEditor)
+    <div class="my-8">
+        <x-form.textarea
+            :print="$print"
+            :id="'comments'"
+            :label="'EACEA Comments'"
+            :hasError="$errors->has('fiche.comments')"
+            :isRequired="FormHelpers::isRequired($rules, 'fiche.comments')"
+            wire:model="fiche.comments"
+            value="{{ $fiche->comments }}"
+        ></x-form.textarea>
+
+        @error('fiche.comments')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+    @endif
+
+</x-fiche-form>

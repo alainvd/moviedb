@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Country;
 use App\Models\Movie;
+use App\Models\Crew;
+use App\Models\Person;
 use App\Models\Status;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -13,6 +15,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class MovieDatatables extends LivewireDatatable
 {
 
+    public $title = 'Films - Distribution';
     public $hideable = 'select';
     public $countries = Country::class;
     public $model = Movie::class;
@@ -29,16 +32,24 @@ class MovieDatatables extends LivewireDatatable
         return [
             //Column::name('id')
             //  ->label('MEDIA ID'),
-            Column::name('id')
+            Column::name('fiche.id')
                 ->label('ID')
+                ->filterable()
                 ->linkTo('browse/movies'),
             Column::name('original_title')
-                ->label('TITLE'),
+                ->label('TITLE')
+                ->filterable(),
             Column::name('year_of_copyright')
                 ->label('YEAR OF COPYRIGHT')
                 ->filterable($this->copyrightYears),
-            Column::callback('id','getDirectorName')
-                ->label('DIRECTOR'),
+            /*Column::callback('id','getDirectorName')
+                ->label('DIRECTOR')
+                ->filterable(),
+            Column::name('people.lastname:group_concat')
+                ->label('DIRECTOR')
+                ->filterable(),*/
+            Column::scope('groupedDirectorNames','DIRECTOR')
+                ->filterable(null,'filterGroupedDirectorNames'),
             Column::name('film_country_of_origin')
                 ->label('COUNTRY')
                 ->filterable($this->countryoforigin),
@@ -53,7 +64,7 @@ class MovieDatatables extends LivewireDatatable
 
     public function getCopyrightYearsProperty()
     {
-        $sortedYears = Movie::pluck('year_of_copyright')->sort()->unique()->values()->all();
+        $sortedYears = Movie::pluck('year_of_copyright')->sortdesc()->unique()->values()->all();
         return $sortedYears;
     }
 
@@ -85,11 +96,37 @@ class MovieDatatables extends LivewireDatatable
         }, 'DIRECTOR')->first();
 
         if ($director) {
-            return $director->fullname;
+            return $director->firstname;
         }
 
         return '';
     }
 
+    public function getDirectorNames($id)
+    {
+        $directors = Movie::find($id)->people()->where(function ($query) {
+            $query->select('code')
+                ->from('titles')
+                ->whereColumn('titles.id', 'crews.title_id');
+        }, 'DIRECTOR');
+
+        if ($directors) {
+            $allDirectors = "x";
+            foreach($directors as $director){
+
+                $allDirectors = $director->fullname;
+            }
+            
+            return $allDirectors;
+        }
+
+        return '';
+    }
+
+    public function getPersonProperty()
+    {
+        $sortedPersons = Person::pluck('lastname')->sortdesc()->unique()->values()->all();
+        return $sortedPersons;
+    }
 
 }

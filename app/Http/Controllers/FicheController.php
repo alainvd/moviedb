@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\MovieDevPrevForm;
 use App\Models\Fiche;
 use Illuminate\Http\Request;
+use App\Http\Livewire\MovieDistForm;
+use App\Http\Livewire\MovieTVForm;
+use App\Http\Livewire\VideoGamePrevForm;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class FicheController extends Controller
 {
@@ -83,5 +89,61 @@ class FicheController extends Controller
         Fiche::find($id)->delete();
 
         return redirect()->back();
+    }
+
+    public static function prepareFiche(Fiche $fiche) {
+
+        // TODO: complete this
+        switch ($fiche->type) {
+            case 'dev-current':
+                $f = new MovieDevCurrentForm();
+                $title = 'Films - Current work';
+                break;
+            case 'dev-prev':
+                $f = new MovieDevPrevForm();
+                $title = 'Films - Previous work';
+                break;
+            case 'dist':
+                $f = new MovieDistForm();
+                $title = 'Films - Distribution';
+                break;
+            case 'tv':
+                $f = new MovieTVForm();
+                $title = 'Audiovisual Work - Production - TV and Online';
+                break;
+            case 'vg':
+                $f = new VideoGamePrevForm();
+                $title = 'Audiovisual Work - Production - Videogames';
+                break;
+        }
+        $rules = $f->rules();
+        $layout = 'print-layout';
+        $movie = $fiche->movie;
+        $isApplicant = true;
+        $isEditor = false;
+        $shootingLanguages = $movie->languages;
+        $print = true;
+        $crumbs = [];
+
+        return compact('rules', 'layout', 'movie', 'fiche', 'isApplicant', 'isEditor', 'shootingLanguages', 'print', 'title', 'crumbs');
+
+    }
+
+    public static function template(Fiche $fiche) {
+        return 'livewire.movie-'.$fiche->type.'-form-with-layout';
+    }
+
+    public static function printFiche(Fiche $fiche) {
+
+        return view(self::template($fiche), self::prepareFiche($fiche));
+
+    }
+
+    public static function downloadFiche(Fiche $fiche) {
+
+        // dompdf
+        $pdf = PDF::loadView(self::template($fiche), self::prepareFiche($fiche));
+        return $pdf->stream();
+
     }
 }

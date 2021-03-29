@@ -19,6 +19,7 @@ class SalesAgent extends Model
     protected $fillable = [
         'movie_id',
         'name',
+        'role',
         'country',
         'contact_person',
         'email',
@@ -47,5 +48,17 @@ class SalesAgent extends Model
     public function movie()
     {
         return $this->belongsTo(Movie::class);
+    }
+
+    static function defaultsSalesAgent()
+    {
+        return [
+            'name' => '',
+            'role' => '',
+            'country' => '',
+            'contact_person' => '',
+            'email' => '',
+            'distribution_date' => null,
+        ];
     }
 }

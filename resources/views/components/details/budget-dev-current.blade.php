@@ -2,14 +2,16 @@
 
     <div class="col-span-1">
         <x-form.input-trailing
+            :print="$print"
             :id="'total_budget_euro'"
             :label="'Total Estimated Production Budget including Development'"
             :trailing="'€'"
             :hasError="$errors->has('movie.total_budget_euro')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_euro')"
             wire:model="movie.total_budget_euro"
-            placeholder="0">
-
-        </x-form.input>
+            placeholder="0"
+            value="{{ $movie->total_budget_euro }}"
+        ></x-form.input-trailing>
 
         @error('movie.total_budget_euro')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>

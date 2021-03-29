@@ -6,10 +6,15 @@ use App\Models\Action;
 use App\Models\Fiche;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Dossier extends Model
 {
     use HasFactory;
+
+    protected $attributes = [
+        'status_id' => Status::DRAFT, // Defaults to DRAFT
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +29,8 @@ class Dossier extends Model
         'call_id',
         'contact_person',
         'company',
+        'created_by',
+        'updated_by',
     ];
 
     /**
@@ -58,6 +65,22 @@ class Dossier extends Model
 
     public function fiches()
     {
-        return $this->hasMany(Fiche::class);
+        return $this->belongsToMany(Fiche::class)
+            ->withPivot('activity_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function scopeForUser($query, $id)
+    {
+        return $query->where('created_by', $id);
     }
 }

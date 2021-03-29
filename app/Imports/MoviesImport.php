@@ -42,7 +42,7 @@ class MoviesImport implements ToModel, WithHeadingRow
             'film_length' => $row['film_length'],
             'film_format' => $row['film_format'],
             'film_type' => $row['film_type'],
-            'film_country_of_origin' => $row['film_country_of_origin'],
+            'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
             'film_score' => $row['film_score'],
             'european_nationality_flag' => $row['european_nationality_flag'],
             'production_costs_currency_date' => $row['production_costs_currency_date'],

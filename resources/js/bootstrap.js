@@ -25,6 +25,8 @@ window._ = require('lodash');
 
 window.moment = require('moment');
 window.Pikaday = require('pikaday');
+window.Popper = require('@popperjs/core').default;
+window.tippy = require('tippy.js').default;
 
 import 'alpinejs';
 /**

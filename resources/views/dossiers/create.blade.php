@@ -1,19 +1,14 @@
 <x-dynamic-component
     :component="$layout"
-    :title="'Films on the Move'"
+    :crumbs="$crumbs"
+    :title="$pageTitles[$dossier->action->name]"
     :class="'dossier-page'">
+
     <div class="px-4 bg-white">
-        <!-- Title -->
 
-        @if (Auth::user()->hasRole('applicant'))
-            @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
-                @include('dossiers.instructions.dist')
-            @endif
-        @else
-            <h1 class="mt-8 text-3xl font-light leading-tight">Films on the Move</h1>
-        @endif
+        @include('dossiers.instructions.index', ['dossier' => $dossier])
 
-        <form action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
+        <form id="dossier-form" action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf
             {{ method_field('PATCH') }}
             <!-- Dossier details section -->
@@ -21,14 +16,16 @@
                 <div class="grid grid-cols-2 gap-4 my-4">
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'call-reference'"
                             :label="'Call / Topic reference'"
                             :disabled="true"
                             name="call_name"
-                            value="{{ $dossier->call->name  }}"></x-form.input>
+                            value="{{ $dossier->call->name }}"></x-form.input>
                     </div>
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'sep-id'"
                             :label="'SEP Project ID'"
                             name="project_ref_id"
@@ -37,6 +34,7 @@
                     </div>
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'company-name'"
                             :label="'Company Name'"
                             :hasError="$errors->has('company')"
@@ -49,6 +47,7 @@
                     </div>
                     <div class="col-span-1">
                         <x-form.input
+                            :print="$print"
                             :id="'contact-person'"
                             :label="'Contact Person'"
                             :disabled="true"
@@ -58,35 +57,41 @@
                 </div>
             </x-layout.section>
 
+
+
             <x-layout.section>
                 @foreach ($dossier->action->activities as $activity)
 
-                    @foreach($activity->pivot->rules as $ruleName => $rule)
-                        <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
-                    @endforeach
+                    @if ($activity->pivot->rules)
+                        @foreach($activity->pivot->rules as $ruleName => $rule)
+                            <input type="hidden" name="{{ $ruleName }}" value="{{ $rule }}">
+                        @endforeach
+                    @endif
 
                     @livewire(
                         "dossiers.activities.$activity->name",
                         [
                             'activity' => $activity,
                             'dossier' => $dossier,
+                            'print' => $print,
                         ]
                     )
                 @endforeach
             </x-layout.section>
 
-            <div x-data class="flex items-center justify-end mt-32 space-x-3">
-                <x-button.download></x-button.download>
+            @if(empty($print))
+            <div x-data class="flex items-center justify-end mt-32 space-x-3 print:hidden">
+                <x-button.download :dossier="$dossier"></x-button.download>
                 <x-button.primary type="submit">Save</x-button.primary>
             </div>
+            @endif
         </form>
-
-        @if ($errors->has('film_title'))
-            <div class="mt-1 text-red-500 text-sm">
-                You must select a movie
-            </div>
-        @endif
     </div>
 
-
+    <script>
+        const form = document.getElementById('dossier-form');
+        if ({{ $errors->count() }}) {
+            form.scrollIntoView();
+        }
+    </script>
 </x-dynamic-component>

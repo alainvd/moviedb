@@ -13,34 +13,36 @@
                 <x-table.heading>Country</x-table.heading>
                 <x-table.heading>Share</x-table.heading>
                 <x-table.heading>Budget</x-table.heading>
-                <x-table.heading></x-table.heading>
+                @if(empty($print))<x-table.heading></x-table.heading>@endif
             </x-slot>
 
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">{{ $producer_roles[$item['role']] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $countries_by_code[$item['country']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['share'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['budget'] }}</x-table.cell>
-                    <x-table.cell class="space-x-2 text-center">
-                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer">Edit</a>
-                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer">Delete</a>
-                    </x-table.cell>
+                    @if(empty($print))<x-table.cell class="space-x-2 text-center">
+                        <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
+                        <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>
+                    </x-table.cell>@endif
                 </x-table.row>
                 @endforeach
             </x-slot>
         </x-table>
 
-        <div class="mt-5 text-right">
+        @if(empty($print))
+        <div class="mt-5 text-right print:hidden">
             @if ($movie_id)
             <x-button.secondary wire:click="showModalAdd" wire:loading.attr="disabled">
                 Add
             </x-button.secondary>
             @endif
         </div>
+        @endif
     </div>
 
     <form class="space-y-2">
@@ -57,6 +59,7 @@
                             :id="'role'"
                             :label="'Role'"
                             :hasError="$errors->has('editing.role')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.role')"
                             wire:model="editing.role">
 
                             <option value="producer">Producer</option>
@@ -73,6 +76,7 @@
                             :id="'name'"
                             :label="'Name'"
                             :hasError="$errors->has('editing.name')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.name')"
                             wire:model="editing.name">
                         </x-form.input>
 
@@ -86,6 +90,7 @@
                             :id="'city'"
                             :label="'City'"
                             :hasError="$errors->has('editing.city')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.city')""
                             wire:model="editing.city">
                         </x-form.input>
 
@@ -99,6 +104,7 @@
                             :id="'country'"
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
+                            :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
                             wire:model="editing.country">
 
                             @foreach ($countries as $country)
@@ -117,6 +123,7 @@
                             :label="'Share'"
                             :trailing="'%'"
                             :hasError="$errors->has('editing.share')"
+                            :isRequired="FormHelpers::isRequired($rules, '')"
                             wire:model="editing.share"
                         >
                         </x-form.input>
@@ -131,6 +138,7 @@
                             :label="'Budget'"
                             :trailing="'€'"
                             :hasError="$errors->has('editing.budget')"
+                            :isRequired="FormHelpers::isRequired($rules, '')"
                             wire:model="editing.budget"
                         >
                         </x-form.input>

@@ -24,10 +24,13 @@ class FicheFactory extends BaseFactory
      */
     public function definition()
     {
+        $fiche_types = [
+            "dist", "dev-prev","dev-current", "tv"
+        ];
         return [
             'movie_id' => $this->getRelationId(Movie::class),
-            'dossier_id' => $this->getRelationId(Dossier::class),
             'status_id' => $this->getRelationId(Status::class),
+            'type' => $this->faker->randomElement($fiche_types),
             'created_by' => $this->getRelationId(User::class),
             'comments' => $this->faker->text(),
         ];

@@ -4,8 +4,12 @@
 
 @tailwind utilities;
 
-@import '../../node_modules/pikaday/css/pikaday.css';
 @import './pikaday.css';
+
+@import '../../node_modules/pikaday/css/pikaday.css';
+
+/* looks like these can go away */
+/* @import '../../node_modules/tippy.js/dist/tippy.css'; */
 
 [x-cloak] {
     display: none;
@@ -35,11 +39,14 @@ main {
 #fdc-basic-dev-current:before {
     content: "basic-dev-current";
 }
-#fdc-basic-dev-prev:before {
-    content: "basic-dev-prev";
-}
 #fdc-basic:before {
     content: "basic";
+}
+#fdc-basic-tv:before {
+    content: "basic tv";
+}
+#fdc-basic-vg-prev:before {
+    content: "basic vg prev";
 }
 #fdc-budget:before {
     content: "budget";
@@ -50,14 +57,14 @@ main {
 #fdc-link-applicant-work:before {
     content: "link-applicant-work";
 }
-#fdc-photography-dev-current:before {
-    content: "photography-dev-current";
+#fdc-tech-dev-current:before {
+    content: "tech-dev-current";
 }
-#fdc-photography-dev-prev:before {
-    content: "photography-dev-prev";
+#fdc-tech:before {
+    content: "tech";
 }
-#fdc-photography:before {
-    content: "photography";
+#fdc-tech-tv:before {
+    content: "tech-tv";
 }
 #fdc-points:before {
     content: "points";
@@ -67,6 +74,9 @@ main {
 }
 #fdc-ownership:before {
     content: "ownership";
+}
+#fdc-prev-support-tv:before{
+    content: "prev-support-tv";
 }
 */
 
@@ -86,7 +96,7 @@ main {
 
 @media (min-width: 1280px) {
     body.dossier-page {
-        background: url('../images/dossier/dots-vertical-1.png') 2% 11% no-repeat;
+        background: url('../images/dossier/dots-vertical-1.png') 2% 305px no-repeat;
     }
 }
 

@@ -8,6 +8,7 @@ use App\Models\Dossier;
 use App\Models\Genre;
 use Livewire\Component;
 use App\Models\Movie;
+use App\Media;
 use App\Models\Activity;
 use App\Models\Country;
 use App\Models\Fiche;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 
-class MovieDevPreviousForm extends Component
+class VideoGamePrevForm extends Component
 {
 
     public $isNew = false;
@@ -31,40 +32,43 @@ class MovieDevPreviousForm extends Component
     public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
+    public ?Media $media = null;
 
+    // Movie original
     public $movie_original = [];
 
-    public $shootingLanguages;
+    // public $shootingLanguages;
+    public $shootingLanguage = '';
 
+    // public $crews = [];
     public $producers = [];
     public $sales_agents = [];
 
     protected $listeners = [
+        // 'update-movie-crews' => 'updateMovieCrews',
         'update-movie-producers' => 'updateMovieProducers',
         'update-movie-sales-agents' => 'updateMovieSalesAgents',
         'addItem' => 'addShootingLanguage',
         'removeItem' => 'removeShootingLanguage'
     ];
 
+    /**
+     * Each wired fields needs to be here or it will be filtered
+     */
     protected $rules = [
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
-        'movie.film_country_of_origin' => 'string',
+        'movie.film_country_of_origin' => 'string|max:255',
         'movie.year_of_copyright' => 'integer',
-        'movie.genre_id' => 'required|integer',
+        'media.genre_id' => 'required|integer',
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'required|string',
 
-        'movie.film_length' => 'required|integer',
-        'movie.shooting_language' => 'required',
-        'movie.audience_id' => 'required|integer',
-
-        'movie.link_applicant_work' => 'string',
-        'movie.link_applicant_work_person_name' => 'string',
-        'movie.link_applicant_work_person_position' => 'string',
-        'movie.link_applicant_work_person_credit' => 'string',
+        // 'shootingLanguage' => 'required|integer',
+        'shootingLanguage' => 'integer',
+        'media.audience_id' => 'required|integer',
 
         'fiche.comments' => 'string',
     ];
@@ -77,18 +81,24 @@ class MovieDevPreviousForm extends Component
 
     public function mount(Request $request)
     {
-        $this->shootingLanguages = collect([]);
+        // $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
             $this->isNew = true;
             $this->fiche = new Fiche;
+            $this->media = new Media;
             $this->movie = new Movie($this->movieDefaults());
         } else {
-            $this->movie = $this->fiche->movie;
-            $this->shootingLanguages = collect($this->movie->languages->map(
-                fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
-            ));
-            $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
-            $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
+            $this->media = $this->fiche->media;
+            $this->movie = $this->media->grantable;
+            // Fill selected languages
+            // $this->shootingLanguages = $this->movie->languages->map(
+            //     fn ($lang) => ['value' => $lang->id, 'label' => $lang->name],
+            // );
+
+            // $this->crews = Crew::with('person')->where('media_id',$this->movie->media->id)->get()->toArray();
+            $this->producers = Producer::where('media_id', $this->movie->media->id)->get()->toArray();
+            $this->sales_agents = SalesAgent::where('media_id', $this->movie->media->id)->get()->toArray();
+            // dd($this->producers);
         }
 
         if (Auth::user()->hasRole('applicant')) {
@@ -98,83 +108,88 @@ class MovieDevPreviousForm extends Component
             $this->isEditor = true;
         }
 
-        if($request->input('editor')) {
-            $this->isApplicant = false;
-            $this->isEditor = true;
-        }
-
         if ($this->isApplicant && $this->isNew) {
             $this->fiche->status_id = 1;
         }
 
     }
 
-    public function addShootingLanguage($lang)
-    {
-        // @todo build listener names using select name
-        $this->shootingLanguages->push($lang[1]);
-    }
+    // public function addShootingLanguage($lang)
+    // {
+    //     // @todo build listener names using select name
+    //     $this->shootingLanguages->push($lang[1]);
+    // }
 
-    public function removeShootingLanguage($lang)
-    {
-        $this->shootingLanguages = $this->shootingLanguages->reject(
-            fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
-        );
-    }
+    // public function removeShootingLanguage($lang)
+    // {
+    //     $this->shootingLanguages = $this->shootingLanguages->reject(
+    //         fn ($shootingLanguage) => $shootingLanguage['value'] === $lang[1]['value']
+    //     );
+    // }
 
     public function callValidate()
     {
-        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
-        unset($this->movie->shooting_language);
-    }
-
-    public function reject()
-    {
-        $this->fiche = new Fiche;
-        $this->movie = new Movie;
     }
 
     public function submit()
     {
-        $this->movie->shooting_language = $this->shootingLanguages;
         $this->validate();
-        unset($this->movie->shooting_language);
+
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
+
+        // When it's new
         if ($this->isNew) {
+            // Save movie
             $this->movie->save();
-            $this->movie->languages()->sync(
-                $this->shootingLanguages->map(
-                    fn ($lang) => $lang['value']
-                )
-            );
+            // $this->movie->languages()->attach(
+            //     $this->shootingLanguage
+            // );
+
+            // Save media
+            $this->media->fill([
+                'title' => $this->movie->original_title,
+                'grantable_id' => $this->movie->id,
+                'grantable_type' => 'App\Models\Movie',
+            ])->save();
+
+            // Save fiche
             $this->fiche->fill([
-                'movie_id' => $this->movie->id,
+                'media_id' => $this->media->id,
                 'dossier_id' => $this->dossier->id,
                 'activity_id' => $this->activity->id,
                 'created_by' => 1,
             ])->save();
-            $this->emit('notify-saved');
-        } else {
-            // When editing
+
+            $this->emit('notifySaved');
+        } else { // When editing
             $this->movie->save();
-            $this->movie->languages()->sync(
-                $this->shootingLanguages->map(
-                    fn ($lang) => $lang['value']
-                )
-            );
+            // $this->movie->languages()->attach(
+            //     // $this->shootingLanguages->map(
+            //     //     fn ($lang) => $lang['value']
+            //     // )
+            //     $this->shootingLanguage
+            // );
+            $this->media->title = $this->movie->original_title;
+            $this->media->save();
             $this->fiche->save();
-            $this->emit('notify-saved');
+            $this->emit('notifySaved');
         }
 
-        // producers, sales agents
-        $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
-        $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
+        // crew, producers, sales agents
+        // $this->saveItems(Crew::with('person')->where('media_id',$this->movie->media->id)->get(), $this->crews, 'person_crew');
+        $this->saveItems(Producer::where('media_id', $this->movie->media->id)->get(), $this->producers, Producer::class);
+        $this->saveItems(SalesAgent::where('media_id', $this->movie->media->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        // if ($this->dossier->call_id && $this->dossier->project_ref_id) {
-        //     return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
-        // }
+        if ($this->dossier->call_id && $this->dossier->project_ref_id) {
+            return redirect()->route('projects.create', ['call_id' => $this->dossier->call_id, 'project_ref_id' => $this->dossier->project_ref_id]);
+        }
     }
+
+    // public function updateMovieCrews($items)
+    // {
+    //     $this->crews = $items;
+    // }
 
     public function updateMovieProducers($items)
     {
@@ -212,7 +227,7 @@ class MovieDevPreviousForm extends Component
             unset($item['key']);
             unset($item['created_at']);
             unset($item['updated_at']);
-            $item['movie_id'] = $this->movie->id;
+            $item['media_id'] = $this->movie->media->id;
             if (isset($item['id'])) {
                 if ($saving_class == 'person_crew') {
                     // TODO: is there an 'update with' thing?
@@ -235,12 +250,23 @@ class MovieDevPreviousForm extends Component
 
     public function render()
     {
-        if($this->getErrorBag()->any()){
-            $this->emit('validation-errors');
-        }
 
-        return view('livewire.movie-dev-previous-form')
-            ->layout('components.layout');
+        $title = 'Audiovisual Work - Production - Videogames';
+
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+
+        return view('livewire.video-game-prev-form', [
+                'rules' => $this->rules(),
+                'layout' => $layout,
+                'print' => false,
+                'title' => $title,
+                'crumbs' => $this->crumbs,
+            ])
+            ->layout($layout, [
+                'title' => $title,
+                'crumbs' => $this->crumbs,
+            ]);
+
     }
 
 }

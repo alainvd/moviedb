@@ -16,6 +16,11 @@ abstract class BaseFactory extends Factory
      */
     protected function getRelationId($model)
     {
+        return $this->getRelation($model)->id;
+    }
+
+    protected function getRelation($model)
+    {
         $model = new $model;
 
         if (!$model instanceof Model) {
@@ -23,7 +28,7 @@ abstract class BaseFactory extends Factory
         }
 
         if ($model->all()->count() > 0) {
-            return $model->all()->random()->id;
+            return $model->all()->random();
         } else {
             return $model->factory()->create();
         }

@@ -1,6 +1,6 @@
 <div>
   <header data-ecl-auto-init="SiteHeaderHarmonised" class="ecl-site-header-harmonised--group1 ecl-site-header-harmonised" data-ecl-has-menu="true">
-    <div class="ecl-site-header-harmonised__container ecl-container">
+    <div class="ecl-site-header-harmonised__container ecl-container print:hidden">
       <div class="ecl-site-header-harmonised__top"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__logo-link" href="/" aria-label="European Commission"><img alt="European Commission logo" title="European Commission" class="ecl-site-header-harmonised__logo-image" src="/ecl-images/logo/logo--en.svg" /></a>
         <div class="ecl-site-header-harmonised__action">
           <div class="ecl-site-header-harmonised__login-container"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__login-toggle" href="/example" data-ecl-login-toggle="true" aria-controls="login-box-id" aria-expanded="false"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
@@ -48,7 +48,7 @@
           </header>
           <ul class="ecl-menu__list">
             <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers" class="ecl-menu__link" data-ecl-menu-link="true">My Dossiers</a></li>
-            <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers/1/activities/2/fiches/dist" class="ecl-menu__link" data-ecl-menu-link="true">Create Movie</a></li>
+            <!--<li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers/1/activities/2/fiches/dist" class="ecl-menu__link" data-ecl-menu-link="true">Create Movie</a></li>-->
             <!--
             <li class="ecl-menu__item ecl-menu__item--current ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link ecl-menu__link--current" data-ecl-menu-link="true">Item 2<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
                   <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
@@ -169,7 +169,7 @@
         </section>
       </div>
     </nav>
-    <div id="language-list-overlay" hidden="" class="ecl-language-list ecl-language-list--overlay" aria-labelledby="ecl-language-list__title" role="dialog" data-ecl-language-list-overlay="true">
+    <div id="language-list-overlay" hidden="" class="ecl-language-list ecl-language-list--overlay print:hidden" aria-labelledby="ecl-language-list__title" role="dialog" data-ecl-language-list-overlay="true">
       <div class="ecl-language-list__container ecl-container">
         <div class="ecl-row">
           <div class="ecl-language-list__close ecl-col-12 ecl-col-lg-8 ecl-offset-lg-2"><button data-ecl-language-list-close="true" type="submit" class="ecl-language-list__close-button ecl-button ecl-button--ghost"><span class="ecl-button__container"><span class="ecl-button__label" data-ecl-label="true">Close</span><svg focusable="false" aria-hidden="true" data-ecl-icon="true" class="ecl-button__icon ecl-button__icon--after ecl-icon ecl-icon--s">

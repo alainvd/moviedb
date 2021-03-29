@@ -20,6 +20,7 @@ class Fiche extends Model
         'created_by',
         'updated_by',
         'comments',
+        'type',
     ];
 
     public function movie()
@@ -27,9 +28,10 @@ class Fiche extends Model
         return $this->belongsTo(Movie::class);
     }
 
-    public function dossier()
+    public function dossiers()
     {
-        return $this->belongsTo(Dossier::class);
+        return $this->belongsToMany(Dossier::class)
+            ->withPivot('activity_id');
     }
 
     public function status()
@@ -39,6 +41,12 @@ class Fiche extends Model
 
     public function scopeForActivity($query, $activityId)
     {
-        return $query->where('activity_id', $activityId);
+        // return $query->where(function ($query) {
+        //     $query->select('activity_id')
+        //         ->from('dossier_fiche')
+        //         ->whereColumn('fiche_id', 'fiches.id')
+        //         ->get();
+        // }, $activityId);
+        return $query->where('dossier_fiche.activity_id', $activityId);
     }
 }

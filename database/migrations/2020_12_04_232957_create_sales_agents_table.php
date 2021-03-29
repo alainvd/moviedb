@@ -17,6 +17,7 @@ class CreateSalesAgentsTable extends Migration
             $table->id();
             $table->integer('movie_id');
             $table->string('name')->nullable();
+            $table->string('role')->nullable();
             $table->string('country')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('email')->nullable();

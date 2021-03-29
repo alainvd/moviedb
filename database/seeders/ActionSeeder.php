@@ -17,9 +17,9 @@ class ActionSeeder extends Seeder
     {
         $codes = [
             "DEVSLATE",
-            "DEVSLATEEU",
-            "DEVSLATEEUMINI",
-            "EUCODEV",
+            // "DEVSLATEEU",
+            "DEVSLATEMINI",
+            "CODEVELOPMENT",
             // "DEVSPANI",
             // "DEVSPDOC",
             // "DEVSPFIC",
