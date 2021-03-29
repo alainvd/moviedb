@@ -90,7 +90,7 @@
             :hasError="$errors->has('movie.film_format')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_format')"
             wire:model="movie.film_format"
-            value="{{ $filmFormats[$movie->film_format] }}"
+            value="{{ isset($filmFormats[$movie->film_format]) ? $filmFormats[$movie->film_format] : '' }}"
         >
 
             @foreach ($filmFormats as $key => $value)
