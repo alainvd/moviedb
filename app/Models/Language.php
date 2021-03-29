@@ -17,6 +17,7 @@ class Language extends Model
     protected $fillable = [
         'code',
         'name',
+        'position',
     ];
 
     public function movies()

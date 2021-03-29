@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Crew;
-use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Title;
@@ -27,7 +26,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
      */
     public function collection(Collection $collection)
     {
-        foreach ($this->getActors($collection) as $row) {
+        foreach ($collection as $row) {
 
             //Get Person
             $actor = $this->getPerson($row);
@@ -40,7 +39,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
 
             //Create the crew entry
             $crew = new Crew([
-                "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
+                "points" => $row['film_staff_score'] ? $row['film_staff_score'] : null,
                 "person_id" => $actor->id,
                 "title_id" => $title->id,
                 "movie_id" => $movie->id
@@ -78,24 +77,24 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
     }
 
 
-    /**
+    /*/**
      * @param Collection $collection
      * @return Collection
      */
-    public function getActors(Collection $collection): Collection
+    /* public function getActors(Collection $collection): Collection
     {
         $actors = $collection->filter(function ($row, $key) {
             return (strpos($row["film_role_name"], 'Actor') !== false);
         });
         return $actors;
-    }
+    } */
 
     /**
      * @param $actor
      */
-    public function getPerson($actor): Person
+    public function getPerson($row): Person
     {
-        $fullName = (Str::of(Str::title($actor["film_staff_name"]))->trim());
+        $fullName = (Str::of(Str::title($row["film_staff_name"]))->trim());
         $firstName = $this->getFirstName($fullName);
         $lastName = $this->getLastName($fullName, $firstName);
         echo($fullName . "\n");
@@ -106,8 +105,8 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             "fullname" => $fullName,
             "firstname" => $firstName,
             "lastname" => $lastName,
-            "nationality1" => $actor["film_staff_nationality_1_code"],
-            "country_of_residence" => $actor["film_staff_residence_country"],
+            "nationality1" => $row["film_staff_nationality_1_code"],
+            "country_of_residence" => $row["film_staff_residence_country_code"],
         ]);
         $person->save();
         return $person;

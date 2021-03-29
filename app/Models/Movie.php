@@ -146,12 +146,12 @@ class Movie extends Model
 
     public function scopeFilterGroupedDirectorNames($query, $value)
     {
-        $query->whereHas('crew', function ($query) use ($value) {
+        $query->whereHas('people', function ($query) use ($value) {
             /*$query->where('people.id', $value);*/
             $query
             ->leftJoin('crews', 'crews.person_id', 'people.id')
             ->whereRaw("CONCAT(crew.people.firstname,'',crew.people.lastname) = '$value'");
-            dd($query);
+            
         });
     }
 

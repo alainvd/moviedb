@@ -24,8 +24,8 @@ class CreateMoviesTable extends Migration
             $table->string('imdb_url')->nullable();
             $table->string('isan', 255)->nullable();
             $table->string('eidr', 255)->nullable();
-            $table->date('shooting_start')->nullable();
-            $table->date('shooting_end')->nullable();
+            //$table->date('shooting_start')->nullable();
+            //$table->date('shooting_end')->nullable();
             $table->date('delivery_date')->nullable();
             $table->date('broadcast_date')->nullable();
             $table->string('film_length')->nullable();
@@ -34,27 +34,27 @@ class CreateMoviesTable extends Migration
             $table->string('film_country_of_origin')->nullable();
             $table->string('film_country_of_origin_2014_2020')->nullable();
             $table->integer('year_of_copyright')->nullable();
-            $table->integer('directors_film')->nullable();
-            $table->string('european_nationality_flag',255)->nullable();
-            $table->longText('european_nationality_basis')->nullable();
+            //$table->integer('directors_film')->nullable();
+            //$table->string('european_nationality_flag',255)->nullable();
+            //$table->longText('european_nationality_basis')->nullable();
             $table->bigInteger('development_costs_in_euro')->nullable();
-            $table->string('production_costs_currency_date')->nullable();
-            $table->string('production_costs_currency')->nullable();
-            $table->bigInteger('production_costs')->nullable();
-            $table->bigInteger('production_costs_in_euro')->nullable();
+            //$table->string('production_costs_currency_date')->nullable();
+            //$table->string('production_costs_currency')->nullable();
+            //$table->bigInteger('production_costs')->nullable();
+            //$table->bigInteger('production_costs_in_euro')->nullable();
             $table->string('film_type')->nullable();
             $table->string('film_format')->nullable();
-            $table->integer('total_budget_currency_amount')->nullable();
+            $table->bigInteger('total_budget_currency_amount')->nullable();
             $table->string('total_budget_currency_code')->nullable();
             $table->decimal('total_budget_currency_rate')->nullable();
-            $table->integer('total_budget_euro')->nullable();
+            $table->bigInteger('total_budget_euro')->nullable();
             $table->boolean('dev_support_flag')->nullable();
             $table->string('dev_support_reference')->nullable();
             $table->integer('source_film_id')->default(false); // ???
-            $table->string('username')->nullable();
-            $table->date('audit_date')->nullable();
-            $table->date('eu_net_change_date')->nullable();
-            $table->date('eu_net_change_name')->nullable();
+            //$table->string('username')->nullable();
+            //$table->date('audit_date')->nullable();
+            //$table->date('eu_net_change_date')->nullable();
+            //$table->date('eu_net_change_name')->nullable();
             $table->date('photography_start')->nullable();
             $table->date('photography_end')->nullable();
             $table->decimal('film_score')->nullable();
@@ -93,5 +93,6 @@ class CreateMoviesTable extends Migration
 
     {
         Schema::dropIfExists('movies');
+
     }
 }

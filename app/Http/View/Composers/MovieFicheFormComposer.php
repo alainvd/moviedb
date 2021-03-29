@@ -38,13 +38,15 @@ class MovieFicheFormComposer
         $gameGenres = Genre::where('type', 'VideoGame')->get()->toArray();
         $allGenresById = Genre::get()->keyBy('id')->toArray();
         $languages = Language::where('active', true)
-            ->get()
+            ->orderBy('position','desc')
+            ->get() 
             ->map(fn ($lang) => [
                 'value' => $lang->id,
                 'label' => $lang->name,
             ])
             ->toArray();
         $languagesWithCode = Language::where('active', true)
+            ->orderBy('position','desc')
             ->get()
             ->map(fn ($lang) => [
                 'code' => $lang->code,

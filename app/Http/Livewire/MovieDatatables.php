@@ -48,8 +48,8 @@ class MovieDatatables extends LivewireDatatable
             Column::name('people.lastname:group_concat')
                 ->label('DIRECTOR')
                 ->filterable(),*/
-            Column::scope('groupedDirectorNames','DIRECTOR')
-                ->filterable(null,'filterGroupedDirectorNames'),
+            /*Column::scope('groupedDirectorNames','DIRECTOR')
+                ->filterable(null,'filterGroupedDirectorNames'),*/
             Column::name('film_country_of_origin')
                 ->label('COUNTRY')
                 ->filterable($this->countryoforigin),

@@ -17,6 +17,7 @@ class AddLanguagesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code', 2);
+            $table->integer('position');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
