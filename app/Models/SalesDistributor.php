@@ -37,6 +37,11 @@ class SalesDistributor extends Model
         'release_date' => 'date:d.m.Y'
     ];
 
+    const DISTRIBUTOR_ROLES = [
+        'PLATFORM' => 'Platform',
+        'DISTRIBUTOR' => 'Distributor',
+        'BROADCASTER' => 'Broadcaster',
+    ];
 
     public function movie()
     {

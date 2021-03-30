@@ -30,7 +30,7 @@ class FormHelpers
 
     // Check if the required crew members are present
     public static function requiredCrew($crews, $genre_id) {
-        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrew($genre_id))->get();
+        $requiredTitles = Title::whereIn('code', Crew::requiredMovieCrewTypes($genre_id))->get();
         $requiredCrewMessages = [];
         foreach ($requiredTitles as $title) {
             if (!array_filter(
@@ -48,7 +48,7 @@ class FormHelpers
 
     // Check if the required locations are present
     public static function requiredLocations($locations, $genre_id) {
-        $requiredLocs = Location::whereIn('type', Location::requiredMovieLocations($genre_id))->get();
+        $requiredLocs = Location::whereIn('type', Location::requiredMovieLocationTypes($genre_id))->get();
         $requiredLocationsMessages = [];
         foreach ($requiredLocs as $loc) {
             if (!array_filter(
@@ -64,6 +64,16 @@ class FormHelpers
         return $requiredLocationsMessages;
     }
 
+    // Check if producer is present
+    public static function requiredProducers($producers) {
+        foreach ($producers as $producer) {
+            if ($producer['role'] == 'PRODUCER') {
+                return [];
+            }
+        }
+        return ['One producer is required.'];
+    }
+
     // Check if financing plan document is present
     public static function validateDocumentsFinancingPlan($documents) {
         foreach ($documents as $document) {
@@ -75,7 +85,6 @@ class FormHelpers
     public static function validateSalesDistributorTerritories($salesDistributors) {
         // TODO: new implementation
         $territories = [];
-        // dd($salesDistributors);
         foreach($salesDistributors as $salesDistributor) {
             foreach($salesDistributor['countries'] as $country)
             if (!in_array($country['id'], $territories)) {

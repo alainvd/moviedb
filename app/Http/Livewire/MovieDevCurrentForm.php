@@ -60,7 +60,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'movie.rights_contract_start_date' => 'required|date:d.m.Y',
         'movie.rights_contract_end_date' => 'required|date:d.m.Y',
         'movie.rights_contract_signature_date' => 'required|date:d.m.Y',
-        // dependant fields
+        // dependent fields
         'movie.rights_adapt_author_name' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
         'movie.rights_adapt_original_title' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
         'movie.rights_adapt_contract_type' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',

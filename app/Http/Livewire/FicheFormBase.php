@@ -5,9 +5,10 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Helpers\FormHelpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class FicheFormBase extends Component
 {
@@ -75,19 +76,26 @@ class FicheFormBase extends Component
         ];
 
         if (in_array($currentRoute, $ficheFormRoutes)) {
-            return [
-                [
-                    'url' => route('dossiers.index'),
-                    'title' => 'My dossiers',
-                ],
-                [
-                    'url' => url('dossiers/'.$this->dossier->project_ref_id),
-                    'title' => 'Edit dossier',
-                ],
-                [
-                    'title' => 'Edit fiche'
-                ],
+            $routes[] = [
+                // TODO: this line breaks livewire and browser-sync (when running on localhost:3000)
+                // TODO: gives error: Livewire\Exceptions\CorruptComponentPayloadException
+                // 'url' => route('dossiers.index'),
+                'url' => '/dossiers',
+                'title' => 'My dossiers',
             ];
+            if (isset($this->dossier)) {
+                $routes[] = [
+                    // TODO: this line breaks livewire and browser-sync (when running on localhost:3000)
+                    // TODO: gives error: Livewire\Exceptions\CorruptComponentPayloadException
+                    // 'url' => url('dossiers/'.$this->dossier->project_ref_id),
+                    'url' => '/dossiers/'.$this->dossier->project_ref_id,
+                    'title' => 'Edit dossier',
+                ];
+            }
+            $routes[] = [
+                    'title' => 'Edit fiche'
+            ];
+            return $routes;
         } else {
             return [
                 [

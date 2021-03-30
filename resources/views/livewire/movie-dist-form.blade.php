@@ -20,6 +20,7 @@
             :movieAudiences="$movieAudiences"
             :allAaudiencesById="$allAaudiencesById"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
             :movieGenres="$movieGenres"
@@ -78,6 +79,7 @@
             :rules="$rules"
             :movie="$movie"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
         ></x-details.summary>
     </div>
@@ -92,7 +94,7 @@
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
-            :languages="$languages"
+            :languagesValueLabel="$languagesValueLabel"
             :languagesSelected="$shootingLanguages"
         ></x-details.tech>
     </div>

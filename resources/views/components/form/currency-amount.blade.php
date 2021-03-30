@@ -1,11 +1,11 @@
 <div>
+    @if (empty($print))
+    <!-- Output for screen -->
     <label for="{{ $idAmount }}" class="block text-sm font-light leading-5 text-gray-700">
         {{ $labelAmount }}
         <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
     </label>
 
-    <!-- Output for screen -->
-    @if (empty($print))
     <div class="relative mt-1 rounded-md shadow-sm">
         <input 
             type="text"
@@ -33,8 +33,9 @@
     </div>
     @endif
 
-    <!-- Output for print -->
     @if (!empty($print) && !empty($value))
-    <span class="inline-block">{{ $value }}</span>
+    <!-- Output for print -->
+    <span class="font-bold">{{ $labelAmount }}</span>
+    <span class="">{{ $value }}</span>
     @endif
 </div>                  

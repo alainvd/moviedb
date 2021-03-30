@@ -4,28 +4,16 @@ namespace App\Http\Livewire;
 
 use App\Models\Crew;
 use App\Models\Movie;
-use App\Models\Title;
-use App\Models\Person;
-use App\Models\Country;
-use Illuminate\Support\Facades\Log;
 
 class TableEditMovieCrews extends TableEditBase
 {
 
     public Movie $movie;
 
-    public $titles = [];
-
-    public $genders = [];
-
-    public $countries = [];
-
-    public $countries_by_code = [];
-
     public $points_total = 0;
 
     protected $listeners = [
-        'movieCrewsAddRequired'
+        'movieCrewsAddDefault'
     ];
 
     protected function defaults()
@@ -90,26 +78,19 @@ class TableEditMovieCrews extends TableEditBase
     {
         $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
         if ($this->movie) {
-            $this->movieCrewsAddRequired($this->movie->genre_id);
+            $this->movieCrewsAddDefault($this->movie->genre_id);
         }
         $this->addUniqueKeys();
     }
 
     public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->titles = Title::all()->keyBy('id')->toArray();
-        $this->genders = Person::GENDERS;
-        // TODO: Can remove?
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
+        parent::mount($movie_id, $isApplicant, $isEditor);
         $this->movie = new Movie();
-
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();
         }
-        $this->isApplicant = $isApplicant;
-        $this->isEditor = $isEditor;
         $this->recalculatePoints();
     }
 
@@ -145,10 +126,10 @@ class TableEditMovieCrews extends TableEditBase
         $this->recalculatePoints();
     }
 
-    public function movieCrewsAddRequired($genre_id) {
-        $req_items = Crew::newMovieCrew($genre_id);
-        $req_items_title_ids = array_column($req_items, 'title_id');
-        foreach ($req_items as $req_item) {
+    public function movieCrewsAddDefault($genre_id) {
+        // defaults
+        $def_items = Crew::newMovieCrew($genre_id);
+        foreach ($def_items as $req_item) {
             if (!array_filter(
                 $this->items,
                 function ($item) use ($req_item) {
@@ -159,8 +140,10 @@ class TableEditMovieCrews extends TableEditBase
                 $this->items[] = $req_item;
             }
         }
+        // required (the same in this case)
+        $req_items_title_ids = array_column($def_items, 'title_id');
         $this->items = array_map(
-            function($item) use ($req_items, $req_items_title_ids) {
+            function($item) use ($req_items_title_ids) {
                 // mark as required or not
                 if (in_array($item['title_id'], $req_items_title_ids)) {
                     $item['required'] = true;

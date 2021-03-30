@@ -10,10 +10,14 @@
             value="{{ isset($countriesByCode[$movie->film_country_of_origin]) ? $countriesByCode[$movie->film_country_of_origin]['name'] : '' }}"
         >
 
-            @foreach($countries as $country)
-                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+            @foreach ($countriesGrouped as $group=>$countries)
+                <optgroup label="---">
+                    @foreach ($countries as $country)
+                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                    @endforeach
+                </optgroup>
             @endforeach
-
+            
         </x-form.select>
 
         @error('movie.film_country_of_origin')
@@ -33,8 +37,12 @@
             value="{{ isset($countriesByCode[$movie->film_country_of_origin_2014_2020]) ? $countriesByCode[$movie->film_country_of_origin_2014_2020]['name'] : '' }}"
         >
 
-            @foreach($countries as $country)
-                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+            @foreach ($countriesGrouped as $group=>$countries)
+                <optgroup label="---">
+                    @foreach ($countries as $country)
+                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                    @endforeach
+                </optgroup>
             @endforeach
 
         </x-form.select>

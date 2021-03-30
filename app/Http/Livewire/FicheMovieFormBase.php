@@ -95,9 +95,36 @@ class FicheMovieFormBase extends FicheFormBase
     {
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
-            $this->emit('movieCrewsAddRequired', $value);
+            $this->emit('movieCrewsAddDefault', $value);
             // Update the locations livewire component
-            $this->emit('movieLocationsAddRequired', $value);
+            $this->emit('movieLocationsAddDefault', $value);
+        }
+        if ($name == 'movie.total_budget_euro') {
+            $this->movie->total_budget_euro = amount($value);
+        }
+        // clear dependent fields
+        if ($name == 'movie.link_applicant_work') {
+            if ($value !== 'WRKPERS') {
+                $this->movie->link_applicant_work_person_name = NULL;
+                $this->movie->link_applicant_work_person_position = NULL;
+                $this->movie->link_applicant_work_person_credit = NULL;
+            }
+        }
+        if ($name == 'movie.rights_origin_of_work') {
+            if ($value !== 'ADAPTATION') {
+                $this->movie->rights_adapt_author_name = NULL;
+                $this->movie->rights_adapt_original_title = NULL;
+                $this->movie->rights_adapt_contract_type = NULL;
+                $this->movie->rights_adapt_contract_start_date = NULL;
+                $this->movie->rights_adapt_contract_end_date = NULL;
+                $this->movie->rights_adapt_contract_signature_date = NULL;
+            }
+        }
+        if ($name == 'movie.film_type') {
+            if ($value !== 'SERIES') {
+                $this->movie->number_of_episodes = NULL;
+                $this->movie->length_of_episodes = NULL;
+            }
         }
     }
 
