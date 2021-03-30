@@ -15,22 +15,18 @@ class DossierFiche extends Pivot
     protected static function booted()
     {
         static::created(function ($pivot) {
-            if ($pivot->activity_id == 2) {
-                $model = 'Previous Work';
-            } else if ($pivot->activity_id == 3) {
-                $model = 'Current Work';
-            } else if ($pivot->activity_id == 5) {
-                $model = 'Short Film';
+            // Log current / previous / short film added
+            if (in_array($pivot->activity_id, [2,3,5])) {
+                $fiche = Fiche::find($pivot->fiche_id);
+                activity()->on(Dossier::find($pivot->dossier_id))
+                    ->by(User::find($fiche->created_by))
+                    ->withProperties([
+                        'model' => Activity::find($pivot->activity_id)->log_model,
+                        'operation' => 'added',
+                        'movie' => $fiche->movie->only(['id', 'original_title', 'year_of_copyright', 'isan', 'imdb_url', 'synopsis']),
+                    ])
+                    ->log('updated');
             }
-
-            activity()->on(Dossier::find($pivot->dossier_id))
-                ->by(Auth::user())
-                ->withProperties([
-                    'model' => $model,
-                    'operation' => 'added',
-                    'movie' => Fiche::find($pivot->fiche_id)->movie->toArray(),
-                ])
-                ->log('updated');
         });
     }
 }

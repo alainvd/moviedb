@@ -20,6 +20,7 @@ use App\Models\Producer;
 use App\Models\SalesAgent;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -167,8 +168,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
                 'type' => $type,
-                // @todo fix user being null here
-                'created_by' => 1,
+                'created_by' => Auth::user()->id,
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
@@ -192,9 +192,7 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->fiche->fill([
-                'updated_by' => 1,
-            ])->save();
+            $this->fiche->save();
             $this->notify('Fiche is saved');
         }
         $this->fichePostSave();

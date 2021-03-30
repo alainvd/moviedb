@@ -6,6 +6,7 @@ use App\Models\Dossier;
 use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\Status;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -31,7 +32,8 @@ class HistoryController extends Controller
         $logs = self::getFormattedLogs($fiche);
 
         return view('dossiers.history', [
-            'crumbs' => $this->getCrumbs($fiche),
+            // 'crumbs' => $this->getCrumbs($fiche),
+            'crumbs' => [],
             'layout' => $this->getLayout(),
             'type' => class_basename($fiche),
             'model' => $fiche,

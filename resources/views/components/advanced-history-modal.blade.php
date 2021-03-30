@@ -9,10 +9,10 @@
                         </h3>
                         @foreach ($changes['old'] as $key => $value)
                             <label for="{{ $key }}" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                {{ $key }}
+                                {{ $this->getLabel($key) }}
                             </label>
-                            <div class="w-1/2 py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
-                                {{ $value ?? 'No value' }}
+                            <div class="py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
+                                {{ $value ? $this->getValue($key, $value) : '&nbsp;' }}
                             </div>
                         @endforeach
                     </div>
@@ -24,12 +24,14 @@
                             New values
                         </h3>
                         @foreach ($changes['attributes'] as $key => $value)
-                            <label for="{{ $key }}" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                {{ $key }}
-                            </label>
-                            <div class="w-1/2 py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
-                                {{ $value ?? 'No value' }}
-                            </div>
+                            @if ($value)
+                                <label for="{{ $key }}" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    {{ $this->getLabel($key) }}
+                                </label>
+                                <div class="py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
+                                    {{ $value ? $this->getValue($key, $value) : '&nbsp;' }}
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 @endif
@@ -40,12 +42,12 @@
                     Movie details
                 </h3>
                 @foreach ($changes['movie'] as $key => $value)
-                    @if (!is_array($value))
+                    @if (!is_array($value) && $value)
                         <label for="{{ $key }}" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                            {{ $key }}
+                            {{ $this->getLabel($key) }}
                         </label>
-                        <div class="w-1/2 py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
-                            {{ $value ?? 'No value' }}
+                        <div class="w-3/4 py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
+                            {{ $value ? $this->getValue($key, $value) : '&nbsp;' }}
                         </div>
                     @endif
                 @endforeach
