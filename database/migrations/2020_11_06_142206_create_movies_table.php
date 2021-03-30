@@ -44,10 +44,10 @@ class CreateMoviesTable extends Migration
             $table->bigInteger('production_costs_in_euro')->nullable();
             $table->string('film_type')->nullable();
             $table->string('film_format')->nullable();
-            $table->integer('total_budget_currency_amount')->nullable();
+            $table->bigInteger('total_budget_currency_amount')->nullable();
             $table->string('total_budget_currency_code')->nullable();
             $table->decimal('total_budget_currency_rate')->nullable();
-            $table->integer('total_budget_euro')->nullable();
+            $table->bigInteger('total_budget_euro')->nullable();
             $table->boolean('dev_support_flag')->nullable();
             $table->string('dev_support_reference')->nullable();
             $table->integer('source_film_id')->default(false); // ???
