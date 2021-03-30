@@ -95,9 +95,6 @@ class FicheMovieFormBase extends FicheFormBase
             // Update the locations livewire component
             $this->emit('movieLocationsAddDefault', $value);
         }
-        if ($name == 'movie.total_budget_euro') {
-            $this->movie->total_budget_euro = amount($value);
-        }
         // clear dependent fields
         if ($name == 'movie.link_applicant_work') {
             if ($value !== 'WRKPERS') {
@@ -127,12 +124,15 @@ class FicheMovieFormBase extends FicheFormBase
     // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
+
         // Bare bones validation
         $this->validate([
             'movie.original_title' => 'required',
             'fiche.status_id' => 'required',
             'movie.genre_id' => 'required',
+            'movie.film_type' => 'required',
         ]);
+
         unset($this->movie->shooting_language);
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
