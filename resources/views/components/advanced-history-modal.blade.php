@@ -12,7 +12,7 @@
                                 {{ $this->getLabel($key) }}
                             </label>
                             <div class="py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
-                                {{ $value ? $this->getValue($key, $value) : '&nbsp;' }}
+                                {{ $value ? $this->getValue($key, $value) : '-' }}
                             </div>
                         @endforeach
                     </div>
@@ -24,14 +24,12 @@
                             New values
                         </h3>
                         @foreach ($changes['attributes'] as $key => $value)
-                            @if ($value)
-                                <label for="{{ $key }}" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    {{ $this->getLabel($key) }}
-                                </label>
-                                <div class="py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
-                                    {{ $value ? $this->getValue($key, $value) : '&nbsp;' }}
-                                </div>
-                            @endif
+                            <label for="{{ $key }}" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                {{ $this->getLabel($key) }}
+                            </label>
+                            <div class="py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
+                                {{ $value ? $this->getValue($key, $value) : '-' }}
+                            </div>
                         @endforeach
                     </div>
                 @endif
@@ -47,7 +45,7 @@
                             {{ $this->getLabel($key) }}
                         </label>
                         <div class="w-3/4 py-2 px-4 mb-4 border rounded-md bg-gray-300 text-gray-700 leading-tight text-sm 0" id="{{ $key }}">
-                            {{ $value ? $this->getValue($key, $value) : '&nbsp;' }}
+                            {{ $value ? $this->getValue($key, $value) : '-' }}
                         </div>
                     @endif
                 @endforeach
