@@ -8,6 +8,7 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.scripts.alpine')
+    @include('partials.scripts.functions')
     @include('partials.scripts.choices')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @livewireStyles
