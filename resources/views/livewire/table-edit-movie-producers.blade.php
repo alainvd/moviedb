@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="mb-4 text-lg">
         <h3>
         @if($fiche == 'dist')
@@ -193,11 +193,13 @@
                     @endif
 
                     @if($fiche == 'devPrev')
+                    {{-- The isAmount formatting in the modal is not working --}}
                     <div>
                         <x-form.input-trailing
                             :id="'producer_budget'"
                             :label="'Budget'"
                             :trailing="'€'"
+                            :isAmount="false"
                             :hasError="$errors->has('editing.budget')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.budget')"
                             wire:model="editing.budget"
