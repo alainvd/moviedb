@@ -6,7 +6,9 @@
 
     <div class="px-4 bg-white">
 
+        @if(empty($print))
         @include('dossiers.instructions.index', ['dossier' => $dossier])
+        @endif
 
         <form id="dossier-form" action="{{ route('dossiers.update', $dossier->id) }}" method="POST">
             @csrf

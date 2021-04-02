@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\VideoGamePrevForm;
-use Barryvdh\DomPDF\Facade as PDF;
+use Meneses\LaravelMpdf\Facades\LaravelMpdf as LaravelMpdf;
 
 class FicheController extends Controller
 {
@@ -141,8 +141,8 @@ class FicheController extends Controller
 
     public static function downloadFiche(Fiche $fiche) {
 
-        // dompdf
-        $pdf = PDF::loadView(self::template($fiche), self::prepareFiche($fiche));
+        // mpdf
+        $pdf = LaravelMpdf::loadView(self::template($fiche), self::prepareFiche($fiche));
         return $pdf->stream();
 
     }

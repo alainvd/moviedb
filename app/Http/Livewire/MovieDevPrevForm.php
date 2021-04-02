@@ -50,7 +50,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
-        // dependant fields
+        // dependent fields
         'movie.link_applicant_work_person_name' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
         'movie.link_applicant_work_person_position' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
         'movie.link_applicant_work_person_credit' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
@@ -71,13 +71,11 @@ class MovieDevPrevForm extends FicheMovieFormBase
     public function saveFiche()
     {
         parent::saveFiche();
-
     }
 
     public function submitFiche()
     {
         parent::submitFiche();
-
     }
 
     public function specialValidation()

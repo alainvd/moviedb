@@ -13,7 +13,7 @@ class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
             'editing.city' => 'string',
             'editing.country' => 'required|string',
             'editing.language' => 'string',
-            'editing.share' => 'required|integer|min:1|max:100',
+            'editing.share' => 'required|numeric|min:1|max:100',
             'editing.budget' => 'required|integer',
         ] + TableEditBase::rules();
     }
@@ -28,9 +28,9 @@ class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
         return view('livewire.table-edit-movie-producers', ['fiche' => 'devPrev', 'rules' => $this->rules()]);
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        parent::mount($movie_id);
+        parent::mount($movie_id, $isApplicant, $isEditor);
         $this->recalculateBudget();
     }
 

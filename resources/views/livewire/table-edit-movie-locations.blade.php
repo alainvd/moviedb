@@ -1,7 +1,7 @@
 <div>
 
     <div class="mb-8 text-lg">
-        Locations
+        <h3>Locations</h3>
     </div>
 
     <div x-data="{ points_total: {{ $points_total }} }">
@@ -17,16 +17,20 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">
-                        @if(isset($item['required']) && $item['required'])<span class="text-red-500">*</span>@endif
+                    <x-table.cell class="text-left">
                         {{ !empty($item['type']) ? $locationTypes[$item['type']] : '' }}
+                        @if($item['required'])<span class="text-red-500">*</span>@endif
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countries_by_code[$item['country']]['name'] : '' }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ !empty($item['country']) ? $countriesByCode[$item['country']]['name'] : '' }}</x-table.cell>
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
+                        @if(!$item['required'])
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>
+                        @else
+                        <span class="text-gray-400 print:hidden">Delete</span>
+                        @endif
                     </x-table.cell>@endif
                 </x-table.row>
                 @endforeach
@@ -90,11 +94,17 @@
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
-                            wire:model="editing.country">
+                            wire:model="editing.country"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+                            
                         </x-form.select>
 
                         @error('editing.country')

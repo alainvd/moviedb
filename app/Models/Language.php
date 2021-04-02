@@ -34,4 +34,28 @@ class Language extends Model
     {
         return strtoupper($this->code);
     }
+
+    public static function languagesValueLabel() {
+        return Language::where('active', true)
+            ->orderBy('position')
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($lang) => [
+                'value' => $lang->id,
+                'label' => $lang->name,
+            ])
+            ->toArray();
+    }
+
+    public static function languagesCodeName() {
+        return Language::where('active', true)
+            ->orderBy('position')
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($lang) => [
+                'code' => $lang->code,
+                'name' => $lang->name,
+            ])
+            ->toArray();
+    }
 }

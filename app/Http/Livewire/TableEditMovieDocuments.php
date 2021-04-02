@@ -68,8 +68,9 @@ class TableEditMovieDocuments extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
+        parent::mount($movie_id, $isApplicant, $isEditor);
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();

@@ -3,22 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Movie;
-use App\Models\Country;
 use App\Models\SalesDistributor;
-use Illuminate\Support\Facades\Log;
 
 class TableEditMovieSalesDistributors extends TableEditBase
 {
 
     public Movie $movie;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
-
-    public $countries_value_label = [];
-
-    public $distributorRoles;
 
     protected function defaults()
     {
@@ -56,22 +46,10 @@ class TableEditMovieSalesDistributors extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->countries_value_label = Country::where('active', true)
-            ->get()
-            ->map(fn ($country) => [
-                'value' => $country->id,
-                'label' => $country->name,
-            ])
-            ->toArray();
-        $this->distributorRoles = [
-            'PLATFORM' => 'Platform',
-            'DISTRIBUTOR' => 'Distributor',
-            'BROADCASTER' => 'Broadcaster',
-        ];
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();
@@ -94,7 +72,7 @@ class TableEditMovieSalesDistributors extends TableEditBase
 
         // Reinit Choices widget with different country values
         $editing_countries_ids = collect($this->editing['countries'])->pluck('id')->toArray();
-        $countries_values = collect($this->countries_value_label)->filter(
+        $countries_values = collect($this->countriesValueLabel)->filter(
             function ($c) use ($editing_countries_ids) {
                 return in_array($c['value'], $editing_countries_ids);
             }
