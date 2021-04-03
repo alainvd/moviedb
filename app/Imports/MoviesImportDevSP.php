@@ -45,7 +45,7 @@ class MoviesImportDevSP implements ToModel, WithHeadingRow, WithChunkReading
         return new Movie([
             'id' => $row['id_code_film'],
             'original_title' => $row['original_title'],
-            'logline' => $row['logline'],
+            'synopsis' => $row['logline'],
             'shooting_start' => $row['first_day_of_principal_photography'] ? $this->formatDate($row['first_day_of_principal_photography'], $row['id_code_film']) : null,
             'year_of_copyright' => $row['year_of_production'],
             'film_length' => $row['film_length'],

@@ -23,8 +23,6 @@ class MoviesImport implements ToCollection, WithHeadingRow
             Log::error("Caught exception in date transformation of Movie ID {$id}: " . $e->getMessage());
             return null;
         }
-
-
     }
 
     /**
@@ -33,7 +31,6 @@ class MoviesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-
             
             //Create the crew entry
             $movie = new Movie([
@@ -49,7 +46,6 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 'film_type' => $row['film_type'],
                 'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
                 'film_country_of_origin' => $row['film_country_of_origin'],
-                //'european_nationality_flag' => $row['european_nationality_flag'],
                 'photography_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
                 'photography_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,
                 'total_budget_currency_code' => $row['production_costs_currency'],

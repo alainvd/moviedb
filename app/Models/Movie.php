@@ -30,7 +30,6 @@ class Movie extends Model
      * Default attribute values
      */
     protected $attributes = [
-        // 'european_nationality_flag' => 'New',
     ];
 
     protected $dates = [
