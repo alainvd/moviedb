@@ -16,9 +16,7 @@ class AudiencesImport implements ToCollection, WithHeadingRow
      */
     public function collection(Collection $collection)
     {
-
         foreach ($collection as $row) {
-
 
             if ($row["film_audience"]) {
 

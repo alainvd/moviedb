@@ -4,11 +4,12 @@ namespace App\Imports;
 
 use App\Models\Crew;
 use App\Models\Movie;
-use App\Models\Person;
 use App\Models\Title;
+use App\Models\Person;
+use Illuminate\Support\Str;
+use App\Imports\RolesImport;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -28,6 +29,8 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
+            // print_r($row);
+
             //Get Person
             $actor = $this->getPerson($row);
 
@@ -38,25 +41,24 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             $title = $this->getTitle($row);
 
             //Create the crew entry
-            $crew = new Crew([
-                "points" => $row['film_staff_score'] ? $row['film_staff_score'] : null,
-                "person_id" => $actor->id,
-                "title_id" => $title->id,
-                "movie_id" => $movie->id
-            ]);
-            $crew->save();
+            if ($movie){
+                $crew = new Crew([
+                    "points" => $row['film_staff_score'] ? $row['film_staff_score'] : null,
+                    "person_id" => $actor->id,
+                    "title_id" => $title->id,
+                    "movie_id" => $movie->id
+                ]);
+                $crew->save();
+            }
 
         }
-
     }
 
     private function getTitle($row)
     {
-
-        return Title::firstWhere("name", "=", $row["film_role_name"]);
+        $title_code = RolesImport::rolesNameMap($row["film_role_name"]);
+        return Title::firstWhere("code", "=", $title_code);
     }
-
-
 
     private function getMovie($row)
     {
@@ -65,17 +67,28 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         return $movie;
     }
 
-
     public function getFirstName($fullname)
     {
-        return explode(" ", $fullname)[0];
+        if ($parts = explode(" ", $fullname)) {
+            return explode(" ", $fullname)[0];
+        }
+        else {
+            return "-";
+        }
     }
 
     public function getLastName($fullname, $firstname)
     {
-        return substr($fullname, strlen($firstname) + 1);
+        if ($firstname == "N/A") {
+            return "";
+        }
+        elseif (strlen($fullname) > strlen($firstname)) {
+            return substr($fullname, strlen($firstname) + 1);
+        }
+        else {
+            return '-';
+        }
     }
-
 
     /*/**
      * @param Collection $collection
@@ -97,16 +110,17 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
         $fullName = (Str::of(Str::title($row["film_staff_name"]))->trim());
         $firstName = $this->getFirstName($fullName);
         $lastName = $this->getLastName($fullName, $firstName);
-        echo($fullName . "\n");
-//        echo($this->getFirstName($fullName) . "\n");
-//        echo($lastName . "\n");
-//        echo("================================================\n");
+        // echo($fullName . "\n");
+        // echo($this->getFirstName($fullName) . "\n");
+        // echo($lastName . "\n");
+        // echo("================================================\n");
         $person = new Person([
-            "fullname" => $fullName,
             "firstname" => $firstName,
             "lastname" => $lastName,
-            "nationality1" => $row["film_staff_nationality_1_code"],
-            "country_of_residence" => $row["film_staff_residence_country_code"],
+            "gender" => 'NA',
+            "nationality1" => $row["film_staff_nationality_1_code"] ?? '',
+            "nationality2" => '',
+            "country_of_residence" => $row["film_staff_residence_country_code"] ?? '',
         ]);
         $person->save();
         return $person;

@@ -32,24 +32,23 @@ class ProducersImport implements ToCollection, WithHeadingRow, WithChunkReading
             //Get Movie
             $movie = $this->getMovie($row);
 
-             
-
             //Create the Producer
-            $producer = new Producer([
-                "movie_id" => $movie->id,
-                "role" => $row["film_role_name"],
-                "name" => $row["prod_name"],
-                "city" => $row["prod_city"],
-                "country" => $row["prod_country_code"],
-                "share" => $row["prod_share"],
-                
-            ]);
-            $producer->save();
+            if ($movie){
+                $producer = new Producer([
+                    "movie_id" => $movie->id,
+                    "role" => $row["film_role_name"],
+                    "name" => $row["prod_name"],
+                    "city" => $row["prod_city"],
+                    "country" => $row["prod_country_code"],
+                    "language" => "",
+                    "share" => $row["prod_share"],
+                ]);
+                $producer->save();
+            }
 
         }
 
     }
-
     
     private function getMovie($row)
     {
@@ -57,6 +56,5 @@ class ProducersImport implements ToCollection, WithHeadingRow, WithChunkReading
         $movie = Movie::where("legacy_id","=",$filmID)->first();
         return $movie;
     }
-
 
 }

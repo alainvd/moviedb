@@ -25,7 +25,7 @@ class TableEditMovieProducers extends TableEditBase
             'editing.city' => 'required|string|max:255',
             'editing.country' => 'required|string',
             'editing.language' => 'string',
-            'editing.share' => 'required|numeric|min:1|max:100',
+            'editing.share' => 'required|numeric|min:0|max:100',
             'editing.budget' => '',
         ] + TableEditBase::rules();
     }

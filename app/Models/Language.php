@@ -37,7 +37,7 @@ class Language extends Model
 
     public static function languagesValueLabel() {
         return Language::where('active', true)
-            ->orderBy('position')
+            ->orderBy('position', 'desc')
             ->orderBy('name')
             ->get()
             ->map(fn ($lang) => [
@@ -49,7 +49,7 @@ class Language extends Model
 
     public static function languagesCodeName() {
         return Language::where('active', true)
-            ->orderBy('position')
+            ->orderBy('position', 'desc')
             ->orderBy('name')
             ->get()
             ->map(fn ($lang) => [

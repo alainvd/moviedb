@@ -42,7 +42,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 'original_title' => $row['original_title'],
                 'year_of_copyright' => $row['year_of_copyright'],
                 'film_length' => $row['film_length'],
-                'film_format' => $row['film_format'],
+                // 'film_format' => $row['film_format'], // How to import 873 unique values?
                 'film_type' => $row['film_type'],
                 'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
                 'film_country_of_origin' => $row['film_country_of_origin'],

@@ -2,14 +2,15 @@
 
 namespace App\Imports;
 
-use App\Models\Location;
 use App\Models\Genre;
 use App\Models\Movie;
-use App\Models\Person;
 use App\Models\Title;
+use App\Models\Person;
+use App\Models\Country;
+use App\Models\Location;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -22,6 +23,46 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
 		return 1000;
 	}
 
+    public function locationsNameMap($location_name)
+    {
+        switch(strtolower($location_name)) {
+            case 'shooting location':
+            case 'shooting location 2':
+            case 'shooting location 3':
+            case 'shooting location 4':
+            case 'shooting location 5':
+            case 'shooting location 6':
+            case 'shooting location 7':
+            case 'shooting location 8':
+            case 'shooting location 9':
+                return 'SHOOT';
+
+            case 'post production location':
+            case 'post production location 2':
+            case 'post production location 3':
+            case 'post production location 4':
+            case 'post production location 5':
+            case 'post production location 6':
+            case 'post production location 7':
+            case 'post production location 8':
+            case 'post production location 9':
+                return 'POST';
+
+            case 'studio location':
+            case 'studio location 2':
+            case 'studio location 3':
+            case 'studio location 4':
+            case 'studio location 5':
+            case 'studio location 6':
+            case 'studio location 7':
+            case 'studio location 8':
+            case 'studio location 9':
+                return 'STUDIO';
+        }
+        echo "Error: no match for location name '".$location_name."'";
+    }
+
+
     /**
      * @param Collection $collection
      */
@@ -29,88 +70,36 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            //Get Person
-            $actor = $this->getPerson($row);
+            // print_r($row);
 
             //Get Movie
             $movie = $this->getMovie($row);
 
-            //Get Title
-            $title = $this->getTitle($row);
+            //Get country from location name
+            $country = Country::firstWhere("name", "=", $row['film_staff_name']);
 
             //Create the crew entry
-            $crew = new Location([
-                "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
-                "person_id" => $actor->id,
-                "title_id" => $title->id,
-                "movie_id" => $movie->id
-            ]);
-            $crew->save();
+            if ($movie) {
+                $location = new Location([
+                    "movie_id" => $movie->id,
+                    "type" => $this->locationsNameMap($row['film_role_name']),
+                    "name" => $row['film_staff_name'],
+                    "country" => $country ? $country->code : null,
+                    // "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
+                    "points" => null,
+                ]);
+                $location->save();
+            }
 
         }
 
     }
-
-    private function getTitle($row)
-    {
-
-        return Title::firstWhere("name", "=", $row["film_role_name"]);
-    }
-
-
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
         $movie = Movie::where("legacy_id","=",$filmID)->first();
         return $movie;
-    }
-
-
-    public function getFirstName($fullname)
-    {
-        return explode(" ", $fullname)[0];
-    }
-
-    public function getLastName($fullname, $firstname)
-    {
-        return substr($fullname, strlen($firstname) + 1);
-    }
-
-
-    /*/**
-     * @param Collection $collection
-     * @return Collection
-     */
-    /* public function getActors(Collection $collection): Collection
-    {
-        $actors = $collection->filter(function ($row, $key) {
-            return (strpos($row["film_role_name"], 'Actor') !== false);
-        });
-        return $actors;
-    } */
-
-    /**
-     * @param $actor
-     */
-    public function getPerson($row): Person
-    {
-        $fullName = (Str::of(Str::title($row["film_staff_name"]))->trim());
-        $firstName = $this->getFirstName($fullName);
-        $lastName = $this->getLastName($fullName, $firstName);
-        echo($fullName . "\n");
-//        echo($this->getFirstName($fullName) . "\n");
-//        echo($lastName . "\n");
-//        echo("================================================\n");
-        $person = new Person([
-            "fullname" => $fullName,
-            "firstname" => $firstName,
-            "lastname" => $lastName,
-            "nationality1" => $row["film_staff_nationality_1_code"],
-            "country_of_residence" => $row["film_staff_residence_country"],
-        ]);
-        $person->save();
-        return $person;
     }
 
 }
