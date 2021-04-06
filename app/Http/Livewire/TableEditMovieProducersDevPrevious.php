@@ -13,7 +13,7 @@ class TableEditMovieProducersDevPrevious extends TableEditMovieProducers
             'editing.city' => 'string',
             'editing.country' => 'required|string',
             'editing.language' => 'string',
-            'editing.share' => 'required|integer|min:1|max:100',
+            'editing.share' => 'required|numeric|min:0|max:100',
             'editing.budget' => 'required|integer',
         ] + TableEditBase::rules();
     }

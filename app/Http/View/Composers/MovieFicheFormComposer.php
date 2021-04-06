@@ -17,8 +17,8 @@ class MovieFicheFormComposer
      */
     public function compose(View $view)
     {
-        $movieAudiences = Audience::all()->where('type', 'App\Models\Movie')->toArray();
-        $gameAudiences = Audience::all()->where('type', 'App\Models\VideoGame')->toArray();
+        $movieAudiences = Audience::all()->where('type', 'Movie')->toArray();
+        $gameAudiences = Audience::all()->where('type', 'VideoGame')->toArray();
         $allAudiencesById = Audience::all()->keyBy('id')->toArray();
         $countries = Country::countries();
         $countriesGrouped = Country::countriesGrouped();

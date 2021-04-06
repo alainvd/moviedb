@@ -17,99 +17,123 @@ class LanguageSeeder extends Seeder
         DB::table('languages')->insert([
             [
                 'code' => 'bg',
-                'name' => 'български'
+                'name' => 'български',
+                'position' => 0
             ],
             [
                 'code' => 'es',
-                'name' => 'español'
+                'name' => 'español',
+                'position' => 0
             ],
             [
                 'code' => 'cs',
-                'name' => 'čeština'
+                'name' => 'čeština',
+                'position' => 0
             ],
             [
                 'code' => 'da',
-                'name' => 'dansk'
+                'name' => 'dansk',
+                'position' => 0
             ],
             [
                 'code' => 'de',
-                'name' => 'Deutsch'
+                'name' => 'Deutsch',
+                'position' => 0
             ],
             [
                 'code' => 'et',
-                'name' => 'eesti'
+                'name' => 'eesti',
+                'position' => 0
             ],
             [
                 'code' => 'el',
-                'name' => 'ελληνικά'
+                'name' => 'ελληνικά',
+                'position' => 0
             ],
             [
                 'code' => 'en',
-                'name' => 'English'
+                'name' => 'English',
+                'position' => 0
             ],
             [
                 'code' => 'fr',
-                'name' => 'français'
+                'name' => 'français',
+                'position' => 0
             ],
             [
                 'code' => 'ga',
-                'name' => 'Gaeilge'
+                'name' => 'Gaeilge',
+                'position' => 0
             ],
             [
                 'code' => 'hr',
-                'name' => 'hrvatski'
+                'name' => 'hrvatski',
+                'position' => 0
             ],
             [
                 'code' => 'it',
-                'name' => 'italiano'
+                'name' => 'italiano',
+                'position' => 0
             ],
             [
                 'code' => 'lv',
-                'name' => 'latviešu'
+                'name' => 'latviešu',
+                'position' => 0
             ],
             [
                 'code' => 'lt',
-                'name' => 'lietuvių'
+                'name' => 'lietuvių',
+                'position' => 0
             ],
             [
                 'code' => 'hu',
-                'name' => 'magyar'
+                'name' => 'magyar',
+                'position' => 0
             ],
             [
                 'code' => 'mt',
-                'name' => 'Malti'
+                'name' => 'Malti',
+                'position' => 0
             ],
             [
                 'code' => 'nl',
-                'name' => 'Nederlands'
+                'name' => 'Nederlands',
+                'position' => 0            
             ],
             [
                 'code' => 'pl',
-                'name' => 'polski'
+                'name' => 'polski',
+                'position' => 0
             ],
             [
                 'code' => 'pt',
-                'name' => 'português'
+                'name' => 'português',
+                'position' => 0
             ],
             [
                 'code' => 'ro',
-                'name' => 'română'
+                'name' => 'română',
+                'position' => 0
             ],
             [
                 'code' => 'sk',
-                'name' => 'slovenčina'
+                'name' => 'slovenčina',
+                'position' => 0
             ],
             [
                 'code' => 'sl',
-                'name' => 'slovenščina'
+                'name' => 'slovenščina',
+                'position' => 0
             ],
             [
                 'code' => 'fi',
-                'name' => 'suomi'
+                'name' => 'suomi',
+                'position' => 0
             ],
             [
                 'code' => 'sv',
-                'name' => 'svenska'
+                'name' => 'svenska',
+                'position' => 0
             ],
         ]);
     }

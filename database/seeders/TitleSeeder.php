@@ -105,6 +105,25 @@ class TitleSeeder extends Seeder
             'name' => 'Voice-over',
             'code' => 'VOICEOVER'
         ],
+        [
+            'name' => 'Co-producer',
+            'code' => 'COPRODUCER'
+        ],
+        // Not in data set
+        // [
+        //     'name' => 'Sales Agent',
+        //     'code' => 'SA'
+        // ],
+        // Not in data set
+        // [
+        //     'name' => 'Other',
+        //     'code' => 'ROLOTH'
+        // ],
+        // Not in data set
+        // [
+        //     'name' => 'Principal Cast',
+        //     'code' => 'ROLPCA'
+        // ],
     ];
 
     /**

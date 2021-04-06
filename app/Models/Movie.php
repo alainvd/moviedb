@@ -30,7 +30,6 @@ class Movie extends Model
      * Default attribute values
      */
     protected $attributes = [
-        // 'european_nationality_flag' => 'New',
     ];
 
     protected $dates = [
@@ -206,12 +205,12 @@ class Movie extends Model
 
     public function scopeFilterGroupedDirectorNames($query, $value)
     {
-        $query->whereHas('crew', function ($query) use ($value) {
+        $query->whereHas('people', function ($query) use ($value) {
             /*$query->where('people.id', $value);*/
             $query
             ->leftJoin('crews', 'crews.person_id', 'people.id')
             ->whereRaw("CONCAT(crew.people.firstname,'',crew.people.lastname) = '$value'");
-            dd($query);
+            
         });
     }
 

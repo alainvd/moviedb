@@ -31,7 +31,7 @@ class TableEditExampleSimple extends TableEditBase
             'editing.name' => 'required|string|max:255',
             'editing.city' => 'required|string|max:255',
             'editing.country' => 'required|string',
-            'editing.share' => 'required|integer|min:1|max:100',
+            'editing.share' => 'required|numeric|min:0|max:100',
             'editing.budget' => '',
         ] + TableEditBase::rules();
     }

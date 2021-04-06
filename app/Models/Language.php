@@ -17,6 +17,7 @@ class Language extends Model
     protected $fillable = [
         'code',
         'name',
+        'position',
     ];
 
     public function movies()
@@ -36,21 +37,25 @@ class Language extends Model
 
     public static function languagesValueLabel() {
         return Language::where('active', true)
-        ->get()
-        ->map(fn ($lang) => [
-            'value' => $lang->id,
-            'label' => $lang->name,
-        ])
-        ->toArray();
+            ->orderBy('position', 'desc')
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($lang) => [
+                'value' => $lang->id,
+                'label' => $lang->name,
+            ])
+            ->toArray();
     }
 
     public static function languagesCodeName() {
         return Language::where('active', true)
-        ->get()
-        ->map(fn ($lang) => [
-            'code' => $lang->code,
-            'name' => $lang->name,
-        ])
-        ->toArray();
+            ->orderBy('position', 'desc')
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($lang) => [
+                'code' => $lang->code,
+                'name' => $lang->name,
+            ])
+            ->toArray();
     }
 }
