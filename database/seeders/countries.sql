@@ -26,6 +26,7 @@
 DROP TABLE IF EXISTS `countries`;
 
 CREATE TABLE `countries` (
+                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                              `group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                              `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                              `parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -39,7 +40,8 @@ CREATE TABLE `countries` (
                              `created_at` timestamp NULL DEFAULT NULL,
                              `updated_at` timestamp NULL DEFAULT NULL,
                              `longitude` double DEFAULT NULL,
-                             `latitude` double DEFAULT NULL
+                             `latitude` double DEFAULT NULL,
+                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `countries` WRITE;
