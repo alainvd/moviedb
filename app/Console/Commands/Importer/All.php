@@ -56,5 +56,8 @@ class All extends Command
         $this->call('import:locations'); // Locations.php
         $this->call('import:producers'); // Producers.php // takes a long time
         $this->call('import:sa'); // SalesAgents.php
+
+        // for testing
+        $this->call(\Database\Seeders\CallSeeder::class);
     }
 }
