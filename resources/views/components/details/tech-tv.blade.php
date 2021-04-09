@@ -83,7 +83,7 @@
             'label' => 'Shooting languages',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
-            'options' => json_encode($languagesValueLabel),
+            'options' => json_encode($languagesValueLabelGroupedChoices),
             'items' => json_encode($languagesSelected),
         ])
 
