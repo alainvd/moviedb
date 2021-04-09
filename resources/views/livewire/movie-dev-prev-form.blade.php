@@ -60,7 +60,7 @@
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
-            :languagesValueLabelGroupedChoices="$languagesValueLabelGroupedChoices"
+            :languagesGroupedChoices="$languagesGroupedChoices"
             :languagesSelected="$shootingLanguages"
         ></x-details.tech>
     </div>
