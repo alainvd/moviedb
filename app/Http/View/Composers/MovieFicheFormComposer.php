@@ -27,6 +27,7 @@ class MovieFicheFormComposer
         $movieGenres = Genre::where('type', 'Movie')->get()->toArray();
         $gameGenres = Genre::where('type', 'VideoGame')->get()->toArray();
         $allGenresById = Genre::get()->keyBy('id')->toArray();
+        $languagesGrouped = Language::languagesGrouped();
         $languagesGroupedChoices = Language::languagesGroupedChoices();
         $languagesCodeName = Language::languagesCodeName();
         $statuses = Status::all()->toArray();
@@ -45,6 +46,7 @@ class MovieFicheFormComposer
         $view->with('movieGenres', $movieGenres);
         $view->with('gameGenres', $gameGenres);
         $view->with('allGenresById', $allGenresById);
+        $view->with('languagesGrouped', $languagesGrouped);
         $view->with('languagesGroupedChoices', $languagesGroupedChoices);
         $view->with('languagesCodeName', $languagesCodeName);
         $view->with('platforms', Movie::PLATFORMS);

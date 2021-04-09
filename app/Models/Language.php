@@ -35,6 +35,16 @@ class Language extends Model
         return strtoupper($this->code);
     }
 
+    public static function languagesGrouped() {
+        $languagesGrouped = Language::where('active', true)
+            ->orderBy('position', 'desc')
+            ->orderBy('name')
+            ->get()
+            ->groupBy('position')
+            ->toArray();
+        return $languagesGrouped;
+    }
+
     public static function languagesGroupedChoices() {
         $l = Language::where('active', true)
             ->orderBy('position', 'desc')
