@@ -161,9 +161,13 @@
                             :isRequired="FormHelpers::isRequired($rules, 'editing.language')"
                             wire:model="editing.language"
                         >
-                
-                            @foreach ($languagesCodeName as $language)
-                                <option value="{{ $language['code'] }}">{{$language['name']}}</option>
+
+                            @foreach ($languagesGrouped as $group=>$languages)
+                                <optgroup label="---">
+                                    @foreach ($languages as $language)
+                                        <option value="{{ $language['code'] }}">{{ $language['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
                 
                         </x-form.select>
