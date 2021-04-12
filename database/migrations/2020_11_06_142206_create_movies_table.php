@@ -26,7 +26,7 @@ class CreateMoviesTable extends Migration
             $table->string('eidr')->nullable();
             $table->date('delivery_date')->nullable();
             $table->date('broadcast_date')->nullable();
-            $table->string('film_length')->nullable();
+            $table->integer('film_length')->nullable();
             $table->integer('number_of_episodes')->nullable();
             $table->integer('length_of_episodes')->nullable();
             $table->string('film_country_of_origin')->nullable();
