@@ -16,7 +16,7 @@ class CreateFichesTable extends Migration
         Schema::create('fiches', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('movie_id');
-            $table->unsignedSmallInteger('status_id');
+            $table->unsignedSmallInteger('status_id')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->text('comments')->nullable();
