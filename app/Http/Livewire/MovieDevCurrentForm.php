@@ -73,6 +73,45 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
+    protected $rulesDraft = [
+        'movie.original_title' => 'required|string|max:255',
+        'fiche.status_id' => 'integer',
+        'movie.film_country_of_origin' => 'string',
+        'movie.audience_id' => 'integer',
+        'movie.genre_id' => 'integer',
+        'movie.delivery_platform' => 'string',
+        'movie.user_experience' => 'string',
+        'movie.film_type' => 'string',
+
+        'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.shooting_language' => '',
+        'movie.development_costs_in_euro' => 'integer',
+        'movie.film_length' => 'integer',
+        'movie.number_of_episodes' => 'integer',
+        'movie.length_of_episodes' => 'integer',
+
+        'movie.rights_origin_of_work' => 'string',
+        'movie.rights_contract_type' => 'string',
+        'movie.rights_contract_start_date' => 'date:d.m.Y',
+        'movie.rights_contract_end_date' => 'date:d.m.Y',
+        'movie.rights_contract_signature_date' => 'date:d.m.Y',
+        // dependent fields
+        'movie.rights_adapt_author_name' => 'string',
+        'movie.rights_adapt_original_title' => 'string',
+        'movie.rights_adapt_contract_type' => 'string',
+        'movie.rights_adapt_contract_start_date' => 'date:d.m.Y',
+        'movie.rights_adapt_contract_end_date' => 'date:d.m.Y',
+        'movie.rights_adapt_contract_signature_date' => 'date:d.m.Y',
+
+        'movie.total_budget_euro' => 'integer',
+
+        'fiche.comments' => 'string',
+    ];
+
     public function rules()
     {
         return $this->rules;

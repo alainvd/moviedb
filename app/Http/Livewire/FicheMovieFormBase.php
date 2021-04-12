@@ -138,12 +138,7 @@ class FicheMovieFormBase extends FicheFormBase
         }
 
         // Bare bones validation
-        $this->validate([
-            'movie.original_title' => 'required',
-            'fiche.status_id' => 'required',
-            'movie.genre_id' => 'required',
-            'movie.film_type' => 'required',
-        ]);
+        $this->validate($this->rulesDraft);
 
         unset($this->movie->shooting_language);
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
