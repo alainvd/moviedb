@@ -95,13 +95,14 @@ class Distributors extends Component
     {
         $this->validate();
 
-        // $this->currentDistributor->created_by = $this->user->id;
         if ($this->editId) {
+            $this->currentDistributor->updated_by = $this->user->id;
             $this->movie
                 ->distributors()
                 ->find($this->editId)
                 ->update($this->currentDistributor->toArray());
         } else {
+            $this->currentDistributor->created_by = $this->user->id;
             $this->movie
                 ->distributors()
                 ->save($this->currentDistributor);

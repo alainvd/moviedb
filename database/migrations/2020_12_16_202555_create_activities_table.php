@@ -16,17 +16,10 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('log_model')->nullable();
             $table->timestamps();
         });
     }
-
-    /**
-     * fiecare action are activities
-     * fiecare call are un action
-     * fiecare dossier are un call
-     * fiecare fiche are...un dossier_id si un activity
-     *
-     */
 
     /**
      * Reverse the migrations.

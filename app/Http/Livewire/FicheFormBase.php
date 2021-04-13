@@ -93,7 +93,7 @@ class FicheFormBase extends Component
                 ];
             }
             $routes[] = [
-                    'title' => 'Edit fiche'    
+                    'title' => 'Edit fiche'
             ];
             return $routes;
         } else {

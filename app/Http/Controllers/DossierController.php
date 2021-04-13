@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Dossier;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Meneses\LaravelMpdf\LaravelMpdf as LaravelMpdf;
 
 class DossierController extends Controller
@@ -38,7 +41,7 @@ class DossierController extends Controller
         $print = true;
 
         return compact('crumbs', 'dossier', 'layout', 'pageTitles', 'print');
-        
+
     }
 
     public function printDossier(Dossier $dossier) {
@@ -50,7 +53,7 @@ class DossierController extends Controller
     public function downloadFullDossier(Dossier $dossier) {
 
         $output = $this->printDossier($dossier);
-        
+
         // get related fiches
         // html output
         // $fiches = $dossier->fiches;
@@ -97,5 +100,5 @@ class DossierController extends Controller
         // return $pdf->stream();
 
     }
-    
+
 }
