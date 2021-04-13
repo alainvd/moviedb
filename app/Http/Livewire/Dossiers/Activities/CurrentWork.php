@@ -6,12 +6,6 @@ use Livewire\Component;
 
 class CurrentWork extends BaseActivity
 {
-    public function mount()
-    {
-        $this->logModel = 'Current Work';
-        parent::mount();
-    }
-
     public function getUrlProperty()
     {
         $params = [

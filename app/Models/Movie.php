@@ -33,6 +33,7 @@ class Movie extends Model
 
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
+    protected static $recordEvents = ['updated'];
 
     /**
      * Default attribute values

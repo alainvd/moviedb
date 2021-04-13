@@ -125,7 +125,7 @@ class MovieWizard extends Component
                 $query->whereNotIn('status_id', function ($query) {
                     $query->select('id')
                         ->from('statuses')
-                        ->whereIn('name', ['Duplicated']);
+                        ->whereIn('name', ['Duplicated', 'Draft']);
                 });
             });
 

@@ -40,14 +40,18 @@ class BaseActivity extends Component
     public function delete()
     {
         if ($this->deletingId) {
-            // @todo implement remove in child component
             $this->dossier->fiches()->detach($this->deletingId);
+            $model = Str::of(class_basename($this))
+                ->singular()
+                ->replaceMatches("/(?<=\\w)(?=[A-Z])/", " $1")
+                ->lowercase()
+                ->ucfirst();
             // Add activity log
             activity()
                 ->on($this->dossier)
                 ->by(Auth::user())
                 ->withProperties([
-                    'model' => $this->logModel,
+                    'model' => $model,
                     'operation' => 'removed',
                     'movie' => Fiche::find($this->deletingId)->movie->toArray()
                 ])->log('removed');

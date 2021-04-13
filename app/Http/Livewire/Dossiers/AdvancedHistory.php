@@ -50,6 +50,9 @@ class AdvancedHistory extends Component
 
     public function getValue($key, $value)
     {
+        $parts = explode('.', $key);
+        $key = count($parts) > 1 ? $parts[1] : $parts[0];
+
         switch ($key) {
             case 'status_id':
                 return Status::find($value)->name;
