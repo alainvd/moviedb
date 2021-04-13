@@ -204,9 +204,8 @@
 //
 //        $this->movie = Movie::factory()->make([
 //            'eidr' => null,
-//            'shooting_start' => null,
-//            'shooting_end' => null,
-//            'european_nationality_flag' => null,
+//            'photography_start' => null,
+//            'photography_end' => null,
 //        ]);
 //        $this->media = Media::make([
 //            'grantable_type' => 'App\Models\Movie',

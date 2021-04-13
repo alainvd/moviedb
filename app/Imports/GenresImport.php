@@ -18,7 +18,6 @@ class GenresImport implements ToCollection, WithHeadingRow
     {
         foreach ($collection as $row) {
 
-
             if ($row["media_film_detailsfilm_genre"]) {
 
                 $movie = Movie::where(

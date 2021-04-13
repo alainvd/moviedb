@@ -6,16 +6,16 @@
                 {{ $fiche->movie->original_title }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
-                {{ $fiche->movie->genre->name }}
+                {{ !empty($fiche->movie->genre) ? $fiche->movie->genre->name : '' }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
-                {{ $fiche->movie->film_type ? App\Models\Movie::FILM_TYPES[$fiche->movie->film_type] : '' }}
+                {{ !empty($fiche->movie->film_type) ? App\Models\Movie::FILM_TYPES[$fiche->movie->film_type] : '' }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
-                @euro($fiche->movie->total_budget_euro)
+                {{ !empty($fiche->movie->total_budget_euro) ? euro($fiche->movie->total_budget_euro) : '' }}
             </x-table.cell>
-            <x-table.cell class="tracking-tight text-center font-md uppercase {{ $fiche->status->name === 'Draft' ?  'text-red-600' : '' }}">
-                {{ $fiche->status->name }}
+            <x-table.cell class="tracking-tight text-center font-md {{ (!empty($fiche->status) && $fiche->status->name === 'Draft') ?  'text-red-600' : '' }}">
+                {{ !empty($fiche->status) ? $fiche->status->name : '' }}
             </x-table.cell>
             @if(empty($print))
             <x-table.cell class="space-x-2 text-center">
@@ -35,7 +35,7 @@
                 {{ $fiche->movie->original_title }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
-                {{ $fiche->movie->genre->name }}
+                {{ !empty($fiche->movie->genre) ? $fiche->movie->genre->name : '' }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->year_of_copyright }}
@@ -43,8 +43,8 @@
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->id }}
             </x-table.cell>
-            <x-table.cell class="tracking-tight text-center font-md {{ $fiche->status->name === 'Draft' ?  'text-red-600' : '' }}">
-                {{ $fiche->status->name }}
+            <x-table.cell class="tracking-tight text-center font-md {{ (!empty($fiche->status) && $fiche->status->name === 'Draft') ?  'text-red-600' : '' }}">
+                {{ !empty($fiche->status) ? $fiche->status->name : '' }}
             </x-table.cell>
             @if(empty($print))
             <x-table.cell class="space-x-2 text-center">

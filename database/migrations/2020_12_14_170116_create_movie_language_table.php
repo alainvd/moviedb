@@ -16,6 +16,7 @@ class CreateMovieLanguageTable extends Migration
         Schema::create('movie_language', function (Blueprint $table) {
             $table->unsignedBigInteger('movie_id');
             $table->unsignedBigInteger('language_id');
+
         });
     }
 

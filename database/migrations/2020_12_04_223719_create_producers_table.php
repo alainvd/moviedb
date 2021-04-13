@@ -21,8 +21,8 @@ class CreateProducersTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('language')->nullable();
-            $table->integer('share')->nullable();
-            $table->integer('budget')->nullable();
+            $table->decimal('share')->nullable();
+            $table->bigInteger('budget')->nullable();
             $table->timestamps();
         });
     }

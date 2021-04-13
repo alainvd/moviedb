@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.scripts.webtools')
     @include('partials.scripts.alpine')
+    @include('partials.scripts.functions')
     @include('partials.scripts.choices')
     @include('partials.scripts.ecl')
     @include('partials.scripts.cck')

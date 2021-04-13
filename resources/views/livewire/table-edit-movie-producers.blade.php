@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="mb-4 text-lg">
         <h3>
         @if($fiche == 'dist')
@@ -161,9 +161,13 @@
                             :isRequired="FormHelpers::isRequired($rules, 'editing.language')"
                             wire:model="editing.language"
                         >
-                
-                            @foreach ($languagesCodeName as $language)
-                                <option value="{{ $language['code'] }}">{{$language['name']}}</option>
+
+                            @foreach ($languagesGrouped as $group=>$languages)
+                                <optgroup label="---">
+                                    @foreach ($languages as $language)
+                                        <option value="{{ $language['code'] }}">{{ $language['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
                 
                         </x-form.select>
@@ -193,11 +197,13 @@
                     @endif
 
                     @if($fiche == 'devPrev')
+                    {{-- The isAmount formatting in the modal is not working --}}
                     <div>
                         <x-form.input-trailing
                             :id="'producer_budget'"
                             :label="'Budget'"
                             :trailing="'€'"
+                            :isAmount="false"
                             :hasError="$errors->has('editing.budget')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.budget')"
                             wire:model="editing.budget"

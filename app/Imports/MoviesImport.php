@@ -2,13 +2,15 @@
 
 namespace App\Imports;
 
-use App\Media;
+
 use App\Models\Movie;
+use App\Models\Fiche;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class MoviesImport implements ToModel, WithHeadingRow
+class MoviesImport implements ToCollection, WithHeadingRow
 {
 
     private function formatDate($date, $id)
@@ -21,41 +23,58 @@ class MoviesImport implements ToModel, WithHeadingRow
             Log::error("Caught exception in date transformation of Movie ID {$id}: " . $e->getMessage());
             return null;
         }
-
-
     }
 
     /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @param Collection $collection
      */
-    public function model(array $row)
+    public function collection(Collection $collection)
     {
+        foreach ($collection as $row) {
+            
+            $film_length = $row['film_length'];
+            if (!is_numeric($film_length)) {
+                $parts = explode(' ', $film_length);
+                if (is_numeric($parts[0])) {
+                    $film_length = $parts[0];
+                } else {
+                    $film_length = null;
+                }
+            }
 
-        return new Movie([
-            'legacy_id' => $row['id_code_film'],
-            'original_title' => $row['original_title'],
-            'shooting_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
-            'shooting_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,
-            'year_of_copyright' => $row['year_of_copyright'],
-            'film_length' => $row['film_length'],
-            'film_format' => $row['film_format'],
-            'film_type' => $row['film_type'],
-            'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
-            'film_score' => $row['film_score'],
-            'european_nationality_flag' => $row['european_nationality_flag'],
-            'production_costs_currency_date' => $row['production_costs_currency_date'],
-            'production_costs_currency' => $row['production_costs_currency'],
-            'production_costs' => $row['production_costs'],
-            'production_costs_in_euro' => $row['production_costs_in_euro'],
+            //Create the crew entry
+            $movie = new Movie([
+                'genre_id' => $row['film_genre'],
+                'audience_id' => $row['film_audience'],
+                'delivery_platform' => "CINEMA",
+                'film_type' => $row['film_type']?$row['film_type']:"ONEOFF",
+                'legacy_id' => $row['id_code_film'],
+                'original_title' => $row['original_title'],
+                'year_of_copyright' => $row['year_of_copyright'],
+                'film_length' => $film_length,
+                // 'film_format' => $row['film_format'], // How to import 873 unique values?
+                'film_type' => $row['film_type'],
+                'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
+                'film_country_of_origin' => $row['film_country_of_origin'],
+                'photography_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
+                'photography_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,
+                'total_budget_currency_code' => $row['production_costs_currency'],
+                'total_budget_currency_amount' => $row['production_costs'],
+                'total_budget_euro' => $row['production_costs_in_euro'],
+            ]);
+            $movie->save();
+            $fiche = new Fiche([
+                'movie_id' => $movie->id,
+                'status_id' => 3,
+                'created_by' => 1,
+                'type' => "dist",
+            ]);
+            $fiche->save();
 
-            //'production_budget_local_currency' => $row['production_budget_local_currency'],
-
-
-        ]);
-
+        }
 
     }
+
+    
 
 }

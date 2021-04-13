@@ -24,6 +24,7 @@ class LanguageFactory extends Factory
         return [
             'code' => $this->faker->languageCode,
             'name' => $this->faker->word,
+            'position' => 0,
         ];
     }
 }

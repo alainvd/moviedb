@@ -12,7 +12,7 @@
             :hasError="$errors->has('movie.rights_origin_of_work')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.rights_origin_of_work')"
             wire:model="movie.rights_origin_of_work"
-            value="{{ isset($movie->rights_origin_of_work) ? $workOrigins[$movie->rights_origin_of_work] : '' }}"
+            value="{{ !empty($movie->rights_origin_of_work) ? $workOrigins[$movie->rights_origin_of_work] : '' }}"
         >
 
             @foreach ($workOrigins as $key => $value)

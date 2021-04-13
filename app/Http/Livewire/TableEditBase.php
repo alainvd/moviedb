@@ -85,6 +85,7 @@ class TableEditBase extends Component
 
     protected function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
+        $this->editing = $this->defaults();
         $this->isApplicant = $isApplicant;
         $this->isEditor = $isEditor;
         $this->titles = Title::all()->keyBy('id')->toArray();
