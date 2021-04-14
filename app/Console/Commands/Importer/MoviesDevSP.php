@@ -40,6 +40,6 @@ class MoviesDevSP extends Command
     public function handle()
     {
 
-        Excel::import(new MoviesImportDevSP, 'Dev_SP_General.xlsx','excel');
+        Excel::import(new MoviesImportDevSP, 'Dev_SP_General_Old.xlsx','excel');
     }
 }

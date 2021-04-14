@@ -20,7 +20,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
 
     public function chunkSize(): int
 	{
-		return 1000;
+		return 500;
 	}
 
     /**
@@ -62,7 +62,6 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
         $filmID = $row["id_code_film"];
         echo($filmID);
         $movie = Movie::where("legacy_id","=",$filmID)->first();
-        dd($movie);
         return $movie;
     }
 

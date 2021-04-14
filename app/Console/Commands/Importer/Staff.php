@@ -40,7 +40,7 @@ class Staff extends Command
      */
     public function handle()
     {
-        Excel::import(new StaffImport, 'Dist_Film_Staff.xlsx', 'excel');
-        //Excel::import(new StaffImportDevSP, 'Dev_SP_Staff.xlsx', 'excel');
+        //Excel::import(new StaffImport, 'Dist_Film_Staff.xlsx', 'excel');
+        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff.xlsx', 'excel');
     }
 }
