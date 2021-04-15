@@ -18,6 +18,7 @@ use App\Models\Language;
 use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
 use Illuminate\Support\Facades\DB;
@@ -124,6 +125,17 @@ class FicheMovieFormBase extends FicheFormBase
     // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
+        // Integer fields with "" value should be stored as null
+        foreach ($this->rules() as $field => $rule) {
+            list($var, $atr) = explode('.', $field);
+            if (isset($this->{$var}->{$atr})) {
+                if ($this->{$var}->{$atr} == '') {
+                    if (Str::contains($rule, 'integer')) {
+                        $this->{$var}->{$atr} = NULL;
+                    }
+                }
+            }
+        }
 
         // Bare bones validation
         $this->validate([

@@ -69,7 +69,6 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-
             // print_r($row);
 
             //Get Movie

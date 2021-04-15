@@ -32,6 +32,16 @@ class MoviesImport implements ToCollection, WithHeadingRow
     {
         foreach ($collection as $row) {
             
+            $film_length = $row['film_length'];
+            if (!is_numeric($film_length)) {
+                $parts = explode(' ', $film_length);
+                if (is_numeric($parts[0])) {
+                    $film_length = $parts[0];
+                } else {
+                    $film_length = null;
+                }
+            }
+
             //Create the crew entry
             $movie = new Movie([
                 'genre_id' => $row['film_genre'],
@@ -41,7 +51,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 'legacy_id' => $row['id_code_film'],
                 'original_title' => $row['original_title'],
                 'year_of_copyright' => $row['year_of_copyright'],
-                'film_length' => $row['film_length'],
+                'film_length' => $film_length,
                 // 'film_format' => $row['film_format'], // How to import 873 unique values?
                 'film_type' => $row['film_type'],
                 'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
