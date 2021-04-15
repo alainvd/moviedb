@@ -46,12 +46,14 @@ class All extends Command
         $this->call(\Database\Seeders\UserSeeder::class);
 
         $this->call('import:movies'); // Movies.php
+        $this->call('import:moviestv'); // MoviesTv.php
         $this->call('import:genres'); // Genres.php
         $this->call('import:audiences'); // Audiences.php // Can use seeder as well
 
         // $this->call('import:roles'); // Roles.php // Use seeder instead
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
         $this->call('import:staff'); // Staff.php // takes a long time
+        $this->call('import:staffdevsp'); // StaffDevSP.php // takes a long time
 
         $this->call('import:locations'); // Locations.php
         $this->call('import:producers'); // Producers.php // takes a long time
@@ -59,5 +61,7 @@ class All extends Command
 
         // for testing
         $this->call(\Database\Seeders\CallSeeder::class);
+
+        $this->call('import:dossierstv'); // DossiersTv.php
     }
 }

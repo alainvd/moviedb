@@ -9,14 +9,14 @@ use App\Imports\MoviesImportTV;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Dossiers extends Command
+class DossiersTv extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:dossiers';
+    protected $signature = 'import:dossiersTv';
 
     /**
      * The console command description.
