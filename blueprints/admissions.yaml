@@ -31,4 +31,10 @@ models:
     relationships:
       belongsTo: Admission, Fiche
 
+controllers:
+  Admission:
+    index:
+      query: all
+      render: admission.index with:admissions
+
 seeders: Admission, AdmissionFilm

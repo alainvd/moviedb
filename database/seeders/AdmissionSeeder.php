@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Admission;
+use App\Models\Admission;
 use Illuminate\Database\Seeder;
 
 class AdmissionSeeder extends Seeder

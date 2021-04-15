@@ -39,5 +39,4 @@ class Admission extends Model
     {
         return $this->belongsTo(\App\Models\Country::class);
     }
-
 }

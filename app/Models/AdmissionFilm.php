@@ -64,7 +64,7 @@ class AdmissionFilm extends Model
 
     public function admission()
     {
-        return $this->belongsTo(\App\Admission::class);
+        return $this->belongsTo(\App\Models\Admission::class);
     }
 
     public function fiche()

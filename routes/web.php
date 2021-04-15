@@ -7,6 +7,8 @@ use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MovieDatatables;
+use App\Http\Livewire\MovieDevPrevForm;
+use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDevCurrentForm;
@@ -14,8 +16,7 @@ use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
-use App\Http\Livewire\MovieDevPrevForm;
-use App\Http\Livewire\VideoGamePrevForm;
+use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\CreateFicheController;
 
 /*
@@ -164,6 +165,7 @@ Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->onl
 Route::resource('sales-distributor', 'App\Http\Controllers\SalesDistributorController')->only('index');
 Route::resource('document', 'App\Http\Controllers\DocumentController')->only('index');
 Route::resource('location', 'App\Http\Controllers\LocationController')->only('index');
+Route::resource('admission', 'AdmissionController')->only('index');
 
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 
@@ -177,3 +179,5 @@ Route::get('/dossiers/{dossier:project_ref_id}/print', [DossierController::class
 Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierController::class, 'downloadFullDossier'])->middleware('cas.auth')->name('dossier-full-download');
 Route::get('/fiche/{fiche}/print', [FicheController::class, 'printFiche'])->middleware('cas.auth')->name('fiche-print');
 Route::get('/fiche/{fiche}/download', [FicheController::class, 'downloadFiche'])->middleware('cas.auth')->name('fiche-download');
+
+Route::get('admission', [AdmissionController::class, 'admissionForm'])->middleware('cas.auth')->name('admission-form');
