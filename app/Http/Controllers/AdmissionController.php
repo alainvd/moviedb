@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdmissionController extends Controller
 {
@@ -22,7 +23,7 @@ class AdmissionController extends Controller
 
         // TODO: complete this
         $crumbs = [];
-        $layout = 'ecl-layout';
+        $layout = (Auth::user()->hasRole('applicant') ? 'ecl-layout' : 'layout');
         $print = false;
 
         return compact('crumbs', 'layout', 'print');
