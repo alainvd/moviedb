@@ -165,7 +165,7 @@ Route::resource('sales-agent', 'App\Http\Controllers\SalesAgentController')->onl
 Route::resource('sales-distributor', 'App\Http\Controllers\SalesDistributorController')->only('index');
 Route::resource('document', 'App\Http\Controllers\DocumentController')->only('index');
 Route::resource('location', 'App\Http\Controllers\LocationController')->only('index');
-Route::resource('admission', 'AdmissionController')->only('index');
+Route::resource('admissions-table', 'App\Http\Controllers\AdmissionsTableController')->only('index');
 
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
 

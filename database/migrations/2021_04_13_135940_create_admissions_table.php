@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdmissionFilmsTable extends Migration
+class CreateAdmissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateAdmissionFilmsTable extends Migration
     {
         Schema::create('admissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('admission_id')->nullable();
+            $table->unsignedInteger('admissions_table_id')->nullable();
             $table->unsignedInteger('fiche_id')->nullable();
             $table->string('local_title')->nullable();
             $table->date('release_date')->nullable();

@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Admission;
+use App\Models\AdmissionsTable;
 
-class AdmissionFactory extends Factory
+class AdmissionsTableFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Admission::class;
+    protected $model = AdmissionsTable::class;
 
     /**
      * Define the model's default state.

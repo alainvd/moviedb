@@ -23,7 +23,7 @@ class AdmissionFactory extends Factory
     public function definition()
     {
         return [
-            'admission_id' => $this->faker->randomNumber(),
+            'admissions_table_id' => $this->faker->randomNumber(),
             'fiche_id' => $this->faker->randomNumber(),
             'local_title' => $this->faker->word,
             'release_date' => $this->faker->date(),
