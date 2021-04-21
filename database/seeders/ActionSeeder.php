@@ -32,7 +32,8 @@ class ActionSeeder extends Seeder
             // "DISTSAR1",
             // "DISTSAR2",
             "DISTSEL",
-            "TV"
+            "TV",
+            "DISTAUTOG"
         ];
 
 

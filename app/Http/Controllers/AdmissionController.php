@@ -19,21 +19,15 @@ class AdmissionController extends Controller
         return view('admission.index', compact('admissions'));
     }
 
-    public function prepare() {
+    public function prepare($admission) {
 
         // TODO: complete this
         $crumbs = [];
-        $layout = (Auth::user()->hasRole('applicant') ? 'ecl-layout' : 'layout');
-        $print = false;
+        /** @var \App\Models\User */
+        $currentUser = Auth::user();
+        $layout = ($currentUser->hasRole('applicant') ? 'ecl-layout' : 'layout');
 
-        return compact('crumbs', 'layout', 'print');
+        return compact('admission', 'crumbs', 'layout');
         
-    }
-
-
-    // just a simple form for now
-    public function admissionForm()
-    {
-        return view('admission.form', $this->prepare());
     }
 }

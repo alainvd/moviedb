@@ -33,7 +33,8 @@ class DossierController extends Controller
             'DEVSLATEMINI' => 'European Mini-slate Development',
             'CODEVELOPMENT' => 'European Co-development',
             'TV' => 'TV and Online Content',
-            'DEVVG' => 'Videogame development'
+            'DEVVG' => 'Videogame development',
+            'DISTAUTOG' => 'Distribution Automatic'
         ];
         $print = true;
 

@@ -88,6 +88,7 @@ class MovieWizard extends Component
             case 'DEVSLATEMINI':
             case 'CODEVELOPMENT':
             case 'TV':
+            case 'DISTAUTOG':
                 // Attach fiche for activity
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {

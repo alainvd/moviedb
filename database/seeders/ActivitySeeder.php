@@ -35,6 +35,10 @@ class ActivitySeeder extends Seeder
             [
                 'name' => 'short-films',
                 'actions' => ['DEVSLATE', 'DEVSLATEMINI']
+            ],
+            [
+                'name' => 'admissions',
+                'actions' => ['DISTAUTOG']
             ]
         ];
 
@@ -79,6 +83,7 @@ class ActivitySeeder extends Seeder
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],
+            'DISTAUTOG' => [],
         ];
 
         foreach ($activities as $activity) {
