@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\AdmissionFilm;
+use App\Models\AdmissionsTable;
 use Illuminate\Database\Seeder;
 
-class AdmissionFilmSeeder extends Seeder
+class AdmissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class AdmissionFilmSeeder extends Seeder
      */
     public function run()
     {
-        AdmissionFilm::factory()->count(5)->create();
+        AdmissionsTable::factory()->count(5)->create();
     }
 }

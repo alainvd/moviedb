@@ -13,7 +13,7 @@ class CreateAdmissionFilmsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admission_films', function (Blueprint $table) {
+        Schema::create('admissions', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('admission_id')->nullable();
             $table->unsignedInteger('fiche_id')->nullable();
@@ -46,6 +46,6 @@ class CreateAdmissionFilmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admission_films');
+        Schema::dropIfExists('admissions');
     }
 }

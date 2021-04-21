@@ -1,14 +1,14 @@
 models:
 
-  Models\Admission:
+  Models\AdmissionsTable:
     dossier_id: integer nullable unsigned
     country_id: integer nullable unsigned
     year: integer nullable
     relationships:
       belongsTo: Dossier, Country
 
-  Models\AdmissionFilm:
-    admission_id: integer nullable unsigned
+  Models\Admission:
+    admissions_table_id: integer nullable unsigned
     fiche_id: integer nullable unsigned
     local_title: string nullable
     release_date: date nullable
@@ -29,12 +29,12 @@ models:
     eligibility_justification: string nullable
     comments: text nullable
     relationships:
-      belongsTo: Admission, Fiche
+      belongsTo: AdmissionsTable, Fiche
 
 controllers:
-  Admission:
+  AdmissionsTable:
     index:
       query: all
-      render: admission.index with:admissions
+      render: admissions_table.index with:admissions_tables
 
-seeders: Admission, AdmissionFilm
+seeders: AdmissionsTable, Admission

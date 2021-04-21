@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admission;
+use App\Models\AdmissionsTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdmissionController extends Controller
+class AdmissionsTableController extends Controller
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -14,12 +14,12 @@ class AdmissionController extends Controller
      */
     public function index(Request $request)
     {
-        $admissions = Admission::all();
+        $admissionsTables = AdmissionsTable::all();
 
-        return view('admission.index', compact('admissions'));
+        return view('admissions_table.index', compact('admissionsTables'));
     }
 
-    public function prepare($admission) {
+    public function prepare($admissionsTable) {
 
         // TODO: complete this
         $crumbs = [];
@@ -27,7 +27,7 @@ class AdmissionController extends Controller
         $currentUser = Auth::user();
         $layout = ($currentUser->hasRole('applicant') ? 'ecl-layout' : 'layout');
 
-        return compact('admission', 'crumbs', 'layout');
+        return compact('admissionsTable', 'crumbs', 'layout');
         
     }
 }
