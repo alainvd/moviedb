@@ -24,7 +24,7 @@ class AdmissionsTables extends BaseActivity
         $this->admissionsTables = AdmissionsTable::where(['dossier_id' => $this->dossier->id])->get();
         $this->countriesById = Country::countriesById();
         $this->countriesGrouped = Country::countriesGrouped();
-        $this->years = range(date('Y'), date('Y') - 10);
+        $this->years = range(date('Y'), date('Y') - 11);
     }
 
     public function updated($name, $value)
@@ -35,9 +35,15 @@ class AdmissionsTables extends BaseActivity
 
     public function addTable()
     {
+        $firstCountryId = Country::where('active', true)
+            ->orderBy('group')
+            ->orderBy('position', 'asc')
+            ->orderBy('name')
+            ->first()
+            ->id;
         $newTable = AdmissionsTable::create([
             'dossier_id' => $this->dossier->id,
-            'country_id' => Country::first()->id,
+            'country_id' => $firstCountryId,
             'year' => date('Y'),
         ]);
         // add the new table at the end of collection
