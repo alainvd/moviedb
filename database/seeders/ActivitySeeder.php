@@ -37,7 +37,7 @@ class ActivitySeeder extends Seeder
                 'actions' => ['DEVSLATE', 'DEVSLATEMINI']
             ],
             [
-                'name' => 'admissions',
+                'name' => 'admissions-tables',
                 'actions' => ['DISTAUTOG']
             ]
         ];

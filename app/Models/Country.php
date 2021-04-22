@@ -83,6 +83,14 @@ class Country extends Model
         return $countriesGroupedChoices;
     }
 
+    public static function countriesById() {
+        return Country::where('active', true)
+            ->orderBy('name')
+            ->get()
+            ->keyBy('id')
+            ->toArray();
+    }
+
     public static function countriesByCode() {
         return Country::where('active', true)
             ->orderBy('name')
