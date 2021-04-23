@@ -13,7 +13,8 @@ class Navbar extends Component
         'dossiers' => 'dossiers-datatables',
         'movies' => 'movies',
         'reports' => 'reports',
-        'helpdesk' => 'helpdesk'
+        'helpdesk' => 'helpdesk',
+        'export' => 'export'
     ];
 
     public function __construct()
