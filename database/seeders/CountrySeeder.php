@@ -37,7 +37,7 @@ class CountrySeeder extends Seeder
             ["group" => "eu", "name" => "Latvia", "code" => "LV", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Moldova", "code" => "MD", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Montenegro", "code" => "ME", "continent" => "EU", "position" => 0],
-            ["group" => "other", "name" => "Macedonia", "code" => "MK", "continent" => "EU", "position" => 0],
+            ["group" => "other", "name" => "North Macedonia", "code" => "MK", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Malta", "code" => "MT", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Netherlands", "code" => "NL", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Norway", "code" => "NO", "continent" => "EU", "position" => 0],
