@@ -25,9 +25,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Helpers\IntegerEmptyToNull;
 
 class FicheMovieFormBase extends FicheFormBase
 {
+
+    use IntegerEmptyToNull;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -125,17 +128,9 @@ class FicheMovieFormBase extends FicheFormBase
     // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
-        // Integer fields with "" value should be stored as null
-        foreach ($this->rules() as $field => $rule) {
-            list($var, $atr) = explode('.', $field);
-            if (isset($this->{$var}->{$atr})) {
-                if ($this->{$var}->{$atr} == '') {
-                    if (Str::contains($rule, 'integer')) {
-                        $this->{$var}->{$atr} = NULL;
-                    }
-                }
-            }
-        }
+
+        // if integer field set to empty, make sure it's saved as null
+        $this->integerEmptyToNull_All();
 
         // Bare bones validation
         $this->validate($this->rulesDraft);

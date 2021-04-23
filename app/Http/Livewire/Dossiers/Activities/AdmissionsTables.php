@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
+use App\Helpers\IntegerEmptyToNull;
 use App\Models\Country;
 use App\Models\AdmissionsTable;
 use Illuminate\Support\Collection;
 
 class AdmissionsTables extends BaseActivity
 {
+
+    use IntegerEmptyToNull;
 
     public Collection $admissionsTables;
     public array $countriesById;
