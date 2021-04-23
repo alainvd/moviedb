@@ -50,9 +50,12 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
+
         "files": [
+            "vendor-fix/CAS_Client.php",
             "app/Helpers/global_helpers.php"
         ]
+
     },
     "autoload-dev": {
         "psr-4": {
