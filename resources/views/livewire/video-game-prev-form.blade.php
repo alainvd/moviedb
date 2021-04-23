@@ -1,4 +1,4 @@
-<x-fiche-form :layout="$layout" :print="$print">
+<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory">
 
     <!-- title -->
     <div class="my-8">
@@ -50,7 +50,7 @@
             :movie="$movie"
         ></x-details.summary>
     </div>
-    
+
     <!--  tech-vg -->
     <div class="my-8">
         <x-details.tech-vg

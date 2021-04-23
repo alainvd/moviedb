@@ -15,7 +15,9 @@ class CreateDossiersTable extends Migration
     {
         Schema::create('dossiers', function (Blueprint $table) {
             $table->id();
+
             $table->string('project_ref_id', 30);
+
             $table->unsignedBigInteger('action_id');
             $table->unsignedSmallInteger('status_id');
             $table->integer('year');

@@ -11,6 +11,7 @@ class StatusSeeder extends Seeder
     public $statuses = [
         ['name' => 'Draft', 'public' => false],
         ['name' => 'Complete', 'public' => false],
+        ['name' => 'New', 'public' => true],
         ['name' => 'Accepted', 'public' => false],
         ['name' => 'Rejected', 'public' => false],
         ['name' => 'Duplicated', 'public' => false],
@@ -20,6 +21,12 @@ class StatusSeeder extends Seeder
         ['name' => 'OK', 'public_name' => 'European'],
         ['name' => 'Not OK', 'public_name' => 'Not European'],
         ['name' => 'Qualified AO'],
+        ['name' => 'Eligible'],
+        ['name' => 'Ineligible'],
+        ['name' => 'Submitted'],
+        ['name' => 'Not submitted'],
+        ['name' => 'Selected'],
+        ['name' => 'Not selected'],
     ];
 
     /**

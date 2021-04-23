@@ -21,10 +21,12 @@ use App\Models\SalesAgent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class FicheMovieFormBase extends FicheFormBase
 {
@@ -49,6 +51,8 @@ class FicheMovieFormBase extends FicheFormBase
 
     public $crumbs = [];
 
+    public $hasHistory = false;
+
     public function validationAttributes()
     {
         // todo: finish for all fields
@@ -70,6 +74,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche = new Fiche;
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
+            $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
@@ -138,12 +143,7 @@ class FicheMovieFormBase extends FicheFormBase
         }
 
         // Bare bones validation
-        $this->validate([
-            'movie.original_title' => 'required',
-            'fiche.status_id' => 'required',
-            'movie.genre_id' => 'required',
-            'movie.film_type' => 'required',
-        ]);
+        $this->validate($this->rulesDraft);
 
         unset($this->movie->shooting_language);
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
@@ -175,7 +175,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
                 'type' => $type,
-                'created_by' => 1,
+                'created_by' => Auth::user()->id,
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
@@ -199,9 +199,7 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->fiche->fill([
-                'updated_by' => 1,
-            ])->save();
+            $this->fiche->save();
             $this->notify('Fiche is saved');
         }
         $this->fichePostSave();

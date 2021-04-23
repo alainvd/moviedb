@@ -19,10 +19,9 @@ class CreateDistributorsTable extends Migration
             $table->string('role')->nullable();
             $table->unsignedBigInteger('country_id');
             $table->date('forecast_release_date');
-            $table->bigInteger('forecast_grant')->nullable();
-            $table->bigInteger('pa_costs')->nullable();
-//            $table->unsignedBigInteger('created_by');
-//            $table->unsignedBigInteger('updatedBy')->nullable();
+            $table->integer('forecast_grant')->nullable();
+            $table->integer('pa_costs')->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
     }
