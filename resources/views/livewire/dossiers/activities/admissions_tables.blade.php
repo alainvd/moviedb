@@ -18,7 +18,7 @@
                     :label="''"
                     :hasError="$errors->has('admissionsTables.{{ $index }}.country_id')"
                     wire:model="admissionsTables.{{ $index }}.country_id"
-                    value="{{ $countriesById[$admissionsTables[$index]->country_id]['name'] }}"
+                    value="{{ !empty($admissionsTables[$index]->country_id) ? $countriesById[$admissionsTables[$index]->country_id]['name'] : '' }}"
                 >
                     @foreach ($countriesGrouped as $group=>$countries)
                         <optgroup label="---">
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        {{--
+        <!-- ADMISSIONS  -->
         <x-table class="{{ $errors->has('admissions') ? 'border border-red-500' : '' }}">
             <x-slot name="head">
                 <x-table.heading>ORIGINAL TITLE</x-table.heading>
@@ -67,37 +67,31 @@
             </x-slot>
 
             <x-slot name="body">
-
-                @if ($admissionsTables->count())
-
-                    <x-dossiers.admission-rows
+                @if (!empty($admissionsTable->admissions))
+                    <x-dossiers.admissions-table-rows
                         :dossier="$dossier"
-                        :activity="$activity"
-                        :admissions="$admissions"                    
+                        :admissions="$admissionsTable->admissions"
+                        :countriesById="$countriesById"
                     >
-                    </x-dossiers.work-fiche-rows>
-
+                    </x-dossiers.admissions-table-rows>
                 @else
-
                 <x-table.row>
                     <x-table.cell class="text-center" colspan="5">No declarations yet</x-table.cell>
                 </x-table.row>
-
                 @endif
-
             </x-slot>
         </x-table>
 
         @error('admissions')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
-        --}}
+        <!-- /ADMISSIONS -->
 
         @if(empty($print))
         <div class="mt-5 text-right print:hidden">
             <x-anchors.secondary
-                :url="'/admission'"
-                :disabled="$isAddDisabled">
+                :url="'/admission/'.$this->dossier->project_ref_id.'/'.$admissionsTable->id"
+            >
                 Add a line
             </x-anchors.secondary>
         </div>
@@ -110,7 +104,6 @@
     @if(empty($print))
     <div class="mt-5 text-right print:hidden">
         <x-button.primary
-            :disabled="$isAddDisabled"
             wire:click="addTable"
         >
             Add a new Territory/Year Table

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MovieDatatables;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
+use App\Http\Livewire\AdmissionForm;
 use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDevCurrentForm;
@@ -16,8 +17,6 @@ use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
-use App\Http\Controllers\AdmissionController;
-use App\Http\Controllers\CreateFicheController;
 
 /*
 |--------------------------------------------------------------------------
@@ -180,4 +179,4 @@ Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierControlle
 Route::get('/fiche/{fiche}/print', [FicheController::class, 'printFiche'])->middleware('cas.auth')->name('fiche-print');
 Route::get('/fiche/{fiche}/download', [FicheController::class, 'downloadFiche'])->middleware('cas.auth')->name('fiche-download');
 
-Route::get('admission', [AdmissionController::class, 'admissionForm'])->middleware('cas.auth')->name('admission-form');
+Route::get('/admission/{dossier:project_ref_id}/{admissionsTable?}/{admission?}', AdmissionForm::class)->middleware('cas.auth')->name('admission');

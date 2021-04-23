@@ -22,31 +22,42 @@ class AdmissionsTables extends BaseActivity
         'admissionsTables.*.year' => 'required|integer',
     ];
 
+    public function rules()
+    {
+        return $this->rules;
+    }
+
     public function mount()
     {
         $this->admissionsTables = AdmissionsTable::where(['dossier_id' => $this->dossier->id])->get();
+        // Create default table if none exists
+        if ($this->admissionsTables->isEmpty()) {
+            AdmissionsTable::create([
+                'dossier_id' => $this->dossier->id,
+                'country_id' => null,
+                'year' => date('Y'),
+            ]);
+            $this->admissionsTables = AdmissionsTable::where(['dossier_id' => $this->dossier->id])->get();
+        }
         $this->countriesById = Country::countriesById();
         $this->countriesGrouped = Country::countriesGrouped();
-        $this->years = range(date('Y'), date('Y') - 11);
+        $this->years = range(date('Y'), date('Y')-1);
     }
 
     public function updated($name, $value)
     {
+        // if integer field set to empty, make sure it's saved as null
+        $this->integerEmptyToNull_Single($name);
+
         list($var, $index, $property) = explode('.', $name);
         $this->admissionsTables[$index]->save();
     }
 
     public function addTable()
     {
-        $firstCountryId = Country::where('active', true)
-            ->orderBy('group')
-            ->orderBy('position', 'asc')
-            ->orderBy('name')
-            ->first()
-            ->id;
         $newTable = AdmissionsTable::create([
             'dossier_id' => $this->dossier->id,
-            'country_id' => $firstCountryId,
+            'country_id' => null,
             'year' => date('Y'),
         ]);
         // add the new table at the end of collection

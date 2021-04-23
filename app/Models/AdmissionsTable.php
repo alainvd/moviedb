@@ -40,8 +40,8 @@ class AdmissionsTable extends Model
         return $this->belongsTo(\App\Models\Country::class);
     }
 
-    public function admission()
+    public function admissions()
     {
-        return $this->hasOne(\App\Models\Admission::class);
+        return $this->hasMany(\App\Models\Admission::class);
     }
 }
