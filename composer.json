@@ -47,7 +47,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": ["vendor-fix/CAS_Client.php"]
     },
     "autoload-dev": {
         "psr-4": {
