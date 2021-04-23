@@ -15,7 +15,7 @@ class MoviesImportDevSP implements ToCollection, WithHeadingRow
 
     public function chunkSize(): int
 	{
-		return 1000;
+		return 500;
 	}
 
     private function formatDate($date, $id)
@@ -54,10 +54,10 @@ class MoviesImportDevSP implements ToCollection, WithHeadingRow
             'film_country_of_origin' => $row['film_country_of_origin'],
             'development_costs_in_euro' => $row['development_costs_in_euro'],
             //'total_budget_euro' => $row['production_costs_in_euro'],
-            'link_applicant_work' => $row['link_applicant_work'],
-            'link_applicant_work_person_name' => $row['link_applicant_work_person_name'],
-            'link_applicant_work_person_position' => $row['link_applicant_work_person_position'],
-            'link_applicant_work_person_credit' => $row['link_applicant_work_person_credit'],
+            //'link_applicant_work' => $row['link_applicant_work'],
+            //'link_applicant_work_person_name' => $row['link_applicant_work_person_name'],
+            //'link_applicant_work_person_position' => $row['link_applicant_work_person_position'],
+            //'link_applicant_work_person_credit' => $row['link_applicant_work_person_credit'],
             'rights_origin_of_work'=> $row['rights_origin_of_work'],
             //'rights_contract_type'=> $row['rights_contract_type'],
             'rights_contract_start_date' => $row['rights_contract_start_date']? $this->formatDate($row['rights_contract_start_date'], $row['id_code_film']) : null,
@@ -70,20 +70,20 @@ class MoviesImportDevSP implements ToCollection, WithHeadingRow
             'rights_adapt_contract_end_date' => $row['rights_adapt_contract_end_date']? $this->formatDate($row['rights_adapt_contract_end_date'], $row['id_code_film']) : null,
             'rights_adapt_contract_signature_date' => $row['rights_adapt_contract_signature_date']? $this->formatDate($row['rights_adapt_contract_signature_date'], $row['id_code_film']) : null,
 
-        ]);
+            ]);
 
-        $movie->save();
-        $fiche = new Fiche([
-            'movie_id' => $movie->id,
-            'status_id' => 3,
-            'created_by' => 1,
-            'type' => "dev-current",
-        ]);
-        $fiche->save();
+            $movie->save();
+            $fiche = new Fiche([
+                'movie_id' => $movie->id,
+                'status_id' => 3,
+                'created_by' => 1,
+                'type' => "dev-current",
+            ]);
+            $fiche->save();
 
+        }
+        echo("Movies DEVSP import ok");
     }
-
-}
 
 
 }

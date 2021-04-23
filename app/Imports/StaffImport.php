@@ -16,12 +16,13 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
 {
-
+    
     public function chunkSize(): int
 	{
-		return 1000;
+		return 5000;
 	}
-
+    
+     
     /**
      * @param Collection $collection
      */
@@ -52,6 +53,8 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             }
 
         }
+        echo("DIST Staff import 5000 ok \r\n");
+        return;
     }
 
     private function getTitle($row)
