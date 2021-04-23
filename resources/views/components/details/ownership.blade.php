@@ -1,7 +1,7 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-ownership">
 
     <div class="col-span-2 mb-4 text-lg">
-        Ownership of Rights
+        <h3>Ownership of Rights</h3>
     </div>
 
     <div class="col-span-1 col-start-1">
@@ -12,7 +12,7 @@
             :hasError="$errors->has('movie.rights_origin_of_work')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.rights_origin_of_work')"
             wire:model="movie.rights_origin_of_work"
-            value="{{ isset($movie->rights_origin_of_work) ? $workOrigins[$movie->rights_origin_of_work] : '' }}"
+            value="{{ !empty($movie->rights_origin_of_work) ? $workOrigins[$movie->rights_origin_of_work] : '' }}"
         >
 
             @foreach ($workOrigins as $key => $value)
@@ -96,7 +96,7 @@
         @enderror
     </div>
 
-    <!-- dependant fields -->
+    <!-- dependent fields -->
     <div class="col-span-1 col-start-1" x-data="{ show: false }" x-show="$wire.movie.rights_origin_of_work == 'ADAPTATION'">
         <x-form.input
             :print="$print"

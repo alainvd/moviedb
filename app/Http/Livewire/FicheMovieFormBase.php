@@ -18,12 +18,15 @@ use App\Models\Language;
 use App\Models\Location;
 use App\Models\Producer;
 use App\Models\SalesAgent;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class FicheMovieFormBase extends FicheFormBase
 {
@@ -48,6 +51,8 @@ class FicheMovieFormBase extends FicheFormBase
 
     public $crumbs = [];
 
+    public $hasHistory = false;
+
     public function validationAttributes()
     {
         // todo: finish for all fields
@@ -69,6 +74,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche = new Fiche;
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
+            $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
@@ -91,21 +97,54 @@ class FicheMovieFormBase extends FicheFormBase
     {
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
-            $this->emit('movieCrewsAddRequired', $value);
+            $this->emit('movieCrewsAddDefault', $value);
             // Update the locations livewire component
-            $this->emit('movieLocationsAddRequired', $value);
+            $this->emit('movieLocationsAddDefault', $value);
+        }
+        // clear dependent fields
+        if ($name == 'movie.link_applicant_work') {
+            if ($value !== 'WRKPERS') {
+                $this->movie->link_applicant_work_person_name = NULL;
+                $this->movie->link_applicant_work_person_position = NULL;
+                $this->movie->link_applicant_work_person_credit = NULL;
+            }
+        }
+        if ($name == 'movie.rights_origin_of_work') {
+            if ($value !== 'ADAPTATION') {
+                $this->movie->rights_adapt_author_name = NULL;
+                $this->movie->rights_adapt_original_title = NULL;
+                $this->movie->rights_adapt_contract_type = NULL;
+                $this->movie->rights_adapt_contract_start_date = NULL;
+                $this->movie->rights_adapt_contract_end_date = NULL;
+                $this->movie->rights_adapt_contract_signature_date = NULL;
+            }
+        }
+        if ($name == 'movie.film_type') {
+            if ($value !== 'SERIES') {
+                $this->movie->number_of_episodes = NULL;
+                $this->movie->length_of_episodes = NULL;
+            }
         }
     }
 
     // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
+        // Integer fields with "" value should be stored as null
+        foreach ($this->rules() as $field => $rule) {
+            list($var, $atr) = explode('.', $field);
+            if (isset($this->{$var}->{$atr})) {
+                if ($this->{$var}->{$atr} == '') {
+                    if (Str::contains($rule, 'integer')) {
+                        $this->{$var}->{$atr} = NULL;
+                    }
+                }
+            }
+        }
+
         // Bare bones validation
-        $this->validate([
-            'movie.original_title' => 'required',
-            'fiche.status_id' => 'required',
-            'movie.genre_id' => 'required',
-        ]);
+        $this->validate($this->rulesDraft);
+
         unset($this->movie->shooting_language);
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
@@ -136,7 +175,7 @@ class FicheMovieFormBase extends FicheFormBase
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
                 'type' => $type,
-                'created_by' => 1,
+                'created_by' => Auth::user()->id,
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
@@ -160,9 +199,7 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->fiche->fill([
-                'updated_by' => 1,
-            ])->save();
+            $this->fiche->save();
             $this->notify('Fiche is saved');
         }
         $this->fichePostSave();

@@ -1,7 +1,7 @@
 <div>
     
     <div class="mb-8 text-lg">
-        Supporting Documents
+        <h3>Supporting Documents</h3>
     </div>
 
     <div>

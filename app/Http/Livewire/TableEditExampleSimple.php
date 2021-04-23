@@ -2,17 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Movie;
 use App\Models\Producer;
-use App\Models\Country;
 
 class TableEditExampleSimple extends TableEditBase
 {
 
+    public Movie $movie;
+
     public $movie_id = null;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
 
     protected function defaults()
     {
@@ -33,7 +31,7 @@ class TableEditExampleSimple extends TableEditBase
             'editing.name' => 'required|string|max:255',
             'editing.city' => 'required|string|max:255',
             'editing.country' => 'required|string',
-            'editing.share' => 'required|integer|min:1|max:100',
+            'editing.share' => 'required|numeric|min:0|max:100',
             'editing.budget' => '',
         ] + TableEditBase::rules();
     }
@@ -57,10 +55,10 @@ class TableEditExampleSimple extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie_id = $movie_id;
             $this->loadItems();

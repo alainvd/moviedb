@@ -17,6 +17,7 @@ use App\Http\Livewire\Dossiers\MovieWizard;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Controllers\CreateFicheController;
+use App\Http\Controllers\HistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,11 +83,24 @@ Route::get('dossiers-public', function () use ($dossiers) {
     return view('dossiers', ['dossiers' => $dossiers]);
 })->name('dossiers-public');
 
-Route::resource('dossiers', ProjectController::class)
-    ->scoped([
-        'dossier' => 'project_ref_id'
-    ])
-    ->middleware('cas.auth');
+Route::middleware('cas.auth')->group(function () {
+    // Dossiers routes
+    Route::resource('dossiers', ProjectController::class)
+        ->scoped([
+            'dossier' => 'project_ref_id'
+        ]);
+
+    // History routes
+    Route::resource('dossiers/{dossier}/history', HistoryController::class)
+        ->scoped([
+            'dossier' => 'project_ref_id'
+        ])
+        ->only('index')
+        ->name('index', 'dossier-history');
+
+    Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
+        ->name('fiche-history');
+});
 
 Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
     ->middleware('cas.auth')
@@ -174,7 +188,6 @@ Route::get('movies', function () {
     return view('livewire.movie-datatables',['title' => "Search Movies"]);});
 
 Route::get('/dossiers/{dossier:project_ref_id}/print', [DossierController::class, 'printDossier'])->middleware('cas.auth')->name('dossier-print');
-Route::get('/dossiers/{dossier:project_ref_id}/download', [DossierController::class, 'downloadDossier'])->middleware('cas.auth')->name('dossier-download');
 Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierController::class, 'downloadFullDossier'])->middleware('cas.auth')->name('dossier-full-download');
 Route::get('/fiche/{fiche}/print', [FicheController::class, 'printFiche'])->middleware('cas.auth')->name('fiche-print');
 Route::get('/fiche/{fiche}/download', [FicheController::class, 'downloadFiche'])->middleware('cas.auth')->name('fiche-download');
