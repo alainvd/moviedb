@@ -94,6 +94,36 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
+    protected $rulesDraft = [
+        'movie.original_title' => 'required|string|max:255',
+        'fiche.status_id' => 'integer',
+        'movie.film_country_of_origin' => 'string',
+        'movie.film_country_of_origin_2014_2020' => 'string',
+        'movie.year_of_copyright' => 'integer',
+        'movie.genre_id' => 'integer',
+        'movie.delivery_platform' => 'string',
+        'movie.audience_id' => 'integer',
+        'movie.film_type' => 'string',
+
+        'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        'movie.country_of_origin_points' => 'numeric',
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_end' => 'date:d.m.Y',
+        'movie.shooting_language' => '',
+        'movie.film_length' => 'integer',
+        'movie.film_format' => 'string|max:255',
+
+        'movie.total_budget_currency_amount' => 'integer',
+        'movie.total_budget_currency_code' => 'string|max:255',
+        'movie.total_budget_currency_rate' => 'numeric',
+        'movie.total_budget_euro' => 'integer',
+
+        'fiche.comments' => 'string',
+    ];
+
     public function rules() {
         if ($this->isEditor) {
             return $this->rulesEditor;

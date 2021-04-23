@@ -18,22 +18,27 @@ class ActivitySeeder extends Seeder
         $activities =[
             [
                 'name' => 'description',
+                'log_model' => 'Movie',
                 'actions' => ['DISTSEL', 'DISTSAG'],
             ],
             [
                 'name' => 'previous-work',
+                'log_model' => 'Previous work',
                 'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT'],
             ],
             [
                 'name' => 'current-work',
+                'log_model' => 'Current work',
                 'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT', 'TV'],
             ],
             [
                 'name' => 'distributors',
+                'log_model' => 'Distributor',
                 'actions' => ['DISTSEL', 'DISTSAG'],
             ],
             [
                 'name' => 'short-films',
+                'log_model' => 'Short film',
                 'actions' => ['DEVSLATE', 'DEVSLATEMINI']
             ]
         ];
@@ -84,6 +89,7 @@ class ActivitySeeder extends Seeder
         foreach ($activities as $activity) {
             $newActivity = Activity::create([
                 'name' => $activity['name'],
+                'log_model' => $activity['log_model'],
             ]);
 
             foreach ($activity['actions'] as $action) {

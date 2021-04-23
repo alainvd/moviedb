@@ -98,6 +98,38 @@ class MovieTVForm extends FicheMovieFormBase
         'fiche.comments' => 'string',
     ];
 
+    protected $rulesDraft = [
+        'movie.original_title' => 'required|string|max:255',
+        'fiche.status_id' => 'integer',
+        'movie.film_country_of_origin' => 'string',
+        'movie.genre_id' => 'integer',
+        'movie.delivery_platform' => 'string',
+        'movie.audience_id' => 'integer',
+        'movie.film_type' => 'string',
+
+        'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        'movie.country_of_origin_points' => 'numeric',
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_end' => 'date:d.m.Y',
+        'movie.delivery_date' => 'date:d.m.Y',
+        'movie.broadcast_date' => 'date:d.m.Y',
+        'movie.shooting_language' => '',
+        'movie.development_costs_in_euro' => 'integer',
+        'movie.film_length' => 'integer',
+        'movie.number_of_episodes' => 'integer',
+        'movie.length_of_episodes' => 'integer',
+
+        'movie.dev_support_flag' => 'integer',
+        'movie.dev_support_reference' => 'string',
+
+        'movie.total_budget_euro' => 'integer',
+
+        'fiche.comments' => 'string',
+    ];
+
     public function rules() {
         if ($this->isEditor) {
             return $this->rulesEditor;

@@ -10,10 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Session;
+use Spatie\Activitylog\Traits\CausesActivity;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, HasFactory;
+    use CausesActivity, Notifiable, HasRoles, HasFactory;
 
     /**
      * The attributes that are mass assignable.

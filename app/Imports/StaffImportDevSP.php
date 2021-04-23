@@ -40,12 +40,14 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
             $title = $this->getTitle($row);
 
             //Create the crew entry
-            $crew = new Crew([
-                "person_id" => $person->id,
-                "title_id" => $title->id,
-                "movie_id" => $movie->id
-            ]);
-            $crew->save();
+            if ($movie){
+                $crew = new Crew([
+                    "person_id" => $person->id,
+                    "title_id" => $title->id,
+                    "movie_id" => $movie->id
+                ]);
+                $crew->save();
+            }
 
         }
 
