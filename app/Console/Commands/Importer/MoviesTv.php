@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\RolesImport;
+use App\Imports\MoviesImportTV;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Roles extends Command
+class MoviesTv extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:roles';
+    protected $signature = 'import:moviesTv';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Roles';
+    protected $description = 'Import Movies from Excel';
 
     /**
      * Create a new command instance.
@@ -39,6 +39,10 @@ class Roles extends Command
      */
     public function handle()
     {
-        Excel::import(new RolesImport, 'Staff_Roles.xlsx','excel');
+
+        //Excel::import(new MoviesImport, 'Dist_Film_General.xlsx','excel');
+        //Excel::import(new MoviesImportDevSP, 'Dev_SP_General_Old.xlsx','excel');
+        //Excel::import(new MoviesImportDevSlate, 'Dev_Slate_General.xlsx','excel');
+        Excel::import(new MoviesImportTV, 'TV_General .xlsx','excel');
     }
 }

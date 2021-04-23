@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\RolesImport;
+use App\Imports\StaffImportDevSP;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Roles extends Command
+class StaffDevSP extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:roles';
+    protected $signature = 'import:staffdevsp';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Roles';
+    protected $description = 'Link Staff with movies';
 
     /**
      * Create a new command instance.
@@ -39,6 +39,6 @@ class Roles extends Command
      */
     public function handle()
     {
-        Excel::import(new RolesImport, 'Staff_Roles.xlsx','excel');
+        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff.xlsx', 'excel');
     }
 }
