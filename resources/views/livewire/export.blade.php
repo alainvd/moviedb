@@ -5,7 +5,7 @@
             @livewire('select-component', [
                 'ref' => 'selectedActions',
                 'domId' => 'selected-actions',
-                'label' => 'ACTIONS',
+                'label' => 'ACTION',
                 'isRequired' => false,
                 'name' => 'selectedActions',
                 'options' => json_encode($actions),
@@ -17,11 +17,23 @@
             @livewire('select-component', [
                 'ref' => 'selectedCalls',
                 'domId' => 'selected-calls',
-                'label' => 'TOPICS',
+                'label' => 'TOPIC',
                 'isRequired' => false,
                 'name' => 'selectedCalls',
                 'options' => json_encode($calls),
                 'items' => json_encode($selectedCalls)
+            ])
+        </div>
+
+        <div class="w-full my-2">
+            @livewire('select-component', [
+                'ref' => 'selectedStatuses',
+                'domId' => 'selected-statuses',
+                'label' => 'STATUS',
+                'isRequired' => false,
+                'name' => 'selectedStatuses',
+                'options' => json_encode($statuses),
+                'items' => json_encode($selectedStatuses)
             ])
         </div>
 

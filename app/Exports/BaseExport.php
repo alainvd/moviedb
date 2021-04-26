@@ -28,6 +28,10 @@ abstract class BaseExport implements FromQuery, WithHeadings
             $query->whereIn('actions.id', $this->params->get('actions'));
         }
 
+        if ($this->params->has('statuses')) {
+            $query->whereIn('statuses.id', $this->params->get('statuses'));
+        }
+
         if ($this->params->has('year')) {
             $query->where('calls.year', $this->params->get('year'));
         }

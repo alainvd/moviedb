@@ -7,24 +7,25 @@ use App\Exports\FichesExport;
 use App\Exports\FichesWithCrews;
 use App\Models\Action;
 use App\Models\Call;
+use App\Models\Status;
 use Livewire\Component;
 
 class Export extends Component
 {
     public $from;
     public $to;
-    public $actionId;
-    public $callId;
     public $year;
     public $exportFiches = false;
 
     public $selectedActions;
     public $selectedCalls;
+    public $selectedStatuses;
 
     public function mount()
     {
         $this->selectedActions = collect([]);
         $this->selectedCalls = collect([]);
+        $this->selectedStatuses = collect([]);
     }
 
     protected function getListeners()
@@ -45,6 +46,10 @@ class Export extends Component
 
         if ($this->selectedCalls->count()) {
             $params['calls'] = $this->selectedCalls->map(fn ($call) => $call['value']);
+        }
+
+        if ($this->selectedStatuses->count()) {
+            $params['statuses'] = $this->selectedStatuses->map(fn($status) => $status['value']);
         }
 
         if ($this->year) {
@@ -79,6 +84,9 @@ class Export extends Component
         $this->from = null;
         $this->to = null;
         $this->exportFiches = false;
+        $this->selectedActions = [];
+        $this->selectedCalls = [];
+        $this->selectedStatuses = [];
     }
 
     public function submit()
@@ -108,7 +116,13 @@ class Export extends Component
                 ->map(fn ($call) => [
                     'label' => $call->name,
                     'value' => $call->id,
-                ])
+                ]),
+            'statuses' => Status::forDossier()
+                    ->get()
+                    ->map(fn ($status) => [
+                        'label' => $status->name,
+                        'value' => $status->id,
+                    ])
         ])->layout('components.layout');
     }
 }
