@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cas.auth'  => EULoginAuth::class,
-        'cas.guest' => \Subfission\Cas\Middleware\RedirectCASAuthenticated::class
+        'cas.guest' => \Subfission\Cas\Middleware\RedirectCASAuthenticated::class,
+        'for.editor' => \App\Http\Middleware\ForEditor::class
     ];
 }

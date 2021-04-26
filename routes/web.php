@@ -18,6 +18,7 @@ use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Controllers\CreateFicheController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Livewire\Export;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +101,8 @@ Route::middleware('cas.auth')->group(function () {
 
     Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
         ->name('fiche-history');
+
+    Route::get('/export', Export::class)->middleware('for.editor');
 });
 
 Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)

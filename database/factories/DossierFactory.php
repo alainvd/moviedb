@@ -26,12 +26,14 @@ class DossierFactory extends BaseFactory
     {
         $ref = sprintf('SEP-%d', $this->faker->randomNumber(9));
 
+        $call = $this->getRelation(Call::class);
+
         return [
             'project_ref_id' => $ref,
-            'action_id' => $this->getRelationId(Action::class),
+            'action_id' => $call->action_id,
             'year' => $this->faker->numberBetween(1990, 2020),
             'status_id' => $this->getRelationId(Status::class),
-            'call_id' => $this->getRelationId(Call::class),
+            'call_id' => $call->id,
             'contact_person' => $this->faker->safeEmail,
             'company' => $this->faker->company,
             'created_by' => $this->getRelationId(User::class),
