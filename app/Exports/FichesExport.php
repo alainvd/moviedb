@@ -3,11 +3,8 @@
 namespace App\Exports;
 
 use App\Models\Dossier;
-use App\Models\Fiche;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class FichesExport extends BaseExport
 {

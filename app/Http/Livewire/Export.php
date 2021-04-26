@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Exports\DossiersExport;
 use App\Exports\FichesExport;
+use App\Exports\FichesWithCrews;
 use App\Models\Action;
 use App\Models\Call;
 use Livewire\Component;
@@ -86,7 +87,7 @@ class Export extends Component
         $export = new DossiersExport($params);
 
         if ($this->exportFiches) {
-            $export = new FichesExport($params);
+            $export = new FichesWithCrews($params);
         }
 
         $filename = ($this->exportFiches ? 'fiches' : 'dossiers') . '-' . date('U') . '.xlsx';
