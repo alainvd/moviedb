@@ -79,6 +79,7 @@ class MoviesImportTV implements ToCollection, WithHeadingRow
         $fiche->save();
 
     }
+    echo("Movies TV import ok");
 
 }
 

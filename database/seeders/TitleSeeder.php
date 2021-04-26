@@ -114,11 +114,11 @@ class TitleSeeder extends Seeder
         //     'name' => 'Sales Agent',
         //     'code' => 'SA'
         // ],
-        // Not in data set
-        // [
-        //     'name' => 'Other',
-        //     'code' => 'ROLOTH'
-        // ],
+        // Role Other needed for DEVSP Staff import, can be removed once OTHER roles will be translated into actual roles
+         [
+             'name' => 'Other',
+             'code' => 'ROLOTH'
+         ],
         // Not in data set
         // [
         //     'name' => 'Principal Cast',

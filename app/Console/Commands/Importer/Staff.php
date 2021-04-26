@@ -3,6 +3,9 @@
 namespace App\Console\Commands\Importer;
 
 use App\Imports\StaffImport;
+use App\Imports\StaffImportDevSP;
+use App\Imports\StaffImportDevSlate;
+use App\Imports\StaffImportTV;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -39,6 +42,9 @@ class Staff extends Command
      */
     public function handle()
     {
-        Excel::import(new StaffImport, 'Dist_Film_Staff.xlsx', 'excel');
+        //Excel::import(new StaffImport, 'Dist_Film_Staff.xlsx', 'excel');
+        //Excel::import(new StaffImportDevSP, 'Dev_SP_Staff .xlsx', 'excel');
+        //Excel::import(new StaffImportDevSlate, 'Dev_Slate_Staff_web_outcomes.xlsx', 'excel');
+        Excel::import(new StaffImportTV, 'TV_Staff.xlsx', 'excel');
     }
 }

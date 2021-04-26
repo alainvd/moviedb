@@ -42,7 +42,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 }
             }
 
-            //Create the crew entry
+            //Create the movie
             $movie = new Movie([
                 'genre_id' => $row['film_genre'],
                 'audience_id' => $row['film_audience'],
@@ -53,7 +53,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 'year_of_copyright' => $row['year_of_copyright'],
                 'film_length' => $film_length,
                 // 'film_format' => $row['film_format'], // How to import 873 unique values?
-                'film_type' => $row['film_type'],
+                'film_type' => "ONEOFF",
                 'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
                 'film_country_of_origin' => $row['film_country_of_origin'],
                 'photography_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
@@ -72,6 +72,8 @@ class MoviesImport implements ToCollection, WithHeadingRow
             $fiche->save();
 
         }
+    
+        echo("Movies DIST import ok");
 
     }
 

@@ -93,10 +93,10 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
 //        echo($lastName . "\n");
 //        echo("================================================\n");
         $person = new Person([
-            "fullname" => $fullName,
             "firstname" => $firstName,
             "lastname" => $lastName,
             "nationality1" => $row["nationality_code"],
+            "gender" => $row["gender"],
         ]);
         $person->save();
         return $person;

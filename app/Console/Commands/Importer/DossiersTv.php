@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\DossierImportTV;
-use App\Imports\MoviesImportDevSP;
-use App\Imports\MoviesImportDevSlate;
+use App\Imports\DossiersImportTV;
+use App\Imports\DossiersImportDevSP;
+use App\Imports\DossiersImportDevSlate;
 use App\Imports\MoviesImportTV;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
@@ -43,9 +43,9 @@ class DossiersTv extends Command
     public function handle()
     {
 
-        //Excel::import(new MoviesImport, 'Dist_Film_General.xlsx','excel');
-        //Excel::import(new MoviesImportDevSP, 'Dev_SP_General_Old.xlsx','excel');
-        //Excel::import(new MoviesImportDevSlate, 'Dev_Slate_General.xlsx','excel');
-        Excel::import(new DossierImportTV, 'TV_Dossiers.xlsx','excel');
+        //Excel::import(new DossiersImportDist, 'Dist_Film_General.xlsx','excel');
+        Excel::import(new DossiersImportDevSP, 'DEV_SP_Dossiers.xlsx','excel');
+        Excel::import(new DossiersImportDevSlate, 'Dev_Slate_Dossiers.xlsx','excel');
+        Excel::import(new DossiersImportTV, 'TV_Dossiers.xlsx','excel');
     }
 }
