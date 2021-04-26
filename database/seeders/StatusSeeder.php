@@ -4,29 +4,22 @@ namespace Database\Seeders;
 
 use App\Models\Status;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class StatusSeeder extends Seeder
 {
     public $statuses = [
-        ['name' => 'Draft', 'public' => false],
-        ['name' => 'Complete', 'public' => false],
-        ['name' => 'New', 'public' => true],
-        ['name' => 'Accepted', 'public' => false],
-        ['name' => 'Rejected', 'public' => false],
-        ['name' => 'Duplicated', 'public' => false],
-        ['name' => 'Distinct', 'public_name' => 'Under processing'],
-        ['name' => 'Missing Information'],
-        ['name' => 'Validated'],
-        ['name' => 'OK', 'public_name' => 'European'],
-        ['name' => 'Not OK', 'public_name' => 'Not European'],
-        ['name' => 'Qualified AO'],
-        ['name' => 'Eligible'],
-        ['name' => 'Ineligible'],
-        ['name' => 'Submitted'],
-        ['name' => 'Not submitted'],
-        ['name' => 'Selected'],
-        ['name' => 'Not selected'],
+        ['name' => 'Draft', 'dossier' => true, 'dist' => true, 'dev' => true],
+        ['name' => 'Submitted', 'dossier' => true, 'dist' => true, 'dev' => true],
+        ['name' => 'Under processing', 'dossier' => true, 'dist' => true],
+        ['name' => 'Rejected', 'dist' => true],
+        ['name' => 'Duplicated', 'dist' => true],
+        ['name' => 'Processed', 'dist' => true, 'dev' => true],
+        ['name' => 'Missing Information', 'dist' => true],
+        ['name' => 'Eligible', 'dossier' => true],
+        ['name' => 'Ineligible', 'dossier' => true],
+        ['name' => 'Reserve list', 'dossier' => true],
+        ['name' => 'Selected', 'dossier' => true],
+        ['name' => 'Not selected', 'dossier' => true],
     ];
 
     /**
