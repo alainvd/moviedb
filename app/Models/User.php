@@ -59,13 +59,15 @@ class User extends Authenticatable
                 ],
                 $attributes
             );
-            DB::table('model_has_roles')->upsert([
-                [
-                    'role_id' => 1,
-                    'model_type' => 'App\Models\User',
-                    'model_id' => $user->id,
-                ],
-            ], ['model_id', 'role_id']);
+            if (DB::table('model_has_roles')->where('model_id', '=', $user->id)->count() == 0) {
+                DB::table('model_has_roles')->insert([
+                    [
+                        'role_id' => 1,
+                        'model_type' => 'App\Models\User',
+                        'model_id' => $user->id,
+                    ],
+                ]);
+            }
             return $user;
         }
     }

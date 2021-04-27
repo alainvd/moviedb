@@ -38,12 +38,6 @@ class EULoginAuth
                 $user = User::where('eu_login_username', $this->cas->user())
                     ->first();
 
-                if (! $user) {
-                    $user = User::factory()->make([
-                        'eu_login_username' => $this->cas->user(),
-                    ])->assignRole('applicant');
-                }
-
                 // impersonate
                 if($request->session()->has('impersonate'))
                 {
