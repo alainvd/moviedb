@@ -4,18 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Movie;
 use App\Models\SalesAgent;
-use App\Models\Country;
 
 class TableEditMovieSalesAgents extends TableEditBase
 {
 
     public Movie $movie;
-
-    public $countries = [];
-
-    public $countries_by_code = [];
-
-    public $distributorRoles;
 
     protected function defaults()
     {
@@ -55,15 +48,10 @@ class TableEditMovieSalesAgents extends TableEditBase
         $this->addUniqueKeys();
     }
 
-    public function mount($movie_id = null)
+    public function mount($movie_id = null, $isApplicant = false, $isEditor = false)
     {
-        $this->countries = Country::where('active', true)->orderBy('name')->get()->toArray();
-        $this->countries_by_code = Country::where('active', true)->orderBy('name')->get()->keyBy('code')->toArray();
-        $this->distributorRoles = [
-            'PLATFORM' => 'Platform',
-            'DISTRIBUTOR' => 'Distributor',
-            'BROADCASTER' => 'Broadcaster',
-        ];
+        parent::mount($movie_id, $isApplicant, $isEditor);
+        $this->movie = new Movie();
         if ($movie_id) {
             $this->movie = Movie::find($movie_id);
             $this->loadItems();

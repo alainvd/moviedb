@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Importer;
 
 use App\Imports\AudiencesImport;
-use App\Imports\MoviesImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 

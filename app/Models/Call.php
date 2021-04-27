@@ -17,6 +17,8 @@ class Call extends Model
     protected $fillable = [
         'name',
         'description',
+        'action_id',
+        'year',
         'published_at',
         'status',
     ];

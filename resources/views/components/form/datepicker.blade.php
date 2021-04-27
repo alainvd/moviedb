@@ -1,10 +1,10 @@
+@if (empty($print))
+<!-- Output for screen -->
 <label for="{{ $id }}" class="block text-sm font-light leading-5 text-gray-800">
     {{ $label }}
     <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
 </label>
 
-<!-- Output for screen -->
-@if (empty($print))
 <div
     x-data=""
     x-init="new Pikaday({
@@ -20,7 +20,7 @@
         {{ $attributes }}
         x-ref="input"
         placeholder="DD.MM.YYYY"
-        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }}"
+        class="my-2 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }}"
         autocomplete="off"
         {{ $disabled ?? false ? 'disabled' : ''  }}
     />
@@ -33,7 +33,8 @@
 </div>
 @endif
 
-<!-- Output for print -->
 @if (!empty($print) && !empty($value))
-<span class="inline-block">{{ $value }}</span>
+<!-- Output for print -->
+<span class="font-bold">{{ $label }}</span>
+<span class="">{{ $value ? date('d.m.Y.', strtotime($value)) : '' }}</span>
 @endif

@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use App\Tools\Generic;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\CausesActivity;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Session;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, HasFactory;
+    use CausesActivity, Notifiable, HasRoles, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -47,13 +49,26 @@ class User extends Authenticatable
         $attributes['password'] = Str::random(16);
 
         // Check if there is a user associated with this email
-        if (isset($attributes['eu_login_username'])) {
-            return User::firstOrCreate(
+        if (isset($attributes['domainUsername']) || isset($attributes['eu_login_username'])) {
+            if (isset($attributes['domainUsername'])) $username = $attributes['domainUsername'];
+            if (isset($attributes['eu_login_username'])) $username = $attributes['eu_login_username'];
+            $attributes['name'] = isset($attributes['firstName']) && isset($attributes['firstName']) ? $attributes['firstName'] . ' ' . $attributes['lastName'] : '';
+            $user = User::firstOrCreate(
                 [
-                    'eu_login_username' => $attributes['eu_login_username']
+                    'eu_login_username' => $username,
                 ],
                 $attributes
             );
+            if (DB::table('model_has_roles')->where('model_id', '=', $user->id)->count() == 0) {
+                DB::table('model_has_roles')->insert([
+                    [
+                        'role_id' => 1,
+                        'model_type' => 'App\Models\User',
+                        'model_id' => $user->id,
+                    ],
+                ]);
+            }
+            return $user;
         }
     }
 

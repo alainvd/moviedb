@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 gap-4 fiche-details-component sm:grid-cols-2 md:grid-cols-3" id="fdc-photography-dev-current">
 
     <div class="col-span-1 mb-4 text-lg sm:col-span-2 md:col-span-3">
-        Technical Information
+        <h3>Technical Information</h3>
     </div>
 
     <div class="col-span-1 col-start-1 sm:col-start-1 md:col-start-1">
@@ -80,10 +80,10 @@
         @livewire('select-component', [
             'ref' => 'choices_shooting_lang',
             'domId' => 'shooting-language',
-            'label' => 'Shooting language',
+            'label' => 'Shooting languages',
             'isRequired' => FormHelpers::isRequired($rules, 'movie.shooting_language'),
             'name' => 'shootingLanguages',
-            'options' => json_encode($languages),
+            'options' => json_encode($languagesGroupedChoices),
             'items' => json_encode($languagesSelected),
         ])
 
@@ -93,10 +93,9 @@
     </div>
     @endif
 
-    @if (!empty($print) && !empty($languagesSelected))
-    <div class="block">Shooting languages: 
-        {{ $languagesSelected->implode('name', ', ') }}
-    </div>
+    @if (!empty($print))
+    <span class="font-bold">Shooting languages</span>
+    <span>{{ $languagesSelected->implode('name', ', ') }}</span>
     @endif
 
     <div class="col-span-1 col-start-1 sm:col-start-1 md:col-start-1">
@@ -105,6 +104,7 @@
             :id="'development_costs_in_euro'"
             :label="'Development cost'"
             :trailing="'€'"
+            :isAmount="true"
             :hasError="$errors->has('movie.development_costs_in_euro')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.development_costs_in_euro')"
             wire:model="movie.development_costs_in_euro"
@@ -122,6 +122,7 @@
             :id="'film_length'"
             :label="'Total duration'"
             :trailing="'Minutes'"
+            :isAmount="false"
             :hasError="$errors->has('movie.film_length')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_length')"
             wire:model="movie.film_length"
@@ -157,6 +158,7 @@
             :id="'length_of_episodes'"
             :label="'Average duration of episode'"
             :trailing="'Minutes'"
+            :isAmount="false"
             :hasError="$errors->has('movie.length_of_episodes')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.length_of_episodes')"
             wire:model="movie.length_of_episodes"

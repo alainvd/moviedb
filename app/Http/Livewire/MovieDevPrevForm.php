@@ -50,10 +50,39 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
-        // dependant fields
+        // dependent fields
         'movie.link_applicant_work_person_name' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
         'movie.link_applicant_work_person_position' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
         'movie.link_applicant_work_person_credit' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
+
+        'fiche.comments' => 'string',
+    ];
+
+    protected $rulesDraft = [
+        'movie.original_title' => 'required|string|max:255',
+        'fiche.status_id' => 'integer',
+        'movie.film_country_of_origin' => 'string',
+        'movie.year_of_copyright' => 'integer',
+        'movie.genre_id' => 'integer',
+        'movie.delivery_platform' => 'string',
+        'movie.audience_id' => 'integer',
+        'movie.film_type' => 'string',
+
+        'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_end' => 'date:d.m.Y',
+        'movie.shooting_language' => '',
+        'movie.film_length' => 'integer',
+        'movie.film_format' => 'string',
+
+        'movie.link_applicant_work' => 'string',
+        // dependent fields
+        'movie.link_applicant_work_person_name' => 'string',
+        'movie.link_applicant_work_person_position' => 'string',
+        'movie.link_applicant_work_person_credit' => 'string',
 
         'fiche.comments' => 'string',
     ];
@@ -71,13 +100,11 @@ class MovieDevPrevForm extends FicheMovieFormBase
     public function saveFiche()
     {
         parent::saveFiche();
-
     }
 
     public function submitFiche()
     {
         parent::submitFiche();
-
     }
 
     public function specialValidation()

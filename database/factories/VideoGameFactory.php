@@ -24,7 +24,7 @@ class VideoGameFactory extends Factory
     {
         return [
             'original_title' => $this->faker->words(5,true),
-            'logline' => $this->faker->text(600)
+            'synopsis' => $this->faker->text(600)
         ];
     }
 }

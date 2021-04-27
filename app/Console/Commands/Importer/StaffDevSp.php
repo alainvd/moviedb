@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\MoviesImportDevSP;
+use App\Imports\StaffImportDevSP;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class MoviesDevSP extends Command
+class StaffDevSP extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:moviesDevSP';
+    protected $signature = 'import:staffdevsp';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Movies from Excel';
+    protected $description = 'Link Staff with movies';
 
     /**
      * Create a new command instance.
@@ -39,7 +39,6 @@ class MoviesDevSP extends Command
      */
     public function handle()
     {
-
-        Excel::import(new MoviesImportDevSP, 'Dev_SP_General.xlsx','excel');
+        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff.xlsx', 'excel');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\MoviesImport;
 use App\Imports\RolesImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;

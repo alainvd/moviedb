@@ -23,8 +23,6 @@ class MoviesImport implements ToCollection, WithHeadingRow
             Log::error("Caught exception in date transformation of Movie ID {$id}: " . $e->getMessage());
             return null;
         }
-
-
     }
 
     /**
@@ -33,9 +31,18 @@ class MoviesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-
             
-            //Create the crew entry
+            $film_length = $row['film_length'];
+            if (!is_numeric($film_length)) {
+                $parts = explode(' ', $film_length);
+                if (is_numeric($parts[0])) {
+                    $film_length = $parts[0];
+                } else {
+                    $film_length = null;
+                }
+            }
+
+            //Create the movie
             $movie = new Movie([
                 'genre_id' => $row['film_genre'],
                 'audience_id' => $row['film_audience'],
@@ -44,12 +51,11 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 'legacy_id' => $row['id_code_film'],
                 'original_title' => $row['original_title'],
                 'year_of_copyright' => $row['year_of_copyright'],
-                'film_length' => $row['film_length'],
-                'film_format' => $row['film_format'],
-                'film_type' => $row['film_type'],
+                'film_length' => $film_length,
+                // 'film_format' => $row['film_format'], // How to import 873 unique values?
+                'film_type' => "ONEOFF",
                 'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
                 'film_country_of_origin' => $row['film_country_of_origin'],
-                //'european_nationality_flag' => $row['european_nationality_flag'],
                 'photography_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
                 'photography_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,
                 'total_budget_currency_code' => $row['production_costs_currency'],
@@ -66,6 +72,8 @@ class MoviesImport implements ToCollection, WithHeadingRow
             $fiche->save();
 
         }
+    
+        echo("Movies DIST import ok");
 
     }
 

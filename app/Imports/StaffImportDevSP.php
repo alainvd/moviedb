@@ -20,7 +20,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
 
     public function chunkSize(): int
 	{
-		return 1000;
+		return 500;
 	}
 
     /**
@@ -40,12 +40,14 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
             $title = $this->getTitle($row);
 
             //Create the crew entry
-            $crew = new Crew([
-                "person_id" => $person->id,
-                "title_id" => $title->id,
-                "movie_id" => $movie->id
-            ]);
-            $crew->save();
+            if ($movie){
+                $crew = new Crew([
+                    "person_id" => $person->id,
+                    "title_id" => $title->id,
+                    "movie_id" => $movie->id
+                ]);
+                $crew->save();
+            }
 
         }
 
@@ -62,7 +64,6 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
         $filmID = $row["id_code_film"];
         echo($filmID);
         $movie = Movie::where("legacy_id","=",$filmID)->first();
-        dd($movie);
         return $movie;
     }
 
@@ -92,10 +93,10 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
 //        echo($lastName . "\n");
 //        echo("================================================\n");
         $person = new Person([
-            "fullname" => $fullName,
             "firstname" => $firstName,
             "lastname" => $lastName,
             "nationality1" => $row["nationality_code"],
+            "gender" => $row["gender"],
         ]);
         $person->save();
         return $person;

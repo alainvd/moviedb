@@ -1,8 +1,12 @@
 <div>
 
-    <div class="mb-8 text-lg">
-        Cast and Crew
+    <div class="mb-4 text-lg">
+        <h3>Cast and Crew</h3>
     </div>
+
+    @if(empty($print))
+    <div class="my-2 text-sm text-gray-600 print:hidden">Please input TBC for mandatory roles not defined.</div>
+    @endif
 
     <div x-data="{ points_total: {{ $points_total }} }">
         <x-table>
@@ -20,19 +24,23 @@
             <x-slot name="body">
                 @foreach ($items as $item)
                 <x-table.row>
-                    <x-table.cell class="text-center">
-                        @if(isset($item['required']) && $item['required'])<span class="text-red-500">*</span>@endif
+                    <x-table.cell class="text-left">
                         {{ $titles[$item['title_id']]['name'] }}
+                        @if($item['required'])<span class="text-red-500">*</span>@endif
                     </x-table.cell>
                     <x-table.cell class="text-center">{{ $item['person']['firstname'] }} {{ $item['person']['lastname'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ !empty($item['person']['gender']) ? $genders[$item['person']['gender']] : '' }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countries_by_code[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
-                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countries_by_code[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
-                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countries_by_code[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
+                    <x-table.cell class="text-center">{{ !empty($item['person']['nationality1']) ? $countriesByCode[$item['person']['nationality1']]['name'] : '' }}</x-table.cell>
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['nationality2']) ? $countriesByCode[$item['person']['nationality2']]['name'] : '' }}</x-table.cell>@endif
+                    @if($fiche=='dist')<x-table.cell class="text-center">{{ !empty($item['person']['country_of_residence']) ? $countriesByCode[$item['person']['country_of_residence']]['name'] : '' }}</x-table.cell>@endif
                     @if ($isEditor && $fiche=='dist')<x-table.cell class="text-center">{{ $item['points'] }}</x-table.cell>@endif
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
                         <a wire:click="showModalEdit('{{ $item['key'] }}')" class="text-indigo-700 cursor-pointer print:hidden">Edit</a>
+                        @if(!$item['required'])
                         <a wire:click="showModalDelete('{{ $item['key'] }}')" class="text-red-600 cursor-pointer print:hidden">Delete</a>
+                        @else
+                        <span class="text-gray-400 print:hidden">Delete</span>
+                        @endif
                     </x-table.cell>@endif
                 </x-table.row>
                 @endforeach
@@ -127,11 +135,17 @@
                             :label="'Nationality 1'"
                             :hasError="$errors->has('editing.person.nationality1')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality1')"
-                            wire:model="editing.person.nationality1">
+                            wire:model="editing.person.nationality1"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+                        
                         </x-form.select>
 
                         @error('editing.person.nationality1')
@@ -146,11 +160,17 @@
                             :label="'Nationality 2'"
                             :hasError="$errors->has('editing.person.nationality2')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality2')"
-                            wire:model="editing.person.nationality2">
+                            wire:model="editing.person.nationality2"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+
                         </x-form.select>
 
                         @error('editing.person.nationality2')
@@ -166,11 +186,17 @@
                             :label="'Country of residence'"
                             :hasError="$errors->has('editing.person.country_of_residence')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.country_of_residence')"
-                            wire:model="editing.person.country_of_residence">
+                            wire:model="editing.person.country_of_residence"
+                        >
 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
-                            @endforeach
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach                            
+
                         </x-form.select>
 
                         @error('editing.person.country_of_residence')
@@ -203,6 +229,7 @@
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
                 </div>
+                
             </x-slot>
 
             <x-slot name="footer">

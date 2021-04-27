@@ -10,6 +10,7 @@ use App\Models\Activity;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class MovieWizard extends Component
 {
@@ -98,6 +99,17 @@ class MovieWizard extends Component
                         ['activity_id' => $this->activity->id]
                     );
                 }
+                $hasMovie = ActivityLog::forSubject($this->dossier)
+                    ->where('properties->model', 'Movie')
+                    ->count();
+                activity()->on($this->dossier)
+                    ->by($this->user)
+                    ->withProperties([
+                        'model' => 'Movie',
+                        'operation' => $hasMovie ? 'replaced' : 'attached',
+                        'movie' => $this->movie->only(['id', 'original_title', 'year_of_copyright', 'isan', 'imdb_url', 'synopsis']),
+                    ])
+                    ->log('updated');
                 $this->notify('Movie added/updated');
             default:
                 break;
@@ -113,7 +125,7 @@ class MovieWizard extends Component
                 $query->whereNotIn('status_id', function ($query) {
                     $query->select('id')
                         ->from('statuses')
-                        ->whereIn('name', ['Duplicated']);
+                        ->whereIn('name', ['Duplicated', 'Draft']);
                 });
             });
 

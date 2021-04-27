@@ -6,6 +6,8 @@ use App\Models\Dossier;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Meneses\LaravelMpdf\LaravelMpdf as LaravelMpdf;
 
 class DossierController extends Controller
 {
@@ -39,7 +41,7 @@ class DossierController extends Controller
         $print = true;
 
         return compact('crumbs', 'dossier', 'layout', 'pageTitles', 'print');
-        
+
     }
 
     public function printDossier(Dossier $dossier) {
@@ -48,32 +50,55 @@ class DossierController extends Controller
 
     }
 
-    public function downloadDossier(Dossier $dossier) {
-
-        // dompdf
-        $pdf = PDF::loadView('dossiers.create', $this->prepareDossier($dossier));
-        return $pdf->stream();
-
-    }
-
     public function downloadFullDossier(Dossier $dossier) {
 
         $output = $this->printDossier($dossier);
 
         // get related fiches
-        $fiches = $dossier->fiches;
-        foreach ($fiches as $fiche) {
-            $output .= FicheController::printFiche($fiche);
-        }
-        
         // html output
+        // $fiches = $dossier->fiches;
+        // foreach ($fiches as $fiche) {
+        //     $output .= FicheController::printFiche($fiche);
+        // }
         // return $output;
 
-        // pdf output
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML($output);
-        return $pdf->stream();
+        // mpdf output page by page
+        $output_dossier = $this->printDossier($dossier);
+
+        // get related fiches
+        $fiches = $dossier->fiches;
+        $output_fiches = [];
+        foreach ($fiches as $fiche) {
+            $output_fiches[] = FicheController::printFiche($fiche);
+        }
+
+        $margin_left = 20;
+        $margin_right = 20;
+        $margin_top = 25;
+        $margin_bottom = 25;
+        $margin_header = 10;
+        $margin_footer = 10;
+        $pdf = new LaravelMpdf('', [
+            'margin_left' => $margin_left,
+            'margin_right' => $margin_right,
+            'margin_top' => $margin_top,
+            'margin_bottom' => $margin_bottom,
+            'margin_header' => $margin_header,
+            'margin_footer' => $margin_footer,
+        ]);
+        date_default_timezone_set('Europe/Brussels');
+
+        $pdf->getMpdf()->SetHTMLHeader('PDF download of dossier, {DATE d.m.Y. H:i:s}', 0, 1);
+        $pdf->getMpdf()->SetHTMLFooter('Page {PAGENO}', 0, 1);
+        $pdf->getMpdf()->WriteHTML($output_dossier);
+        foreach($output_fiches as $output_fiche) {
+            $pdf->getMpdf()->AddPage('P','','','','',$margin_left,$margin_right,$margin_top,$margin_bottom,$margin_header,$margin_footer);
+            $pdf->getMpdf()->WriteHTML($output_fiche);
+        }
+
+        return $pdf->download('dossier-'.$dossier->project_ref_id.'.pdf');
+        // return $pdf->stream();
 
     }
-    
+
 }

@@ -21,8 +21,7 @@ class CreateDistributorsTable extends Migration
             $table->date('forecast_release_date');
             $table->integer('forecast_grant')->nullable();
             $table->integer('pa_costs')->nullable();
-//            $table->unsignedBigInteger('created_by');
-//            $table->unsignedBigInteger('updatedBy')->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
     }

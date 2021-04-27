@@ -1,7 +1,7 @@
 <div>
     
     <div class="mb-8 text-lg">
-        Producers
+        <h3>Producers</h3>
     </div>
 
     <div>
@@ -22,7 +22,7 @@
                     <x-table.cell class="text-center">{{ $producerRoles[$item['role']] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['city'] }}</x-table.cell>
-                    <x-table.cell class="text-center">{{ $countries_by_code[$item['country']]['name'] }}</x-table.cell>
+                    <x-table.cell class="text-center">{{ $countriesByCode[$item['country']]['name'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['share'] }}</x-table.cell>
                     <x-table.cell class="text-center">{{ $item['budget'] }}</x-table.cell>
                     @if(empty($print))<x-table.cell class="space-x-2 text-center">
@@ -105,11 +105,17 @@
                             :label="'Country'"
                             :hasError="$errors->has('editing.country')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.country')"
-                            wire:model="editing.country">
+                            wire:model="editing.country"
+                        >
                 
-                            @foreach ($countries as $country)
-                                <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                            @foreach ($countriesGrouped as $group=>$countries)
+                                <optgroup label="---">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
+
                         </x-form.select>
 
                         @error('editing.country')
@@ -122,6 +128,7 @@
                             :id="'share'"
                             :label="'Share'"
                             :trailing="'%'"
+                            :isAmount="false"
                             :hasError="$errors->has('editing.share')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.share')"
                             wire:model="editing.share"

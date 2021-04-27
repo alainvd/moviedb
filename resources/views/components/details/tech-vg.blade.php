@@ -1,7 +1,7 @@
 <div class="grid grid-cols-2 gap-4 fiche-details-component md:grid-cols-3" id="fdc-tech-vg">
 
     <div class="col-span-2 mb-4 text-lg">
-        Technical information
+        <h3>Technical information</h3>
     </div>
 
     <div class="col-span-1 sm:col-span-1 md:col-span-1">

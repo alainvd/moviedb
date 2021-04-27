@@ -16,10 +16,10 @@ class AudienceSeeder extends Seeder
     public function run()
     {
         $audiences = [
-            "App\Models\Movie" => [
+            "Movie" => [
                 "Children", "Adults","All"
             ],
-            "App\Models\VideoGame" => [
+            "VideoGame" => [
                 "PEGI OK", "PEGI 3", "PEGI 7", "PEGI 12", "PEGI 16", "PEGI 18",
             ]
         ];

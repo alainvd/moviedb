@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Models\Crew;
 use App\Models\Location;
 use App\Models\Genre;
@@ -13,10 +12,12 @@ use App\Models\Language;
 use App\Models\Distributor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Movie extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
 
     /**
@@ -24,13 +25,20 @@ class Movie extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected static $logUnguarded = true;
+    protected static $logOnlyDirty = true;
+    protected static $recordEvents = ['updated'];
 
     /**
      * Default attribute values
      */
     protected $attributes = [
-        // 'european_nationality_flag' => 'New',
     ];
 
     protected $dates = [
@@ -63,6 +71,66 @@ class Movie extends Model
         'rights_adapt_contract_start_date' => 'date:d.m.Y',
         'rights_adapt_contract_end_date' => 'date:d.m.Y',
         'rights_adapt_contract_signature_date' => 'date:d.m.Y',
+    ];
+
+    const PLATFORMS = [
+        'CINEMA' => 'Features / Cinema',
+        'TV' => 'TV',
+        'DIGITAL' => 'Digital',
+    ];
+
+    const FILM_FORMATS = [
+        '35MM' => '35mm',
+        'DIGITAL' => 'Digital',
+        'OTHER' => 'Other',
+    ];
+
+    const FILM_TYPES = [
+        'ONEOFF' => 'One-off',
+        'SERIES' => 'Series',
+        'SHORT' => 'Short film',
+    ];
+
+    const CURRENCIES = [
+        'EUR' => 'Euro',
+        'USD' => 'US dollar',
+        'JPY' => 'Japanese yen',
+        'GBP' => 'Pound sterling',
+        'CHF' => 'Swiss franc',
+        'SEK' => 'Swedish krona',
+    ];
+
+    const LINK_APPLICANT_WORK = [
+        'WRKPRODAP' => 'Work Produced by the Applicant Company',
+        'WRKPERS' => 'Work where Personnal Credit is Eligible'
+    ];
+
+    const USER_EXPERIENCES = [
+        'LINEAR' => 'Linear',
+        'INTERACTIVE' => 'Interactive, non-linear (VR)'
+    ];
+
+    const WORK_ORIGINS = [
+        'ORIGINAL' => 'Original Work',
+        'ADAPTATION' => 'Adaptation'
+    ];
+
+    const WORK_CONTRACT_TYPES = [
+        'CTONRTRANS' => 'Contract of transfer of rights',
+        'PUBLIDOM' => 'Public domain',
+        'OPTAGR' => 'Option Agreement of transfer of rights',
+        'UNILATDECL' => 'Unilateral declaration of transfer of rights',
+        'COPRODDEV' => 'Co-Production/co-development agreement',
+    ];
+
+    const DOCUMENT_TYPES = [
+        'FINANCING' => 'Financing plan',
+        'OTHER' => 'Other',
+    ];
+
+    CONST PRODUCER_ROLES = [
+        'PRODUCER' => 'Producer',
+        'COPRODUCER' => 'Coproducer',
     ];
 
     public function crew()
@@ -140,7 +208,7 @@ class Movie extends Model
             $alias => Person::selectRaw('GROUP_CONCAT(firstname, " ", lastname SEPARATOR " , ")')
                 ->leftJoin('crews', 'crews.person_id', 'people.id')
                 ->whereColumn('crews.movie_id', 'movies.id')
-                ->where('crews.title_id', '=', 1)       
+                ->where('crews.title_id', '=', 1)
         ]);
     }
 
@@ -161,5 +229,19 @@ class Movie extends Model
         return [
             'total_budget_currency_code' => 'EUR',
         ];
+    }
+
+    public function tapActivity(ActivityLog $activity, string $eventName)
+    {
+        if ($eventName === 'updated') {
+            activity()
+                ->on($activity->subject->fiche)
+                ->by($activity->causer)
+                ->withProperties([
+                    'old' => $activity->properties['old'],
+                    'attributes' => $activity->properties['attributes']
+                ])
+                ->log('updated');
+        }
     }
 }

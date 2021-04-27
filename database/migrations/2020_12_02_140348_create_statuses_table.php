@@ -16,8 +16,9 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->unsignedSmallInteger('id')->autoIncrement();
             $table->string('name');
-            $table->string('public_name')->nullable();
-            $table->boolean('public')->default(true);
+            $table->boolean('dossier')->default(false);
+            $table->boolean('dev')->default(false);
+            $table->boolean('dist')->default(false);
             $table->timestamps();
         });
     }

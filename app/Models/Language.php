@@ -34,4 +34,50 @@ class Language extends Model
     {
         return strtoupper($this->code);
     }
+
+    public static function languagesGrouped() {
+        $languagesGrouped = Language::where('active', true)
+            ->orderBy('position', 'desc')
+            ->orderBy('name')
+            ->get()
+            ->groupBy('position')
+            ->toArray();
+        return $languagesGrouped;
+    }
+
+    public static function languagesGroupedChoices() {
+        $l = Language::where('active', true)
+            ->orderBy('position', 'desc')
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($lang) => [
+                'position' => $lang->position,
+                'value' => $lang->id,
+                'label' => $lang->name,
+            ])
+            ->groupBy('position')
+            ->toArray();
+        $i = 0;
+        foreach ($l as $group => $choices) {
+            $i++;
+            $languagesGroupedChoices[] = [
+                'label' => '---',
+                'id' => $i,
+                'choices' => $choices,
+            ];
+        }
+        return $languagesGroupedChoices;
+    }
+
+    public static function languagesCodeName() {
+        return Language::where('active', true)
+            ->orderBy('position', 'desc')
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($lang) => [
+                'code' => $lang->code,
+                'name' => $lang->name,
+            ])
+            ->toArray();
+    }
 }

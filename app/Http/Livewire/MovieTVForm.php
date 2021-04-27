@@ -63,7 +63,7 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
-        'movie.total_budget_euro' => 'integer',
+        'movie.total_budget_euro' => 'required|integer',
     ];
 
     protected $rulesEditor = [
@@ -92,6 +92,38 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
+
+        'movie.total_budget_euro' => 'required|integer',
+
+        'fiche.comments' => 'string',
+    ];
+
+    protected $rulesDraft = [
+        'movie.original_title' => 'required|string|max:255',
+        'fiche.status_id' => 'integer',
+        'movie.film_country_of_origin' => 'string',
+        'movie.genre_id' => 'integer',
+        'movie.delivery_platform' => 'string',
+        'movie.audience_id' => 'integer',
+        'movie.film_type' => 'string',
+
+        'movie.imdb_url' => 'string|max:255',
+        'movie.isan' => 'string|max:255',
+        'movie.synopsis' => 'string',
+
+        'movie.country_of_origin_points' => 'numeric',
+        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_end' => 'date:d.m.Y',
+        'movie.delivery_date' => 'date:d.m.Y',
+        'movie.broadcast_date' => 'date:d.m.Y',
+        'movie.shooting_language' => '',
+        'movie.development_costs_in_euro' => 'integer',
+        'movie.film_length' => 'integer',
+        'movie.number_of_episodes' => 'integer',
+        'movie.length_of_episodes' => 'integer',
+
+        'movie.dev_support_flag' => 'integer',
+        'movie.dev_support_reference' => 'string',
 
         'movie.total_budget_euro' => 'integer',
 
@@ -159,8 +191,11 @@ class MovieTVForm extends FicheMovieFormBase
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
 
-        // Validate subform
-        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredProducers($this->producers);
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
+        // Validate subform: if all item fields are filled
+        $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersTv::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
 
         return $specialErrors;

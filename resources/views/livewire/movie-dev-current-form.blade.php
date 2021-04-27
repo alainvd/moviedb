@@ -1,4 +1,4 @@
-<x-fiche-form :layout="$layout" :print="$print">
+<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory">
 
     <!-- title -->
     <div class="my-8">
@@ -20,6 +20,7 @@
             :movieAudiences="$movieAudiences"
             :allAaudiencesById="$allAaudiencesById"
             :countries="$countries"
+            :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
             :movieGenres="$movieGenres"
@@ -50,7 +51,7 @@
             :filmFormats="$filmFormats"
             :isApplicant="$isApplicant"
             :isEditor="$isEditor"
-            :languages="$languages"
+            :languagesGroupedChoices="$languagesGroupedChoices"
             :languagesSelected="$shootingLanguages"
         ></x-details.tech-dev-current>
     </div>

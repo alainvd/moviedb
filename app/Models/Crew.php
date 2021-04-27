@@ -107,7 +107,7 @@ class Crew extends Model
         return $crew;
     }
 
-    static function requiredMovieCrew($genre_id)
+    static function requiredMovieCrewTypes($genre_id)
     {
         if ($genre_id == 1) {
             return [

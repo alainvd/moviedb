@@ -105,6 +105,25 @@ class TitleSeeder extends Seeder
             'name' => 'Voice-over',
             'code' => 'VOICEOVER'
         ],
+        [
+            'name' => 'Co-producer',
+            'code' => 'COPRODUCER'
+        ],
+        // Not in data set
+        // [
+        //     'name' => 'Sales Agent',
+        //     'code' => 'SA'
+        // ],
+        // Role Other needed for DEVSP Staff import, can be removed once OTHER roles will be translated into actual roles
+         [
+             'name' => 'Other',
+             'code' => 'ROLOTH'
+         ],
+        // Not in data set
+        // [
+        //     'name' => 'Principal Cast',
+        //     'code' => 'ROLPCA'
+        // ],
     ];
 
     /**

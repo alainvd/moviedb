@@ -9,15 +9,13 @@ class DistributorsComposer
 {
     public function compose(View $view)
     {
-        $countries = Country::where('active', true)
-            ->get()
-            ->toArray();
+        $countriesGrouped = Country::countriesGrouped();
         $distributorRoles = [
             'Coordinator',
             'Participant'
         ];
 
-        $view->with('countries', $countries);
+        $view->with('countriesGrouped', $countriesGrouped);
         $view->with('distributorRoles', $distributorRoles);
     }
 }

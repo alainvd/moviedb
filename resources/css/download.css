@@ -8,10 +8,8 @@ main {
     margin-left: auto;
     max-width: 100%;
     width: 1140px;
-}
-
-label {
-    font-weight: bold;
+    font-size: 0.8em;
+    line-height: 1.6em;
 }
 
 table {
@@ -19,10 +17,12 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid grey;
+    font-size: 0.8em;
 }
 
 th {
     background-color: lightgrey;
+    font-size: 0.75em;
 }
 
 th, td {
@@ -30,8 +30,30 @@ th, td {
     border: 1px solid grey;
 }
 
-.text-lg {
-    font-size: 1.5em;
+h1 {
+    font-size: 1.6em;
+    margin-top: 1em;
+    margin-bottom: 0.4em;
+}
+
+/* .text-lg { */
+h2 {
+    font-size: 1.4em;
     margin-top: 0.5em;
     margin-bottom: 0.2em;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+/* mimic some tailwind classes */
+.font-bold {
+    font-weight: bold;
+}
+
+.block {
+    display: block;
 }
