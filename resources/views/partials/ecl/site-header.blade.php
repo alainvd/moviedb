@@ -9,7 +9,7 @@
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
               </svg></a>
             <div id="login-box-id" class="ecl-site-header-harmonised__login-box" data-ecl-login-box="true">
-              <p class="ecl-site-header-harmonised__login-description">Logged in as &lt;last name&gt;, &lt;first name&gt;</p>
+              <p class="ecl-site-header-harmonised__login-description">Logged in as {{ Auth::user() ? Auth::user()->name : '' }}</p>
               <hr class="ecl-site-header-harmonised__login-separator" /><a href="/example" class="ecl-link ecl-link--standalone">Log out</a>
             </div>
           </div><!--<a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__language-selector" href="/example" aria-label="English" data-ecl-language-selector="true" aria-controls="language-list-overlay"><span class="ecl-site-header-harmonised__language-icon"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">

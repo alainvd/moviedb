@@ -6,7 +6,6 @@ use App\Tools\Generic;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -53,6 +52,10 @@ class User extends Authenticatable
             if (isset($attributes['domainUsername'])) $username = $attributes['domainUsername'];
             if (isset($attributes['eu_login_username'])) $username = $attributes['eu_login_username'];
             $attributes['name'] = isset($attributes['firstName']) && isset($attributes['firstName']) ? $attributes['firstName'] . ' ' . $attributes['lastName'] : '';
+            if(session()->has('impersonate')) {
+                $user = User::where('id', session()->get('impersonate'))->first();
+                $username = $user->eu_login_username;
+            }
             $user = User::firstOrCreate(
                 [
                     'eu_login_username' => $username,
@@ -74,17 +77,12 @@ class User extends Authenticatable
 
     public function setImpersonating($id)
     {
-        Session::put('impersonate', $id);
+        session()->put('impersonate', $id);
     }
 
     public function stopImpersonating()
     {
-        Session::forget('impersonate');
-    }
-
-    public function isImpersonating()
-    {
-        return Session::has('impersonate');
+        session()->forget('impersonate');
     }
 
 }
