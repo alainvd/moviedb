@@ -16,7 +16,7 @@
                     :print="$print"
                     :id="'country_id_'.$index"
                     :label="''"
-                    :hasError="$errors->has('admissionsTables.{{ $index }}.country_id')"
+                    :disabled="!$admissionsTable->admissions->isEmpty()"
                     wire:model="admissionsTables.{{ $index }}.country_id"
                     value="{{ !empty($admissionsTables[$index]->country_id) ? $countriesById[$admissionsTables[$index]->country_id]['name'] : '' }}"
                 >
@@ -28,10 +28,6 @@
                         </optgroup>
                     @endforeach
                 </x-form.select>
-
-                @error('admissionsTables.{{ $index }}.country_id')
-                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                @enderror
             </div>
 
             <!-- year of admissions -->
@@ -41,7 +37,7 @@
                     :print="$print"
                     :id="'year_'.$index"
                     :label="''"
-                    :hasError="$errors->has('admissionsTables.{{ $index }}.year')"
+                    :disabled="!$admissionsTable->admissions->isEmpty()"
                     wire:model="admissionsTables.{{ $index }}.year"
                     value="{{ $admissionsTable->year }}"
                 >
@@ -49,15 +45,11 @@
                         <option value="{{$year}}">{{ $year }}</option>
                     @endforeach
                 </x-form.select>
-
-                @error('admissionsTables.{{ $index }}.year')
-                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                @enderror
             </div>
         </div>
 
         <!-- ADMISSIONS  -->
-        <x-table class="{{ $errors->has('admissions') ? 'border border-red-500' : '' }}">
+        <x-table>
             <x-slot name="head">
                 <x-table.heading>ORIGINAL TITLE</x-table.heading>
                 <x-table.heading>MEDIA FILM NATIONALITY</x-table.heading>
@@ -81,16 +73,13 @@
                 @endif
             </x-slot>
         </x-table>
-
-        @error('admissions')
-            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-        @enderror
         <!-- /ADMISSIONS -->
 
         @if(empty($print))
         <div class="mt-5 text-right print:hidden">
             <x-anchors.secondary
                 :url="'/admission/'.$this->dossier->project_ref_id.'/'.$admissionsTable->id"
+                :disabled="empty($admissionsTable->country_id) || empty($admissionsTable->year)"
             >
                 Add a line
             </x-anchors.secondary>
