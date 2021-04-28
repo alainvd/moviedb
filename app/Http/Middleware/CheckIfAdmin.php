@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Illuminate\Routing\Route;
 
 use Closure;
 
@@ -28,7 +29,7 @@ class CheckIfAdmin
      */
     private function checkIfUserIsAdmin($user)
     {
-        // return ($user->is_admin == 1);
+        //return ($user->is_admin == 1);
         return true;
     }
 
@@ -58,14 +59,14 @@ class CheckIfAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (backpack_auth()->guest()) {
+        /**if (backpack_auth()->guest()) {
             return $this->respondToUnauthorizedRequest($request);
         }
 
         if (! $this->checkIfUserIsAdmin(backpack_user())) {
             return $this->respondToUnauthorizedRequest($request);
-        }
-
-        return $next($request);
+        }**/
+        //dd(backpack_user());
+        return $next($request)->middleware('cas.auth');
     }
 }
