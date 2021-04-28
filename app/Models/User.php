@@ -71,6 +71,7 @@ class User extends Authenticatable
                     ],
                 ]);
             }
+
             return $user;
         }
     }
