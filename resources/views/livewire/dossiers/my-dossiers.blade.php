@@ -10,7 +10,7 @@
             </span>
         </label>
     </div>
-    <x-table class="mb-64">
+    <x-table class="dossiers-list mb-64">
         <x-slot name="head">
             <x-table.heading>CALL</x-table.heading>
             <x-table.heading>YEAR</x-table.heading>

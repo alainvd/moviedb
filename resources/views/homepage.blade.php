@@ -1,7 +1,7 @@
 <x-landing-layout>
     <div class="md:flex">
         <div class="my-4 p-4 md:w-1/2 sm:px-8 md:pl-16 md:pr-4 lg:pl-24 md:flex md:flex-col md:justify-center">
-            <form action="{{route('dossiers.create')}}" method="get">
+            <form id="create-dossier-form" action="{{route('dossiers.create')}}" method="get">
                 @csrf
                 {{ method_field('PATCH') }}
                 <div>
@@ -31,7 +31,7 @@
                 <div class="mt-2">
                     <div class="inline-block relative">
                         <input type="text" name="project_ref_id" class="w-64 p-3 border-2 border-indigo-700 text-sm text-indigo-700 placeholder-indigo-700 font-bold" placeholder="enter your project ID" required>
-                        <button type="submit" class="p-3 mt-2 border-2 border-indigo-700 text-sm text-white font-bold bg-indigo-700">
+                        <button id="create-dossier" type="submit" class="p-3 mt-2 border-2 border-indigo-700 text-sm text-white font-bold bg-indigo-700">
                             Create media dossier
                         </button>
                     </div>
