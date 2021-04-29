@@ -5,6 +5,7 @@
                 <div class="flex-shrink-0">
                     <img class="w-8 h-8" src="{{ asset('images/vector.svg') }}" alt="Movie DB logo">
                 </div>
+                <div class="ml-4 text-white font-bold leading-tight tracking-wide text-xl">Media DB</div>
                 <div class="hidden md:block">
                     <div class="flex items-baseline ml-10 space-x-4">
                         @foreach($links as $label => $url)
@@ -18,7 +19,7 @@
             <div class="z-10 hidden md:block">
                 <div class="flex items-center ml-4 md:ml-6">
                     <div class="flex justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
-                        <div class="w-full max-w-lg lg:max-w-xs">
+                        <!-- <div class="w-full max-w-lg lg:max-w-xs">
                             <label for="search" class="sr-only">Search</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -34,7 +35,10 @@
                         <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
-                    </button>
+                    </button> -->
+                    <div class="text-white text-md font-medium tracking-wider self-center">
+                        {{ auth()->user()->name }}
+                    </div>
                     <!-- Profile dropdown -->
                     <div x-data="{ open: false }" @click.away="open = false" class="relative ml-3">
                         <div>
