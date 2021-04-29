@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'email' => 'super-admin@media-database.eu',
             'eu_login_username' => "mediadb-admin",
             'password' => Hash::make(Str::random(20)),
-        ])->assignRole('super admin');
+        ])->assignRole('admin');
 
         for ($i = 0; $i < rand(10, 30); $i++) {
             User::factory()->create()->assignRole('applicant');

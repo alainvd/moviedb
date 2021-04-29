@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\EULoginAuth;
+
 return [
 
     /*
@@ -108,10 +110,10 @@ return [
     'developer_name' => 'Cristian Tabacitu',
 
     // Developer website. Link in footer. Type false if you want to hide it.
-    'developer_link' => 'http://tabacitu.ro',
+    'developer_link' => false,
 
     // Show powered by Laravel Backpack in the footer? true/false
-    'show_powered_by' => true,
+    'show_powered_by' => false,
 
     // -------
     // SCRIPTS
@@ -178,20 +180,24 @@ return [
     // The web middleware (group) used in all base & CRUD routes
     // If you've modified your "web" middleware group (ex: removed sessions), you can use a different
     // route group, that has all the the middleware listed below in the comments.
-    'web_middleware' => 'web',
+    //'web_middleware' => 'web',
     // Or you can comment the above, and uncomment the complete list below.
-    // 'web_middleware' => [
-    //     \App\Http\Middleware\EncryptCookies::class,
-    //     \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-    //     \Illuminate\Session\Middleware\StartSession::class,
-    //     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-    //     \App\Http\Middleware\VerifyCsrfToken::class,
-    // ],
+      'web_middleware' => [
+         \App\Http\Middleware\EncryptCookies::class,
+         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+         \Illuminate\Session\Middleware\StartSession::class,
+         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+         \App\Http\Middleware\VerifyCsrfToken::class,
+        
+         \App\Http\Middleware\EULoginAuth::class,
+         \App\Http\Middleware\Authenticate::class,
+         
+     ],
 
     // Set this to false if you would like to use your own AuthController and PasswordController
     // (you then need to setup your auth routes manually in your routes.php file)
     // Warning: if you disable this, the password recovery routes (below) will be disabled too!
-    'setup_auth_routes' => true,
+    //'setup_auth_routes' => true,
 
     // Set this to false if you would like to skip adding the password recovery routes
     // (you then need to manually define the routes in your web.php)
@@ -221,11 +227,11 @@ return [
     'middleware_class' => [
         App\Http\Middleware\CheckIfAdmin::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        // \Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
+        //\Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
     ],
 
     // Alias for that middleware
-    'middleware_key' => 'super admin',
+    'middleware_key' => 'admin',
     // Note: It's recommended to use the backpack_middleware() helper everywhere, which pulls this key for you.
 
     // Username column for authentication

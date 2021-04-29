@@ -16,7 +16,7 @@ class ForEditor
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->user()->hasRole(['editor', 'super admin'])) {
+        if(!$request->user()->hasRole(['editor', 'admin'])) {
             return redirect('homepage');
         }
 

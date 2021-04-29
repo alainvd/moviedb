@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
-use Illuminate\Routing\Route;
-
 use Closure;
+
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 
 class CheckIfAdmin
 {
@@ -59,14 +60,15 @@ class CheckIfAdmin
      */
     public function handle($request, Closure $next)
     {
-        /**if (backpack_auth()->guest()) {
+        auth('backpack')->setUser(Auth::user());
+        if (backpack_auth()->guest()) {
             return $this->respondToUnauthorizedRequest($request);
         }
 
         if (! $this->checkIfUserIsAdmin(backpack_user())) {
             return $this->respondToUnauthorizedRequest($request);
-        }**/
-        //dd(backpack_user());
-        return $next($request)->middleware('cas.auth');
+        }
+        //dd(Auth::user());
+        return $next($request);
     }
 }

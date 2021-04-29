@@ -29,7 +29,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ->givePermissionTo('view advanced history')
             ->givePermissionTo('access dashboard');
 
-        $role_admin = Role::create(['name' => 'super admin']);
+        $role_admin = Role::create(['name' => 'admin']);
         $role_admin->givePermissionTo(Permission::all());
     }
 }
