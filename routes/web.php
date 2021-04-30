@@ -53,37 +53,6 @@ Route::get('homepage', function () {
     return view('homepage', compact('calls'));
 })->name('homepage');
 
-$dossiers = [
-    [
-        'id' => 1,
-        'project' => 'PROJECT REF ID',
-        'shield' => true,
-        'call' => 'Call DISTRAUTO 2020',
-        'edit' => false,
-        'closed' => false,
-    ],
-    [
-        'id' => 2,
-        'project' => 'PROJECT REF ID',
-        'shield' => false,
-        'call' => 'Call DISTRAUTO 2020',
-        'edit' => false,
-        'closed' => false,
-    ],
-    [
-        'id' => 3,
-        'project' => 'PROJECT REF ID',
-        'shield' => false,
-        'call' => 'Call DISTRAUTO 2019 - CLOSED',
-        'edit' => true,
-        'closed' => true,
-    ],
-];
-
-Route::get('dossiers-public', function () use ($dossiers) {
-    return view('dossiers', ['dossiers' => $dossiers]);
-})->name('dossiers-public');
-
 Route::middleware('cas.auth')->group(function () {
     // Dossiers routes
     Route::resource('dossiers', ProjectController::class)
