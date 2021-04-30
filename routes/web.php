@@ -45,7 +45,7 @@ Route::get('/test/cas/logout', [
     function(){
         cas()->logout();
     }
-]);
+])->name('cas-logout');
 
 Route::get('homepage', function () {
     $calls = Call::where('status', 'open')
