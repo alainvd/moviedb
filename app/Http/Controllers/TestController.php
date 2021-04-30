@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Audience;
-
 use App\Models\Movie;
+
+use App\Models\Audience;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -16,6 +16,7 @@ class TestController extends Controller
 
     public function cas()
     {
+        dd(cas()->getAttributes());
         return view('test.cas');
     }
 
