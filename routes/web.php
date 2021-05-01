@@ -104,7 +104,6 @@ Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->na
 //Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
 
 //Pending
-Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->middleware('cas.auth')->name('table_edit_examples');
 Route::view('/reports', 'coming-soon')->middleware('cas.auth');
 
 
@@ -122,7 +121,7 @@ Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->mid
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select'])->middleware('cas.auth');
 Route::get('/pic', [\App\Http\Controllers\PICController::class,'index'])->middleware('cas.auth')->name('pic');
 //Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
-
+Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->middleware('cas.auth')->name('table_edit_examples');
 
 
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience'])->middleware('cas.auth');

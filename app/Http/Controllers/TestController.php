@@ -22,24 +22,18 @@ class TestController extends Controller
 
     public function select()
     {
-
         return view('test.select');
     }
 
     public function movies()
     {
-
         $movies = Movie::simplePaginate(30);
-
-
         return view('test.browse.movies', compact('movies'));
     }
 
     public function crew()
     {
-
         $movie = Movie::first();
-
         return view('test.browse.crew', compact('movie'));
     }
 
