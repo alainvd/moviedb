@@ -141,13 +141,15 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         $title = 'Films - Previous work';
         $crumbs[] = [
-            'url' => route('dossiers'),
+            'url' => route('dossiers.index'),
             'title' => 'My dossiers'
         ];
-        $crumbs[] = [
-            'url' => route('dossiers.show', $this->dossier),
-            'title' => 'Edit dossier'
-        ];
+        if (isset($this->dossier)) {
+            $crumbs[] = [
+                'url' => route('dossiers.show', $this->dossier),
+                'title' => 'Edit dossier'
+            ];
+        }
         $crumbs[] = [
             'title' => 'Edit fiche'
         ];
