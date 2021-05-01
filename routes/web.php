@@ -58,7 +58,7 @@ Route::middleware('cas.auth')->group(function () {
     Route::resource('dossiers', ProjectController::class)
         ->scoped([
             'dossier' => 'project_ref_id'
-        ]);
+        ])->name('index', 'dossiers');
 
     // History routes
     Route::resource('dossiers/{dossier}/history', HistoryController::class)

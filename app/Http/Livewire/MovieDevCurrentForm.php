@@ -174,11 +174,11 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         $title = 'Films - Current work';
         $crumbs[] = [
-            'url' => route('dossiers-public'),
+            'url' => route('dossiers'),
             'title' => 'My dossiers'
         ];
         $crumbs[] = [
-            'url' => route('dossiers-public'),
+            'url' => route('dossiers.show', $this->dossier),
             'title' => 'Edit dossier'
         ];
         $crumbs[] = [
