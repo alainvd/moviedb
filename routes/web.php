@@ -57,7 +57,7 @@ Route::middleware('cas.auth')->group(function () {
     // Root route
     Route::get('/', function () {
         if (auth()->user()->hasRole('editor')) {
-            return redirect('dashboard');
+            return redirect('dashboard/dossiers');
         }
 
         return redirect('dossiers');
