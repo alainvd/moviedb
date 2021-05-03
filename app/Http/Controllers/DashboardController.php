@@ -9,7 +9,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $dossiers = Dossier::all();
-        return view('dashboard', compact(['dossiers']));
+        return view('dashboard');
     }
 }

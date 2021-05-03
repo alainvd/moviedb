@@ -43,6 +43,7 @@ class EULoginAuth
                     $user = User::factory()->make([
                         'domain' => 'external',
                         'domainUsername' => $this->cas->user(),
+                        'eu_login_username' => $this->cas->user(),
                     ]);
                 }
 

@@ -17,6 +17,7 @@ use App\Http\Livewire\Dossiers\MovieWizard;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Controllers\CreateFicheController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Livewire\Export;
 
@@ -31,14 +32,13 @@ use App\Http\Livewire\Export;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
-
-Route::get('/auth/login', function(){
-    cas()->authenticate();
-});
+// Route::get('/auth/login', function(){
+//     cas()->authenticate();
+// });
 
 Route::get('/test/cas/logout', [
     'middleware' => 'cas.auth',
@@ -54,6 +54,32 @@ Route::get('homepage', function () {
 })->name('homepage');
 
 Route::middleware('cas.auth')->group(function () {
+    // Root route
+    Route::get('/', function () {
+        if (auth()->user()->hasRole('editor')) {
+            return redirect('dashboard/dossiers');
+        }
+
+        return redirect('dossiers');
+    });
+
+    // Editor dashboard
+    Route::prefix('dashboard')
+        ->middleware('can:access dashboard')
+        ->group(function () {
+            Route::redirect('/', 'dashboard/dossiers')->name('dashboard');
+
+            // Datatables
+            Route::get('/dossiers', function () {
+                return view('livewire.dossier-datatables',['title' => "Search Dossier"]);
+            });
+            Route::get('/movies', function () {
+                return view('livewire.movie-datatables', ['title' => "Search Movies"]);
+            });
+
+            Route::get('/export', Export::class);
+        });
+
     // Dossiers routes
     Route::resource('dossiers', ProjectController::class)
         ->scoped([
@@ -71,12 +97,10 @@ Route::middleware('cas.auth')->group(function () {
     Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
         ->name('fiche-history');
 
-    Route::get('/export', Export::class)->middleware('for.editor');
+    // Movie wizard
+    Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
+        ->name('movie-wizard');
 });
-
-Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
-    ->middleware('cas.auth')
-    ->name('movie-wizard');
 
 // One path that redirects to correct fiche form based on activity
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fiche?}', function(App\Models\Dossier $dossier, $activity, $fiche = null) {
@@ -151,14 +175,6 @@ Route::resource('document', 'App\Http\Controllers\DocumentController')->middlewa
 Route::resource('location', 'App\Http\Controllers\LocationController')->middleware('cas.auth')->only('index');
 
 Route::get('document-download', [App\Http\Livewire\TableEditMovieDocuments::class, 'download'])->middleware('cas.auth')->name('document-download');
-
-//Data Tables
-Route::get('dossiers-datatables', function () {
-    return view('livewire.dossier-datatables',['title' => "Search Dossier"]);}
-)->middleware('cas.auth');
-Route::get('movies', function () {
-    return view('livewire.movie-datatables',['title' => "Search Movies"]);}
-)->middleware('cas.auth');
 
 Route::get('/dossiers/{dossier:project_ref_id}/print', [DossierController::class, 'printDossier'])->middleware('cas.auth')->name('dossier-print');
 Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierController::class, 'downloadFullDossier'])->middleware('cas.auth')->name('dossier-full-download');

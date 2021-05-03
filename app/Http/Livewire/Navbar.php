@@ -9,12 +9,12 @@ class Navbar extends Component
 {
     public $active = '';
     public $links = [
-        'dashboard' => 'dashboard',
-        'dossiers' => 'dossiers-datatables',
-        'movies' => 'movies',
-        'reports' => 'reports',
-        'helpdesk' => 'helpdesk',
-        'export' => 'export'
+        // 'dashboard' => 'dashboard',
+        'dossiers' => 'dashboard/dossiers',
+        'movies' => 'dashboard/movies',
+        // 'reports' => 'reports',
+        // 'helpdesk' => 'helpdesk',
+        'export' => 'dashboard/export'
     ];
 
     public function __construct()
