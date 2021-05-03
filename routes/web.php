@@ -60,14 +60,7 @@ Route::middleware('cas.auth')->group(function () {
             return redirect('dashboard');
         }
 
-        // Random call_id and SEP ID => create dossier
-        $sepId = 'SEP-' . rand(1210102, 999999999);
-        $callId = Call::all()->random()->id;
-
-        return redirect()->route('dossiers.create', [
-            'call_id' => $callId,
-            'project_ref_id' => $sepId
-        ]);
+        return redirect('dossiers');
     });
 
     // Editor dashboard

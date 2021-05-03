@@ -1,4 +1,4 @@
-<div>
+<div class="mb-64">
     <div class="my-4 flex justify-between items-center">
         <h3 class="text-bold text-gray-800 text-xl tracking-wider">
             Here are your existing technical dossiers as recorded in MediaDB.
@@ -10,7 +10,7 @@
             </span>
         </label>
     </div>
-    <x-table class="dossiers-list mb-64">
+    <x-table class="dossiers-list mb-4">
         <x-slot name="head">
             <x-table.heading>CALL</x-table.heading>
             <x-table.heading>YEAR</x-table.heading>
@@ -58,4 +58,10 @@
             @endforelse
         </x-slot>
     </x-table>
+
+    <div class="flex justify-end">
+        <x-anchors.primary :url="route('homepage')">
+            Create a new dossier
+        </x-anchors.primary>
+    </div>
 </div>
