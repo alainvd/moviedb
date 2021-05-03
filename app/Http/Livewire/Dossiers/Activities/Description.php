@@ -16,6 +16,8 @@ class Description extends Component
 
     public $print = false;
 
+    public $showDetailsModal = false;
+
     protected $rules = [
         'movie.original_title' => 'required',
         'movie.film_country_of_origin' => 'required',
@@ -38,6 +40,13 @@ class Description extends Component
             if ($found) {
                 $this->movie = $found;
             }
+        }
+    }
+
+    public function toggleShowDetails()
+    {
+        if ($this->movie->id) {
+            $this->showDetailsModal = true;
         }
     }
 
