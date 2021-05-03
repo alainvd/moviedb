@@ -1,4 +1,3 @@
-<x-landing-layout>
-<livewire:pic/>
-</x-landing-layout>
-
+<x-ecl-layout>
+    <livewire:pic/>
+</x-ecl-layout>

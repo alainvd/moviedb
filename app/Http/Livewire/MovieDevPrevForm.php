@@ -140,6 +140,19 @@ class MovieDevPrevForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Previous work';
+        $crumbs[] = [
+            'url' => route('dossiers.index'),
+            'title' => 'My dossiers'
+        ];
+        if (isset($this->dossier)) {
+            $crumbs[] = [
+                'url' => route('dossiers.show', $this->dossier),
+                'title' => 'Edit dossier'
+            ];
+        }
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
         
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 

@@ -5,12 +5,12 @@
         <div class="ecl-site-header-harmonised__action">
           <div class="ecl-site-header-harmonised__login-container"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__login-toggle" href="/example" data-ecl-login-toggle="true" aria-controls="login-box-id" aria-expanded="false"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--logged-in"></use>
-              </svg>Log in<svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__login-arrow ecl-icon ecl-icon--xs">
+              </svg>{{ Auth::user() ? Auth::user()->name : 'Log in' }}<svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__login-arrow ecl-icon ecl-icon--xs">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
               </svg></a>
             <div id="login-box-id" class="ecl-site-header-harmonised__login-box" data-ecl-login-box="true">
               <p class="ecl-site-header-harmonised__login-description">Logged in as {{ Auth::user() ? Auth::user()->name : '' }}</p>
-              <hr class="ecl-site-header-harmonised__login-separator" /><a href="/example" class="ecl-link ecl-link--standalone">Log out</a>
+              <hr class="ecl-site-header-harmonised__login-separator" /><a href="{{ route('cas-logout') }}" class="ecl-link ecl-link--standalone">Log out</a>
             </div>
           </div><!--<a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__language-selector" href="/example" aria-label="English" data-ecl-language-selector="true" aria-controls="language-list-overlay"><span class="ecl-site-header-harmonised__language-icon"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--language"></use>
@@ -47,7 +47,7 @@
                 </svg><span class="ecl-button__label" data-ecl-label="true">Back</span></span></button>
           </header>
           <ul class="ecl-menu__list">
-            <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers" class="ecl-menu__link" data-ecl-menu-link="true">My Dossiers</a></li>
+            <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="{{ route('dossiers.index') }}" class="ecl-menu__link" data-ecl-menu-link="true">My Dossiers</a></li>
             <!--<li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers/1/activities/2/fiches/dist" class="ecl-menu__link" data-ecl-menu-link="true">Create Movie</a></li>-->
             <!--
             <li class="ecl-menu__item ecl-menu__item--current ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link ecl-menu__link--current" data-ecl-menu-link="true">Item 2<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
