@@ -12,9 +12,7 @@
               <p class="ecl-site-header-harmonised__login-description">Logged in as {{ Auth::user() ? Auth::user()->name : '' }}</p>
               <hr class="ecl-site-header-harmonised__login-separator" /><a href="{{ route('cas-logout') }}" class="ecl-link ecl-link--standalone">Log out</a>
             </div>
-          </div><!--<a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__language-selector" href="/example" aria-label="English" data-ecl-language-selector="true" aria-controls="language-list-overlay"><span class="ecl-site-header-harmonised__language-icon"><svg focusable="false" aria-hidden="true" class="ecl-site-header-harmonised__icon ecl-icon ecl-icon--s">
-                <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--language"></use>
-              </svg><span class="ecl-site-header-harmonised__language-code">en</span></span>English</a>-->
+          </div>
           <div class="ecl-site-header-harmonised__search-container"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__search-toggle" href="/example" data-ecl-search-toggle="true" aria-controls="search-form-id" aria-expanded="false"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--search"></use>
               </svg>Search</a>
@@ -27,11 +25,6 @@
         </div>
       </div>
     </div>
-    <!--
-    <div class="ecl-site-header-harmonised__banner-top">
-      <div class="ecl-container"><a href="https://eacea.ec.europa.eu/" class="ecl-link ecl-link--standalone">Class name</a></div>
-    </div>
-    -->
     <nav data-ecl-auto-init="Menu" class="ecl-menu--group1 ecl-menu" aria-expanded="false" data-ecl-menu="true">
       <div class="ecl-menu__overlay" data-ecl-menu-overlay="true"></div>
       <div class="ecl-container ecl-menu__container"><a class="ecl-link ecl-link--standalone ecl-menu__open" href="/example" data-ecl-menu-open="true"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
@@ -49,122 +42,6 @@
           <ul class="ecl-menu__list">
             <li class="ecl-menu__item" data-ecl-menu-item="true"><a href="{{ route('dossiers.index') }}" class="ecl-menu__link" data-ecl-menu-link="true">My Dossiers</a></li>
             <!--<li class="ecl-menu__item" data-ecl-menu-item="true"><a href="/dossiers/1/activities/2/fiches/dist" class="ecl-menu__link" data-ecl-menu-link="true">Create Movie</a></li>-->
-            <!--
-            <li class="ecl-menu__item ecl-menu__item--current ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link ecl-menu__link--current" data-ecl-menu-link="true">Item 2<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
-                  <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
-                </svg></a>
-              <div class="ecl-menu__mega" data-ecl-menu-mega="true">
-                <ul class="ecl-menu__sublist">
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.1</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.2</a></li>
-                  <li class="ecl-menu__subitem ecl-menu__subitem--current" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink ecl-menu__sublink--current">Item 2.3</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.4</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.5</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.6</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.7</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.8</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.9</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.10</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.11</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.12</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.13</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.14</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.15</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 2.16</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="ecl-menu__item ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link" data-ecl-menu-link="true">Item 3<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
-                  <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
-                </svg></a>
-              <div class="ecl-menu__mega" data-ecl-menu-mega="true">
-                <ul class="ecl-menu__sublist">
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 3.1</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 3.2</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 3.3</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="ecl-menu__item ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link" data-ecl-menu-link="true">Item 4<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
-                  <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
-                </svg></a>
-              <div class="ecl-menu__mega" data-ecl-menu-mega="true">
-                <ul class="ecl-menu__sublist">
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.1</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.2</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.3 with a very long label going on 2 lines</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.4</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.5</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.6</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.7</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.8</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.9</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.10</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.11</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.12</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.13</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 4.14</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="ecl-menu__item ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link" data-ecl-menu-link="true">Item 5<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
-                  <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
-                </svg></a>
-              <div class="ecl-menu__mega" data-ecl-menu-mega="true">
-                <ul class="ecl-menu__sublist">
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.1</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.2</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.3</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.4</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.5</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.6</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 5.7</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="ecl-menu__item ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link" data-ecl-menu-link="true">Item 6<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
-                  <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
-                </svg></a>
-              <div class="ecl-menu__mega" data-ecl-menu-mega="true">
-                <ul class="ecl-menu__sublist">
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.1</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.2</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.3</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.4</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.5</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.6</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.7</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.8</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.9 with a very long label</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.10</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.11</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.12</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.13</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.14</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.15</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 6.16</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="ecl-menu__item ecl-menu__item--has-children" data-ecl-has-children="true" data-ecl-menu-item="true"><a href="/example" class="ecl-menu__link" data-ecl-menu-link="true">Item 7 with a long label<svg focusable="false" aria-hidden="true" class="ecl-menu__link-icon ecl-icon ecl-icon--xs ecl-icon--rotate-90">
-                  <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
-                </svg></a>
-              <div class="ecl-menu__mega" data-ecl-menu-mega="true">
-                <ul class="ecl-menu__sublist">
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.1</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.2</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.3</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.4</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.5</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.6</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.7</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.8</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.9</a></li>
-                  <li class="ecl-menu__subitem" data-ecl-menu-subitem="true"><a href="/example" class="ecl-menu__sublink">Item 7.10</a></li>
-                </ul>
-              </div>
-            </li>
-            -->
           </ul>
         </section>
       </div>
