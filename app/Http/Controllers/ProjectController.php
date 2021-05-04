@@ -105,6 +105,10 @@ class ProjectController extends Controller
      */
     public function show(Dossier $dossier)
     {
+        if (request()->user()->cannot('view', $dossier)) {
+            abort(404);
+        }
+
         $layout = $this->getLayout();
         $pageTitles = $this->pageTitles;
         $crumbs = $this->getCrumbs();
@@ -134,11 +138,15 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $dossier = Dossier::findOrFail($id);
+
+        if ($request->user()->cannot('update', $dossier)) {
+            return abort(404);
+        }
+
         $this->validate($request, $this->buildValidator($request));
 
         $params = $request->only(['company']);
-
-        $dossier = Dossier::findOrFail($id);
 
         $dossier->fill([
             'company' => $params['company'],
