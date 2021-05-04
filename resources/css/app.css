@@ -98,6 +98,10 @@ main {
     body.dossier-page {
         background: url('../images/dossier/dots-vertical-1.png') 2% 305px no-repeat;
     }
+
+    body.error-page {
+        background: url('../images/dossier/dots-vertical-1.png') 2% 152px no-repeat;
+    }
 }
 
 
