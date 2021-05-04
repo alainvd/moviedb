@@ -32,9 +32,12 @@ use App\Http\Livewire\Export;
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/welcome', [
+    'middleware' => 'cas.guest',
+    function () {
+        return view('welcome');
+    }
+])->name('welcome');
 
 // Route::get('/auth/login', function(){
 //     cas()->authenticate();
@@ -47,11 +50,14 @@ Route::get('/test/cas/logout', [
     }
 ])->name('cas-logout');
 
-Route::get('homepage', function () {
-    $calls = Call::where('status', 'open')
-        ->get();
-    return view('homepage', compact('calls'));
-})->name('homepage');
+Route::get('homepage', [
+    'middleware' => 'cas.guest',
+    function () {
+        $calls = Call::where('status', 'open')
+            ->get();
+        return view('homepage', compact('calls'));
+    }
+])->name('homepage');
 
 Route::middleware('cas.auth')->group(function () {
     // Root route

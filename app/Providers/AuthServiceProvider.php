@@ -30,7 +30,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::viaRequest('movie-db', function ($request) {
             if (session()->get('cas_user')) {
-                return User::firstOrCreateByAttributes(cas()->getAttributes());
+                if (cas()->isAuthenticated()) {
+                    return User::firstOrCreateByAttributes(cas()->getAttributes());
+                } else return null;
             } else return null;
         });
     }
