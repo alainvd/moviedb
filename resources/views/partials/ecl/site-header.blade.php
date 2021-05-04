@@ -5,7 +5,7 @@
         <div class="ecl-site-header-harmonised__action">
 
           @livewire('login')
-
+          
           <div class="ecl-site-header-harmonised__search-container"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__search-toggle" href="#" data-ecl-search-toggle="true" aria-controls="search-form-id" aria-expanded="false"><svg focusable="false" aria-hidden="true" class="ecl-icon ecl-icon--s">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#general--search"></use>
               </svg>Search</a>
