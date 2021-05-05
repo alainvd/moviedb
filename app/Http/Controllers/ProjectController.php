@@ -144,9 +144,14 @@ class ProjectController extends Controller
             return abort(404);
         }
 
+        $params = $request->only(['company']);
+        if ($params['company'] !== $dossier->company) {
+            $dossier->company = $params['company'];
+            $dossier->save();
+        }
+
         $this->validate($request, $this->buildValidator($request));
 
-        $params = $request->only(['company']);
 
         $dossier->fill([
             'company' => $params['company'],
