@@ -20,7 +20,7 @@ class Calls extends Command
      *
      * @var string
      */
-    protected $description = 'Import Roles';
+    protected $description = 'Import Calls';
 
     /**
      * Create a new command instance.
