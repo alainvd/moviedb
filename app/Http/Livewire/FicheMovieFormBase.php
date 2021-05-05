@@ -162,7 +162,7 @@ class FicheMovieFormBase extends FicheFormBase
                     $type = 'dev-prev';
                     break;
                 case 'current-work':
-                    if ($this->dossier->action->name == 'TV') {
+                    if ($this->dossier->action->name == 'TVONLINE') {
                         $type = 'tv';
                     } else {
                         $type = 'dev-current';

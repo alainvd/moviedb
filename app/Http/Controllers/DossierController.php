@@ -30,12 +30,12 @@ class DossierController extends Controller
         $crumbs = [];
         $layout = 'print-layout';
         $pageTitles = [
-            'DISTSEL' => 'Films on the Move',
+            'FILMOVE' => 'Films on the Move',
             'DISTSAG' => 'European Sales Support',
             'DEVSLATE' => 'European Slate Development',
-            'DEVSLATEMINI' => 'European Mini-slate Development',
-            'CODEVELOPMENT' => 'European Co-development',
-            'TV' => 'TV and Online Content',
+            'DEVMINISLATE' => 'European Mini-slate Development',
+            'CODEV' => 'European Co-development',
+            'TVONLINE' => 'TV and Online Content',
             'DEVVG' => 'Videogame development'
         ];
         $print = true;
