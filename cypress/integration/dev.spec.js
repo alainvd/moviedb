@@ -2,7 +2,7 @@ const faker = require('faker')
 
 context('DEV dossiers', () => {
     const sepId = 'SEP-' + Math.floor(Math.random() * 1000000)
-    const action = faker.random.arrayElement(['DEVSLATE', 'DEVSLATEMINI'])
+    const action = faker.random.arrayElement(['DEVSLATE', 'DEVMINISLATE'])
     const previousTitle = faker.lorem.sentence(3)
     const newPreviousTitle = previousTitle + ' - edited - ' + Date.now()
     const currentTitle = faker.lorem.sentence(3)

@@ -7,15 +7,15 @@
         </p>
 
     @if (Auth::user()->hasRole('applicant'))
-        @if (in_array($dossier->action->name, ['DISTSEL', 'DISTSAG']))
+        @if (in_array($dossier->action->name, ['FILMOVE', 'DISTSAG']))
             @include('dossiers.instructions.dist')
         @elseif ($dossier->action->name === 'DEVSLATE')
             @include('dossiers.instructions.devslate')
-        @elseif ($dossier->action->name === 'DEVSLATEMINI')
-            @include('dossiers.instructions.devslatemini')
-        @elseif ($dossier->action->name === 'CODEVELOPMENT')
+        @elseif ($dossier->action->name === 'DEVMINISLATE')
+            @include('dossiers.instructions.DEVMINISLATE')
+        @elseif ($dossier->action->name === 'CODEV')
             @include('dossiers.instructions.devco')
-        @elseif ($dossier->action->name === 'TV')
+        @elseif ($dossier->action->name === 'TVONLINE')
             @include('dossiers.instructions.tv')
         @endif
     @endif

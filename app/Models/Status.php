@@ -23,12 +23,12 @@ class Status extends Model
     {
         switch ($action) {
             case 'DEVSLATE':
-            case 'DEVSLATEMINI':
+            case 'DEVMINISLATE':
             case 'DEVVG':
-            case 'CODEVELOPMENT':
-            case 'TV':
+            case 'CODEV':
+            case 'TVONLINE':
                 return $query->where('dev', true);
-            case 'DISTSEL':
+            case 'FILMOVE':
             case 'DISTSAG':
                 return $query->where('dist', true);
         }
