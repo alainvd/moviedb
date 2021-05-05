@@ -13,7 +13,7 @@ class Actions extends Command
      *
      * @var string
      */
-    protected $signature = 'import:actionss';
+    protected $signature = 'import:actions';
 
     /**
      * The console command description.
