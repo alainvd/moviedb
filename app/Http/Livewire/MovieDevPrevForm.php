@@ -162,6 +162,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
                 'print' => false,
                 'title' => $title,
                 'crumbs' => $this->crumbs,
+                'hasHistory' => false
             ])
             ->layout($layout, [
                 'title' => $title,
