@@ -162,7 +162,7 @@ class ProjectController extends Controller
             $request->session()
                 ->flash(
                     'error',
-                    'Cannot submit dossier while fiches are in DRAFT'
+                    'Cannot submit dossier while works are in DRAFT'
                 );
             return redirect()->back();
         }
