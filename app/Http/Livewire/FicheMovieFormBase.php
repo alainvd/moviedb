@@ -227,7 +227,7 @@ class FicheMovieFormBase extends FicheFormBase
             $errors = $specialErrors;
         }
 
-        if($errors) {
+        if($errors->count()) {
             $this->setErrorBag($errors);
             return;
         }
