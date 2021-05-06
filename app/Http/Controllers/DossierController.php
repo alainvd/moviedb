@@ -52,6 +52,8 @@ class DossierController extends Controller
 
     public function downloadFullDossier(Dossier $dossier) {
 
+        ini_set("pcre.backtrack_limit", "5000000");
+
         $output = $this->printDossier($dossier);
 
         // get related fiches
