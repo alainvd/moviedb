@@ -145,6 +145,8 @@ class ProjectController extends Controller
         }
 
         $params = $request->only(['company']);
+
+        // Keep company name even if validation fails
         if ($params['company'] !== $dossier->company) {
             $dossier->company = $params['company'];
             $dossier->save();
@@ -152,9 +154,20 @@ class ProjectController extends Controller
 
         $this->validate($request, $this->buildValidator($request));
 
+        // Check if there are any fiches in DRAFT and prevent submit
+        $hasAnyDrafts = $dossier->fiches()->where('status_id', Status::DRAFT)
+            ->count();
+
+        if ($hasAnyDrafts) {
+            $request->session()
+                ->flash(
+                    'error',
+                    'Cannot submit dossier while works are in DRAFT'
+                );
+            return redirect()->back();
+        }
 
         $dossier->fill([
-            'company' => $params['company'],
             'status_id' => Status::NEW,
             'updated_by' => Auth::user()->id,
         ]);
