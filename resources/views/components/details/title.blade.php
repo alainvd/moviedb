@@ -5,7 +5,7 @@
     
     @if($fiche->updated_at)
     <div class="mt-3 text-xs tracking-tight text-gray-600 align-baseline">
-        Modified on {{ $fiche->updated_at->format('d F Y') }} by John Smith
+        Modified on {{ $fiche->updated_at->format('d F Y') }} by {{ $fiche->author->name }}
     </div>
     @endif
 </div>
