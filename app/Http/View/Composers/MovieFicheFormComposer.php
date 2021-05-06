@@ -60,5 +60,6 @@ class MovieFicheFormComposer
         $view->with('workContractTypes', Movie::WORK_CONTRACT_TYPES);
         $view->with('documentTypes', Movie::DOCUMENT_TYPES);
         $view->with('producerRoles', Movie::PRODUCER_ROLES);
+        $view->with('hasHistory', false);
     }
 }
