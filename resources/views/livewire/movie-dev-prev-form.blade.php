@@ -26,8 +26,8 @@
             :movieGenres="$movieGenres"
             :allGenresById="$allGenresById"
             :platforms="$platforms"
-            :statuses="$statuses"
-            :statusesById="$statusesById"
+            :statuses="$statusesDev"
+            :statusesById="$statusesByIdDev"
             :years="$years"
         ></x-details.basic>
     </div>

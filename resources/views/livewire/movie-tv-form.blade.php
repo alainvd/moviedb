@@ -26,8 +26,8 @@
             :movieGenres="$movieGenres"
             :allGenresById="$allGenresById"
             :platforms="$platforms"
-            :statuses="$statuses"
-            :statusesById="$statusesById"
+            :statuses="$statusesDist"
+            :statusesById="$statusesByIdDist"
             :years="$years"
         ></x-details.basic-tv>
     </div>
