@@ -40,7 +40,7 @@ class CallsImport implements ToModel, WithHeadingRow
             'action_id' => $action->id,
             'year' => $row['year'],
             'status' => $row['status'],
-            'published_at' => $row['call_publication_date'] ? $this->formatDate($row['call_publication_date'], $row['call_ref']) : null,
+            'published_at' => $row['call_publication_date'] ? $this->formatDate($row['call_publication_date'], $row['call_ref']) : now(),
 
         ]);
         echo($row['call_ref']);
