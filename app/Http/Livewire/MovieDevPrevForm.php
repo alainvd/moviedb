@@ -120,17 +120,17 @@ class MovieDevPrevForm extends FicheMovieFormBase
         foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_distributors, TableEditMovieSalesDistributors::class, function($sales_distributor) {return $sales_distributor['name'];});
-        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);    
+        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
 
         return $specialErrors;
     }
-    
+
     public function fichePostSave()
     {
         // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
-        
+
         // only back, no wizard
         return redirect()->to($this->previous);
     }
@@ -153,7 +153,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         $crumbs[] = [
             'title' => 'Edit fiche'
         ];
-        
+
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-prev-form', [
@@ -162,7 +162,6 @@ class MovieDevPrevForm extends FicheMovieFormBase
                 'print' => false,
                 'title' => $title,
                 'crumbs' => $this->crumbs,
-                'hasHistory' => false
             ])
             ->layout($layout, [
                 'title' => $title,
