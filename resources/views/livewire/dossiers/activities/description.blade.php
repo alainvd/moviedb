@@ -36,8 +36,7 @@
                 :id="'director'"
                 :label="'Film Director'"
                 :disabled="true"
-                wire:model="movie.director"
-                value="{{ $movie->original_title }}">
+                value="{{ $movie->director }}">
             </x-form.input>
         </div>
         <div class="col-span-1">
