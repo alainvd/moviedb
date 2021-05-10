@@ -15,7 +15,7 @@ class CreateSalesDistributorsTable extends Migration
     {
         Schema::create('sales_distributors', function (Blueprint $table) {
             $table->id();
-            $table->integer('movie_id');
+            $table->unsignedBigInteger('movie_id');
             $table->string('name')->nullable();
             $table->string('role')->nullable();
             $table->date('release_date')->nullable();

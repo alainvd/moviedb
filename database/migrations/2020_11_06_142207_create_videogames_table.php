@@ -18,8 +18,8 @@ class CreateVideogamesTable extends Migration
             $table->string('original_title')->nullable();
             $table->integer('year_of_copyright')->nullable();
             $table->text('synopsis')->nullable();
-            $table->unsignedInteger('genre_id')->nullable();
-            $table->unsignedInteger('audience_id')->nullable();
+            $table->unsignedBigInteger('genre_id')->nullable()->references('id')->on('genres');
+            $table->unsignedBigInteger('audience_id')->nullable()->references('id')->on('audiences');
             $table->timestamps();
 
         });
