@@ -87,8 +87,8 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer|max:10000',
-        'movie.number_of_episodes' => 'integer',
-        'movie.length_of_episodes' => 'integer',
+        'movie.number_of_episodes' => 'integer|max:10000',
+        'movie.length_of_episodes' => 'integer|max:10000',
 
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
