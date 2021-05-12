@@ -87,7 +87,7 @@
                         @enderror
                     </div>
 
-                    @if($fiche=='dist')
+                    @if($fiche=='dist' || $fiche=='devCurrent')
                     <div>
                         <x-form.select
                             :id="'locations_country'"
