@@ -14,7 +14,11 @@
                 <x-table.heading>Role</x-table.heading>
                 <x-table.heading>Full name</x-table.heading>
                 <x-table.heading>Gender</x-table.heading>
-                <x-table.heading>Nationality 1</x-table.heading>
+                @if($fiche=='dist')
+                    <x-table.heading>Nationality 1</x-table.heading>
+                @else
+                    <x-table.heading>Nationality</x-table.heading>
+                @endif
                 @if($fiche=='dist')<x-table.heading>Nationality 2</x-table.heading>@endif
                 @if($fiche=='dist')<x-table.heading>Residence</x-table.heading>@endif
                 @if ($isEditor && $fiche=='dist')<x-table.heading>Scoring</x-table.heading>@endif
@@ -132,7 +136,7 @@
                     <div>
                         <x-form.select
                             :id="'crews_nationality1'"
-                            :label="'Nationality 1'"
+                            :label="$fiche=='dist' ? 'Nationality 1' : 'Nationality'"
                             :hasError="$errors->has('editing.person.nationality1')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.person.nationality1')"
                             wire:model="editing.person.nationality1"
