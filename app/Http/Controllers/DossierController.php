@@ -90,6 +90,7 @@ class DossierController extends Controller
         ]);
         date_default_timezone_set('Europe/Brussels');
 
+        $pdf->getMpdf()->setTitle('Dossier');
         $pdf->getMpdf()->SetHTMLHeader('PDF download of dossier, {DATE d.m.Y. H:i:s}', 0, 1);
         $pdf->getMpdf()->SetHTMLFooter('Page {PAGENO}', 0, 1);
         $pdf->getMpdf()->WriteHTML($output_dossier);
