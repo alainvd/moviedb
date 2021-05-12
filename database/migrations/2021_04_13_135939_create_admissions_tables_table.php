@@ -15,8 +15,8 @@ class CreateAdmissionsTablesTable extends Migration
     {
         Schema::create('admissions_tables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('dossier_id')->nullable();
-            $table->unsignedInteger('country_id')->nullable();
+            $table->unsignedBigInteger('dossier_id')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->integer('year')->nullable();
             $table->timestamps();
         });
