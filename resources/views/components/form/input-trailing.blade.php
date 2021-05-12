@@ -47,5 +47,5 @@
 @if (!empty($print) && !empty($value))
 <!-- Output for print -->
 <span class="font-bold">{{ $label }}</span>
-<span class="">{{ $isAmount ? amount($value) : $value }} {{ $trailing }}</span>
+<span class="">{!! $isAmount ? amount($value) : $value !!} {!! $trailing !!}</span>
 @endif

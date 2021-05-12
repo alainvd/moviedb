@@ -44,5 +44,5 @@
 @if (!empty($print) && !empty($value))
 <!-- Output for print -->
 <span class="font-bold">{{ $label }}</span>
-<span class="">{{ $value }}</span>
+<span class="">{!! $value !!}</span>
 @endif

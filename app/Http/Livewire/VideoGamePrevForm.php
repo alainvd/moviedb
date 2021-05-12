@@ -59,12 +59,12 @@ class VideoGamePrevForm extends Component
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string|max:255',
-        'movie.year_of_copyright' => 'integer|max:10000',
+        'movie.year_of_copyright' => 'integer',
         'media.genre_id' => 'required|integer',
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         // 'shootingLanguage' => 'required|integer',
         'shootingLanguage' => 'integer',

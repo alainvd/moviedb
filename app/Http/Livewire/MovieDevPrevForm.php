@@ -33,7 +33,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
-        'movie.year_of_copyright' => 'integer|max:10000',
+        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'required|integer',
@@ -41,12 +41,12 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.photography_start' => 'date:d.m.Y',
         'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer|max:10000',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
@@ -62,7 +62,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'integer',
         'movie.film_country_of_origin' => 'string',
-        'movie.year_of_copyright' => 'integer|max:10000',
+        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'integer',
         'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'integer',
@@ -70,12 +70,12 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.photography_start' => 'date:d.m.Y',
         'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => '',
-        'movie.film_length' => 'integer|max:10000',
+        'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',

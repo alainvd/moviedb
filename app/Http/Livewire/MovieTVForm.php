@@ -48,7 +48,7 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
@@ -56,9 +56,9 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.broadcast_date' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
-        'movie.film_length' => 'required|integer|max:10000',
-        'movie.number_of_episodes' => 'integer|max:10000',
-        'movie.length_of_episodes' => 'integer|max:10000',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
@@ -77,7 +77,7 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
@@ -86,9 +86,9 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.broadcast_date' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
-        'movie.film_length' => 'required|integer|max:10000',
-        'movie.number_of_episodes' => 'integer|max:10000',
-        'movie.length_of_episodes' => 'integer|max:10000',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
         'movie.dev_support_flag' => 'required|integer',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
@@ -109,7 +109,7 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'date:d.m.Y',
@@ -118,9 +118,9 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.broadcast_date' => 'date:d.m.Y',
         'movie.shooting_language' => '',
         'movie.development_costs_in_euro' => 'integer',
-        'movie.film_length' => 'integer|max:10000',
-        'movie.number_of_episodes' => 'integer|max:10000',
-        'movie.length_of_episodes' => 'integer|max:10000',
+        'movie.film_length' => 'integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
         'movie.dev_support_flag' => 'integer',
         'movie.dev_support_reference' => 'string',

@@ -46,14 +46,14 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
-        'movie.film_length' => 'required|integer|max:10000',
-        'movie.number_of_episodes' => 'integer|max:10000',
-        'movie.length_of_episodes' => 'integer|max:10000',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
         'movie.rights_origin_of_work' => 'required|string',
         'movie.rights_contract_type' => 'required|string',
@@ -85,14 +85,14 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.photography_start' => 'date:d.m.Y',
         'movie.shooting_language' => '',
         'movie.development_costs_in_euro' => 'integer',
-        'movie.film_length' => 'integer|max:10000',
-        'movie.number_of_episodes' => 'integer|max:10000',
-        'movie.length_of_episodes' => 'integer|max:10000',
+        'movie.film_length' => 'integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
         'movie.rights_origin_of_work' => 'string',
         'movie.rights_contract_type' => 'string',

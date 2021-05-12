@@ -44,7 +44,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer|max:10000',
+        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
@@ -52,12 +52,12 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer|max:10000',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string',
 
         'movie.total_budget_currency_amount' => 'required|integer',
@@ -69,7 +69,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer|max:10000',
+        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
@@ -77,13 +77,13 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer|max:10000',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string|max:255',
 
         'movie.total_budget_currency_amount' => 'required|integer',
@@ -99,7 +99,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer|max:10000',
+        'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'integer',
         'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'integer',
@@ -107,13 +107,13 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'date:d.m.Y',
         'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => '',
-        'movie.film_length' => 'integer|max:10000',
+        'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string|max:255',
 
         'movie.total_budget_currency_amount' => 'integer',
