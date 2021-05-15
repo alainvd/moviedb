@@ -144,7 +144,9 @@ class ProjectController extends Controller
             return abort(404);
         }
 
-        $params = $request->only(['company']);
+        $params = $request->validate([
+            'company' => 'required|string|max:255'
+        ]);
 
         // Keep company name even if validation fails
         if ($params['company'] !== $dossier->company) {
