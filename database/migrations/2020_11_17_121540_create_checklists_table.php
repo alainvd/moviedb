@@ -17,9 +17,9 @@ class CreateChecklistsTable extends Migration
             $table->id();
             $table->unsignedInteger('position');
             $table->string('status');
-            $table->unsignedInteger('dossier_id');
-            $table->unsignedInteger('movie_id');
-            $table->unsignedInteger('step_id');
+            $table->unsignedBigInteger('dossier_id');
+            $table->unsignedBigInteger('movie_id');
+            $table->unsignedBigInteger('step_id');
             $table->string('status_by')->nullable();
             $table->timestamps();
         });
