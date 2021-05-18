@@ -19,7 +19,7 @@
             </x-table.cell>
             @if(empty($print))
             <x-table.cell class="space-x-2 text-center">
-                <a href="{{ route($dossier->action->name === 'TV' ? "tv-fiche-form" : "dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
+                <a href="{{ route($dossier->action->name === 'TVONLINE' ? "tv-fiche-form" : "dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
                     class="text-purple-600 cursor-pointer print:hidden">
                     Edit
                 </a>

@@ -37,7 +37,7 @@ class MovieFactory extends BaseFactory
         return [
             'genre_id' => $this->getRelationId(Genre::class),
             'audience_id' => $this->getRelationId(Audience::class),
-            'delivery_platform' => $this->faker->randomElement(array_merge([NULL], array_keys(Movie::PLATFORMS))),
+            'delivery_platform' => $this->faker->randomElement( array_keys(Movie::PLATFORMS)),
             //legacy_id
             'original_title' => $this->faker->sentence(3, true),
             'synopsis' => $this->faker->paragraph(12, true),

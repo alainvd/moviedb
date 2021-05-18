@@ -25,12 +25,12 @@ class ProjectController extends Controller
     ];
 
     protected $pageTitles = [
-        'DISTSEL' => 'Films on the Move',
+        'FILMOVE' => 'Films on the Move',
         'DISTSAG' => 'European Sales Support',
         'DEVSLATE' => 'European Slate Development',
-        'DEVSLATEMINI' => 'European Mini-slate Development',
-        'CODEVELOPMENT' => 'European Co-development',
-        'TV' => 'TV and Online Content',
+        'DEVMINISLATE' => 'European Mini-slate Development',
+        'CODEV' => 'European Co-development',
+        'TVONLINE' => 'TV and Online Content',
         'DEVVG' => 'Videogame development'
     ];
 
@@ -105,6 +105,10 @@ class ProjectController extends Controller
      */
     public function show(Dossier $dossier)
     {
+        if (request()->user()->cannot('view', $dossier)) {
+            abort(404);
+        }
+
         $layout = $this->getLayout();
         $pageTitles = $this->pageTitles;
         $crumbs = $this->getCrumbs();
@@ -134,14 +138,36 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->buildValidator($request));
+        $dossier = Dossier::findOrFail($id);
+
+        if ($request->user()->cannot('update', $dossier)) {
+            return abort(404);
+        }
 
         $params = $request->only(['company']);
 
-        $dossier = Dossier::findOrFail($id);
+        // Keep company name even if validation fails
+        if ($params['company'] !== $dossier->company) {
+            $dossier->company = $params['company'];
+            $dossier->save();
+        }
+
+        $this->validate($request, $this->buildValidator($request));
+
+        // Check if there are any fiches in DRAFT and prevent submit
+        $hasAnyDrafts = $dossier->fiches()->where('status_id', Status::DRAFT)
+            ->count();
+
+        if ($hasAnyDrafts) {
+            $request->session()
+                ->flash(
+                    'error',
+                    'Cannot submit dossier while works are in DRAFT'
+                );
+            return redirect()->back();
+        }
 
         $dossier->fill([
-            'company' => $params['company'],
             'status_id' => Status::NEW,
             'updated_by' => Auth::user()->id,
         ]);

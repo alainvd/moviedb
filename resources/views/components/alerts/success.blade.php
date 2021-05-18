@@ -3,7 +3,7 @@
     role="alert"
     x-data="{show: true}"
     x-show="show"
-    x-init="setTimeout(() => show = false, 3000)">
+    x-init="setTimeout(() => show = false, 5000)">
     <span class="block sm:inline">
         {{$slot}}
     </span>

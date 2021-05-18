@@ -44,7 +44,7 @@ class BaseActivity extends Component
             $model = Str::of(class_basename($this))
                 ->singular()
                 ->replaceMatches("/(?<=\\w)(?=[A-Z])/", " $1")
-                ->lowercase()
+                ->lower()
                 ->ucfirst();
             // Add activity log
             activity()

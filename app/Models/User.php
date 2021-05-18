@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Tools\Generic;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\CausesActivity;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Session;
-use Spatie\Activitylog\Traits\CausesActivity;
 
 class User extends Authenticatable
 {
@@ -48,29 +48,47 @@ class User extends Authenticatable
         $attributes['password'] = Str::random(16);
 
         // Check if there is a user associated with this email
-        if (isset($attributes['eu_login_username'])) {
-            return User::firstOrCreate(
+        if (isset($attributes['domainUsername']) || isset($attributes['eu_login_username'])) {
+            if (isset($attributes['domainUsername'])) $username = $attributes['domainUsername'];
+            if (isset($attributes['eu_login_username'])) $username = $attributes['eu_login_username'];
+            $attributes['name'] = isset($attributes['firstName']) && isset($attributes['lastName'])
+                ? $attributes['firstName'] . ' ' . $attributes['lastName']
+                : (isset($attributes['name'])
+                    ? $attributes['name']
+                    : '');
+            if(session()->has('impersonate')) {
+                $user = User::where('id', session()->get('impersonate'))->first();
+                $username = $user->eu_login_username;
+            }
+            $user = User::firstOrCreate(
                 [
-                    'eu_login_username' => $attributes['eu_login_username']
+                    'eu_login_username' => $username,
                 ],
                 $attributes
             );
+
+            // if departmentNumber 'CNECT.R2.0001' => editor
+            if (!$user->roles->count()) {
+                $domain = isset($attributes['domain']) ? $attributes['domain'] : 'external';
+                if ($domain === 'external') {
+                    $user->assignRole('applicant');
+                } else {
+                    $user->assignRole('editor');
+                }
+            }
+
+            return $user;
         }
     }
 
     public function setImpersonating($id)
     {
-        Session::put('impersonate', $id);
+        session()->put('impersonate', $id);
     }
 
     public function stopImpersonating()
     {
-        Session::forget('impersonate');
-    }
-
-    public function isImpersonating()
-    {
-        return Session::has('impersonate');
+        session()->forget('impersonate');
     }
 
 }

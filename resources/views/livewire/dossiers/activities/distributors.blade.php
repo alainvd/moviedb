@@ -2,7 +2,7 @@
     <h3 class="my-4 text-lg font-normal leading-tight">
         Distributors Participating in the Grouping
     </h3>
-    <x-table>
+    <x-table class="distributors-list">
         <x-slot name="head">
             <x-table.heading>DISTRIBUTION COUNTRY</x-table.heading>
             <x-table.heading>COMPANY NAME</x-table.heading>
@@ -34,13 +34,13 @@
                 <x-table.cell class="space-x-2 text-center">
                     <a
                         wire:click="showAdd({{ $distributor->id }})"
-                        class="text-indigo-600 cursor-pointer hover:text-indigo-900 print:hidden">
+                        class="text-indigo-600 cursor-pointer hover:text-indigo-900 print:hidden edit-distributor">
                         Edit
                     </a>
                     <a
                         wire:click="showDelete({{ $distributor->id }})"
-                        class="text-red-600 cursor-pointer hover:text-red-900 print:hidden">
-                        Delete
+                        class="text-red-600 cursor-pointer hover:text-red-900 print:hidden remove-distributor">
+                        Remove
                     </a>
                 </x-table.cell>
                 @endif
@@ -58,7 +58,7 @@
 
     @if(empty($print))
     <div class="mt-5 text-right print:hidden">
-        <x-button.secondary wire:click="showAdd" wire:loading.attr="disabled">
+        <x-button.secondary id="add-distributor" wire:click="showAdd" wire:loading.attr="disabled">
             Add
         </x-button.secondary>
     </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="my-4 md:w-1/2">
                 <x-form.input
-                    :id="'company-name'"
+                    :id="'distributor-company'"
                     :label="'Company Name'"
                     :hasError="$errors->has('currentDistributor.name')"
                     wire:model="currentDistributor.name">
@@ -172,14 +172,14 @@
         <x-slot name="title">Delete Distributor</x-slot>
 
         <x-slot name="content">
-            <div class="py-8 text-xl">
-                Are you sure you want to delete this distributor?
+            <div class="py-8 text-xl remove-distributor-confirmation">
+                Are you sure you want to remove this distributor?
             </div>
         </x-slot>
 
         <x-slot name="footer">
             <div class="flex items-center justify-end space-x-3">
-                <x-button.primary wire:click="deleteDistributor()">Yes</x-button>
+                <x-button.primary class="confirm-remove-distributor" wire:click="deleteDistributor()">Yes</x-button>
 
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
             </div>

@@ -41,12 +41,12 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.photography_start' => 'date:d.m.Y',
         'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
@@ -70,12 +70,12 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.photography_start' => 'date:d.m.Y',
         'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => '',
-        'movie.film_length' => 'integer',
+        'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
@@ -120,17 +120,17 @@ class MovieDevPrevForm extends FicheMovieFormBase
         foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_distributors, TableEditMovieSalesDistributors::class, function($sales_distributor) {return $sales_distributor['name'];});
-        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);    
+        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
 
         return $specialErrors;
     }
-    
+
     public function fichePostSave()
     {
         // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
-        
+
         // only back, no wizard
         return redirect()->to($this->previous);
     }
@@ -140,7 +140,20 @@ class MovieDevPrevForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Previous work';
-        
+        $crumbs[] = [
+            'url' => route('dossiers.index'),
+            'title' => 'My dossiers'
+        ];
+        if (isset($this->dossier)) {
+            $crumbs[] = [
+                'url' => route('dossiers.show', $this->dossier),
+                'title' => 'Edit dossier'
+            ];
+        }
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
+
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-prev-form', [

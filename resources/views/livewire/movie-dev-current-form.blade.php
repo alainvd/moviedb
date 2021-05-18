@@ -1,4 +1,4 @@
-<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory">
+<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory ?? false">
 
     <!-- title -->
     <div class="my-8">
@@ -26,8 +26,8 @@
             :movieGenres="$movieGenres"
             :allGenresById="$allGenresById"
             :platforms="$platforms"
-            :statuses="$statuses"
-            :statusesById="$statusesById"
+            :statuses="$statusesDev"
+            :statusesById="$statusesByIdDev"
             :years="$years"
             :userExperiences="$userExperiences"
         ></x-details.basic-dev-current>
@@ -70,7 +70,7 @@
     <!-- location -->
     <div class="my-8" id="table-location">
         <div id="table-location-wrapper" class="@if ($errors->has('locationErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
-            @livewire('table-edit-movie-locations', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+            @livewire('table-edit-movie-locations-dev-current', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
         </div>
 
         <div id="table-location-messages">

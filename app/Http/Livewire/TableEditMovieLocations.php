@@ -32,7 +32,7 @@ class TableEditMovieLocations extends TableEditBase
         'editing.type' => 'required|string',
         'editing.name' => 'required|string',
         'editing.country' => 'required|string',
-        'editing.points' => 'required|numeric',
+        'editing.points' => 'required|numeric|min:0|max:10000',
     ];
 
     protected function rules() {

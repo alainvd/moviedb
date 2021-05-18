@@ -17,7 +17,7 @@
             @endforeach
           </ol>
         </nav>
-        <h1 class="ecl-page-header-harmonised__title">{{ $title ?? 'Page title' }}</h1>
+        <h1 class="ecl-page-header-harmonised__title">{{ $title ?? '' }}</h1>
       </div>
     </div>
   </div>

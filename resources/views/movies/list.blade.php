@@ -1,4 +1,4 @@
-<x-landing-layout>
+<x-ecl-layout>
     <div class="pt-2 pb-6 md:py-6">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
             <div class="md:flex md:items-center md:justify-between">
@@ -8,7 +8,6 @@
                     </h2>
                 </div>
             </div>
-
 
             <div class="flex flex-col mt-4">
                 <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -93,4 +92,4 @@
 
         </div>
     </div>
-</x-landing-layout>
+</x-ecl-layout>

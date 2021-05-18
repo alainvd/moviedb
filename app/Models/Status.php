@@ -14,6 +14,28 @@ class Status extends Model
 
     public $fillable = [
         'name',
-        'public'
+        'dev',
+        'distri',
+        'dossier',
     ];
+
+    public function scopeForAction($query, $action)
+    {
+        switch ($action) {
+            case 'DEVSLATE':
+            case 'DEVMINISLATE':
+            case 'DEVVG':
+            case 'CODEV':
+            case 'TVONLINE':
+                return $query->where('dev', true);
+            case 'FILMOVE':
+            case 'DISTSAG':
+                return $query->where('dist', true);
+        }
+    }
+
+    public function scopeForDossier($query)
+    {
+        return $query->where('dossier', true);
+    }
 }

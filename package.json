@@ -7,7 +7,8 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "cypress:open": "cypress open"
     },
     "devDependencies": {
         "@tailwindcss/custom-forms": "^0.2",
@@ -15,6 +16,7 @@
         "browser-sync": "^2.26.13",
         "browser-sync-webpack-plugin": "^2.2.2",
         "cross-env": "^7.0",
+        "cypress": "^6.8.0",
         "laravel-mix": "^5.0.7",
         "laravel-mix-purgecss": "^5.0.0",
         "laravel-mix-tailwind": "^0.1.1",
@@ -27,6 +29,7 @@
     "dependencies": {
         "@popperjs/core": "^2.6.0",
         "alpinejs": "^2.7.3",
+        "faker": "^5.5.3",
         "moment": "^2.29.1",
         "pikaday": "^1.8.2",
         "tailwindcss": "^1.9.6",

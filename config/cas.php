@@ -168,8 +168,16 @@ return [
      */
     'cas_masquerade'      => env('CAS_MASQUERADE', ''),
 
+    /*
+    |--------------------------------------------------------------------------
+    | The extra query parameter to concat in the service validate in order
+    | to get the information about the user just do ?userDetails=true
+     */
+    'cas_service_validate_query'     => env('CAS_SERVICE_VALIDATE_QUERY', ''),
 
-    'cas_service_validate_query'      => env('CAS_SERVICE_VALIDATE_QUERY', '')
-
-
+    /*
+    |--------------------------------------------------------------------------
+    | The extra query parameter to specify the service type
+     */
+    'cas_service_type'      => env('CAS_SERVICE_TYPE', 'serviceValidate')
 ];
