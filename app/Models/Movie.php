@@ -61,16 +61,6 @@ class Movie extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'photography_start' => 'date:d.m.Y',
-        'photography_end' => 'date:d.m.Y',
-        'delivery_date' => 'date:d.m.Y',
-        'broadcast_date' => 'date:d.m.Y',
-        'rights_contract_start_date' => 'date:d.m.Y',
-        'rights_contract_end_date' => 'date:d.m.Y',
-        'rights_contract_signature_date' => 'date:d.m.Y',
-        'rights_adapt_contract_start_date' => 'date:d.m.Y',
-        'rights_adapt_contract_end_date' => 'date:d.m.Y',
-        'rights_adapt_contract_signature_date' => 'date:d.m.Y',
     ];
 
     const PLATFORMS = [
@@ -223,7 +213,6 @@ class Movie extends Model
         });
     }
 
-
     static function defaultsMovie()
     {
         return [
@@ -243,5 +232,55 @@ class Movie extends Model
                 ])
                 ->log('updated');
         }
+    }
+
+    public function getPhotographyStartAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getPhotographyEndAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getDeliveryDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getBroadcastDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getRightsContractStartDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getRightsContractEndDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getRightsContractSignatureDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getRightsAdaptContractStartDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getRightsAdaptContractEndDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
+    }
+
+    public function getRightsAdaptContractSignatureDateAttribute($value)
+    {
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
     }
 }

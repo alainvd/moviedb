@@ -10,8 +10,8 @@
     x-init="new Pikaday({
         field: $refs.input,
         theme: 'moviedb-theme',
-        format: 'DD.MM.YYYY',
-        firstDay: 1
+        format: 'DD.MM.YYYY.',
+        firstDay: 1,
     })"
     @change="$dispatch('input', $event.target.value)"
     class="relative"

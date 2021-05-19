@@ -54,8 +54,8 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string',
@@ -80,8 +80,8 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string|max:255',
@@ -110,8 +110,8 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => '',
         'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string|max:255',

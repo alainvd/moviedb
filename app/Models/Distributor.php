@@ -38,6 +38,6 @@ class Distributor extends Model
 
     public function getForecastReleaseDateAttribute($value)
     {
-        return $value ? date('d.m.Y', strtotime($value)) : null;
+        return $value ? date('d.m.Y.', strtotime($value)) : null;
     }
 }

@@ -95,6 +95,7 @@ class FicheMovieFormBase extends FicheFormBase
 
     public function updated($name, $value)
     {
+
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
             $this->emit('movieCrewsAddDefault', $value);
@@ -130,6 +131,7 @@ class FicheMovieFormBase extends FicheFormBase
     // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
+
         // Integer fields with "" value should be stored as null
         foreach ($this->rules() as $field => $rule) {
             list($var, $atr) = explode('.', $field);
@@ -143,6 +145,7 @@ class FicheMovieFormBase extends FicheFormBase
         }
 
         // Bare bones validation
+        // Check formatting, but no field is required (except title)
         $this->validate($this->rulesDraft);
 
         unset($this->movie->shooting_language);

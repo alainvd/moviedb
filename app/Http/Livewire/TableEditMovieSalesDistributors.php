@@ -21,7 +21,7 @@ class TableEditMovieSalesDistributors extends TableEditBase
             'editing.name' => 'required|string|max:255',
             'editing.role' => 'required|string',
             'editing.countries' => 'required',
-            'editing.release_date' => 'required|date:d.m.Y',
+            'editing.release_date' => 'required|date',
         ] + TableEditBase::rules();
     }
 

@@ -29,7 +29,6 @@
     "dependencies": {
         "alpinejs": "^2.7.3",
         "faker": "^5.5.3",
-        "moment": "^2.29.1",
         "pikaday": "^1.8.2",
         "tailwindcss": "^1.9.6"
     }

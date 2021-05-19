@@ -37,7 +37,7 @@ class Distributors extends Component
         'currentDistributor.country_id' => 'required|integer',
         'currentDistributor.name' => 'required|string',
         'currentDistributor.role' => 'string',
-        'currentDistributor.forecast_release_date' => 'required|date:d.m.Y',
+        'currentDistributor.forecast_release_date' => 'required|date',
         'currentDistributor.pa_costs' => 'integer',
         'currentDistributor.forecast_grant' => 'integer',
     ];
