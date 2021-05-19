@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dossiers;
 
 use App\Http\Controllers\HistoryController;
 use App\Models\Audience;
+use App\Models\Dossier;
 use App\Models\Genre;
 use App\Models\Status;
 use Livewire\Component;
@@ -14,6 +15,8 @@ class AdvancedHistory extends Component
     public $model;
     public $changes = [];
     public $showViewChanges = false;
+
+    public $backUrl;
 
     protected $listeners = [
         'refresh' => '$refresh'
