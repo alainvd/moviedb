@@ -41,6 +41,10 @@ class Movie extends Model
     protected $attributes = [
     ];
 
+    protected $appends = [
+        'director',
+    ];
+
     protected $dates = [
         'photography_start',
         'photography_end',
@@ -133,6 +137,11 @@ class Movie extends Model
         'COPRODUCER' => 'Coproducer',
     ];
 
+    public function status()
+    {
+        return $this->hasOneThrough(Status::class, Fiche::class, 'movie_id', 'id', 'id', 'status_id');
+    }
+
     public function crew()
     {
         return $this->hasMany(Crew::class, 'movie_id', 'id');
@@ -219,10 +228,32 @@ class Movie extends Model
             $query
             ->leftJoin('crews', 'crews.person_id', 'people.id')
             ->whereRaw("CONCAT(crew.people.firstname,'',crew.people.lastname) = '$value'");
-            
+
         });
     }
 
+    public function scopeForDirector($query, $director)
+    {
+        return $query->where(function ($query) use ($director) {
+            $query->select('titles.code')
+                ->from('crews')
+                ->join('people', 'people.id', '=', 'crews.person_id')
+                ->join('titles', 'titles.id', '=', 'crews.title_id')
+                ->whereColumn('crews.movie_id', 'movies.id')
+                ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$director}%'")
+                ->limit(1);
+            }, 'DIRECTOR');
+    }
+
+    public function scopeForStatusId($query, $statusId)
+    {
+        return $query->where(function ($query) {
+            $query->select('fiches.status_id')
+                ->from('fiches')
+                ->whereColumn('fiches.movie_id', 'movies.id')
+                ->limit(1);
+        }, $statusId);
+    }
 
     static function defaultsMovie()
     {
