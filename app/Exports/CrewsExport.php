@@ -44,7 +44,7 @@ class CrewsExport extends BaseExport
             ->join('crews', 'movies.id', '=', 'crews.movie_id')
             ->join('people', 'crews.person_id', '=', 'people.id')
             ->join('titles', 'titles.id', '=', 'crews.title_id')
-            // ->join('statuses', 'statuses.id', '=', 'fiches.status_id')
+            ->join('statuses', 'statuses.id', '=', 'fiches.status_id')
             // ->join('genres', 'movies.genre_id', '=', 'genres.id')
             // ->join('audiences', 'movies.audience_id', '=', 'audiences.id')
             ->join('users', 'users.id', '=', 'fiches.created_by');

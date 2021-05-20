@@ -6,6 +6,12 @@
 
     <div class="px-4 bg-white">
 
+        @if (session()->has('error'))
+            <x-alerts.error>
+                {{ session()->get('error')}}
+            </x-alerts.error>
+        @endif
+
         @if(empty($print))
         @include('dossiers.instructions.index', ['dossier' => $dossier])
         @endif

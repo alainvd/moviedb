@@ -39,20 +39,27 @@ class EULoginAuth
                 $user = User::where('eu_login_username', $this->cas->user())
                     ->first();
 
+                if (!$user) {
+                    $user = User::factory()->make([
+                        'domain' => 'external',
+                        'domainUsername' => $this->cas->user(),
+                        'eu_login_username' => $this->cas->user(),
+                    ]);
+                }
+
                 cas()->setAttributes(
                     $user->toArray()
                 );
             }
 
             // session()->put('cas_attributes', cas()->getAttributes());
-
         } else {
 
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             }
             $this->cas->authenticate();
-            
+
         }
 
         return $next($request);

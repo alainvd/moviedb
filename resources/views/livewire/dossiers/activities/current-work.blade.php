@@ -1,7 +1,7 @@
 <div class="my-8">
     <input type="hidden" name="current_works" wire:model="current">
     <h3 class="my-4 text-lg font-normal leading-tight">
-        Audiovisual Work - {{ $dossier->action->name === 'TV' ? 'Production' : 'Development'}} - For grant request
+        Audiovisual Work - {{ $dossier->action->name === 'TVONLINE' ? 'Production' : 'Development'}} - For grant request
     </h3>
     <x-table class="current-work-list {{ $errors->has('current_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">

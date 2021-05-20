@@ -31,7 +31,11 @@ class MovieFicheFormComposer
         $languagesGroupedChoices = Language::languagesGroupedChoices();
         $languagesCodeName = Language::languagesCodeName();
         $statuses = Status::all()->toArray();
+        $statusesDist = Status::where('dist', '=', 1)->get()->toArray();
+        $statusesDev = Status::where('dev', '=', 1)->get()->toArray();
         $statusesById = Status::all()->keyBy('id')->toArray();
+        $statusesByIdDist = Status::where('dist', '=', 1)->get()->keyBy('id')->toArray();
+        $statusesByIdDev = Status::where('dev', '=', 1)->get()->keyBy('id')->toArray();
         $years = range(date('Y'), 1940);
 
         $view->with('movieAudiences', $movieAudiences);
@@ -51,7 +55,11 @@ class MovieFicheFormComposer
         $view->with('languagesCodeName', $languagesCodeName);
         $view->with('platforms', Movie::PLATFORMS);
         $view->with('statuses', $statuses);
+        $view->with('statusesDist', $statusesDist);
+        $view->with('statusesDev', $statusesDev);
         $view->with('statusesById', $statusesById);
+        $view->with('statusesByIdDist', $statusesByIdDist);
+        $view->with('statusesByIdDev', $statusesByIdDev);
         $view->with('years', $years);
         $view->with('currencies', Movie::CURRENCIES);
         $view->with('linkApplicantWork', Movie::LINK_APPLICANT_WORK);

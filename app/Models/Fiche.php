@@ -84,4 +84,9 @@ class Fiche extends Model
     {
         return $query->where('dossier_fiche.activity_id', $activityId);
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

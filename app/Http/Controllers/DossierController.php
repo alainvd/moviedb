@@ -30,12 +30,12 @@ class DossierController extends Controller
         $crumbs = [];
         $layout = 'print-layout';
         $pageTitles = [
-            'DISTSEL' => 'Films on the Move',
+            'FILMOVE' => 'Films on the Move',
             'DISTSAG' => 'European Sales Support',
             'DEVSLATE' => 'European Slate Development',
-            'DEVSLATEMINI' => 'European Mini-slate Development',
-            'CODEVELOPMENT' => 'European Co-development',
-            'TV' => 'TV and Online Content',
+            'DEVMINISLATE' => 'European Mini-slate Development',
+            'CODEV' => 'European Co-development',
+            'TVONLINE' => 'TV and Online Content',
             'DEVVG' => 'Videogame development'
         ];
         $print = true;
@@ -51,6 +51,8 @@ class DossierController extends Controller
     }
 
     public function downloadFullDossier(Dossier $dossier) {
+
+        ini_set("pcre.backtrack_limit", "5000000");
 
         $output = $this->printDossier($dossier);
 
@@ -88,6 +90,7 @@ class DossierController extends Controller
         ]);
         date_default_timezone_set('Europe/Brussels');
 
+        $pdf->getMpdf()->setTitle('Dossier');
         $pdf->getMpdf()->SetHTMLHeader('PDF download of dossier, {DATE d.m.Y. H:i:s}', 0, 1);
         $pdf->getMpdf()->SetHTMLFooter('Page {PAGENO}', 0, 1);
         $pdf->getMpdf()->WriteHTML($output_dossier);

@@ -51,7 +51,11 @@ class User extends Authenticatable
         if (isset($attributes['domainUsername']) || isset($attributes['eu_login_username'])) {
             if (isset($attributes['domainUsername'])) $username = $attributes['domainUsername'];
             if (isset($attributes['eu_login_username'])) $username = $attributes['eu_login_username'];
-            $attributes['name'] = isset($attributes['firstName']) && isset($attributes['firstName']) ? $attributes['firstName'] . ' ' . $attributes['lastName'] : '';
+            $attributes['name'] = isset($attributes['firstName']) && isset($attributes['lastName'])
+                ? $attributes['firstName'] . ' ' . $attributes['lastName']
+                : (isset($attributes['name'])
+                    ? $attributes['name']
+                    : '');
             if(session()->has('impersonate')) {
                 $user = User::where('id', session()->get('impersonate'))->first();
                 $username = $user->eu_login_username;
@@ -62,14 +66,15 @@ class User extends Authenticatable
                 ],
                 $attributes
             );
-            if (DB::table('model_has_roles')->where('model_id', '=', $user->id)->count() == 0) {
-                DB::table('model_has_roles')->insert([
-                    [
-                        'role_id' => 1,
-                        'model_type' => 'App\Models\User',
-                        'model_id' => $user->id,
-                    ],
-                ]);
+
+            // if departmentNumber 'CNECT.R2.0001' => editor
+            if (!$user->roles->count()) {
+                $domain = isset($attributes['domain']) ? $attributes['domain'] : 'external';
+                if ($domain === 'external') {
+                    $user->assignRole('applicant');
+                } else {
+                    $user->assignRole('editor');
+                }
             }
 
             return $user;
