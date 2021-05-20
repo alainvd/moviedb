@@ -1,5 +1,9 @@
-<x-modal {{ $attributes }}>
-    <div class="p-8">
+<x-modal.dialog {{ $attributes }}>
+    <x-slot name="title">
+        Fiche history
+    </x-slot>
+
+    <x-slot name="content">
         @if (count($changes))
             <div class="w-full grid grid-cols-2 gap-4">
                 @if ($changes->has('old'))
@@ -51,5 +55,9 @@
                 @endforeach
             @endif
         @endif
-    </div>
-</x-modal>
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-button.secondary wire:click="$set('showViewChanges', false)">Close</x-button.secondary>
+    </x-slot>
+</x-modal.dialog>

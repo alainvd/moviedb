@@ -33,7 +33,7 @@ class TableEditMovieCrews extends TableEditBase
     ];
 
     protected $rulesEditor = [
-        'editing.points' => 'required|numeric',
+        'editing.points' => 'required|numeric|min:0|max:10000',
         'editing.person.firstname' => 'required|string|max:255',
         'editing.person.lastname' => 'required|string|max:255',
         'editing.person.gender' => 'required|string',

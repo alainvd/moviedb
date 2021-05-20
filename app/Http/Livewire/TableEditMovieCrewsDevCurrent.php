@@ -20,7 +20,7 @@ class TableEditMovieCrewsDevCurrent extends TableEditMovieCrews
         return $this->rules + TableEditBase::rules();
     }
 
-    public function crewRules($isEditor = null) {
+    public function tableEditRules($isEditor = null) {
         $rules = $this->rules + TableEditBase::rules();
         return parent::rulesCleanup($rules);
     }

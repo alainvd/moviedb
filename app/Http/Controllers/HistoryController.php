@@ -19,6 +19,7 @@ class HistoryController extends Controller
         $logs = self::getFormattedLogs($dossier);
 
         return view('dossiers.history', [
+            'backUrl' => route('dossiers.show', $dossier),
             'crumbs' => $this->getCrumbs($dossier),
             'layout' => $this->getLayout(),
             'type' => class_basename($dossier),
@@ -27,13 +28,23 @@ class HistoryController extends Controller
         ]);
     }
 
-    public function fiche(Fiche $fiche)
+    public function fiche(Dossier $dossier, Fiche $fiche)
     {
         $logs = self::getFormattedLogs($fiche);
 
+        $crumbs = $this->getCrumbs($dossier);
+        $viewHistory = array_pop($crumbs);
+        $activity = $dossier->fiches()->find($fiche->id)->pivot->activity_id;
+        $url = route('dossier-create-fiche', [$dossier, $activity, $fiche]);
+        $crumbs[] = [
+            'title' => 'Edit fiche',
+            'url' => $url
+        ];
+        $crumbs[] = $viewHistory;
+
         return view('dossiers.history', [
-            // 'crumbs' => $this->getCrumbs($fiche),
-            'crumbs' => [],
+            'backUrl' => $url,
+            'crumbs' => $crumbs,
             'layout' => $this->getLayout(),
             'type' => class_basename($fiche),
             'model' => $fiche,

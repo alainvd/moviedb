@@ -36,8 +36,7 @@
                 :id="'director'"
                 :label="'Film Director'"
                 :disabled="true"
-                wire:model="movie.director"
-                value="{{ $movie->original_title }}">
+                value="{{ $movie->director }}">
             </x-form.input>
         </div>
         <div class="col-span-1">
@@ -116,7 +115,7 @@
                             Film genre
                         </label>
                         <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                            {{ $movie->genre->name }}
+                            {{ $movie->genre ? $movie->genre->name : '' }}
                         </div>
                     </div>
 
@@ -125,7 +124,7 @@
                             Audience
                         </label>
                         <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                            {{ $movie->audience->name }}
+                            {{ $movie->audience ? $movie->audience->name : '' }}
                         </div>
                     </div>
                     <div class="col-span-1">

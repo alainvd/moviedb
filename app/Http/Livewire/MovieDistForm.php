@@ -52,12 +52,12 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string',
 
         'movie.total_budget_currency_amount' => 'required|integer',
@@ -77,13 +77,13 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'required|date:d.m.Y',
         'movie.photography_end' => 'required|date:d.m.Y',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string|max:255',
 
         'movie.total_budget_currency_amount' => 'required|integer',
@@ -107,13 +107,13 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
         'movie.photography_start' => 'date:d.m.Y',
         'movie.photography_end' => 'date:d.m.Y',
         'movie.shooting_language' => '',
-        'movie.film_length' => 'integer',
+        'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string|max:255',
 
         'movie.total_budget_currency_amount' => 'integer',
