@@ -16,7 +16,7 @@
                         <select class="block w-64 px-3 py-3 pr-8 text-sm font-bold text-indigo-700 bg-white border-2 border-indigo-700 appearance-none" name="call_id" id="call_id" required>
                             <option value="">Select a call</option>
                             @foreach ($calls as $call)
-                            <option value="{{$call->id}}">
+                            <option value="{{$call->name}}">
                                 {{$call->name}}
                             </option>
                             @endforeach
@@ -29,8 +29,11 @@
                     </div>
                 </div>
                 <div class="mt-2">
+                    <input type="text" class="w-64 p-3 text-sm font-bold text-indigo-700 placeholder-indigo-700 border-2 border-indigo-700" name="PIC" placeholder="Enter PIC number">
+                </div>
+                <div class="mt-2">
                     <div class="relative inline-block">
-                        <input type="text" name="project_ref_id" class="w-64 p-3 text-sm font-bold text-indigo-700 placeholder-indigo-700 border-2 border-indigo-700" placeholder="enter your project ID" required>
+                        <input type="text" name="draft_proposal_id" class="w-64 p-3 text-sm font-bold text-indigo-700 placeholder-indigo-700 border-2 border-indigo-700" placeholder="enter your project ID" required>
                         <button id="create-dossier" type="submit" class="p-3 mt-2 text-sm font-bold text-white bg-indigo-700 border-2 border-indigo-700">
                             Create media dossier
                         </button>

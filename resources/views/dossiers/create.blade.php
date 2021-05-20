@@ -46,6 +46,7 @@
                             :id="'company-name'"
                             :label="'Company Name'"
                             :hasError="$errors->has('company')"
+                            :disabled="true"
                             name="company"
                             value="{{$dossier->company}}"></x-form.input>
 
