@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use App\Models\Crew;
-use App\Models\Location;
 use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Audience;
 use App\Models\Document;
 use App\Models\Language;
+use App\Models\Location;
 use App\Models\Distributor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Movie extends Model
 {
@@ -62,6 +63,20 @@ class Movie extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::saved(function ($movie) {
+            $movie->fiche->updated_by = Auth::user()->id;
+            $movie->fiche->save();
+            $movie->fiche->touch();
+        });
+    }
 
     const PLATFORMS = [
         'CINEMA' => 'Features / Cinema',
