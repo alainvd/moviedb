@@ -77,13 +77,13 @@ class TableEditMovieSalesDistributors extends TableEditBase
                 return in_array($c['value'], $editing_countries_ids);
             }
         )->values();
-        $this->emit('showModalInit', $countries_values);
+        $this->emit('showModalInit_SalesDistributors', $countries_values);
     }
 
     public function showModalAdd()
     {
         parent::showModalAdd();
-        $this->emit('showModalInit', []);
+        $this->emit('showModalInit_SalesDistributors', []);
     }
 
     public function addCountry($id) {

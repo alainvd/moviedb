@@ -83,6 +83,7 @@ class Distributors extends Component
         }
 
         $this->showAddModal = true;
+        $this->emit('showModalInit_Distributors', []);
     }
 
     public function showDelete($id)
