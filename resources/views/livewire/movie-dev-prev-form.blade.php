@@ -9,7 +9,7 @@
     </div>
 
     <!-- basic -->
-    <div class="my-8">
+    <div class="mt-8">
         <x-details.basic
             :print="$print"
             :isApplicant="$isApplicant"
@@ -33,7 +33,7 @@
     </div>
 
     <!-- summary -->
-    <div class="my-8">
+    <div class="">
         <x-details.summary
             :print="$print"
             :rules="$rules"
@@ -42,7 +42,7 @@
     </div>
 
     <!-- link applicant work-->
-    <div class="my-8">
+    <div class="mb-8">
         <x-details.link-applicant-work
             :print="$print"
             :rules="$rules"

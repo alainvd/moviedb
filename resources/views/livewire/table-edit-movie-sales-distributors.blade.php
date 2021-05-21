@@ -1,6 +1,6 @@
 <div>
 
-    <div class="mb-8 text-lg">
+    <div class="mb-4 text-lg">
         <h3>Countries of Distribution</h3>
     </div>
 

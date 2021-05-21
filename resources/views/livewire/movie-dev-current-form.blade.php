@@ -9,7 +9,7 @@
     </div>
 
     <!-- basic-dev-current -->
-    <div class="my-8">
+    <div class="mt-8">
         <x-details.basic-dev-current
             :print="$print"
             :isApplicant="$isApplicant"
@@ -34,7 +34,7 @@
     </div>
 
     <!-- summary -->
-    <div class="my-8">
+    <div class="mb-8">
         <x-details.summary
             :print="$print"
             :rules="$rules"
