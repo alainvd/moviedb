@@ -44,7 +44,7 @@
     <div class="mt-5 text-right print:hidden">
         <x-anchors.secondary
             :url="route('dev-prev-fiche-form', compact('dossier', 'activity'))"
-            :disabled="$isAddDisabled">
+            :disabled="$dossier->call->closed || $isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>

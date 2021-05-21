@@ -43,6 +43,10 @@ Route::get('/welcome', [
 //     cas()->authenticate();
 // });
 
+Route::get('/landing/SEP', function () {
+    return redirect()->route('dossiers.create', request()->all());
+})->name('sep');
+
 Route::get('/test/cas/logout', [
     'middleware' => 'cas.auth',
     function(){
@@ -160,9 +164,6 @@ Route::view('/demo', 'demo')->middleware('cas.auth');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 Route::get('/browse/movies', [MovieController::class,'index'])->middleware('cas.auth')->name('movies');
 Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])->middleware('cas.auth')->name('movie_show');
-
-
-Route::get('/landing/SEP', [\App\Http\Controllers\SEPController::class,'index'])->middleware(['cas.auth'])->name('SEP');
 
 Route::resource('call', '\App\Http\Controllers\CallController')->middleware('cas.auth')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->middleware('cas.auth')->only('index');

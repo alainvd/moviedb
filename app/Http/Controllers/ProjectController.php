@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 /**
@@ -58,13 +59,17 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $this->validate(request(), [
+        $validator = Validator::make(request()->all(), [
             // 'action_type' => 'required',
-            'call_id' => 'required',
-            'draft_proposal_id' => 'required',
+            'call_id' => 'bail|required',
+            'draft_proposal_id' => 'bail|required',
             'PIC' => 'required',
             // 'topic' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            abort(500, 'SEP link seems to be broken');
+        }
 
         $params = request(['call_id', 'draft_proposal_id', 'PIC', 'topic']);
 
