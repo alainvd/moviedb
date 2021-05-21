@@ -50,7 +50,6 @@
                                     <tr class="bg-gray-100">
                                         @endif
                                         <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
-                                            <a href="{{route('movie_show', ['movie'=>$movie->id])}}">{{$movie->original_title}}</a>
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
                                             {{$movie->year_of_copyright}}
