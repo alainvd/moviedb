@@ -80,13 +80,17 @@ class SearchPage extends Component
     public function render()
     {
         $countriesGrouped = Country::countriesGrouped();
-        $years = range(2006, date('Y'));
-        $statuses = Status::forFiche()->get();
+        $years = collect(range(2004, date('Y')))->sortDesc();
+        $statuses = Status::forFiche()
+            ->whereNotIn('name', ['Duplicated', 'Rejected'])
+            ->get();
         $results = collect([]);
 
         if ($this->hasSearch) {
             $this->search();
             $results = $this->query->with('status')
+                ->orderBy('year_of_copyright', 'desc')
+                ->orderBy('original_title', 'asc')
                 ->simplePaginate($this->perPage);
         }
 
