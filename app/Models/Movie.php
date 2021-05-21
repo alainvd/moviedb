@@ -64,20 +64,6 @@ class Movie extends Model
         'id' => 'integer',
     ];
 
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::saved(function ($movie) {
-            $movie->fiche->updated_by = Auth::user()->id;
-            $movie->fiche->save();
-            $movie->fiche->touch();
-        });
-    }
-
     const PLATFORMS = [
         'CINEMA' => 'Features / Cinema',
         'TV' => 'TV',

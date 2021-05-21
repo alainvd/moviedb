@@ -179,6 +179,7 @@ class FicheMovieFormBase extends FicheFormBase
                 'movie_id' => $this->movie->id,
                 'type' => $type,
                 'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
@@ -202,7 +203,10 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->fiche->save();
+            $this->fiche->fill([
+                'updated_by' => Auth::user()->id,
+            ])->save();
+            $this->fiche->touch();
             $this->notify('Fiche is saved');
         }
         $this->fichePostSave();
