@@ -74,6 +74,10 @@ class ProjectController extends Controller
             abort(500, 'The call in your request could not be found');
         }
 
+        if ($call->closed) {
+            abort(500, 'We do not accept any more applications for this call');
+        }
+
         $company = $this->getCompanyByPic($params['PIC']);
 
         $dossier = Dossier::firstOrNew([
@@ -155,6 +159,10 @@ class ProjectController extends Controller
 
         if ($request->user()->cannot('update', $dossier)) {
             return abort(404);
+        }
+
+        if ($dossier->call->closed) {
+            abort(500, 'We do not accept any more applications for this call');
         }
 
         $this->validate($request, $this->buildValidator($request));
