@@ -16,8 +16,12 @@
                         View history
                     </a>
                 @endif
+                @if($isApplicant)
                 <x-button.primary id="button-save" wire:click="saveFiche">Save as Draft</x-button.primary>
                 <x-button.primary id="button-submit" type="submit">Submit</x-button.primary>
+                @elseif($isEditor)
+                <x-button.primary id="button-save" wire:click="saveFiche">Save</x-button.primary>
+                @endif
             </div>
             @endif
         </div>

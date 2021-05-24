@@ -1,4 +1,12 @@
-<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory ?? false" :dossier="$dossier">
+<x-fiche-form
+    :layout="$layout"
+    :print="$print"
+    :fiche="$fiche"
+    :hasHistory="$hasHistory ?? false"
+    :dossier="$dossier"
+    :isApplicant="$isApplicant"
+    :isEditor="$isEditor"
+>
 
     <!-- title -->
     <div class="my-8">
