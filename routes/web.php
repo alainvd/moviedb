@@ -1,25 +1,20 @@
 <?php
 
 use App\Models\Call;
-use App\Models\Action;
-use Illuminate\Http\Request;
 use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\MovieDatatables;
 use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDevCurrentForm;
-use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
-use App\Http\Controllers\CreateFicheController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Livewire\Export;
+use App\Http\Livewire\SearchPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +28,15 @@ use App\Http\Livewire\Export;
 */
 
 Route::get('/welcome', [
-    'middleware' => 'cas.guest',
+    'middleware' => 'guest',
     function () {
         return view('welcome');
     }
 ])->name('welcome');
+
+Route::get('/search', SearchPage::class)
+    ->middleware('guest')
+    ->name('search');
 
 // Route::get('/auth/login', function(){
 //     cas()->authenticate();
@@ -100,7 +99,7 @@ Route::middleware('cas.auth')->group(function () {
         ->only('index')
         ->name('index', 'dossier-history');
 
-    Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
+    Route::get('dossiers/{dossier:project_ref_id}/fiches/{fiche}/history', [HistoryController::class, 'fiche'])
         ->name('fiche-history');
 
     // Movie wizard
@@ -143,7 +142,7 @@ Route::get('select', [\App\Http\Controllers\TestController::class,'select'])->mi
 
 Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
 
-Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies'])->middleware('cas.auth');
+// Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies'])->middleware('cas.auth');
 
 //Test Routes
 Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');

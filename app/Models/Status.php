@@ -34,6 +34,12 @@ class Status extends Model
         }
     }
 
+    public function scopeForFiche($query)
+    {
+        return $query->where('dev', true)
+            ->orWhere('dist', true);
+    }
+
     public function scopeForDossier($query)
     {
         return $query->where('dossier', true);
