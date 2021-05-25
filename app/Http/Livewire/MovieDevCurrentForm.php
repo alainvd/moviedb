@@ -120,6 +120,9 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists() && $this->fiche->type!=='dev-current') {
+            abort(500);
+        }
     }
 
     public function saveFiche()
