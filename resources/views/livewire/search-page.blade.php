@@ -1,16 +1,16 @@
-<div class="px-4 py-8 md:px-16 lg:px-32 xl:w-3/4 mx-auto mb-32">
+<div class="px-4 py-8 mx-auto mb-32 md:px-16 lg:px-32 xl:w-3/4">
     <div class="w-full mb-16">
-        <h2 class="text-3xl text-gray-500 tracking-wide leading-4">
+        <h2 class="text-3xl leading-4 tracking-wide text-gray-500">
             Search {{ count($results) ? "results for {$q}" : "" }}
         </h2>
 
         <form wire:submit.prevent="submit">
-            <input type="text" class="w-full mt-8 border border-indigo-400 px-4 py-2 rounded-sm" placeholder="Film ID, title or director" :key="uuid()" wire:model.defer="q" data-cy="query">
+            <input type="text" class="w-full px-4 py-2 mt-8 border border-indigo-400 rounded-sm" placeholder="Film ID, title or director" :key="uuid()" wire:model.defer="q" data-cy="query">
 
-            <div class="my-4 grid gap-4 grid-cols-1 md:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3">
                 <div class="col-span-1">
-                    <label class="block text-md text-indigo-500 tracking-wide leading-8" for="nationality">Media Film Nationality</label>
-                    <select class="block w-full bg-white border border-indigo-300 rounded-sm px-4 py-2" id="nationality"
+                    <label class="block leading-8 tracking-wide text-indigo-500 text-md" for="nationality">Media Film Nationality</label>
+                    <select class="block w-full px-4 py-2 bg-white border border-indigo-300 rounded-sm" id="nationality"
                         wire:model.defer="nationality">
                         <option value="">All</option>
                         @foreach ($countriesGrouped as $group=>$countries)
@@ -23,8 +23,8 @@
                     </select>
                 </div>
                 <div class="col-span-1">
-                    <label class="block text-md text-indigo-500 tracking-wide leading-8" for="nationality">Year of Copyright</label>
-                    <select class="block w-full bg-white border border-indigo-300 rounded-sm px-4 py-2" id="year"
+                    <label class="block leading-8 tracking-wide text-indigo-500 text-md" for="nationality">Year of Copyright</label>
+                    <select class="block w-full px-4 py-2 bg-white border border-indigo-300 rounded-sm" id="year"
                         wire:model.defer="year">
                         <option value="">All</option>
                         @foreach ($years as $year)
@@ -33,8 +33,8 @@
                     </select>
                 </div>
                 <div class="col-span-1">
-                    <label class="block text-md text-indigo-500 tracking-wide leading-8" for="nationality">Status</label>
-                    <select class="block w-full bg-white border border-indigo-300 rounded-sm px-4 py-2" id="status"
+                    <label class="block leading-8 tracking-wide text-indigo-500 text-md" for="nationality">Status</label>
+                    <select class="block w-full px-4 py-2 bg-white border border-indigo-300 rounded-sm" id="status"
                         wire:model.defer="status">
                         <option value="">All</option>
                         @foreach ($statuses as $status)
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="w-full flex justify-end">
+            <div class="flex justify-end w-full">
                 <x-button.primary type="submit" data-cy="submit">Refine search</x-button.primary>
             </div>
         </form>
@@ -97,10 +97,10 @@
             </x-table-public>
         @else
             @if ($hasSearch)
-                <div class="text-gray-500 text-lg text-center leading-8">
+                <div class="text-lg leading-8 text-center text-gray-500">
                     Could not find the Movie you are looking for?
                     &nbsp;
-                    <a href="{{ url('/') }}" class="text-indigo-600">
+                    <a href="{{ route('movie-dist') }}" class="text-indigo-600">
                         Create your Movie Fiche
                     </a>
                 </div>
