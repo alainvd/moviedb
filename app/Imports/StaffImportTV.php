@@ -27,16 +27,16 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            //Get Person
+            // Get Person
             $person = $this->getPerson($row);
 
-            //Get Media
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get Title
+            // Get Title
             $title = $this->getTitle($row);
 
-            //Create the crew entry
+            // Create the crew entry
             $crew = new Crew([
                 "person_id" => $person->id,
                 "title_id" => $title->id,
@@ -46,19 +46,17 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
             $crew->save();
 
         }
-
     }
 
     private function getTitle($row)
     {
-
         return Title::firstWhere("name", "=", $row["role"]);
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        echo($filmID);
+        echo($filmID."\n");
         $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }

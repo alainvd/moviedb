@@ -2,28 +2,28 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\DossiersImportTV;
-use App\Imports\DossiersImportDevSP;
-use App\Imports\DossiersImportDevSlate;
+use App\Imports\MoviesImportDevSP;
+use App\Imports\MoviesImportDevSlate;
+use App\Imports\MoviesShortsImportDevSlate;
 use App\Imports\MoviesImportTV;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class DossiersTv extends Command
+class MoviesOther extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:dossiersTv';
+    protected $signature = 'import:movies-other';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Dossiers from Excel';
+    protected $description = 'Import Movies from Excel';
 
     /**
      * Create a new command instance.
@@ -42,10 +42,9 @@ class DossiersTv extends Command
      */
     public function handle()
     {
-
-        //Excel::import(new DossiersImportDist, 'Dist_Film_General.xlsx','excel');
-        Excel::import(new DossiersImportDevSP, 'DEV_SP_Dossiers.xlsx','excel');
-        Excel::import(new DossiersImportDevSlate, 'Dev_Slate_Dossiers.xlsx','excel');
-        Excel::import(new DossiersImportTV, 'TV_Dossiers.xlsx','excel');
+        Excel::import(new MoviesImportDevSP, 'Dev_SP_General.xlsx','excel');
+        Excel::import(new MoviesImportDevSlate, 'Dev_Slate_General.xlsx','excel');
+        Excel::import(new MoviesShortsImportDevSlate, 'Dev_Slate_General_Shorts.xlsx','excel');
+        Excel::import(new MoviesImportTV, 'TV_General .xlsx','excel');
     }
 }

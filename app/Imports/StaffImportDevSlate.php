@@ -3,13 +3,10 @@
 namespace App\Imports;
 
 use App\Models\Crew;
-use App\Models\Genre;
-use App\Media;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Title;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -30,16 +27,16 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
     {
         foreach ($collection as $row) {
 
-            //Get Person
+            // Get Person
             $person = $this->getPerson($row);
 
-            //Get Media
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get Title
+            // Get Title
             $title = $this->getTitle($row);
 
-            //Create the crew entry
+            // Create the crew entry
             $crew = new Crew([
                 "person_id" => $person->id,
                 "title_id" => $title->id,
@@ -48,7 +45,6 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
             $crew->save();
 
         }
-
     }
 
     private function getTitle($row)
@@ -59,7 +55,7 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        echo($filmID);
+        echo($filmID."\n");
         $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }

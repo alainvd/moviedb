@@ -63,15 +63,14 @@ class LocationsImportTV implements ToCollection, WithHeadingRow, WithChunkReadin
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            // print_r($row);
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get country from location name
+            // Get country from location name
             $country = Country::firstWhere("name", "=", $row['nationality_code']);
 
-            //Create the crew entry
+            // Create the location
             if ($movie) {
                 $location = new Location([
                     "movie_id" => $movie->id,
@@ -85,7 +84,6 @@ class LocationsImportTV implements ToCollection, WithHeadingRow, WithChunkReadin
             }
 
         }
-
     }
 
     private function getMovie($row)

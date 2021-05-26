@@ -4,9 +4,7 @@ namespace App\Imports;
 
 use App\Models\Call;
 use App\Models\Action;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -31,7 +29,7 @@ class CallsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        //Get Action
+        // Get Action
         $action = $this->getAction($row);
 
         return new Call([
@@ -44,12 +42,12 @@ class CallsImport implements ToModel, WithHeadingRow
             'status' => $row['status'],
 
         ]);
-        // echo($row['call_ref']);
+        // echo($row['call_ref']."\n");
     }
 
     private function getAction($row)
     {
-        // echo($row['call_ref']);
+        // echo($row['call_ref']."\n");
         return Action::firstWhere("name", "=", $row["action_code"]);
     }
 }

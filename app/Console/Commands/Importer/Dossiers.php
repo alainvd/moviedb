@@ -2,26 +2,27 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\LocationsImport;
-use App\Imports\LocationsImportTV;
+use App\Imports\DossiersImportTV;
+use App\Imports\DossiersImportDevSP;
+use App\Imports\DossiersImportDevSlate;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Locations extends Command
+class Dossiers extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:locations';
+    protected $signature = 'import:dossiers';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Link Staff with movies';
+    protected $description = 'Import Dossiers from Excel';
 
     /**
      * Create a new command instance.
@@ -40,7 +41,8 @@ class Locations extends Command
      */
     public function handle()
     {
-        //Excel::import(new LocationsImport, 'Dist_Film_Locations.xlsx', 'excel');
-        Excel::import(new LocationsImportTV, 'TV_Locations.xlsx', 'excel');
+        Excel::import(new DossiersImportDevSP, 'DEV_SP_Dossiers.xlsx','excel');
+        Excel::import(new DossiersImportDevSlate, 'Dev_Slate_Dossiers.xlsx','excel');
+        Excel::import(new DossiersImportTV, 'TV_Dossiers.xlsx','excel');
     }
 }

@@ -17,19 +17,17 @@ class MoviesLanguagesImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        //Get Language
+        // Get Language
         $language = $this->getLanguage($row);
 
-        //Get movie
+        // Get movie
         $movie = $this->getmovie($row);
         
         if($language&&$movie){
             $movie->languages()->attach(
                 $movie->id,
-                [
-                    'movie_id' => $movie->id,
-                    'language_id' => $language ? $language->id : null,
-                ],
+                ['movie_id' => $movie->id,
+                'language_id' => $language ? $language->id : null]
             );
             $movie->save(); 
         }

@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 
-
 use App\Models\Movie;
 use App\Models\Fiche;
 use Illuminate\Support\Facades\Log;
@@ -10,8 +9,13 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class MoviesImport implements ToCollection, WithHeadingRow
+class MoviesImportDist implements ToCollection, WithHeadingRow
 {
+
+    public function chunkSize(): int
+	{
+		return 500;
+	}
 
     private function formatDate($date, $id)
     {
@@ -42,7 +46,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
                 }
             }
 
-            //Create the movie
+            // Create the movie
             $movie = new Movie([
                 'genre_id' => $row['film_genre'],
                 'audience_id' => $row['film_audience'],
@@ -72,7 +76,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
             $fiche->save();
 
         }
-        echo("Movies DIST import ok");
+        echo("Movies DIST import ok\n");
     }
 
 }

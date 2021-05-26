@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 
-use App\Models\Audience;
 use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Support\Collection;
@@ -22,7 +21,7 @@ class GenresImport implements ToCollection, WithHeadingRow
 
                 $movie = Movie::where(["legacy_id" => $row["id_code_film"]])->firstOrFail();
 
-                //Get the Genre
+                // Get the Genre
                 $genre = Genre::firstOrCreate(
                     ["name"=> $row["media_film_detailsfilm_genre"]],
                     ["type"=> "Movie"]

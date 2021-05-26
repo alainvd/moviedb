@@ -24,10 +24,10 @@ class SalesAgentsImport implements ToCollection, WithHeadingRow, WithChunkReadin
     {
         foreach ($collection as $row) {
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Create the Sales Agent
+            // Create the sales agent
             if ($movie){
                 $salesAgent = new SalesAgent([
                     "movie_id" => $movie->id,

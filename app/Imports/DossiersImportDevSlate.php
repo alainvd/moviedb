@@ -24,12 +24,12 @@ class DossiersImportDevSlate implements ToCollection, WithHeadingRow, WithChunkR
     {
         foreach ($collection as $row) {
 
-            //Get Call
+            // Get Call
             $call = $this->getCall($row);
 
-            //Create the Dossier
+            // Create the Dossier
             $dossier = new Dossier([
-                'call_id' =>$call->id,
+                'call_id' => $call->id,
                 'action_id' => 1,
                 'status_id' => 11,
                 'year' => $row["application_year"],

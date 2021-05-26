@@ -2,20 +2,15 @@
 
 namespace App\Imports;
 
-use App\Models\Genre;
 use App\Models\Movie;
-use App\Models\Title;
-use App\Models\Person;
 use App\Models\Country;
 use App\Models\Location;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
+class LocationsImportDist implements ToCollection, WithHeadingRow, WithChunkReading
 {
 
     public function chunkSize(): int
@@ -68,15 +63,14 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            // print_r($row);
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get country from location name
+            // Get country from location name
             $country = Country::firstWhere("name", "=", $row['film_staff_name']);
 
-            //Create the crew entry
+            // Create the location
             if ($movie) {
                 $location = new Location([
                     "movie_id" => $movie->id,
@@ -90,7 +84,6 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
             }
 
         }
-
     }
 
     private function getMovie($row)

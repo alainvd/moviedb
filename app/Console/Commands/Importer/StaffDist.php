@@ -2,21 +2,18 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\StaffImport;
-use App\Imports\StaffImportDevSP;
-use App\Imports\StaffImportDevSlate;
-use App\Imports\StaffImportTV;
+use App\Imports\StaffImportDist;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Staff extends Command
+class StaffDist extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:staff';
+    protected $signature = 'import:staff-dist';
 
     /**
      * The console command description.
@@ -42,9 +39,6 @@ class Staff extends Command
      */
     public function handle()
     {
-        Excel::import(new StaffImport, 'Dist_Film_Staff.xlsx', 'excel');
-        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff .xlsx', 'excel');
-        Excel::import(new StaffImportDevSlate, 'Dev_Slate_Staff_web_outcomes.xlsx', 'excel');
-        Excel::import(new StaffImportTV, 'TV_Staff.xlsx', 'excel');
+        Excel::import(new StaffImportDist, 'Dist_Film_Staff.xlsx', 'excel');
     }
 }

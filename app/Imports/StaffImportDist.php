@@ -9,12 +9,11 @@ use App\Models\Person;
 use Illuminate\Support\Str;
 use App\Imports\RolesImport;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
+class StaffImportDist implements ToCollection, WithHeadingRow, WithChunkReading
 {
     
     public function chunkSize(): int
@@ -29,18 +28,16 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            // print_r($row);
-
-            //Get Person
+            // Get Person
             $actor = $this->getPerson($row);
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get Title
+            // Get Title
             $title = $this->getTitle($row);
 
-            //Create the crew entry
+            // Create the crew entry
             if ($movie){
                 $crew = new Crew([
                     "points" => $row['film_staff_score'] ? $row['film_staff_score'] : null,
@@ -52,7 +49,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             }
 
         }
-        echo("DIST Staff import 5000 ok \r\n");
+        echo("DIST Staff import 5000 ok\n");
         return;
     }
 

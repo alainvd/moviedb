@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 class MoviesImportDevSP implements ToCollection, WithHeadingRow
 {
@@ -28,7 +27,6 @@ class MoviesImportDevSP implements ToCollection, WithHeadingRow
             Log::error("Caught exception in date transformation of Movie ID {$id}: " . $e->getMessage());
             return null;
         }
-
     }
 
      /**
@@ -38,7 +36,7 @@ class MoviesImportDevSP implements ToCollection, WithHeadingRow
     {
         foreach ($collection as $row) {
             
-            //Create the crew entry
+            // Create the movie
             $movie = new Movie([
                 'genre_id' => $row['film_genre'],
                 'legacy_id' => $row['id_code_film'],
@@ -80,7 +78,7 @@ class MoviesImportDevSP implements ToCollection, WithHeadingRow
             $fiche->save();
 
         }
-        echo("Movies DEVSP import ok");
+        echo("Movies DEVSP import ok\n");
     }
 
 }

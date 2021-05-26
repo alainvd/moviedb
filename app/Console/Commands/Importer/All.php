@@ -60,11 +60,14 @@ class All extends Command
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
         $this->info("roles and permissions seed ok");
 
+        // TODO: Don't run user seeder in production
         $this->call(\Database\Seeders\UserSeeder::class);
         $this->info("user seed ok");
 
-        $this->call('import:movies'); // Movies.php
-        $this->info("movies import ok");
+        $this->call('import:movies-dist'); // MoviesDist.php
+        $this->info("movies-dist import ok");
+        // $this->call('import:movies-dist'); // MoviesOther.php
+        // $this->info("movies-other import ok");
 
         $this->call('import:genres'); // Genres.php
         $this->info("genre import ok");
@@ -76,14 +79,18 @@ class All extends Command
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
         $this->info("title seed ok");
 
-        $this->call('import:movies-languages'); // Staff.php // takes a long time
+        $this->call('import:movies-languages'); // MoviesLanguages.php
         $this->info("movie languages import ok");
 
-        $this->call('import:staff'); // Staff.php // takes a long time
-        $this->info("staff import ok");
+        $this->call('import:staff-dist'); // StaffDist.php // takes a long time
+        $this->info("staff-dist import ok");
+        // $this->call('import:staff-other'); // StaffOther.php // takes a long time
+        // $this->info("staff-other import ok");
 
-        $this->call('import:locations'); // Locations.php
-        $this->info("locations import ok");
+        $this->call('import:locations-dist'); // LocationsDist.php
+        $this->info("locations-dist import ok");
+        // $this->call('import:locations-other'); // LocationsOther.php
+        // $this->info("locations-other import ok");
 
         $this->call('import:producers'); // Producers.php // takes a long time
         $this->info("Producers import ok");
@@ -91,10 +98,10 @@ class All extends Command
         $this->call('import:sa'); // SalesAgents.php
         $this->info("Sales agents import ok");
 
-        $this->call('import:dossiers'); // Dossiers.php
-        $this->info("dossiers import ok");
+        // $this->call('import:dossiers'); // Dossiers.php
+        // $this->info("dossiers import ok");
 
-        $this->call('import:activities'); // Activities.php
-        $this->info("activities import ok");
+        // $this->call('import:activities'); // Activities.php
+        // $this->info("activities import ok");
     }
 }

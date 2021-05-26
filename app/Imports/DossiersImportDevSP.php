@@ -3,14 +3,8 @@
 namespace App\Imports;
 
 use App\Models\Dossier;
-use App\Models\Fiche;
-use App\Models\Activity;
 use App\Models\Movie;
-use App\Models\Person;
-use App\Models\Title;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -30,10 +24,10 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
     {
         foreach ($collection as $row) {
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Create the Dossier
+            // Create the Dossier
             $dossier = new Dossier([
                 'call_id' => 1,
                 'action_id' => 3,
@@ -45,6 +39,8 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
                 'created_by' => 1,
             ]);
             $dossier->save();
+
+            // Add movie to dossier
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 3,
@@ -58,7 +54,7 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        echo($filmID);
+        echo($filmID."\n");
         $movie = Movie::where("legacy_id", "=" ,$filmID)->first();
         return $movie;
     }

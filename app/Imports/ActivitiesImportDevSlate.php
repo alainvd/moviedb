@@ -3,14 +3,8 @@
 namespace App\Imports;
 
 use App\Models\Dossier;
-use App\Models\Fiche;
-use App\Models\Activity;
 use App\Models\Movie;
-use App\Models\Person;
-use App\Models\Title;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -30,17 +24,17 @@ class ActivitiesImportDevSlate implements ToCollection, WithHeadingRow, WithChun
     {
         foreach ($collection as $row) {
 
-            //Get Dossier
+            // Get Dossier
             $dossier = $this->getDossier($row);
 
-            //Get Media
+            // Get Movie
             $movie = $this->getMovie($row);
 
             //Create the crew entry
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 3,
-                'dossier_id'=>$dossier->id]
+                'dossier_id' => $dossier->id]
             );
             $dossier->save();  
 
