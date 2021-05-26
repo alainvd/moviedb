@@ -3,7 +3,7 @@
     :print="$print"
     :fiche="$fiche"
     :hasHistory="$hasHistory ?? false"
-    :dossier="$dossier"
+    :dossier="$dossier ?? null"
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
 >
@@ -17,7 +17,7 @@
     </div>
 
     <!-- basic-dev-current -->
-    <div class="mt-8">
+    <div class="mt-8 mb-4">
         <x-details.basic-dev-current
             :print="$print"
             :isApplicant="$isApplicant"

@@ -17,7 +17,7 @@
     </div>
 
     <!-- basic-tv -->
-    <div class="mt-8">
+    <div class="mt-8 mb-4">
         <x-details.basic-tv
             :print="$print"
             :isApplicant="$isApplicant"

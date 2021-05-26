@@ -25,7 +25,7 @@
 </div>
 
 <!-- dependent fields -->
-<div class="grid grid-cols-1 gap-4 my-8 md:grid-cols-3" x-data="{ show: false }" x-show="$wire.movie.link_applicant_work == 'WRKPERS'">
+<div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3" x-data="{ show: false }" x-show="$wire.movie.link_applicant_work == 'WRKPERS'">
     <!-- link_applicant_work_person_name -->
     <div class="col-span-1">
         <x-form.input
