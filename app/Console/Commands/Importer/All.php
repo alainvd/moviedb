@@ -38,48 +38,63 @@ class All extends Command
     public function handle()
     {
         ini_set('memory_limit', '-1');
+
         $this->call(\Database\Seeders\CountriesTableSeeder::class);
-        echo("countries seeder ok \r\n");
+        $this->info("countries seeder ok");
+
         $this->call(\Database\Seeders\StatusSeeder::class);
-        echo("status seeder ok \r\n");
+        $this->info("status seeder ok");
+
         $this->call('import:languages'); // Languages.php
-        echo("languages import ok \r\n");
+        $this->info("languages import ok");
+
         $this->call('import:actions'); // Actions.php
-        echo("actions import ok \r\n");
+        $this->info("actions import ok");
+
         $this->call('import:calls'); // Calls.php
-        echo("calls import ok \r\n");
+        $this->info("calls import ok");
+
         $this->call(\Database\Seeders\ActivitySeeder::class);
-        echo("Activity seed ok \r\n");
+        $this->info("activity seed ok");
+
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
-        echo("Roles and permissions seed ok \r\n");
+        $this->info("roles and permissions seed ok");
+
         $this->call(\Database\Seeders\UserSeeder::class);
-        echo("User seed ok \r\n");
+        $this->info("user seed ok");
 
         $this->call('import:movies'); // Movies.php
-        echo("movies import ok \r\n");
+        $this->info("movies import ok");
+
         $this->call('import:genres'); // Genres.php
-        echo("genre import ok \r\n");
+        $this->info("genre import ok");
+
         $this->call('import:audiences'); // Audiences.php // Can use seeder as well
-        echo("audiences import ok \r\n");
+        $this->info("audiences import ok");
 
         // $this->call('import:roles'); // Roles.php // Use seeder instead
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
-        echo("Title seed ok \r\n");
+        $this->info("title seed ok");
+
         $this->call('import:movies-languages'); // Staff.php // takes a long time
-        echo("movie languages import ok \r\n");
+        $this->info("movie languages import ok");
 
         $this->call('import:staff'); // Staff.php // takes a long time
-        echo("staff import ok \r\n");
+        $this->info("staff import ok");
+
         $this->call('import:locations'); // Locations.php
-        echo("locations import ok \r\n");
+        $this->info("locations import ok");
+
         $this->call('import:producers'); // Producers.php // takes a long time
-        echo("Producers import ok \r\n");
+        $this->info("Producers import ok");
+
         $this->call('import:sa'); // SalesAgents.php
-        echo("Sales agents import ok \r\n");
+        $this->info("Sales agents import ok");
+
         $this->call('import:dossiers'); // Dossiers.php
-        echo("Dossiers import ok \r\n");
+        $this->info("dossiers import ok");
+
         $this->call('import:activities'); // Activities.php
-        echo("Activities import ok \r\n");
-        
+        $this->info("activities import ok");
     }
 }

@@ -72,9 +72,7 @@ class MoviesImport implements ToCollection, WithHeadingRow
             $fiche->save();
 
         }
-    
         echo("Movies DIST import ok");
-
     }
 
 }

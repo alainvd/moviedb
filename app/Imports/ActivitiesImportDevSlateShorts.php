@@ -39,7 +39,6 @@ class ActivitiesImportDevSlateShorts implements ToCollection, WithHeadingRow, Wi
             $dossier->save();  
 
         }
-
     }
 
     private function getDossier($row)

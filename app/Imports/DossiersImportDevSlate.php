@@ -41,7 +41,6 @@ class DossiersImportDevSlate implements ToCollection, WithHeadingRow, WithChunkR
             $dossier->save();
            
         }
-
     }
   
     private function getCall($row)

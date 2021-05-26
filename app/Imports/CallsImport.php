@@ -45,14 +45,11 @@ class CallsImport implements ToModel, WithHeadingRow
 
         ]);
         // echo($row['call_ref']);
-
     }
 
     private function getAction($row)
     {
         // echo($row['call_ref']);
         return Action::firstWhere("name", "=", $row["action_code"]);
-        
     }
-
 }

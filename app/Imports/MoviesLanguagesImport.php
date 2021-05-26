@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\Language;
 use App\Models\Movie;
+use App\Models\Language;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -27,13 +27,12 @@ class MoviesLanguagesImport implements ToModel, WithHeadingRow
             $movie->languages()->attach(
                 $movie->id,
                 [
-                    'movie_id'=>$movie->id,
-                    'language_id'=>$language ? $language->id: null
+                    'movie_id' => $movie->id,
+                    'language_id' => $language ? $language->id : null,
                 ],
             );
             $movie->save(); 
         }
-
     }
 
     private function getLanguage($row)
@@ -44,7 +43,7 @@ class MoviesLanguagesImport implements ToModel, WithHeadingRow
 
     private function getMovie($row)
     {
-        echo(" - ".$row["id_code_film"]);
+        echo(" - ".$row["id_code_film"].'  ');
         return Movie::firstWhere("legacy_id", "=", $row["id_code_film"]);
     }
 

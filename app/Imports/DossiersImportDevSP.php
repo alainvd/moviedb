@@ -53,7 +53,6 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
             $dossier->save();  
 
         }
-
     }
    
     private function getMovie($row)

@@ -45,7 +45,6 @@ class ActivitiesImportDevSlate implements ToCollection, WithHeadingRow, WithChun
             $dossier->save();  
 
         }
-
     }
 
     private function getDossier($row)
