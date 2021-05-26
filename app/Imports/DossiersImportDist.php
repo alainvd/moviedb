@@ -75,7 +75,7 @@ class DossiersImportDist implements ToCollection, WithHeadingRow, WithChunkReadi
     {
         $filmID = $row["id_code_film"];
         echo($filmID);
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 

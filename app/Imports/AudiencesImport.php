@@ -24,8 +24,8 @@ class AudiencesImport implements ToCollection, WithHeadingRow
 
                 //Get the Audience
                 $audience = Audience::firstOrCreate(
-                    ["name"=> $row["film_audience"]],
-                    ["type"=> "Movie"]
+                    ["name" => $row["film_audience"]],
+                    ["type" => "Movie"]
                 );
 
                 $movie->update(['audience_id' => $audience->id]);

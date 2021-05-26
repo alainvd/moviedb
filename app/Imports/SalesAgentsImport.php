@@ -45,7 +45,7 @@ class SalesAgentsImport implements ToCollection, WithHeadingRow, WithChunkReadin
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 

@@ -37,7 +37,6 @@ class DossiersImportDevSlate implements ToCollection, WithHeadingRow, WithChunkR
                 'company' => $row["participant_organisation_name"],
                 'contact_person' => 'n/a',
                 'created_by' => 1,
-
             ]);
             $dossier->save();
            
@@ -48,7 +47,7 @@ class DossiersImportDevSlate implements ToCollection, WithHeadingRow, WithChunkR
     private function getCall($row)
     {
         $callName = $row["call_ref"];
-        $call = Call::where("name","=",$callName)->first();
+        $call = Call::where("name", "=", $callName)->first();
         return $call;
     }
 

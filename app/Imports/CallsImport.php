@@ -35,7 +35,6 @@ class CallsImport implements ToModel, WithHeadingRow
         $action = $this->getAction($row);
 
         return new Call([
-            
             'name' => $row['call_ref'],
             'action_id' => $action->id,
             'year' => $row['year'],
@@ -51,7 +50,6 @@ class CallsImport implements ToModel, WithHeadingRow
 
     private function getAction($row)
     {
-
         // echo($row['call_ref']);
         return Action::firstWhere("name", "=", $row["action_code"]);
         

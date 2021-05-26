@@ -48,7 +48,7 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 3,
-                'dossier_id'=>$dossier->id]
+                'dossier_id' => $dossier->id]
             );
             $dossier->save();  
 
@@ -60,7 +60,7 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
     {
         $filmID = $row["id_code_film"];
         echo($filmID);
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=" ,$filmID)->first();
         return $movie;
     }
 

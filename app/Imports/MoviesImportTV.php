@@ -36,7 +36,7 @@ class MoviesImportTV implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            
+
             //Create the crew entry
             $movie = new Movie([
                 'genre_id' => $row['film_genre'],
@@ -79,6 +79,5 @@ class MoviesImportTV implements ToCollection, WithHeadingRow
         echo("Movies TV import ok");
 
     }
-
 
 }

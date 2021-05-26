@@ -51,14 +51,14 @@ class ActivitiesImportDevSlate implements ToCollection, WithHeadingRow, WithChun
     private function getDossier($row)
     {
         $dossierID = $row["project_reference_number"];
-        $dossier = Dossier::where("project_ref_id","=",$dossierID)->first();
+        $dossier = Dossier::where("project_ref_id", "=", $dossierID)->first();
         return $dossier;
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 

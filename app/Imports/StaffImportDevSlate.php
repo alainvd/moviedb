@@ -60,7 +60,7 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
     {
         $filmID = $row["id_code_film"];
         echo($filmID);
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 

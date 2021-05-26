@@ -30,13 +30,11 @@ class ActivitiesImportDevSlateShorts implements ToCollection, WithHeadingRow, Wi
             //Get Media
             $movie = $this->getMovie($row);
 
-
-            //Create the crew entry
-            
+            //Create the crew entry            
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 5,
-                'dossier_id'=>$dossier->id]
+                'dossier_id' => $dossier->id]
             );
             $dossier->save();  
 
@@ -47,14 +45,14 @@ class ActivitiesImportDevSlateShorts implements ToCollection, WithHeadingRow, Wi
     private function getDossier($row)
     {
         $dossierID = $row["project_reference_number"];
-        $dossier = Dossier::where("project_ref_id","=",$dossierID)->first();
+        $dossier = Dossier::where("project_ref_id", "=", $dossierID)->first();
         return $dossier;
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 
