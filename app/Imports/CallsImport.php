@@ -39,18 +39,20 @@ class CallsImport implements ToModel, WithHeadingRow
             'name' => $row['call_ref'],
             'action_id' => $action->id,
             'year' => $row['year'],
+            'published_at' => $row['call_publication_date'] ? $this->formatDate($row['call_publication_date'], $row['call_ref']) : now(),            
+            'deadline1' => NULL,
+            'deadline2' => NULL,
             'status' => $row['status'],
-            'published_at' => $row['call_publication_date'] ? $this->formatDate($row['call_publication_date'], $row['call_ref']) : now(),
 
         ]);
-        echo($row['call_ref']);
+        // echo($row['call_ref']);
 
     }
 
     private function getAction($row)
     {
 
-        echo($row['call_ref']);
+        // echo($row['call_ref']);
         return Action::firstWhere("name", "=", $row["action_code"]);
         
     }
