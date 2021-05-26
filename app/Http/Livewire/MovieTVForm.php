@@ -50,10 +50,10 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
-        'movie.delivery_date' => 'required|date:d.m.Y',
-        'movie.broadcast_date' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
+        'movie.delivery_date' => 'required|date',
+        'movie.broadcast_date' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer|min:1|max:10000',
@@ -80,10 +80,10 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
-        'movie.delivery_date' => 'required|date:d.m.Y',
-        'movie.broadcast_date' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
+        'movie.delivery_date' => 'required|date',
+        'movie.broadcast_date' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer|min:1|max:10000',
@@ -112,10 +112,10 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
-        'movie.delivery_date' => 'date:d.m.Y',
-        'movie.broadcast_date' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
+        'movie.delivery_date' => 'date',
+        'movie.broadcast_date' => 'date',
         'movie.shooting_language' => '',
         'movie.development_costs_in_euro' => 'integer',
         'movie.film_length' => 'integer|min:1|max:10000',
@@ -141,6 +141,9 @@ class MovieTVForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='tv') {
+            abort(403);
+        }
         // init points value
         foreach($this->crews as $crew) {
             $this->totalPointsCrews += $crew['points'];

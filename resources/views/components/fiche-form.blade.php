@@ -10,14 +10,22 @@
 
             <!-- buttons -->
             @if(empty($print))
-            <div id="fiche-form-buttons" class="flex items-center justify-end mt-12 space-x-3 print:hidden">
+            <div id="fiche-form-buttons" class="flex items-center justify-end mt-12 space-x-3 asdf-123 print:hidden">
                 @if ($hasHistory)
-                    <a href="{{ route('fiche-history', [$dossier, $fiche]) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
+                    @if(!in_array(Request::segment(1),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv']))
+                    <a href="{{-- route('fiche-history', [$dossier, $fiche]) --}}" class="block text-indigo-700 text-md hover:text-indigo-400">
                         View history
                     </a>
+                    @endif
                 @endif
+                @if($isApplicant)
+                @if(!in_array(Request::segment(1),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv']))
                 <x-button.primary id="button-save" wire:click="saveFiche">Save as Draft</x-button.primary>
+                @endif
                 <x-button.primary id="button-submit" type="submit">Submit</x-button.primary>
+                @elseif($isEditor)
+                <x-button.primary id="button-save" wire:click="saveFiche">Save</x-button.primary>
+                @endif
             </div>
             @endif
         </div>

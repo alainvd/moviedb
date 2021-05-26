@@ -33,7 +33,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'required|integer',
@@ -43,8 +43,8 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'string',
@@ -72,8 +72,8 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string|max:4000',
 
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => '',
         'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
@@ -95,6 +95,9 @@ class MovieDevPrevForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='dev-prev') {
+            abort(403);
+        }
     }
 
     public function saveFiche()
@@ -139,7 +142,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Films - Previous work';
+        $title = 'Audiovisual Work - Development - Recent work / previous experience';
         $crumbs[] = [
             'url' => route('dossiers.index'),
             'title' => 'My dossiers'

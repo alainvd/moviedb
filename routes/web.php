@@ -1,25 +1,20 @@
 <?php
 
 use App\Models\Call;
-use App\Models\Action;
-use Illuminate\Http\Request;
 use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\MovieDatatables;
 use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Livewire\MovieDevCurrentForm;
-use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
-use App\Http\Controllers\CreateFicheController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Livewire\Export;
+use App\Http\Livewire\SearchPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +28,15 @@ use App\Http\Livewire\Export;
 */
 
 Route::get('/welcome', [
-    'middleware' => 'cas.guest',
+    'middleware' => 'guest',
     function () {
         return view('welcome');
     }
 ])->name('welcome');
+
+Route::get('/search', SearchPage::class)
+    ->middleware('guest')
+    ->name('search');
 
 // Route::get('/auth/login', function(){
 //     cas()->authenticate();
@@ -124,39 +123,28 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('dev-prev-fiche-form');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('dev-current-fiche-form');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('tv-fiche-form');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
+// Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
 
+Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
+Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
+Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('movie-dev-prev');
+Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('movie-tv');
+// Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev');
+
+// Impersonation
 Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate')->where('id', '[0-9]+');
 Route::get('/impersonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
-Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist-1');
-
-Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
-Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('movie-dev-prev');
-Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
-Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('movie-tv');
-//Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
-
-//Pending
+// Pending
 Route::view('/reports', 'coming-soon')->middleware('cas.auth');
 
-
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
-
-Route::get('select', [\App\Http\Controllers\TestController::class,'select'])->middleware('cas.auth');
-
-Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
-
-Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies'])->middleware('cas.auth');
-
-//Test Routes
+// Test Routes
 Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');
-Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
+Route::get('/test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select'])->middleware('cas.auth');
 Route::get('/pic', [\App\Http\Controllers\PICController::class,'index'])->middleware('cas.auth')->name('pic');
-//Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->middleware('cas.auth')->name('table_edit_examples');
-
+// Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience'])->middleware('cas.auth');
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])->middleware('cas.auth');

@@ -32,11 +32,10 @@ class Fiche extends Model
         'movie.audience_id',
         'movie.delivery_platform',
         'movie.original_title',
+        'movie.synopsis',
         'movie.imdb_url',
         'movie.isan',
         'movie.eidr',
-        'movie.shooting_start',
-        'movie.shooting_end',
         'movie.delivery_date',
         'movie.broadcast_date',
         'movie.film_length',
@@ -44,23 +43,19 @@ class Fiche extends Model
         'movie.length_of_episodes',
         'movie.film_country_of_origin',
         'movie.year_of_copyright',
-        'movie.directors_film',
         'movie.development_costs_in_euro',
-        'movie.production_costs_currency_date',
-        'movie.production_costs_currency',
-        'movie.production_costs',
-        'movie.production_costs_in_euro',
         'movie.film_type',
         'movie.film_format',
         'movie.total_budget_currency_amount',
         'movie.total_budget_currency_code',
         'movie.total_budget_currency_rate',
         'movie.total_budget_euro',
+        'movie.dev_support_flag',
+        'movie.dev_support_reference',
         'movie.photography_start',
         'movie.photography_end',
-        'movie.film_score',
         'movie.country_of_origin_points',
-        'movie.synopsis',
+        'movie.user_experience',
     ];
 
     public function movie()
@@ -88,5 +83,10 @@ class Fiche extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

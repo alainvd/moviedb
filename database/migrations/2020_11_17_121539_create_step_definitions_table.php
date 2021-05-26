@@ -16,7 +16,7 @@ class CreateStepDefinitionsTable extends Migration
         Schema::create('step_definitions', function (Blueprint $table) {
             $table->id();
             $table->string('action', 20);
-            $table->unsignedInteger('step_id');
+            $table->unsignedBigInteger('step_id');
             $table->unsignedInteger('position');
             $table->unsignedInteger('version')->default(1);
             $table->timestamps();

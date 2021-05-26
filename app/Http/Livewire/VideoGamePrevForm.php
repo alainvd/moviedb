@@ -59,7 +59,7 @@ class VideoGamePrevForm extends Component
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string|max:255',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'media.genre_id' => 'required|integer',
 
         'movie.imdb_url' => 'string|max:255',

@@ -15,9 +15,9 @@ class CreateCrewsTable extends Migration
     {
         Schema::create('crews', function (Blueprint $table) {
             $table->id();
-            $table->integer('person_id');
-            $table->integer('title_id');
-            $table->integer('movie_id');
+            $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('title_id');
+            $table->unsignedBigInteger('movie_id');
             $table->decimal('points')->nullable();
             $table->timestamps();
         });

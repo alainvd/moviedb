@@ -2,28 +2,25 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\StaffImport;
-use App\Imports\StaffImportDevSP;
-use App\Imports\StaffImportDevSlate;
-use App\Imports\StaffImportTV;
+use App\Imports\MoviesLanguagesImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Staff extends Command
+class MoviesLanguages extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:staff';
+    protected $signature = 'import:movies-languages';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Link Staff with movies';
+    protected $description = 'Import Languages for Movies from Excel';
 
     /**
      * Create a new command instance.
@@ -42,9 +39,8 @@ class Staff extends Command
      */
     public function handle()
     {
-        Excel::import(new StaffImport, 'Dist_Film_Staff.xlsx', 'excel');
-        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff .xlsx', 'excel');
-        Excel::import(new StaffImportDevSlate, 'Dev_Slate_Staff_web_outcomes.xlsx', 'excel');
-        Excel::import(new StaffImportTV, 'TV_Staff.xlsx', 'excel');
+
+        Excel::import(new MoviesLanguagesImport, 'Dist_Film_Languages.xlsx','excel');
+        
     }
 }

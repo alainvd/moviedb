@@ -58,17 +58,20 @@ class DossierController extends Controller
 
         // get related fiches
         // html output
-        // $fiches = $dossier->fiches;
-        // foreach ($fiches as $fiche) {
-        //     $output .= FicheController::printFiche($fiche);
-        // }
-        // return $output;
+        /*
+        $fiches = $dossier->fiches;
+        foreach ($fiches as $fiche) {
+            $output .= FicheController::printFiche($fiche);
+        }
+        return $output;
+        */
 
         // mpdf output page by page
         $output_dossier = $this->printDossier($dossier);
 
         // get related fiches
         $fiches = $dossier->fiches;
+
         $output_fiches = [];
         foreach ($fiches as $fiche) {
             $output_fiches[] = FicheController::printFiche($fiche);
@@ -100,7 +103,6 @@ class DossierController extends Controller
         }
 
         return $pdf->download('dossier-'.$dossier->project_ref_id.'.pdf');
-        // return $pdf->stream();
 
     }
 

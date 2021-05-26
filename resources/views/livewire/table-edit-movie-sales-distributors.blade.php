@@ -1,6 +1,6 @@
 <div>
 
-    <div class="mb-8 text-lg">
+    <div class="mb-4 text-lg">
         <h3>Countries of Distribution</h3>
     </div>
 
@@ -53,7 +53,7 @@
 
     <div id="cc-init" x-data x-init="
 
-    Livewire.on('showModalInit', countries_values => {
+    Livewire.on('showModalInit_SalesDistributors', countries_values => {
 
         // delete existing choices element
         document.getElementById('cc-init-item').innerHTML = '';
@@ -89,6 +89,21 @@
         );
 
     })
+
+    Livewire.on('showModalInit_SalesDistributors', () => {
+
+        // Destroy and re-init the date picker.
+        // Just target the unique ID, since this code is just for one date picker.
+        if (typeof(pikaday_sales_distributors_release_date) !== 'undefined')
+            pikaday_sales_distributors_release_date.destroy();
+        pikaday_sales_distributors_release_date = new Pikaday({
+            field: document.getElementById('sales_distributors_release_date'),
+            theme: 'moviedb-theme',
+            format: 'DD.MM.YYYY.',
+            firstDay: 1,
+        })
+
+    })    
 
     ">
     </div>
@@ -150,12 +165,13 @@
 
                     <div class="col-span-1">
                         <x-form.datepicker
-                            :id="'distributors_release_date'"
+                            :id="'sales_distributors_release_date'"
                             :label="'Release/Broadcast Date'"
                             :hasError="$errors->has('editing.release_date')"
                             :isRequired="FormHelpers::isRequired($rules, 'editing.release_date')"
-                            wire:model.lazy="editing.release_date">
-                        </x-form.datepicker>
+                            wire:model.lazy="editing.release_date"
+                            value="{{ $editing['release_date'] }}"
+                        ></x-form.datepicker>
                 
                         @error('editing.release_date')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>

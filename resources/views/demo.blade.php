@@ -166,7 +166,7 @@
                     <div id="loginBox">
                         <div id="loginLocked">
                             <a style="font-family: Trebuchet MS, sans-serif; text-shadow: 1px 1px 0pt rgb(0, 0, 0);"
-                               href="/projects/create?call_id=1&project_ref_id=1">Submit</a>
+                               href="/dossiers/create?call_id=1&project_ref_id=SEP-{{ rand(19258181, 999516819691) }}">Submit</a>
                         </div>
 
                     </div>

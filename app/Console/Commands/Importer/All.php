@@ -65,7 +65,8 @@ class All extends Command
         // $this->call('import:roles'); // Roles.php // Use seeder instead
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
         echo("Title seed ok \r\n");
-        
+        $this->call('import:movies-languages'); // Staff.php // takes a long time
+        echo("movie languages import ok \r\n");
 
         $this->call('import:staff'); // Staff.php // takes a long time
         echo("staff import ok \r\n");
