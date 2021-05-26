@@ -20,7 +20,7 @@ class CreateCallsTable extends Migration
             $table->integer('year');
             $table->longText('description')->nullable();
             $table->timestamp('published_at')->nullable();
-            $table->dateTime('deadline1');
+            $table->dateTime('deadline1')->nullable();
             $table->dateTime('deadline2')->nullable();
             $table->enum('status', ["open","closed"]);
             $table->timestamps();
