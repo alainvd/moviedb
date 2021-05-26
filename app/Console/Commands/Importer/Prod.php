@@ -66,8 +66,6 @@ class Prod extends Command
 
         $this->call('import:movies-dist'); // MoviesDist.php
         $this->info("movies-dist import ok");
-        // $this->call('import:movies-dist'); // MoviesOther.php
-        // $this->info("movies-other import ok");
 
         $this->call('import:genres'); // Genres.php
         $this->info("genre import ok");
@@ -84,24 +82,14 @@ class Prod extends Command
 
         $this->call('import:staff-dist'); // StaffDist.php // takes a long time
         $this->info("staff-dist import ok");
-        // $this->call('import:staff-other'); // StaffOther.php // takes a long time
-        // $this->info("staff-other import ok");
 
         $this->call('import:locations-dist'); // LocationsDist.php
         $this->info("locations-dist import ok");
-        // $this->call('import:locations-other'); // LocationsOther.php
-        // $this->info("locations-other import ok");
 
         $this->call('import:producers'); // Producers.php // takes a long time
-        $this->info("Producers import ok");
+        $this->info("producers import ok");
 
         $this->call('import:sa'); // SalesAgents.php
-        $this->info("Sales agents import ok");
-
-        // $this->call('import:dossiers'); // Dossiers.php
-        // $this->info("dossiers import ok");
-
-        // $this->call('import:activities'); // Activities.php
-        // $this->info("activities import ok");
+        $this->info("sales agents import ok");
     }
 }
