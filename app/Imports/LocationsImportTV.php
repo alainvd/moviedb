@@ -57,7 +57,6 @@ class LocationsImportTV implements ToCollection, WithHeadingRow, WithChunkReadin
         echo "Error: no match for location name '".$location_name."'";
     }
 
-
     /**
      * @param Collection $collection
      */

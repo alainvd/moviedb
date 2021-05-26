@@ -30,12 +30,8 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            
-
             //Get Media
             $movie = $this->getMovie($row);
-
-            
 
             //Create the crew entry
             $dossier = new Dossier([
@@ -47,8 +43,6 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
                 'company' => $row["applicant"],
                 'contact_person' => 'n/a',
                 'created_by' => 1,
-
-
             ]);
             $dossier->save();
             $dossier->fiches()->attach(
@@ -66,7 +60,6 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
                 
             ]);
             $activity->save();**/
-
 
         }
 
@@ -86,7 +79,6 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
         return $movie;
     }
 
-
     public function getFirstName($fullname)
     {
         return explode(" ", $fullname)[0];
@@ -96,8 +88,6 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         return substr($fullname, strlen($firstname) + 1);
     }
-
-
 
     /**
      * @param $actor
@@ -120,4 +110,5 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
         $person->save();
         return $person;
     }
+    
 }

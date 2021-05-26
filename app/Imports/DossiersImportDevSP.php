@@ -30,10 +30,8 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
     {
         foreach ($collection as $row) {
 
-            
             //Get Movie
             $movie = $this->getMovie($row);
-
 
             //Create the Dossier
             $dossier = new Dossier([
@@ -57,7 +55,6 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
         }
 
     }
-
    
     private function getMovie($row)
     {
@@ -66,6 +63,5 @@ class DossiersImportDevSP implements ToCollection, WithHeadingRow, WithChunkRead
         $movie = Movie::where("legacy_id","=",$filmID)->first();
         return $movie;
     }
-
 
 }

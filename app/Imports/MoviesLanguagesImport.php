@@ -23,18 +23,15 @@ class MoviesLanguagesImport implements ToModel, WithHeadingRow
         //Get movie
         $movie = $this->getmovie($row);
         
-        
-
         if($language&&$movie){
             $movie->languages()->attach(
-
                 $movie->id,
-                ['movie_id'=>$movie->id,
-                    'language_id'=>$language ? $language->id: null],
-    
+                [
+                    'movie_id'=>$movie->id,
+                    'language_id'=>$language ? $language->id: null
+                ],
             );
             $movie->save(); 
-
         }
 
     }
@@ -53,7 +50,6 @@ class MoviesLanguagesImport implements ToModel, WithHeadingRow
         echo(" - ".$row["id_code_film"]);
         return Movie::firstWhere("legacy_id", "=", $row["id_code_film"]);
 
-        
     }
 
 }

@@ -62,7 +62,6 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
         echo "Error: no match for location name '".$location_name."'";
     }
 
-
     /**
      * @param Collection $collection
      */

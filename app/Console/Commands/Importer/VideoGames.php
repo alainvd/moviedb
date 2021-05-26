@@ -39,7 +39,6 @@ class VideoGames extends Command
      */
     public function handle()
     {
-
         Excel::import(new VideoGamesImport, 'Dev_Video_Games_General.xlsx','excel');
     }
 }

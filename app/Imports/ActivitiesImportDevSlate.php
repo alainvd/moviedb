@@ -36,9 +36,7 @@ class ActivitiesImportDevSlate implements ToCollection, WithHeadingRow, WithChun
             //Get Media
             $movie = $this->getMovie($row);
 
-
             //Create the crew entry
-            
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 3,
@@ -63,6 +61,5 @@ class ActivitiesImportDevSlate implements ToCollection, WithHeadingRow, WithChun
         $movie = Movie::where("legacy_id","=",$filmID)->first();
         return $movie;
     }
-
 
 }

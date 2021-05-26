@@ -39,8 +39,6 @@ class MoviesLanguages extends Command
      */
     public function handle()
     {
-
-        Excel::import(new MoviesLanguagesImport, 'Dist_Film_Languages.xlsx','excel');
-        
+        Excel::import(new MoviesLanguagesImport, 'Dist_Film_Languages.xlsx','excel');   
     }
 }

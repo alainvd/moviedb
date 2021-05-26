@@ -17,14 +17,12 @@ class VideoGamesImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
-
         return new VideoGame([
             'id' => $row['id'],
             'original_title' => $row['original_title'],
             'synopsis' => $row['logline'],
 
         ]);
-
 
     }
 

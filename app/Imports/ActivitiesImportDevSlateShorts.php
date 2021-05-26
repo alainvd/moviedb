@@ -58,5 +58,4 @@ class ActivitiesImportDevSlateShorts implements ToCollection, WithHeadingRow, Wi
         return $movie;
     }
 
-
 }

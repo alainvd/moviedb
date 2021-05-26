@@ -20,19 +20,12 @@ class GenresImport implements ToCollection, WithHeadingRow
 
             if ($row["media_film_detailsfilm_genre"]) {
 
-                $movie = Movie::where(
-                    [
-                        "legacy_id" => $row["id_code_film"]
-                    ]
-                )->firstOrFail();
+                $movie = Movie::where(["legacy_id" => $row["id_code_film"]])->firstOrFail();
 
                 //Get the Genre
                 $genre = Genre::firstOrCreate(
-                    [
-                        "name"=> $row["media_film_detailsfilm_genre"]
-                    ],[
-                        "type"=> "Movie"
-                    ]
+                    ["name"=> $row["media_film_detailsfilm_genre"]],
+                    ["type"=> "Movie"]
                 );
 
                 $movie->update(['genre_id' => $genre->id]);

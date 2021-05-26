@@ -20,20 +20,13 @@ class AudiencesImport implements ToCollection, WithHeadingRow
 
             if ($row["film_audience"]) {
 
-                $movie = Movie::where(
-                    [
-                        "legacy_id" => $row["id_code_film"]
-                    ]
-                )->first();
+                $movie = Movie::where(["legacy_id" => $row["id_code_film"]])->first();
 
                 //Get the Audience
                 $audience = Audience::firstOrCreate(
-                    [
-                        "name"=> $row["film_audience"]
-                    ],[
-                        "type"=> "Movie"
-                    ]
-                    );
+                    ["name"=> $row["film_audience"]],
+                    ["type"=> "Movie"]
+                );
 
                 $movie->update(['audience_id' => $audience->id]);
 

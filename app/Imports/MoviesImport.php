@@ -77,6 +77,4 @@ class MoviesImport implements ToCollection, WithHeadingRow
 
     }
 
-    
-
 }

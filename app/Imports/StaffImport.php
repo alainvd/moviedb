@@ -22,7 +22,6 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
 		return 5000;
 	}
     
-     
     /**
      * @param Collection $collection
      */

@@ -2,17 +2,20 @@
 
 namespace App\Imports;
 
-use App\Models\Crew;
+use App\Models\Dossier;
+use App\Models\Fiche;
+use App\Models\Activity;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Title;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
+class DossiersImportDist implements ToCollection, WithHeadingRow, WithChunkReading
 {
 
     public function chunkSize(): int
@@ -27,23 +30,36 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            //Get Person
-            $person = $this->getPerson($row);
-
             //Get Media
             $movie = $this->getMovie($row);
 
-            //Get Title
-            $title = $this->getTitle($row);
-
             //Create the crew entry
-            $crew = new Crew([
-                "person_id" => $person->id,
-                "title_id" => $title->id,
-                "movie_id" => $movie->id,
-                "points" => $row['points'] ? $row['points'] : null,
+            $dossier = new Dossier([
+                'call_id' => 1,
+                'action_id' => 7,
+                'status_id' => 11,
+                'year' => $row["year"],
+                'project_ref_id' => $row["application_reference_number"],
+                'company' => $row["applicant"],
+                'contact_person' => 'n/a',
+                'created_by' => 1,
             ]);
-            $crew->save();
+            $dossier->save();
+            $dossier->fiches()->attach(
+               $movie->id,
+                ['activity_id' => 3,
+                'dossier_id'=>$dossier->id]
+            );
+            $dossier->save();
+            
+            /**$activity = new Activity([
+                'movie_id' => $movie->id,
+                'status_id' => 3,
+                'created_by' => 1,
+                'type' => "dev-current",
+                
+            ]);
+            $activity->save();**/
 
         }
 
@@ -52,7 +68,7 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     private function getTitle($row)
     {
 
-        return Title::firstWhere("name", "=", $row["role"]);
+        return Title::firstWhere("name", "=", $row["role_name"]);
     }
 
     private function getMovie($row)
@@ -76,9 +92,9 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     /**
      * @param $actor
      */
-    public function getPerson($row): Person
+    public function getActivity($row): Person
     {
-        $fullName = (Str::of(Str::title($row["name"]))->trim());
+        $fullName = $row["name"]->trim();
         $firstName = $this->getFirstName($fullName);
         $lastName = $this->getLastName($fullName, $firstName);
         echo($fullName . "\n");
@@ -86,13 +102,13 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
 //        echo($lastName . "\n");
 //        echo("================================================\n");
         $person = new Person([
+            "fullname" => $fullName,
             "firstname" => $firstName,
             "lastname" => $lastName,
-            "nationality1" => $row["nationality_code"]?? '',
-            "gender" => $row["gender"],
-            "country_of_residence" => $row["residence_code"] ?? '',
+            "nationality1" => $row["nationality_code"],
         ]);
         $person->save();
         return $person;
     }
+    
 }

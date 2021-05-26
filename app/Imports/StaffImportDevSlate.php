@@ -53,7 +53,6 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
 
     private function getTitle($row)
     {
-
         return Title::firstWhere("name", "=", $row["role"]);
     }
 
@@ -65,7 +64,6 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
         return $movie;
     }
 
-
     public function getFirstName($fullname)
     {
         return explode(" ", $fullname)[0];
@@ -75,8 +73,6 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
     {
         return substr($fullname, strlen($firstname) + 1);
     }
-
-
 
     /**
      * @param $actor
