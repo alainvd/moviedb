@@ -30,7 +30,7 @@ class ActivitiesImportDevSlate implements ToCollection, WithHeadingRow, WithChun
             // Get Movie
             $movie = $this->getMovie($row);
 
-            //Create the crew entry
+            // Add movie to dossier
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 3,
