@@ -12,9 +12,11 @@
             @if(empty($print))
             <div id="fiche-form-buttons" class="flex items-center justify-end mt-12 space-x-3 print:hidden">
                 @if ($hasHistory)
+                    @if(!in_array(Request::path(),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv']))
                     <a href="{{ route('fiche-history', [$dossier, $fiche]) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
                         View history
                     </a>
+                    @endif
                 @endif
                 @if($isApplicant)
                 @if(!in_array(Request::path(),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv']))
