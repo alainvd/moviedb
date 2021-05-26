@@ -47,8 +47,11 @@ class Call extends Model
         if ($this->deadline2) {
             return Carbon::now()->greaterThanOrEqualTo($this->deadline2);
         }
-
-        return Carbon::now()->greaterThanOrEqualTo($this->deadline1);
+        if ($this->deadline1) {
+            return Carbon::now()->greaterThanOrEqualTo($this->deadline1);
+        }
+        // TODO: change to false when testing is done
+        return false;
     }
 
     public function dossiers()
