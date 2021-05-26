@@ -4,21 +4,21 @@ namespace App\Console\Commands\Importer;
 
 use Illuminate\Console\Command;
 
-class All extends Command
+class Prod extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:all';
+    protected $signature = 'import:prod';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import all';
+    protected $description = 'Import prod';
 
     /**
      * Create a new command instance.
