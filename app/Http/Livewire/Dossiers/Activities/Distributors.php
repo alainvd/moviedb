@@ -15,6 +15,8 @@ class Distributors extends Component
     // public $coordinatorCount = 0;
     // public $participantCount = 0;
 
+    public Dossier $dossier;
+
     public $isBackoffice = false;
 
     public $showAddModal = false;

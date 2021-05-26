@@ -3,13 +3,14 @@
         Film selection
     </h3>
 
-    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
         <input type="hidden" name="movie_id" wire:model="movie.id">
         @if(empty($print))
         <div class="col-span-1 print:hidden">
             <x-anchors.primary
                 class="mt-6"
-                :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])">
+                :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])"
+                :disabled="$dossier->call->closed">
                 Search and Select
             </x-anchors.primary>
         </div>

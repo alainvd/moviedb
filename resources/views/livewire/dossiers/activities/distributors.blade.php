@@ -58,7 +58,10 @@
 
     @if(empty($print))
     <div class="mt-5 text-right print:hidden">
-        <x-button.secondary id="add-distributor" wire:click="showAdd" wire:loading.attr="disabled">
+        <x-button.secondary id="add-distributor"
+            wire:click="showAdd"
+            wire:loading.attr="disabled"
+            :disabled="$dossier->call->closed">
             Add
         </x-button.secondary>
     </div>

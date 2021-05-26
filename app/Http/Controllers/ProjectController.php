@@ -9,7 +9,9 @@ use App\Models\Status;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 /**
@@ -18,10 +20,10 @@ use Spatie\Activitylog\Models\Activity as ActivityLog;
  */
 class ProjectController extends Controller
 {
+    protected $picSearchUrl = 'https://ec.europa.eu/info/funding-tenders/opportunities/api/organisation/search.json';
 
     protected $dossierRules = [
-        'company' => 'required_without:film_title|string|min:3',
-        'film_title' => 'required_without:company',
+        'film_title' => 'required_with:movie_count',
     ];
 
     protected $pageTitles = [
@@ -57,16 +59,34 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $this->validate(request(), [
-            'call_id' => 'required',
-            'project_ref_id' => 'required',
+        $validator = Validator::make(request()->all(), [
+            // 'action_type' => 'required',
+            'call_id' => 'bail|required',
+            'draft_proposal_id' => 'bail|required',
+            'PIC' => 'required',
+            // 'topic' => 'required',
         ]);
-        $params = request(['call_id', 'project_ref_id']);
 
-        $call = Call::find($params['call_id']);
+        if ($validator->fails()) {
+            abort(500, 'SEP link seems to be broken');
+        }
+
+        $params = request(['call_id', 'draft_proposal_id', 'PIC', 'topic']);
+
+        $call = Call::where('name', $params['call_id'])->first();
+
+        if (!$call) {
+            abort(500, 'The call in your request could not be found');
+        }
+
+        if ($call->closed) {
+            abort(500, 'We do not accept any more applications for this call');
+        }
+
+        $company = $this->getCompanyByPic($params['PIC']);
 
         $dossier = Dossier::firstOrNew([
-            'project_ref_id' => $params['project_ref_id']
+            'project_ref_id' => $params['draft_proposal_id']
         ]);
 
         if ($dossier->id) {
@@ -74,7 +94,9 @@ class ProjectController extends Controller
         }
 
         $dossier->fill([
-            'call_id' => $params['call_id'],
+            'call_id' => $call->id,
+            'company' => $company,
+            'pic' => $params['PIC'],
             'action_id' => $call->action_id,
             'status_id' => 1,
             'year' => date('Y'),
@@ -142,6 +164,10 @@ class ProjectController extends Controller
 
         if ($request->user()->cannot('update', $dossier)) {
             return abort(404);
+        }
+
+        if ($dossier->call->closed) {
+            abort(500, 'We do not accept any more applications for this call');
         }
 
         $params = $request->validate([
@@ -283,5 +309,19 @@ class ProjectController extends Controller
                 ],
             ];
         }
+    }
+
+    protected function getCompanyByPic($pic)
+    {
+        $request = Http::post($this->picSearchUrl, [
+            'pic' => $pic
+        ])->collect();
+
+        $results = $request->collect();
+        if (!$results->count()) {
+            abort(500, 'The provided PIC is invalid');
+        }
+
+        return $results[0]['legalName'];
     }
 }
