@@ -86,6 +86,7 @@
                         @enderror
                     </div>
 
+                    @if($fiche=='devPrev')
                     <div>
                         <x-form.select
                             :id="'agents_role'"
@@ -103,6 +104,7 @@
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
 
                     <div>
                         <x-form.select
