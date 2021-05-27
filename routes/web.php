@@ -27,24 +27,35 @@ use App\Http\Livewire\SearchPage;
 |
 */
 
+// Root route
+Route::get('/', function () {
+    if (auth()->user()) {
+        if (auth()->user()->hasRole('editor')) {
+            return redirect('dashboard/dossiers');
+        }
+        if (auth()->user()->hasRole('editor')) {
+            return redirect('dossiers');
+        }
+    }
+    return redirect('welcome');
+});
+
 Route::get('/welcome', [
-    'middleware' => 'cas.auth',
     function () {
         return view('welcome');
     }
 ])->name('welcome');
 
 Route::get('/search', SearchPage::class)
-    ->middleware('cas.auth')
     ->name('search');
-
-// Route::get('/auth/login', function(){
-//     cas()->authenticate();
-// });
 
 Route::get('/landing/SEP', function () {
     return redirect()->route('dossiers.create', request()->all());
 })->name('sep');
+
+// Route::get('/auth/login', function(){
+//     cas()->authenticate();
+// });
 
 Route::get('/test/cas/logout', [
     'middleware' => 'cas.auth',
@@ -63,15 +74,6 @@ Route::get('homepage', [
 ])->name('homepage');
 
 Route::middleware('cas.auth')->group(function () {
-    // Root route
-    Route::get('/', function () {
-        if (auth()->user()->hasRole('editor')) {
-            return redirect('dashboard/dossiers');
-        }
-
-        return redirect('dossiers');
-    });
-
     // Editor dashboard
     Route::prefix('dashboard')
         ->middleware('can:access dashboard')
