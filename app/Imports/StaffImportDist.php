@@ -124,5 +124,4 @@ class StaffImportDist implements ToCollection, WithHeadingRow, WithChunkReading
         $person->save();
         return $person;
     }
-
 }

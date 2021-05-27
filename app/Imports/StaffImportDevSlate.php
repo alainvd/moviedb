@@ -86,9 +86,19 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
             "firstname" => $firstName,
             "lastname" => $lastName,
             "nationality1" => $row["nationality_code"],
-            "gender" => $row["gender"],
+            "gender" => $this->getGender($row["gender"]),
         ]);
         $person->save();
         return $person;
+    }
+
+    public function getGender($gender)
+    {
+        if ($gender == 'X') return 'NA';
+        if ($gender == 'Undefined') return 'NA';
+        if ($gender == 'UNDEFINED') return 'NA';
+        if ($gender == 'Female') return 'FEMALE';
+        if ($gender == 'Male') return 'MALE';
+        return $gender;
     }
 }
