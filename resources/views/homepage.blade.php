@@ -45,23 +45,4 @@
             <img src="/images/undraw_videographer.png" alt="Videographer">
         </div>
     </div>
-    <div class="md:flex">
-        <div class="w-full p-4 my-4 md:w-1/2 md:order-last sm:px-8 md:flex md:flex-col md:justify-center">
-            <div class="my-4">
-                <h2 class="text-4xl leading-10 text-black">Looking for help?</h2>
-            </div>
-            <div class="my-4">
-                <span class="font-sans text-xl leading-6 text-gray-700">you can contact us ... Lorem ipsum dolor sit
-                    amet, consectetur adipiscing elit. Duis vel.</span>
-            </div>
-            <div class="py-3 my-4">
-                <button type="button" class="p-3 text-sm font-bold text-white bg-indigo-700 border-2 border-indigo-700">
-                    contact the helpdesk
-                </button>
-            </div>
-        </div>
-        <div class="w-full p-4 my-4 md:w-1/2 md:pl-8">
-            <img src="/images/undraw_video_game_night.png" alt="Videogamenight">
-        </div>
-    </div>
 </x-ecl-layout>
