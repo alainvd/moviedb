@@ -3,7 +3,7 @@
     :print="$print"
     :fiche="$fiche"
     :hasHistory="$hasHistory ?? false"
-    :dossier="$dossier"
+    :dossier="$dossier ?? null"
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
 >
