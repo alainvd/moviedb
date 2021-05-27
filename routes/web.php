@@ -28,14 +28,14 @@ use App\Http\Livewire\SearchPage;
 */
 
 Route::get('/welcome', [
-    'middleware' => 'guest',
+    'middleware' => 'cas.auth',
     function () {
         return view('welcome');
     }
 ])->name('welcome');
 
 Route::get('/search', SearchPage::class)
-    ->middleware('guest')
+    ->middleware('cas.auth')
     ->name('search');
 
 // Route::get('/auth/login', function(){
