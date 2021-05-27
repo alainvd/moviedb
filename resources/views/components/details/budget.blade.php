@@ -33,7 +33,7 @@
             :id="'total_budget_currency_rate'"
             :label="'Conversion Rate'"
             :hasError="$errors->has('movie.total_budget_currency_rate')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_currency_rate')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_currency_rate', $movie->total_budget_currency_code)"
             wire:model="movie.total_budget_currency_rate"
             placeholder="0.00"
             value="{{ $movie->total_budget_currency_rate }}"

@@ -88,7 +88,7 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.total_budget_currency_amount' => 'required|integer',
         'movie.total_budget_currency_code' => 'required|string|max:255',
-        'movie.total_budget_currency_rate' => 'required|numeric',
+        'movie.total_budget_currency_rate' => 'requiredUnless:movie.total_budget_currency_code,EUR|numeric',
         'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
