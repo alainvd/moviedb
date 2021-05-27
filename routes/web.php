@@ -33,11 +33,12 @@ Route::get('/', function () {
         if (auth()->user()->hasRole('editor')) {
             return redirect('dashboard/dossiers');
         }
-        if (auth()->user()->hasRole('editor')) {
+        if (auth()->user()->hasRole('applicant')) {
             return redirect('dossiers');
         }
     }
-    return redirect('welcome');
+    // TODO: change to /welcome for production
+    return redirect('homepage');
 });
 
 Route::get('/welcome', [
