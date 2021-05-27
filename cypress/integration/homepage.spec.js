@@ -58,7 +58,7 @@ context('Homepage', () => {
         // Assert title, wizard section, distributors present
         cy.get('body')
         .should('contain', 'Film selection')
-        .should('contain', 'Distributors Participating in the Grouping')
+        .should('contain', 'Participants to the Grouping')
     })
 
     it('should create a TV dossier for TV call', () => {

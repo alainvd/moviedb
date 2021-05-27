@@ -1,6 +1,6 @@
 <div class="my-16">
     <h3 class="my-4 text-lg font-normal leading-tight">
-        Distributors Participating in the Grouping
+        Participants to the Grouping
     </h3>
     <x-table class="distributors-list">
         <x-slot name="head">
