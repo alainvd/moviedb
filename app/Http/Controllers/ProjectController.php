@@ -177,15 +177,16 @@ class ProjectController extends Controller
             abort(500, 'We do not accept any more applications for this call');
         }
 
-        $params = $request->validate([
-            'company' => 'required|string|max:255'
-        ]);
+        /*
+        // TODO: can remove, becaust company name is provided automatically
+        $params = $request->only(['company']);
 
         // Keep company name even if validation fails
         if ($params['company'] !== $dossier->company) {
             $dossier->company = $params['company'];
             $dossier->save();
         }
+        */
 
         $this->validate($request, $this->buildValidator($request));
 
