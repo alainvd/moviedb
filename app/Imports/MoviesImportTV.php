@@ -24,6 +24,7 @@ class MoviesImportTV implements ToCollection, WithHeadingRow
         } catch (\ErrorException $e) {
             echo 'Caught exception in date transformation: ', $e->getMessage(), "\n";
             echo 'Movie ID: ', $id, "\n";
+            echo 'Date: '. $date ."\n";
             Log::error("Caught exception in date transformation of Movie ID {$id}: " . $e->getMessage());
             return null;
         }

@@ -19,14 +19,13 @@
                     This platform is not the entry point to submit an application for funding within the Creative Europe programme. To find open call for proposals and start the application process, please consult the <a class="text-indigo-600 hover:text-indigo-900" href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home" target="_blank">Funding & Tender opportunities portal.</a>
                 </p>
                 <p>
-                    On this page, you will find the dossiers linking ongoing applications and information on audiovisual works.
+                    On this page, you will find the dossiers linking applications and information on audiovisual works.
                 </p>
                 <p>
                     If the dossier list is empty, the reasons can be the following:
                     <ul class="list-disc list-inside">
                         <li>No dossier was created during the preparation of an application for funding via the eGrant submission service</li>
                         <li>The EU login used for creating the application in the eGrant submission service is different than the one used to enter in the Creative Europe MEDIA database is different</li>
-                        <li>The call is closed</li>
                     </ul>
                 </p>
             </div>
