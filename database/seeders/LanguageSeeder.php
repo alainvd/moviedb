@@ -16,6 +16,11 @@ class LanguageSeeder extends Seeder
     {
         DB::table('languages')->insert([
             [
+                'code' => '00',
+                'name' => 'N/A',
+                'position' => 1
+            ],
+            [
                 'code' => 'bg',
                 'name' => 'български',
                 'position' => 0

@@ -61,7 +61,7 @@ class Language extends Model
         foreach ($l as $group => $choices) {
             $i++;
             $languagesGroupedChoices[] = [
-                'label' => '---',
+                'label' => '',
                 'id' => $i,
                 'choices' => $choices,
             ];
