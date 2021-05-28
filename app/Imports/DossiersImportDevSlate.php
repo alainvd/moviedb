@@ -24,14 +24,12 @@ class DossiersImportDevSlate implements ToCollection, WithHeadingRow, WithChunkR
     {
         foreach ($collection as $row) {
 
-
-            //Get Call
+            // Get Call
             $call = $this->getCall($row);
-      
 
-            //Create the Dossier
+            // Create the Dossier
             $dossier = new Dossier([
-                'call_id' =>$call->id,
+                'call_id' => $call->id,
                 'action_id' => 1,
                 'status_id' => 11,
                 'year' => $row["application_year"],
@@ -39,18 +37,16 @@ class DossiersImportDevSlate implements ToCollection, WithHeadingRow, WithChunkR
                 'company' => $row["participant_organisation_name"],
                 'contact_person' => 'n/a',
                 'created_by' => 1,
-
             ]);
             $dossier->save();
            
         }
-
     }
   
     private function getCall($row)
     {
         $callName = $row["call_ref"];
-        $call = Call::where("name","=",$callName)->first();
+        $call = Call::where("name", "=", $callName)->first();
         return $call;
     }
 

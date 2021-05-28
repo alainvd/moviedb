@@ -2,18 +2,18 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\StaffImportDevSP;
+use App\Imports\LocationsImportDist;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class StaffDevSP extends Command
+class LocationsDist extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:staffdevsp';
+    protected $signature = 'import:locations-dist';
 
     /**
      * The console command description.
@@ -39,6 +39,6 @@ class StaffDevSP extends Command
      */
     public function handle()
     {
-        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff.xlsx', 'excel');
+        Excel::import(new LocationsImportDist, 'Dist_Film_Locations.xlsx', 'excel');
     }
 }

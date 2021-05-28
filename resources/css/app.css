@@ -8,9 +8,6 @@
 
 @import '../../node_modules/pikaday/css/pikaday.css';
 
-/* looks like these can go away */
-/* @import '../../node_modules/tippy.js/dist/tippy.css'; */
-
 [x-cloak] {
     display: none;
 }

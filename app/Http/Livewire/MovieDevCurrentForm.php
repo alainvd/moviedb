@@ -48,7 +48,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
         'movie.film_length' => 'required|integer|min:1|max:10000',
@@ -57,16 +57,16 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         'movie.rights_origin_of_work' => 'required|string',
         'movie.rights_contract_type' => 'required|string',
-        'movie.rights_contract_start_date' => 'required|date:d.m.Y',
-        'movie.rights_contract_end_date' => 'required|date:d.m.Y',
-        'movie.rights_contract_signature_date' => 'required|date:d.m.Y',
+        'movie.rights_contract_start_date' => 'required|date',
+        'movie.rights_contract_end_date' => 'required',
+        'movie.rights_contract_signature_date' => 'required',
         // dependent fields
         'movie.rights_adapt_author_name' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
         'movie.rights_adapt_original_title' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
         'movie.rights_adapt_contract_type' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
-        'movie.rights_adapt_contract_start_date' => 'date:d.m.Y|requiredIf:movie.rights_origin_of_work,ADAPTATION',
-        'movie.rights_adapt_contract_end_date' => 'date:d.m.Y|requiredIf:movie.rights_origin_of_work,ADAPTATION',
-        'movie.rights_adapt_contract_signature_date' => 'date:d.m.Y|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_start_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_end_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_signature_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
 
         'movie.total_budget_euro' => 'required|integer',
 
@@ -87,7 +87,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string|max:4000',
 
-        'movie.photography_start' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
         'movie.shooting_language' => '',
         'movie.development_costs_in_euro' => 'integer',
         'movie.film_length' => 'integer|min:1|max:10000',
@@ -96,16 +96,16 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
         'movie.rights_origin_of_work' => 'string',
         'movie.rights_contract_type' => 'string',
-        'movie.rights_contract_start_date' => 'date:d.m.Y',
-        'movie.rights_contract_end_date' => 'date:d.m.Y',
-        'movie.rights_contract_signature_date' => 'date:d.m.Y',
+        'movie.rights_contract_start_date' => 'date',
+        'movie.rights_contract_end_date' => 'date',
+        'movie.rights_contract_signature_date' => 'date',
         // dependent fields
         'movie.rights_adapt_author_name' => 'string',
         'movie.rights_adapt_original_title' => 'string',
         'movie.rights_adapt_contract_type' => 'string',
-        'movie.rights_adapt_contract_start_date' => 'date:d.m.Y',
-        'movie.rights_adapt_contract_end_date' => 'date:d.m.Y',
-        'movie.rights_adapt_contract_signature_date' => 'date:d.m.Y',
+        'movie.rights_adapt_contract_start_date' => 'date',
+        'movie.rights_adapt_contract_end_date' => 'date',
+        'movie.rights_adapt_contract_signature_date' => 'date',
 
         'movie.total_budget_euro' => 'integer',
 
@@ -120,6 +120,9 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='dev-current') {
+            abort(403);
+        }
     }
 
     public function saveFiche()
@@ -172,7 +175,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Films - Current work';
+        $title = 'Audiovisual Work - Development - For grant request';
         $crumbs[] = [
             'url' => route('dossiers.index'),
             'title' => 'My dossiers'

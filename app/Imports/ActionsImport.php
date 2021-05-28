@@ -16,13 +16,9 @@ class ActionsImport implements ToModel, WithHeadingRow
         */
         public function model(array $row)
         {
-            
             return new Action([
-                
-                'name' => $row['name'],               
-    
+                'name' => $row['name'],
             ]);
-    
         }   
 
 }

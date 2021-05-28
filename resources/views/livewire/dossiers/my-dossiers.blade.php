@@ -1,7 +1,7 @@
 <div class="mb-64">
     <div class="flex items-center justify-between my-4">
         <h3 class="text-xl tracking-wider text-gray-800 text-bold">
-            Here are your existing technical dossiers as recorded in MediaDB.
+            Here are your existing technical dossiers as recorded in Creative Europe MEDIA Database
         </h3>
         <label class="block font-medium text-indigo-600">
             <input class="mr-2" type="checkbox" wire:model="showClosed">
@@ -10,6 +10,7 @@
             </span>
         </label>
     </div>
+    
     <x-table class="mb-4 dossiers-list">
         <x-slot name="head">
             <x-table.heading>CALL</x-table.heading>
@@ -58,10 +59,4 @@
             @endforelse
         </x-slot>
     </x-table>
-
-    <div class="flex justify-end">
-        <x-anchors.primary :url="route('homepage')">
-            Create a new dossier
-        </x-anchors.primary>
-    </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="my-16">
     <h3 class="my-4 text-lg font-normal leading-tight">
-        Distributors Participating in the Grouping
+        Participants to the Grouping
     </h3>
     <x-table class="distributors-list">
         <x-slot name="head">
@@ -58,11 +58,34 @@
 
     @if(empty($print))
     <div class="mt-5 text-right print:hidden">
-        <x-button.secondary id="add-distributor" wire:click="showAdd" wire:loading.attr="disabled">
+        <x-button.secondary id="add-distributor"
+            wire:click="showAdd"
+            wire:loading.attr="disabled"
+            :disabled="$dossier->call->closed">
             Add
         </x-button.secondary>
     </div>
     @endif
+
+    <div id="cc-init" x-data x-init="
+
+    Livewire.on('showModalInit_Distributors', () => {
+
+        // Re-init the date picker.
+        // Just target the unique ID, since this code is just for one date picker.
+        if (typeof(pikaday_distributors_release_date) !== 'undefined')
+            pikaday_distributors_release_date.destroy();
+        pikaday_distributors_release_date = new Pikaday({
+            field: document.getElementById('distributors-forecast-release-date'),
+            theme: 'moviedb-theme',
+            format: 'DD.MM.YYYY.',
+            firstDay: 1,
+        })
+
+    })    
+
+    ">
+    </div>
 
     <x-modal.dialog wire:model="showAddModal">
         <x-slot name="title">Add / Edit Distributor</x-slot>
@@ -118,7 +141,7 @@
             </div>
             <div class="my-4 md:w-1/2">
                 <x-form.datepicker
-                    :id="'release-date'"
+                    :id="'distributors-forecast-release-date'"
                     :label="'Forecast Release Date'"
                     :hasError="$errors->has('currentDistributor.forecast_release_date')"
                     wire:model="currentDistributor.forecast_release_date">

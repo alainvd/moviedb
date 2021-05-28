@@ -27,16 +27,32 @@ use App\Http\Livewire\SearchPage;
 |
 */
 
+// Root route
+Route::get('/', function () {
+    if (auth()->user()) {
+        if (auth()->user()->hasRole('editor')) {
+            return redirect('dashboard/dossiers');
+        }
+        if (auth()->user()->hasRole('applicant')) {
+            return redirect('dossiers');
+        }
+    }
+    // TODO: change to /welcome for production
+    return redirect('homepage');
+});
+
 Route::get('/welcome', [
-    'middleware' => 'guest',
     function () {
         return view('welcome');
     }
 ])->name('welcome');
 
 Route::get('/search', SearchPage::class)
-    ->middleware('guest')
     ->name('search');
+
+Route::get('/landing/SEP', function () {
+    return redirect()->route('dossiers.create', request()->all());
+})->name('sep');
 
 // Route::get('/auth/login', function(){
 //     cas()->authenticate();
@@ -59,15 +75,6 @@ Route::get('homepage', [
 ])->name('homepage');
 
 Route::middleware('cas.auth')->group(function () {
-    // Root route
-    Route::get('/', function () {
-        if (auth()->user()->hasRole('editor')) {
-            return redirect('dashboard/dossiers');
-        }
-
-        return redirect('dossiers');
-    });
-
     // Editor dashboard
     Route::prefix('dashboard')
         ->middleware('can:access dashboard')
@@ -119,39 +126,28 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('dev-prev-fiche-form');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('dev-current-fiche-form');
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('tv-fiche-form');
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
+// Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
 
+Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
+Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
+Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('movie-dev-prev');
+Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('movie-tv');
+// Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev');
+
+// Impersonation
 Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->middleware('cas.auth')->name('impersonate')->where('id', '[0-9]+');
 Route::get('/impersonate/stop', [\App\Http\Controllers\ImpersonateController::class, 'stopImpersonate'])->middleware('cas.auth')->name('impersonate_stop');
 
-Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist-1');
-
-Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
-Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('movie-dev-prev');
-Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
-Route::get('/movie-tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('movie-tv');
-//Route::get('/dossier/{project}', ProjectController::class)->middleware('cas.auth');
-
-//Pending
+// Pending
 Route::view('/reports', 'coming-soon')->middleware('cas.auth');
 
-
-Route::get('/dossiers/{dossier}/activities/{activity}/fiches/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth');
-
-Route::get('select', [\App\Http\Controllers\TestController::class,'select'])->middleware('cas.auth');
-
-Route::get('/media/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche');
-
-// Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies'])->middleware('cas.auth');
-
-//Test Routes
+// Test Routes
 Route::get('/test', [\App\Http\Controllers\TestController::class,'index'])->name('test_index');
-Route::get('test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
+Route::get('/test/cas', [\App\Http\Controllers\TestController::class,'cas'])->middleware('cas.auth');
 Route::get('/test/select', [\App\Http\Controllers\TestController::class,'select'])->middleware('cas.auth');
 Route::get('/pic', [\App\Http\Controllers\PICController::class,'index'])->middleware('cas.auth')->name('pic');
-//Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 Route::get('table-edit-example', 'App\Http\Controllers\TableEditExamplesController@examples')->middleware('cas.auth')->name('table_edit_examples');
-
+// Route::get('/browse/movies', [\App\Http\Controllers\TestController::class,'movies']);
 
 Route::get('/browse/audience', [\App\Http\Controllers\TestController::class,'audience'])->middleware('cas.auth');
 Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])->middleware('cas.auth');
@@ -159,9 +155,6 @@ Route::view('/demo', 'demo')->middleware('cas.auth');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 Route::get('/browse/movies', [MovieController::class,'index'])->middleware('cas.auth')->name('movies');
 Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])->middleware('cas.auth')->name('movie_show');
-
-
-Route::get('/landing/SEP', [\App\Http\Controllers\SEPController::class,'index'])->middleware(['cas.auth'])->name('SEP');
 
 Route::resource('call', '\App\Http\Controllers\CallController')->middleware('cas.auth')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->middleware('cas.auth')->only('index');

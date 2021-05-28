@@ -38,30 +38,38 @@ class Acceptance extends Command
     public function handle()
     {
         ini_set('memory_limit', '-1');
+
         $this->call(\Database\Seeders\CountriesTableSeeder::class);
-        echo("countries seeder ok \r\n");
+        $this->info("countries seeder ok");
+
         $this->call(\Database\Seeders\StatusSeeder::class);
-        echo("status seeder ok \r\n");
+        $this->info("status seeder ok");
+
         $this->call('import:languages');
-        echo("languages import ok \r\n");
+        $this->info("languages import ok");
+
         $this->call('import:actions');
-        echo("actions import ok \r\n");
+        $this->info("actions import ok");
+
         $this->call('import:calls');
-        echo("calls import ok \r\n");
+        $this->info("calls import ok");
+
         $this->call(\Database\Seeders\ActivitySeeder::class);
-        echo("Activity seed ok \r\n");
+        $this->info("activity seed ok");
+
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
-        echo("Roles and permissions seed ok \r\n");
+        $this->info("roles and permissions seed ok");
+
         $this->call(\Database\Seeders\UserSeeder::class);
-        echo("User seed ok \r\n");
+        $this->info("user seed ok");
 
         $this->call(\Database\Seeders\GenreSeeder::class);
-        echo("Genre seed ok \r\n");
+        $this->info("genre seed ok");
+
         $this->call(\Database\Seeders\AudienceSeeder::class);
-        echo("Audience seed ok \r\n");
+        $this->info("audience seed ok");
 
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
-        echo("Title seed ok \r\n");
-
+        $this->info("title seed ok");
     }
 }

@@ -2,25 +2,26 @@
 
 namespace App\Console\Commands\Importer;
 
-use App\Imports\AudiencesImport;
+use App\Imports\LocationsImportDist;
+use App\Imports\LocationsImportTV;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class Audiences extends Command
+class LocationsOther extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:audiences';
+    protected $signature = 'import:locations-other';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Audiences';
+    protected $description = 'Link Staff with movies';
 
     /**
      * Create a new command instance.
@@ -39,6 +40,6 @@ class Audiences extends Command
      */
     public function handle()
     {
-        Excel::import(new AudiencesImport, 'Dist_Film_Audience.xlsx', 'excel');
+        Excel::import(new LocationsImportTV, 'TV_Locations.xlsx', 'excel');
     }
 }

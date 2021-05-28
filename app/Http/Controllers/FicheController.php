@@ -97,11 +97,11 @@ class FicheController extends Controller
         switch ($fiche->type) {
             case 'dev-current':
                 $f = new MovieDevCurrentForm();
-                $title = 'Films - Current work';
+                $title = 'Audiovisual Work - Development - For grant request';
                 break;
             case 'dev-prev':
                 $f = new MovieDevPrevForm();
-                $title = 'Films - Previous work';
+                $title = 'Audiovisual Work - Development - Recent work / previous experience';
                 break;
             case 'dist':
                 $f = new MovieDistForm();

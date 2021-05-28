@@ -3,14 +3,10 @@
 namespace App\Imports;
 
 use App\Models\Dossier;
-use App\Models\Fiche;
-use App\Models\Activity;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Title;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -30,14 +26,10 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            
-
-            //Get Media
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            
-
-            //Create the crew entry
+            // Create the dossier
             $dossier = new Dossier([
                 'call_id' => 1,
                 'action_id' => 7,
@@ -47,45 +39,32 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
                 'company' => $row["applicant"],
                 'contact_person' => 'n/a',
                 'created_by' => 1,
-
-
             ]);
             $dossier->save();
+
+            // Add movie to dossier
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 3,
-                'dossier_id'=>$dossier->id]
+                'dossier_id' => $dossier->id]
             );
             $dossier->save();
-            
-            /**$activity = new Activity([
-                'movie_id' => $movie->id,
-                'status_id' => 3,
-                'created_by' => 1,
-                'type' => "dev-current",
-                
-            ]);
-            $activity->save();**/
-
 
         }
-
     }
 
     private function getTitle($row)
     {
-
         return Title::firstWhere("name", "=", $row["role_name"]);
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        echo($filmID);
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        echo($filmID."\n");
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
-
 
     public function getFirstName($fullname)
     {
@@ -96,8 +75,6 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         return substr($fullname, strlen($firstname) + 1);
     }
-
-
 
     /**
      * @param $actor
@@ -120,4 +97,5 @@ class DossiersImportTV implements ToCollection, WithHeadingRow, WithChunkReading
         $person->save();
         return $person;
     }
+    
 }

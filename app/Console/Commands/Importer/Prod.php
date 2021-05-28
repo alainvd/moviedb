@@ -4,21 +4,21 @@ namespace App\Console\Commands\Importer;
 
 use Illuminate\Console\Command;
 
-class All extends Command
+class Prod extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:all';
+    protected $signature = 'import:prod';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import all';
+    protected $description = 'Import prod';
 
     /**
      * Create a new command instance.
@@ -38,47 +38,58 @@ class All extends Command
     public function handle()
     {
         ini_set('memory_limit', '-1');
-        $this->call(\Database\Seeders\CountriesTableSeeder::class);
-        echo("countries seeder ok \r\n");
-        $this->call(\Database\Seeders\StatusSeeder::class);
-        echo("status seeder ok \r\n");
-        $this->call('import:languages'); // Languages.php
-        echo("languages import ok \r\n");
-        $this->call('import:actions'); // Actions.php
-        echo("actions import ok \r\n");
-        $this->call('import:calls'); // Calls.php
-        echo("calls import ok \r\n");
-        $this->call(\Database\Seeders\ActivitySeeder::class);
-        echo("Activity seed ok \r\n");
-        $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
-        echo("Roles and permissions seed ok \r\n");
-        $this->call(\Database\Seeders\UserSeeder::class);
-        echo("User seed ok \r\n");
 
-        $this->call('import:movies'); // Movies.php
-        echo("movies import ok \r\n");
+        $this->call(\Database\Seeders\CountriesTableSeeder::class);
+        $this->info("countries seeder ok");
+
+        $this->call(\Database\Seeders\StatusSeeder::class);
+        $this->info("status seeder ok");
+
+        $this->call('import:languages'); // Languages.php
+        $this->info("languages import ok");
+
+        $this->call('import:actions'); // Actions.php
+        $this->info("actions import ok");
+
+        $this->call('import:calls'); // Calls.php
+        $this->info("calls import ok");
+
+        $this->call(\Database\Seeders\ActivitySeeder::class);
+        $this->info("activity seed ok");
+
+        $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
+        $this->info("roles and permissions seed ok");
+
+        // TODO: Don't run user seeder in production
+        $this->call(\Database\Seeders\UserSeeder::class);
+        $this->info("user seed ok");
+
+        $this->call('import:movies-dist'); // MoviesDist.php
+        $this->info("movies-dist import ok");
+
         $this->call('import:genres'); // Genres.php
-        echo("genre import ok \r\n");
+        $this->info("genre import ok");
+
         $this->call('import:audiences'); // Audiences.php // Can use seeder as well
-        echo("audiences import ok \r\n");
+        $this->info("audiences import ok");
 
         // $this->call('import:roles'); // Roles.php // Use seeder instead
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
-        echo("Title seed ok \r\n");
-        
+        $this->info("title seed ok");
 
-        $this->call('import:staff'); // Staff.php // takes a long time
-        echo("staff import ok \r\n");
-        $this->call('import:locations'); // Locations.php
-        echo("locations import ok \r\n");
+        $this->call('import:movies-languages'); // MoviesLanguages.php
+        $this->info("movie languages import ok");
+
+        $this->call('import:staff-dist'); // StaffDist.php // takes a long time
+        $this->info("staff-dist import ok");
+
+        $this->call('import:locations-dist'); // LocationsDist.php
+        $this->info("locations-dist import ok");
+
         $this->call('import:producers'); // Producers.php // takes a long time
-        echo("Producers import ok \r\n");
+        $this->info("producers import ok");
+
         $this->call('import:sa'); // SalesAgents.php
-        echo("Sales agents import ok \r\n");
-        $this->call('import:dossiers'); // Dossiers.php
-        echo("Dossiers import ok \r\n");
-        $this->call('import:activities'); // Activities.php
-        echo("Activities import ok \r\n");
-        
+        $this->info("sales agents import ok");
     }
 }

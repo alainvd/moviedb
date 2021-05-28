@@ -83,12 +83,14 @@ class Location extends Model
         }
         if ($genre_id == 2) {
             return [
+                'SHOOT',
                 'POST',
             ];
         }
         if ($genre_id == 3) {
             return [
                 'POST',
+                'STUDIO',
             ];
         }
         return [];

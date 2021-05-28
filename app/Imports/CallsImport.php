@@ -4,9 +4,7 @@ namespace App\Imports;
 
 use App\Models\Call;
 use App\Models\Action;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -31,28 +29,25 @@ class CallsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        //Get Action
+        // Get Action
         $action = $this->getAction($row);
 
         return new Call([
-            
             'name' => $row['call_ref'],
             'action_id' => $action->id,
             'year' => $row['year'],
+            'published_at' => $row['call_publication_date'] ? $this->formatDate($row['call_publication_date'], $row['call_ref']) : now(),            
+            'deadline1' => NULL,
+            'deadline2' => NULL,
             'status' => $row['status'],
-            'published_at' => $row['call_publication_date'] ? $this->formatDate($row['call_publication_date'], $row['call_ref']) : now(),
 
         ]);
-        echo($row['call_ref']);
-
+        // echo($row['call_ref']."\n");
     }
 
     private function getAction($row)
     {
-
-        echo($row['call_ref']);
+        // echo($row['call_ref']."\n");
         return Action::firstWhere("name", "=", $row["action_code"]);
-        
     }
-
 }

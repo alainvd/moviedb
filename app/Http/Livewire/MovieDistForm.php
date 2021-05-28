@@ -44,7 +44,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
@@ -54,8 +54,8 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string',
@@ -69,7 +69,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
@@ -80,15 +80,15 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string|max:255',
 
         'movie.total_budget_currency_amount' => 'required|integer',
         'movie.total_budget_currency_code' => 'required|string|max:255',
-        'movie.total_budget_currency_rate' => 'required|numeric',
+        'movie.total_budget_currency_rate' => 'requiredUnless:movie.total_budget_currency_code,EUR|numeric',
         'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
@@ -110,8 +110,8 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => '',
         'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string|max:255',
@@ -135,6 +135,9 @@ class MovieDistForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='dist') {
+            abort(403);
+        }
         // init points value
         foreach($this->crews as $crew) {
             $this->totalPointsCrews += $crew['points'];

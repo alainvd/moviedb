@@ -2,11 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Movie;
 use App\Models\Language;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 

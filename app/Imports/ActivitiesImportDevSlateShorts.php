@@ -24,39 +24,35 @@ class ActivitiesImportDevSlateShorts implements ToCollection, WithHeadingRow, Wi
     {
         foreach ($collection as $row) {
 
-            //Get Dossier
+            // Get Dossier
             $dossier = $this->getDossier($row);
 
-            //Get Media
+            // Get Movie
             $movie = $this->getMovie($row);
 
-
-            //Create the crew entry
-            
+            // Add movie to dossier
             $dossier->fiches()->attach(
                $movie->id,
                 ['activity_id' => 5,
-                'dossier_id'=>$dossier->id]
+                'dossier_id' => $dossier->id]
             );
             $dossier->save();  
 
         }
-
     }
 
     private function getDossier($row)
     {
         $dossierID = $row["project_reference_number"];
-        $dossier = Dossier::where("project_ref_id","=",$dossierID)->first();
+        $dossier = Dossier::where("project_ref_id", "=", $dossierID)->first();
         return $dossier;
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
-
 
 }
