@@ -126,6 +126,12 @@ class FicheMovieFormBase extends FicheFormBase
                 $this->movie->length_of_episodes = NULL;
             }
         }
+        if ($name == 'movie.dev_support_flag') {
+            if ($value !== 1) {
+                $this->movie->dev_support_reference = NULL;
+            }
+        }
+
     }
 
     // Save fiche as is (draft), without full validation
