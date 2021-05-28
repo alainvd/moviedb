@@ -60,7 +60,7 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.number_of_episodes' => 'integer|min:1|max:10000',
         'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
-        'movie.dev_support_flag' => 'required|integer',
+        'movie.dev_support_flag' => 'required|boolean',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
         'movie.total_budget_euro' => 'required|integer',
@@ -90,7 +90,7 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.number_of_episodes' => 'integer|min:1|max:10000',
         'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
-        'movie.dev_support_flag' => 'required|integer',
+        'movie.dev_support_flag' => 'required|boolean',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
         'movie.total_budget_euro' => 'required|integer',
@@ -122,7 +122,7 @@ class MovieTVForm extends FicheMovieFormBase
         'movie.number_of_episodes' => 'integer|min:1|max:10000',
         'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
-        'movie.dev_support_flag' => 'integer',
+        'movie.dev_support_flag' => 'boolean',
         'movie.dev_support_reference' => 'string',
 
         'movie.total_budget_euro' => 'integer',

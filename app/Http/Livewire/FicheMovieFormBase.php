@@ -142,7 +142,7 @@ class FicheMovieFormBase extends FicheFormBase
         foreach ($this->rules() as $field => $rule) {
             list($var, $atr) = explode('.', $field);
             if (isset($this->{$var}->{$atr})) {
-                if ($this->{$var}->{$atr} == '') {
+                if ($this->{$var}->{$atr} === '') {
                     if (Str::contains($rule, 'integer')) {
                         $this->{$var}->{$atr} = NULL;
                     }
