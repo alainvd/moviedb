@@ -68,7 +68,8 @@ class Prod extends Command
         $this->info("movies-dist import ok");
 
         $this->call('import:genres'); // Genres.php
-        $this->info("genre import ok");
+        $this->call(\Database\Seeders\GenreSeeder::class); // Seeder has all genres
+        $this->info("genre seed ok");
 
         $this->call('import:audiences'); // Audiences.php // Can use seeder as well
         $this->info("audiences import ok");

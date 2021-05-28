@@ -3,7 +3,7 @@
         <h3 class="text-lg leading-10 text-left text-gray-900">Instructions</h3>
 
         <p class="leading-6 text-left text-gray-900 text-md">
-            In order to complete your application for funding under the Creative Europe MEDIA programme, the information on the audiovisual works being part of the application needs to be created and added.
+            In order to complete your application for funding under the Creative Europe MEDIA strand, the information on the audiovisual works being part of the application needs to be created and added.
         </p>
 
     @if (Auth::user()->hasRole('applicant'))
