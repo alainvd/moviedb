@@ -126,6 +126,12 @@ class FicheMovieFormBase extends FicheFormBase
                 $this->movie->length_of_episodes = NULL;
             }
         }
+        if ($name == 'movie.dev_support_flag') {
+            if ($value !== 1) {
+                $this->movie->dev_support_reference = NULL;
+            }
+        }
+
     }
 
     // Save fiche as is (draft), without full validation
@@ -136,7 +142,7 @@ class FicheMovieFormBase extends FicheFormBase
         foreach ($this->rules() as $field => $rule) {
             list($var, $atr) = explode('.', $field);
             if (isset($this->{$var}->{$atr})) {
-                if ($this->{$var}->{$atr} == '') {
+                if ($this->{$var}->{$atr} === '') {
                     if (Str::contains($rule, 'integer')) {
                         $this->{$var}->{$atr} = NULL;
                     }

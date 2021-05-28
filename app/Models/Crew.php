@@ -81,7 +81,7 @@ class Crew extends Model
             $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'ACTOR2')->first()->id]);
             $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'ACTOR3')->first()->id]);
         }
-        // Creative Documentary
+        // Documentary
         if ($genre_id == 2) {
             $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'DIRECTOR')->first()->id]);
             $crew[] = array_merge(Crew::defaultsCrew(), ['title_id' => Title::where('code', 'AUTHOR')->first()->id]);

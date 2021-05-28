@@ -40,9 +40,5 @@ class MoviesDist extends Command
     public function handle()
     {
         Excel::import(new MoviesImportDist, 'Dist_Film_General.xlsx','excel');
-        // Excel::import(new MoviesImportDevSP, 'Dev_SP_General.xlsx','excel');
-        // Excel::import(new MoviesImportDevSlate, 'Dev_Slate_General.xlsx','excel');
-        // Excel::import(new MoviesShortsImportDevSlate, 'Dev_Slate_General_Shorts.xlsx','excel');
-        // Excel::import(new MoviesImportTV, 'TV_General .xlsx','excel');
     }
 }

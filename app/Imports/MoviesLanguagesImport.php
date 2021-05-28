@@ -35,13 +35,13 @@ class MoviesLanguagesImport implements ToModel, WithHeadingRow
 
     private function getLanguage($row)
     {
-        echo($row["shooting_language"]);
+        // echo($row["shooting_language"]);
         return Language::firstWhere("name", "=", $row["shooting_language"]);   
     }
 
     private function getMovie($row)
     {
-        echo(" - ".$row["id_code_film"].'  ');
+        // echo(" - ".$row["id_code_film"].'  ');
         return Movie::firstWhere("legacy_id", "=", $row["id_code_film"]);
     }
 
