@@ -67,7 +67,9 @@ class Prod extends Command
         $this->call('import:movies-dist'); // MoviesDist.php
         $this->info("movies-dist import ok");
 
-        $this->call('import:genres'); // Genres.php
+        // Don't use genres import.
+        // Use seeder instead, because that imports genres in the correct order
+        // $this->call('import:genres'); // Genres.php
         $this->call(\Database\Seeders\GenreSeeder::class); // Seeder has all genres
         $this->info("genre seed ok");
 

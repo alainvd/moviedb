@@ -16,7 +16,7 @@ class GenreSeeder extends Seeder
     {
         $genres = [
             "Movie" => [
-                "Fiction", "Animation", "Documentary"
+                "Fiction", "Documentary", "Animation"
             ],
 
             "VideoGame" => [
