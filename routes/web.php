@@ -13,6 +13,7 @@ use App\Http\Livewire\Dossiers\MovieWizard;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\SearchController;
 use App\Http\Livewire\Export;
 use App\Http\Livewire\SearchPage;
 
@@ -47,7 +48,7 @@ Route::get('/welcome', [
     }
 ])->name('welcome');
 
-Route::get('/search', SearchPage::class)
+Route::get('/search', [SearchController::class, 'index'])
     ->name('search');
 
 Route::get('/landing/SEP', function () {
