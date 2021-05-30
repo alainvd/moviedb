@@ -1,8 +1,17 @@
-<header class="w-full bg-white">
-    <div class="py-2 sm:px-8 sm:py-4 md:px-16 lg:px-24">
-        <img class="h-12 mx-auto sm:mx-0 lg:h-16" src="{{asset('images/ec-logo.svg')}}" alt="EC Logo">
+<header data-ecl-auto-init="SiteHeaderHarmonised" class="ecl-site-header-harmonised--group1 ecl-site-header-harmonised" data-ecl-has-menu="true">
+    <div class="ecl-site-header-harmonised__container ecl-container print:hidden">
+        <div class="ecl-site-header-harmonised__top"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__logo-link" href="/" aria-label="European Commission"><img alt="European Commission logo" title="European Commission" class="ecl-site-header-harmonised__logo-image" src="/ecl-images/logo/logo--en.svg" /></a>
+            <div class="ecl-site-header-harmonised__action">
+
+                @include('livewire.login')
+
+            </div>
+        </div>
     </div>
-    <div class="px-4 py-2 bg-ec-blue text-white sm:px-8 sm:py-4 md:px-16 lg:px-24">
-        <h1 class="text-2xl md:text-3xl font-normal tracking-normal">Creative Europe MEDIA Movie Database</h1>
-    </div>
+
+    <nav data-ecl-auto-init="Menu" class="ecl-menu--group1 ecl-menu" aria-expanded="false" data-ecl-menu="true">
+      <div class="ecl-container ecl-menu__container">
+        <div class="ecl-menu__site-name lg:pb-8">Creative Europe MEDIA database</div>
+      </div>
+    </nav>
 </header>
