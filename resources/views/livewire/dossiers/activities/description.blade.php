@@ -62,9 +62,17 @@
         </div>
         @if(empty($print))
         <div class="col-span-1 print:hidden">
-            <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
-                View details
-            </x-button.secondary>
+            @if($movie->fiche->status->id == 1 || Auth::user()->hasRole('editor'))
+                <div class="m-6">
+                    <x-anchors.secondary :url="route('dist-fiche-form', compact('dossier', 'activity', 'fiche'))" :disabled="$dossier->call->closed">
+                        Edit
+                    </x-anchors.secondary>
+                </div>
+            @else
+                <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
+                    View details
+                </x-button.secondary>
+            @endif            
         </div>
         @endif
     </div>

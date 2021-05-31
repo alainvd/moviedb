@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
-use App\Models\Dossier;
-use App\Models\Activity;
+use App\Models\Fiche;
 use App\Models\Movie;
+use App\Models\Dossier;
 use Livewire\Component;
+use App\Models\Activity;
 
 class Description extends Component
 {
@@ -13,6 +14,8 @@ class Description extends Component
     public Dossier $dossier;
 
     public Movie $movie;
+
+    public Fiche $fiche;
 
     public $print = false;
 
@@ -34,6 +37,7 @@ class Description extends Component
 
         if ($fiche) {
             $this->movie = $fiche->movie;
+            $this->fiche = $fiche;
         } else if ($movieId) {
             $found = Movie::find($movieId)->first();
 
