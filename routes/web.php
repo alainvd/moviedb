@@ -2,22 +2,27 @@
 
 use App\Models\Call;
 use App\Http\Livewire\Export;
-use App\Http\Livewire\SearchPage;
 use App\Http\Livewire\MovieTVForm;
 use Illuminate\Support\Facades\App;
 use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PICController;
 use App\Http\Livewire\MovieDevPrevForm;
+use App\Http\Controllers\TestController;
 use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SearchController;
 use App\Http\Livewire\MovieDevCurrentForm;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Livewire\Dossiers\MovieWizard;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Livewire\TableEditMovieDocuments;
+use App\Http\Controllers\ImpersonateController;
+use App\Http\Controllers\TableEditExamplesController;
 
 /*
 |--------------------------------------------------------------------------
