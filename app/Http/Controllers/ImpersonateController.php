@@ -10,7 +10,7 @@ Class ImpersonateController extends Controller {
 
     public function impersonate($id)
     {
-        if (!App::environment('production')) {
+        if(!App::environment('production') && !App::environment('acceptance')) {
             $user = User::find($id);
             Auth::user()->setImpersonating($user->id);
 
@@ -20,7 +20,7 @@ Class ImpersonateController extends Controller {
 
     public function stopImpersonate()
     {
-        if (!App::environment('production')) {
+        if(!App::environment('production') && !App::environment('acceptance')) {
             Auth::user()->stopImpersonating();
 
             return redirect()->back();
