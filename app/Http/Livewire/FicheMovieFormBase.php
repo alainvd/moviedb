@@ -66,6 +66,18 @@ class FicheMovieFormBase extends FicheFormBase
         ];
     }
 
+    protected function refererStandAloneFiche() {
+        $referer = request()->headers->get('referer');
+        if (Str::contains($referer, '/movie-dist/')
+        || Str::contains($referer, '/movie-dev-current/')
+        || Str::contains($referer, '/movie-dev-prev/')
+        || Str::contains($referer, '/movie-tv/') 
+        || Str::contains($referer, '/vg-prev/')) {
+            return true;
+        }
+        return false;
+    }
+
     public function mount(Request $request)
     {
         $this->shootingLanguages = collect([]);

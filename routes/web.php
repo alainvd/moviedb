@@ -84,10 +84,12 @@ Route::middleware('cas.auth')->group(function () {
             // Datatables
             Route::get('/dossiers', function () {
                 return view('livewire.dossier-datatables',['title' => "Search Dossier"]);
-            });
+            })
+            ->name('datatables-dossiers');
             Route::get('/movies', function () {
                 return view('livewire.movie-datatables', ['title' => "Search Movies"]);
-            });
+            })
+            ->name('datatables-movies');
 
             Route::get('/export', Export::class);
         });
