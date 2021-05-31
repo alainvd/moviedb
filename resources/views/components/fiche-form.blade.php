@@ -16,6 +16,10 @@
                     <a href="{{ route('fiche-history', [$dossier, $fiche]) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
                         View history
                     </a>
+                    @elseif($fiche)
+                    <a href="{{ route('fiche-history-no-dossier', [$fiche]) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
+                        View history
+                    </a>
                     @endif
                 @endif
                 @if($isApplicant)

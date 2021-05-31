@@ -28,19 +28,30 @@ class HistoryController extends Controller
         ]);
     }
 
-    public function fiche(Dossier $dossier, Fiche $fiche)
+    public function fiche(Dossier $dossier = null, Fiche $fiche)
     {
         $logs = self::getFormattedLogs($fiche);
 
-        $crumbs = $this->getCrumbs($dossier);
-        $viewHistory = array_pop($crumbs);
-        $activity = $dossier->fiches()->find($fiche->id)->pivot->activity_id;
-        $url = route('dossier-create-fiche', [$dossier, $activity, $fiche]);
-        $crumbs[] = [
-            'title' => 'Edit fiche',
-            'url' => $url
-        ];
-        $crumbs[] = $viewHistory;
+        if ($dossier){
+            $crumbs = $this->getCrumbs($dossier);
+            $viewHistory = array_pop($crumbs);
+            $activity = $dossier->fiches()->find($fiche->id)->pivot->activity_id;
+            $url = route('dossier-create-fiche', [$dossier, $activity, $fiche]);
+            $crumbs[] = [
+                'title' => 'Edit fiche',
+                'url' => $url
+            ];
+            $crumbs[] = $viewHistory;
+        } else {
+            $crumbs = [];
+            $viewHistory = array_pop($crumbs);
+            $url = route('movie_show', [$fiche]);
+            $crumbs[] = [
+                'title' => 'Edit fiche',
+                'url' => $url
+            ];
+            $crumbs[] = $viewHistory;
+        }
 
         return view('dossiers.history', [
             'backUrl' => $url,

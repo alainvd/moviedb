@@ -108,6 +108,8 @@ Route::middleware('cas.auth')->group(function () {
 
     Route::get('dossiers/{dossier:project_ref_id}/fiches/{fiche}/history', [HistoryController::class, 'fiche'])
         ->name('fiche-history');
+    Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
+        ->name('fiche-history-no-dossier');
 
     // Movie wizard
     Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
@@ -128,6 +130,7 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-c
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)->middleware('cas.auth')->name('tv-fiche-form');
 // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)->middleware('cas.auth')->name('vg-prev-fiche-form');
 
+Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])->middleware('cas.auth')->name('movie_show');
 Route::get('/movie-dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('movie-dist');
 Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)->middleware('cas.auth')->name('movie-dev-current');
 Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)->middleware('cas.auth')->name('movie-dev-prev');
@@ -154,7 +157,6 @@ Route::get('/browse/crew', [\App\Http\Controllers\TestController::class,'crew'])
 Route::view('/demo', 'demo')->middleware('cas.auth');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->middleware(['cas.auth','can:access dashboard'])->name('dashboard');
 Route::get('/browse/movies', [MovieController::class,'index'])->middleware('cas.auth')->name('movies');
-Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])->middleware('cas.auth')->name('movie_show');
 
 Route::resource('call', '\App\Http\Controllers\CallController')->middleware('cas.auth')->only('index');
 Route::resource('submission', '\App\Http\Controllers\SubmissionController')->middleware('cas.auth')->only('index');
