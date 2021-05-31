@@ -63,6 +63,6 @@ class SalesAgent extends Model
 
     public function getDistributionDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }

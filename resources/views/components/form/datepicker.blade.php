@@ -14,7 +14,7 @@
     x-init="new Pikaday({
         field: $refs.input,
         theme: 'moviedb-theme',
-        format: 'DD.MM.YYYY.',
+        format: 'DD.MM.YYYY',
         firstDay: 1,
     })"
     @endif
@@ -41,5 +41,5 @@
 @if (!empty($print) && !empty($value))
 <!-- Output for print -->
 <span class="font-bold">{{ $label }}</span>
-<span class="">{{ $value ? date('d.m.Y.', strtotime($value)) : '' }}</span>
+<span class="">{{ $value ? date('d.m.Y', strtotime($value)) : '' }}</span>
 @endif

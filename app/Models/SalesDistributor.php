@@ -64,6 +64,6 @@ class SalesDistributor extends Model
 
     public function getReleaseDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }

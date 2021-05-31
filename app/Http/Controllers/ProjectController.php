@@ -43,6 +43,12 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        /** @var User $user */
+        if ($user->hasRole('editor')) {
+            return redirect()->to(route('datatables-dossiers'));
+        }
+
         // Display all projects
         $layout = $this->getLayout();
         // $dossiers = Dossier::forUser()->orderBy('updated_at', 'desc')->get();
@@ -288,7 +294,7 @@ class ProjectController extends Controller
     protected function getLayout()
     {
         $user = Auth::user();
-
+        /** @var User $user */
         if ($user->hasRole('applicant')) {
             return 'ecl-layout';
         }

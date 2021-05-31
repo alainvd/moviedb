@@ -99,7 +99,7 @@
         pikaday_sales_distributors_release_date = new Pikaday({
             field: document.getElementById('sales_distributors_release_date'),
             theme: 'moviedb-theme',
-            format: 'DD.MM.YYYY.',
+            format: 'DD.MM.YYYY',
             firstDay: 1,
         })
 

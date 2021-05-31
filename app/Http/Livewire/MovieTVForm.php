@@ -211,13 +211,17 @@ class MovieTVForm extends FicheMovieFormBase
         $this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
 
-        // back
+        // go back after saving fiche
         // if coming from wizard, go to dossier
         if (Str::endsWith($this->previous, 'movie-wizard')) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        } else {
-            return redirect()->to($this->previous);
         }
+        // if editor is viewing stand-alone fiche, go back to movie listing
+        if ($this->isEditor && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('datatables-movies'));
+        }
+        // default redirect to stored previous page
+        return redirect()->to($this->previous);
     }
 
     public function render()
