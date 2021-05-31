@@ -269,51 +269,51 @@ class Movie extends Model
 
     public function getPhotographyStartAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getPhotographyEndAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getDeliveryDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getBroadcastDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getRightsContractStartDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getRightsContractEndDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getRightsContractSignatureDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getRightsAdaptContractStartDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getRightsAdaptContractEndDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 
     public function getRightsAdaptContractSignatureDateAttribute($value)
     {
-        return $value ? date('d.m.Y.', strtotime($value)) : null;
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }
