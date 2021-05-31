@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Call;
-use App\Models\Dossier;
 use App\Models\Movie;
 use App\Models\Status;
-use Exception;
+use App\Models\Dossier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -73,12 +74,11 @@ class ProjectController extends Controller
             // 'topic' => 'required',
         ]);
 
-        // TODO: Validation disabled during testing
-        /*
-        if ($validator->fails()) {
-            abort(500, 'SEP link seems to be broken');
+        if (App::environment('production')) {
+            if ($validator->fails()) {
+                abort(500, 'SEP link seems to be broken');
+            }
         }
-        */
 
         $params = request(['call_id', 'draft_proposal_id', 'PIC', 'topic']);
 
@@ -88,14 +88,15 @@ class ProjectController extends Controller
             abort(500, 'The call in your request could not be found');
         }
 
-        // TODO: Validation disabled during testing
-        /*
-        if ($call->closed) {
-            abort(500, 'We do not accept any more applications for this call');
+        if (App::environment('production')) {
+            if ($call->closed) {
+                abort(500, 'We do not accept any more applications for this call');
+            }
+            
+            $company = $this->getCompanyByPic($params['PIC']);
+        } else {
+            $company = 'Test company';
         }
-
-        $company = $this->getCompanyByPic($params['PIC']);
-        */
 
         $dossier = Dossier::firstOrNew([
             'project_ref_id' => $params['draft_proposal_id']
@@ -107,8 +108,7 @@ class ProjectController extends Controller
 
         $dossier->fill([
             'call_id' => $call->id,
-            // 'company' => $company, // TODO: Validation disabled during testing
-            'company' => 'Test Company',
+            'company' => $company,
             'pic' => $params['PIC'],
             'action_id' => $call->action_id,
             'status_id' => 1,
