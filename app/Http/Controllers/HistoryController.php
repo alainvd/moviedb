@@ -110,7 +110,8 @@ class HistoryController extends Controller
     protected function getLayout()
     {
         $user = Auth::user();
-
+        
+        /** @var User $user */
         if ($user->hasRole('applicant')) {
             return 'ecl-layout';
         }

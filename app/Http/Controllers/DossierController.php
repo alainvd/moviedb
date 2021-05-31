@@ -17,15 +17,11 @@ class DossierController extends Controller
      */
     public function index(Request $request)
     {
-
         $dossiers = Dossier::all();
-
         return view('dossier.index', compact('dossiers'));
-
     }
 
     public function prepareDossier(Dossier $dossier) {
-
         // TODO: complete this
         $crumbs = [];
         $layout = 'print-layout';
@@ -39,19 +35,14 @@ class DossierController extends Controller
             'DEVVG' => 'Videogame development'
         ];
         $print = true;
-
         return compact('crumbs', 'dossier', 'layout', 'pageTitles', 'print');
-
     }
 
     public function printDossier(Dossier $dossier) {
-
         return view('dossiers.create', $this->prepareDossier($dossier));
-
     }
 
     public function downloadFullDossier(Dossier $dossier) {
-
         ini_set("pcre.backtrack_limit", "5000000");
 
         $output = $this->printDossier($dossier);
@@ -103,7 +94,6 @@ class DossierController extends Controller
         }
 
         return $pdf->download('dossier-'.$dossier->project_ref_id.'.pdf');
-
     }
 
 }
