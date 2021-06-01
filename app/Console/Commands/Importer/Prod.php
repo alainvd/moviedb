@@ -60,9 +60,10 @@ class Prod extends Command
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
         $this->info("roles and permissions seed ok");
 
-        // TODO: Don't run user seeder in production
-        $this->call(\Database\Seeders\UserSeeder::class);
-        $this->info("user seed ok");
+        if(!App::environment('production') && !App::environment('acceptance')) {
+            $this->call(\Database\Seeders\UserSeeder::class);
+            $this->info("user seed ok");
+        }
 
         $this->call('import:movies-dist'); // MoviesDist.php
         $this->info("movies-dist import ok");
