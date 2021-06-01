@@ -34,7 +34,7 @@ class SalesAgentsImport implements ToCollection, WithHeadingRow, WithChunkReadin
                     // "role" => $row["film_role_name"], // should be one of: PLATFORM, DISTRIBUTOR, BROADCASTER
                     "role" => null,
                     "name" => $row["sales_agent_name"],
-                    "country" => $row["sales_agent_nationality_1_code"] ?? null,
+                    "country" => MoviesImportDist::getCountryCode($row["sales_agent_nationality_1_code"]),
                 ]);
                 $salesAgent->save();
             }
