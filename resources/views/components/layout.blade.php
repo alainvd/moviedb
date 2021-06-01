@@ -20,7 +20,7 @@
 
         @livewire('navbar')
 
-        <div class="flex overflow-hidden bg-gray-100">
+        <div class="flex overflow-hidden bg-gray-100 pb-16">
             <div class="flex flex-col flex-1 w-0 overflow-hidden">
                 <!-- The page content -->
                 <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none" tabindex="0">

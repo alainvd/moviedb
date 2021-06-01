@@ -13,7 +13,7 @@ use Livewire\Component;
 class Distributors extends Component
 {
     // public $coordinatorCount = 0;
-    // public $participantCount = 0;
+    public $participantCount = 0;
 
     public Dossier $dossier;
 
@@ -130,6 +130,7 @@ class Distributors extends Component
 
         if ($this->movie) {
             $distributors = $this->movie->distributors();
+            $this->participantCount = $distributors->count();
         }
 
         return view('livewire.dossiers.activities.distributors', [
