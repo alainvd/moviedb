@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Importer;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 
 class Prod extends Command
 {

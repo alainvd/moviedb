@@ -125,7 +125,7 @@ class StaffImportDist implements ToCollection, WithHeadingRow, WithChunkReading
             "gender" => 'NA',
             "nationality1" => $this->getCountryCode($row["film_staff_nationality_1_code"]),
             "nationality2" => NULL,
-            "country_of_residence" => $this->getCountryCode($row["film_staff_residence_country_code"]),,
+            "country_of_residence" => $row["film_staff_residence_country_code"] ? $this->getCountryCode($row["film_staff_residence_country_code"]): null,
         ]);
         $person->save();
         return $person;
