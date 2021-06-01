@@ -89,6 +89,12 @@ class StaffImportDist implements ToCollection, WithHeadingRow, WithChunkReading
         }
     }
 
+    protected function getCountryCode($code) {
+        if ($code == '-') return NULL;
+        if ($code == '') return NULL;
+        return $code;
+    }
+
     /*/**
      * @param Collection $collection
      * @return Collection
@@ -117,9 +123,9 @@ class StaffImportDist implements ToCollection, WithHeadingRow, WithChunkReading
             "firstname" => $firstName,
             "lastname" => $lastName,
             "gender" => 'NA',
-            "nationality1" => $row["film_staff_nationality_1_code"] ?? '',
-            "nationality2" => '',
-            "country_of_residence" => $row["film_staff_residence_country_code"] ?? '',
+            "nationality1" => $this->getCountryCode($row["film_staff_nationality_1_code"]),
+            "nationality2" => NULL,
+            "country_of_residence" => $this->getCountryCode($row["film_staff_residence_country_code"]),,
         ]);
         $person->save();
         return $person;
