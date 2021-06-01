@@ -81,7 +81,11 @@ class User extends Authenticatable
                 '90266814',
             ];
             if (!$user->roles->count()) {
-                if (Str::contains($attributes['departmentNumber'], 'EACEA.B.2') || in_array($attributes['employeeNumber'], $devTeam))
+                if (
+                    (isset($attributes['departmentNumber']) && Str::contains($attributes['departmentNumber'], 'EACEA.B.2'))
+                    ||
+                    (isset($attributes['employeeNumber']) && in_array($attributes['employeeNumber'], $devTeam))
+                )
                 {
                     $user->assignRole('editor');
                 } else {
