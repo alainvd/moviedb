@@ -67,13 +67,29 @@ class User extends Authenticatable
                 $attributes
             );
 
-            // if departmentNumber 'CNECT.R2.0001' => editor
+            // if departmentNumber 'CNECT.R2.0001' => editor (development team?)
+            // ===
+            // development team:
+            // "departmentNumber" => "CNECT.R.3"
+            //  - "employeeNumber" => "XXXXXXXX" /A
+            //  - "employeeNumber" => "XXXXXXXX" /B
+            //  - "employeeNumber" => "XXXXXXXX" /F
+            //  - "employeeNumber" => "90266814" /M
+            // ===
+            // if departmentNumber: EACEA.B.2 => editor
+            $devTeam = [
+                '90266814',
+            ];
             if (!$user->roles->count()) {
-                $domain = isset($attributes['domain']) ? $attributes['domain'] : 'external';
-                if ($domain === 'external') {
-                    $user->assignRole('applicant');
-                } else {
+                if (
+                    (isset($attributes['departmentNumber']) && Str::contains($attributes['departmentNumber'], 'EACEA.B.2'))
+                    ||
+                    (isset($attributes['employeeNumber']) && in_array($attributes['employeeNumber'], $devTeam))
+                )
+                {
                     $user->assignRole('editor');
+                } else {
+                    $user->assignRole('applicant');
                 }
             }
 
