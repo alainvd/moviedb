@@ -67,18 +67,10 @@ class User extends Authenticatable
                 $attributes
             );
 
-            // if departmentNumber 'CNECT.R2.0001' => editor (development team?)
-            // ===
-            // development team:
-            // "departmentNumber" => "CNECT.R.3"
-            //  - "employeeNumber" => "XXXXXXXX" /A
-            //  - "employeeNumber" => "XXXXXXXX" /B
-            //  - "employeeNumber" => "XXXXXXXX" /F
-            //  - "employeeNumber" => "90266814" /M
-            // ===
             // if departmentNumber: EACEA.B.2 => editor
             $devTeam = [
                 '90266814',
+                '10036578',
             ];
             if (!$user->roles->count()) {
                 if (

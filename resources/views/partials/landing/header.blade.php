@@ -11,7 +11,7 @@
 
     <nav data-ecl-auto-init="Menu" class="ecl-menu--group1 ecl-menu" aria-expanded="false" data-ecl-menu="true">
       <div class="ecl-container ecl-menu__container">
-        <div class="ecl-menu__site-name lg:pb-8">Creative Europe MEDIA database</div>
+        <div class="ecl-menu__site-name lg:pb-8">Creative Europe MEDIA Database</div>
       </div>
     </nav>
 </header>

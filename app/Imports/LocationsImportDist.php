@@ -77,8 +77,7 @@ class LocationsImportDist implements ToCollection, WithHeadingRow, WithChunkRead
                     "type" => $this->locationsNameMap($row['film_role_name']),
                     "name" => $row['location_name'],
                     "country" => $country ? $country->code : null,
-                    // "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
-                    "points" => null,
+                    "points" => $row['location_score'] ? $row['location_score'] : null,
                 ]);
                 $location->save();
             }

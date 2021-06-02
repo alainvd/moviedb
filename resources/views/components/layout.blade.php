@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Creative Europe MEDIA database</title>
+    <title>Creative Europe MEDIA Database</title>
     <meta content="width=device-width,initial-scale=1" name="viewport" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -20,7 +20,7 @@
 
         @livewire('navbar')
 
-        <div class="flex overflow-hidden bg-gray-100 pb-16">
+        <div class="flex pb-16 overflow-hidden bg-gray-100">
             <div class="flex flex-col flex-1 w-0 overflow-hidden">
                 <!-- The page content -->
                 <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none" tabindex="0">

@@ -32,8 +32,6 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
     static function getCountryCode($code) {
         if ($code == '-') return NULL;
         if ($code == '') return NULL;
-        if ($code == 'EL') return 'GR';
-        if ($code == 'GB') return 'UK';
         // we should not import codes we don't have in our countries table
         if ($code == 'PO') return NULL;
         if ($code == 'UR') return NULL;
