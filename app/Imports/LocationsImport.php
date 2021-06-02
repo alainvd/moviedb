@@ -75,14 +75,14 @@ class LocationsImport implements ToCollection, WithHeadingRow, WithChunkReading
             $movie = $this->getMovie($row);
 
             //Get country from location name
-            $country = Country::firstWhere("name", "=", $row['film_staff_name']);
+            $country = Country::firstWhere("name", "=", $row['location_country']);
 
             //Create the crew entry
             if ($movie) {
                 $location = new Location([
                     "movie_id" => $movie->id,
                     "type" => $this->locationsNameMap($row['film_role_name']),
-                    "name" => $row['film_staff_name'],
+                    "name" => $row['location_name'],
                     "country" => $country ? $country->code : null,
                     // "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
                     "points" => null,

@@ -57,10 +57,10 @@ class All extends Command
 
         $this->call('import:movies'); // Movies.php
         echo("movies import ok \r\n");
-        $this->call('import:genres'); // Genres.php
-        echo("genre import ok \r\n");
-        $this->call('import:audiences'); // Audiences.php // Can use seeder as well
-        echo("audiences import ok \r\n");
+        //$this->call('import:genres'); // Genres.php
+        //echo("genre import ok \r\n");
+        //$this->call('import:audiences'); // Audiences.php // Can use seeder as well
+        //echo("audiences import ok \r\n");
 
         // $this->call('import:roles'); // Roles.php // Use seeder instead
         $this->call(\Database\Seeders\TitleSeeder::class); // Seeder has all roles
@@ -83,3 +83,4 @@ class All extends Command
         
     }
 }
+

@@ -122,7 +122,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithChunkReading
             "lastname" => $lastName,
             "gender" => 'NA',
             "nationality1" => $row["film_staff_nationality_1_code"] ?? '',
-            "nationality2" => '',
+            "nationality2" => $row["film_staff_nationality_2_code"] ?? '',
             "country_of_residence" => $row["film_staff_residence_country_code"] ?? '',
         ]);
         $person->save();
