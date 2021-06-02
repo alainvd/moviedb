@@ -15,6 +15,7 @@ class CountrySeeder extends Seeder
     public function run()
     {
         DB::table('countries')->insert([
+            ["group" => "00zero", "name" => "N/A", "code" => "00", "continent" => "", "position" => 0],
             ["group" => "other", "name" => "Andorra", "code" => "AD", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Albania", "code" => "AL", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Austria", "code" => "AT", "continent" => "EU", "position" => 0],
@@ -26,7 +27,7 @@ class CountrySeeder extends Seeder
             ["group" => "eu", "name" => "Cyprus", "code" => "CY", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Czech Republic", "code" => "CZ", "continent" => "EU", "position" => 0],
             ["group" => "select", "name" => "United Kingdom", "code" => "UK", "continent" => "EU", "position" => 0],
-            ["group" => "eu", "name" => "Greece", "code" => "EL", "continent" => "EU", "position" => 0],
+            ["group" => "eu", "name" => "Greece", "code" => "GR", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Croatia", "code" => "HR", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Hungary", "code" => "HU", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Ireland", "code" => "IE", "continent" => "EU", "position" => 0],
@@ -37,7 +38,7 @@ class CountrySeeder extends Seeder
             ["group" => "eu", "name" => "Latvia", "code" => "LV", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Moldova", "code" => "MD", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Montenegro", "code" => "ME", "continent" => "EU", "position" => 0],
-            ["group" => "other", "name" => "Macedonia", "code" => "MK", "continent" => "EU", "position" => 0],
+            ["group" => "other", "name" => "North Macedonia", "code" => "MK", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Malta", "code" => "MT", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Netherlands", "code" => "NL", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Norway", "code" => "NO", "continent" => "EU", "position" => 0],

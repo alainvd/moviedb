@@ -29,6 +29,19 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
         }
     }
 
+    static function getCountryCode($code) {
+        if ($code == '-') return NULL;
+        if ($code == '') return NULL;
+        if ($code == 'EL') return 'GR';
+        if ($code == 'GB') return 'UK';
+        // we should not import codes we don't have in our countries table
+        if ($code == 'PO') return NULL;
+        if ($code == 'UR') return NULL;
+        if ($code == 'VT') return NULL;
+        if ($code == 'EU') return NULL;
+        return $code;
+    }
+
     /**
      * @param Collection $collection
      */
@@ -58,8 +71,8 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
                 'film_length' => $film_length,
                 // 'film_format' => $row['film_format'], // How to import 873 unique values?
                 'film_type' => "ONEOFF",
-                'film_country_of_origin_2014_2020' => $row['film_country_of_origin'],
-                'film_country_of_origin' => $row['film_country_of_origin'],
+                'film_country_of_origin_2014_2020' => $this->getCountryCode($row['film_country_of_origin']),
+                'film_country_of_origin' => $this->getCountryCode($row['film_country_of_origin']),
                 'photography_start' => $row['start_of_shooting_date'] ? $this->formatDate($row['start_of_shooting_date'], $row['id_code_film']) : null,
                 'photography_end' => $row['end_of_shooting_date'] ? $this->formatDate($row['end_of_shooting_date'], $row['id_code_film']) : null,
                 'total_budget_currency_code' => $row['production_costs_currency'],

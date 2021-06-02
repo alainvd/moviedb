@@ -34,7 +34,7 @@ class ProducersImport implements ToCollection, WithHeadingRow, WithChunkReading
                     "role" => $row["film_role_name"],
                     "name" => $row["prod_name"],
                     "city" => $row["prod_city"],
-                    "country" => $row["prod_country_code"],
+                    "country" => MoviesImportDist::getCountryCode($row["prod_country_code"]),
                     "language" => "",
                     "share" => $row["prod_share"],
                 ]);
