@@ -67,15 +67,15 @@ class LocationsImportDist implements ToCollection, WithHeadingRow, WithChunkRead
             // Get Movie
             $movie = $this->getMovie($row);
 
-            // Get country from location name
-            $country = Country::firstWhere("name", "=", $row['film_staff_name']);
+            //Get country from location name
+            $country = Country::firstWhere("name", "=", $row['location_country']);
 
             // Create the location
             if ($movie) {
                 $location = new Location([
                     "movie_id" => $movie->id,
                     "type" => $this->locationsNameMap($row['film_role_name']),
-                    "name" => $row['film_staff_name'],
+                    "name" => $row['location_name'],
                     "country" => $country ? $country->code : null,
                     // "points" => $row['actor_points_points'] ? $row['actor_points_points'] : null,
                     "points" => null,
