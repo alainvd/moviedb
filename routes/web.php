@@ -78,13 +78,15 @@ Route::get('/test/cas/logout', [
     }
 ])->name('cas-logout');
 
-Route::get('homepage', [
-    'middleware' => 'cas.auth',
-    function () {
-        $calls = Call::where('status', 'open')->get();
-        return view('homepage', compact('calls'));
-    }
-])->name('homepage');
+if (!App::environment('production')) {
+    Route::get('homepage', [
+        'middleware' => 'cas.auth',
+        function () {
+            $calls = Call::where('status', 'open')->get();
+            return view('homepage', compact('calls'));
+        }
+    ])->name('homepage');
+}
 
 Route::middleware('cas.auth')->group(function () {
     // Editor dashboard
