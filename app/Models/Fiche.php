@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Fiche extends Model
@@ -25,6 +26,7 @@ class Fiche extends Model
     ];
 
     protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
     protected static $logAttributes = [
         'status_id',
         'comments',
@@ -88,5 +90,37 @@ class Fiche extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function tapActivity(ActivityLog $activity, string $eventName)
+    {
+        if ($eventName === 'updated') {
+            // Get associated movie
+            $movie = $activity->subject->movie;
+
+            if (!$movie) {
+                return;
+            }
+
+            // Get last movie log activity
+            $lastMovieActivity = ActivityLog::forSubject($activity->subject->movie)->orderBy('created_at', 'desc')->first();
+
+            // If created within one second to the new one, it means it's from the same event
+            if (
+                $lastMovieActivity
+                && $lastMovieActivity->created_at->diffInSeconds($activity->created_at) <= 1
+            ) {
+                $activity->properties = collect([
+                    'old' => array_merge(
+                        $activity->properties['old'],
+                        $lastMovieActivity->properties['old']
+                    ),
+                    'attributes' => array_merge(
+                        $activity->properties['attributes'],
+                        $lastMovieActivity->properties['attributes']
+                    )
+                ]);
+            }
+        }
     }
 }

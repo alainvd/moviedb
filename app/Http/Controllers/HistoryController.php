@@ -78,13 +78,16 @@ class HistoryController extends Controller
         $logs = ActivityLog::forSubject($model)->get();
 
         $oldStatus = $logs[0]->properties['attributes']['status_id'];
-        $oldStatus = Status::find($oldStatus)->name;
+        $oldStatus = $oldStatus ? Status::find($oldStatus)->name : 'Undefined';
 
         return $logs->map(function ($log) use ($model, &$oldStatus) {
                 // Get new status if exists on log, otherwise use old status
                 $newStatus = '';
-                if ($log->properties->has('attributes')
-                    && array_key_exists('status_id', $log->properties['attributes'])) {
+                if (
+                    $log->properties->has('attributes')
+                    && array_key_exists('status_id', $log->properties['attributes'])
+                    && $log->properties['attributes']['status_id']
+                ) {
                     $newStatus = $oldStatus = Status::find($log->properties['attributes']['status_id'])->name;
                 }
 
@@ -110,7 +113,7 @@ class HistoryController extends Controller
     protected function getLayout()
     {
         $user = Auth::user();
-        
+
         /** @var User $user */
         if ($user->hasRole('applicant')) {
             return 'ecl-layout';

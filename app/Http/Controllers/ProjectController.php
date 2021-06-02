@@ -92,7 +92,7 @@ class ProjectController extends Controller
             if ($call->closed) {
                 abort(500, 'We do not accept any more applications for this call');
             }
-            
+
             $company = $this->getCompanyByPic($params['PIC']);
         } else {
             $company = 'Test company';
@@ -265,10 +265,9 @@ class ProjectController extends Controller
         //     $rules['coordinator_count'] = "integer|min:{$minCoordinators}";
         // }
 
-        // if ($request->has('participant_count')) {
-        //     $minParticipants = $request->input('min_participants');
-        //     $rules['participant_count'] = "integer|min:{$minParticipants}";
-        // }
+        if ($request->has('participant_count')) {
+            $rules['participant_count'] = $this->getMinMaxRule('participants');
+        }
 
         return $rules;
     }

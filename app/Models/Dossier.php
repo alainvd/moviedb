@@ -40,6 +40,7 @@ class Dossier extends Model
         'company',
     ];
     protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
 
     /**
      * The attributes that should be cast to native types.

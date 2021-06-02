@@ -73,8 +73,9 @@ class ActivitySeeder extends Seeder
             ],
             'FILMOVE' => [
                 'movie_count' => 1,
-                'min_coordinators' => 1,
-                'min_participants' => 7,
+                // 'min_coordinators' => 1,
+                'min_participants' => 8,
+                'max_participants' => 8,
                 'distinct_distribution_countries' => true,
             ],
             'DISTSAG' => [

@@ -34,6 +34,7 @@ class Movie extends Model
 
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
     protected static $recordEvents = ['updated'];
 
     /**
@@ -251,20 +252,6 @@ class Movie extends Model
         return [
             'total_budget_currency_code' => 'EUR',
         ];
-    }
-
-    public function tapActivity(ActivityLog $activity, string $eventName)
-    {
-        if ($eventName === 'updated') {
-            activity()
-                ->on($activity->subject->fiche)
-                ->by($activity->causer)
-                ->withProperties([
-                    'old' => $activity->properties['old'],
-                    'attributes' => $activity->properties['attributes']
-                ])
-                ->log('updated');
-        }
     }
 
     public function getPhotographyStartAttribute($value)

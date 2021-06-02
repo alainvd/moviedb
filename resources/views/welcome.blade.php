@@ -55,7 +55,7 @@
                 <h5 class="mt-16 text-lg font-light tracking-wide">
                     Do you want to have more information on funding opportunities of Creative Europe or prepare an application for a funding support?
                 </h5>
-                <a class="block mt-2 text-lg font-bold text-indigo-700" href="#">
+                <a class="block mt-2 text-lg font-bold text-indigo-700" href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home" target="blank">
                     <svg xmlns="http://www.w3.org/2000/svg" class="inline w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
