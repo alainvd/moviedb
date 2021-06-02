@@ -27,7 +27,9 @@ class AudiencesImport implements ToCollection, WithHeadingRow
                     ["type" => "Movie"]
                 );
 
-                $movie->update(['audience_id' => $audience->id]);
+                if($movie) {
+                    $movie->update(['audience_id' => $audience->id]);
+                }
 
             }
 

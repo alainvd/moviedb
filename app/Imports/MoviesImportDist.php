@@ -49,6 +49,22 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
     {
         foreach ($collection as $row) {
             
+            $status = $row['european_nationality_flag'];
+            if ($status=="OK" ||  $status=="NOT OK") {
+                    $status = 6;
+            } 
+
+            elseif($status=="Under processing"){
+                $status = 3;
+            } 
+            elseif($status=="Missing information"){
+                $status = 7;
+            } 
+            else {
+                    $status = 2;
+                }
+            
+
             $film_length = $row['film_length'];
             if (!is_numeric($film_length)) {
                 $parts = explode(' ', $film_length);
@@ -82,8 +98,8 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
             $movie->save();
             $fiche = new Fiche([
                 'movie_id' => $movie->id,
-                'status_id' => 3,
-                'created_by' => 1,
+                'status_id' => $status,
+                'created_by' => 3,
                 'type' => "dist",
             ]);
             $fiche->save();
