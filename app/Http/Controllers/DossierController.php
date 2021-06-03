@@ -39,10 +39,18 @@ class DossierController extends Controller
     }
 
     public function printDossier(Dossier $dossier) {
+        if (request()->user()->cannot('view', $dossier)) {
+            abort(404);
+        }
+
         return view('dossiers.create', $this->prepareDossier($dossier));
     }
 
     public function downloadFullDossier(Dossier $dossier) {
+        if (request()->user()->cannot('view', $dossier)) {
+            abort(404);
+        }
+
         ini_set("pcre.backtrack_limit", "5000000");
 
         $output = $this->printDossier($dossier);

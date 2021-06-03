@@ -136,7 +136,7 @@ class MovieDistForm extends FicheMovieFormBase
     {
         parent::mount($request);
         if ($this->fiche->exists && $this->fiche->type!=='dist') {
-            abort(403);
+            abort(404);
         }
         // init points value
         foreach($this->crews as $crew) {

@@ -120,6 +120,10 @@ class TableEditMovieDocuments extends TableEditBase
 
     public function download(Request $request)
     {
+        if ($request->user()->cannot('view', $this->movie->fiche)) {
+            abort(404);
+        }
+
         $file = Document::where('file', $request->input('file'))->first();
         return response()->download(storage_path('files/' . $file->file), $file->filename);
     }
