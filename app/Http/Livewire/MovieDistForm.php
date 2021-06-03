@@ -188,11 +188,17 @@ class MovieDistForm extends FicheMovieFormBase
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);    
 
-        // Validate subform
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredProducers($this->producers, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);        
+        // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
 
-        // Validate subform
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredSalesAgents($this->sales_agents, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('salesAgentErrorMessages', $message);       
+        // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];});
         foreach ($messages as $message) $specialErrors->add('salesAgentErrorMessages', $message);
 

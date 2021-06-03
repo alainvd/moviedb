@@ -74,6 +74,13 @@ class FormHelpers
         return ['One producer is required.'];
     }
 
+    // Check if sales agent is present
+    public static function requiredSalesAgents($sales_agents) {
+        if(!empty($sales_agents))
+            return [];
+        return ['One sales agent is required.'];
+    }
+
     // Check if financing plan document is present
     public static function validateDocumentsFinancingPlan($documents) {
         foreach ($documents as $document) {
