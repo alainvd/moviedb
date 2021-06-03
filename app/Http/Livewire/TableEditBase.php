@@ -174,6 +174,10 @@ class TableEditBase extends Component
         } else {
             $this->items[] = $editing;
         }
+        // sort crew in prefered order
+        if(get_class($this) == 'App\Http\Livewire\TableEditMovieCrews') {
+            array_multisort(array_column($this->items, 'title_id'), SORT_ASC, $this->items);
+        }
         $this->sendItems();
     }
 
