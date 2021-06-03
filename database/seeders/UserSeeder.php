@@ -39,6 +39,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make(Str::random(20)),
         ])->assignRole('super admin');
 
+        /*
         for ($i = 0; $i < 20; $i++) {
             User::factory()->create()->assignRole('applicant');
         }
@@ -46,5 +47,6 @@ class UserSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             User::factory()->create()->assignRole('editor');
         }
+        */
     }
 }
