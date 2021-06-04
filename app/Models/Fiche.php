@@ -26,7 +26,7 @@ class Fiche extends Model
     ];
 
     protected static $logOnlyDirty = true;
-    protected static $submitEmptyLogs = false;
+    // protected static $submitEmptyLogs = false;
     protected static $logAttributes = [
         'status_id',
         'comments',
