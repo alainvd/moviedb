@@ -77,6 +77,7 @@ class TableEditMovieCrews extends TableEditBase
     private function loadItems()
     {
         $this->items = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+        array_multisort(array_column($this->items, 'title_id'), SORT_ASC, $this->items);
         if ($this->movie) {
             $this->movieCrewsAddDefault($this->movie->genre_id);
         }
