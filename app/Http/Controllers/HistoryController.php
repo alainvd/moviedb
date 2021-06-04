@@ -77,8 +77,10 @@ class HistoryController extends Controller
     {
         $logs = ActivityLog::forSubject($model)->get();
 
-        $oldStatus = $logs[0]->properties['attributes']['status_id'];
-        $oldStatus = $oldStatus ? Status::find($oldStatus)->name : 'Undefined';
+        if (isset($logs[0]->properties['attributes'])) {
+            $oldStatus = $logs[0]->properties['attributes']['status_id'];
+        }
+        $oldStatus = isset($oldStatus) ? Status::find($oldStatus)->name : 'Undefined';
 
         return $logs->map(function ($log) use ($model, &$oldStatus) {
                 // Get new status if exists on log, otherwise use old status

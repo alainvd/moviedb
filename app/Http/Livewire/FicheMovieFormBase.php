@@ -80,6 +80,10 @@ class FicheMovieFormBase extends FicheFormBase
 
     public function mount(Request $request)
     {
+        if ($this->fiche && request()->user()->cannot('view', $this->fiche)) {
+            abort(404);
+        }
+        
         $this->shootingLanguages = collect([]);
         if (!$this->fiche) {
             $this->isNew = true;

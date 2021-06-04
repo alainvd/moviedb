@@ -2,10 +2,11 @@
 
 namespace App\Imports;
 
-use App\Models\Movie;
 use App\Models\Fiche;
-use Illuminate\Support\Facades\Log;
+use App\Models\Movie;
+use App\Models\Country;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -32,11 +33,12 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
     static function getCountryCode($code) {
         if ($code == '-') return NULL;
         if ($code == '') return NULL;
-        // we should not import codes we don't have in our countries table
-        if ($code == 'PO') return NULL;
-        if ($code == 'UR') return NULL;
-        if ($code == 'VT') return NULL;
-        if ($code == 'EU') return NULL;
+        if ($code == 'GR') return 'EL';
+        if ($code == 'GB') return 'UK';
+        if (Country::where('code', $code)->get()->isEmpty()) {
+            echo "Country code not in reference table: ".$code."\n";
+            return null;
+        }
         return $code;
     }
 
@@ -51,17 +53,15 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
             if ($status=="OK" ||  $status=="NOT OK") {
                     $status = 6;
             } 
-
-            elseif($status=="Under processing"){
+            elseif ($status=="Under processing"){
                 $status = 3;
             } 
-            elseif($status=="Missing information"){
+            elseif ($status=="Missing information"){
                 $status = 7;
             } 
             else {
-                    $status = 2;
-                }
-            
+                $status = 2;
+            }
 
             $film_length = $row['film_length'];
             if (!is_numeric($film_length)) {
@@ -83,7 +83,7 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
                 'original_title' => $row['original_title'],
                 'year_of_copyright' => $row['year_of_copyright'],
                 'film_length' => $film_length,
-                // 'film_format' => $row['film_format'], // How to import 873 unique values?
+                'film_format' => null,
                 'film_type' => "ONEOFF",
                 'film_country_of_origin_2014_2020' => $this->getCountryCode($row['film_country_of_origin']),
                 'film_country_of_origin' => $this->getCountryCode($row['film_country_of_origin']),

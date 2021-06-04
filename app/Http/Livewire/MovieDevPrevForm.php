@@ -96,7 +96,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
     {
         parent::mount($request);
         if ($this->fiche->exists && $this->fiche->type!=='dev-prev') {
-            abort(403);
+            abort(404);
         }
     }
 

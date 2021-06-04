@@ -37,6 +37,10 @@ class MovieWizard extends Component
 
     public function mount(Dossier $dossier, Activity $activity)
     {
+        if (request()->user()->cannot('update', $dossier)) {
+            return abort(404);
+        }
+
         $this->dossier = $dossier;
         $this->movie = new Movie();
         $this->user = Auth::user();
