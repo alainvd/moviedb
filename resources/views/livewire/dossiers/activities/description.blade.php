@@ -3,13 +3,14 @@
         Film selection
     </h3>
 
-    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
         <input type="hidden" name="movie_id" wire:model="movie.id">
         @if(empty($print))
         <div class="col-span-1 print:hidden">
             <x-anchors.primary
                 class="mt-6"
-                :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])">
+                :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])"
+                :disabled="$dossier->call->closed">
                 Search and Select
             </x-anchors.primary>
         </div>
@@ -36,8 +37,7 @@
                 :id="'director'"
                 :label="'Film Director'"
                 :disabled="true"
-                wire:model="movie.director"
-                value="{{ $movie->original_title }}">
+                value="{{ $movie->director }}">
             </x-form.input>
         </div>
         <div class="col-span-1">
@@ -62,10 +62,124 @@
         </div>
         @if(empty($print))
         <div class="col-span-1 print:hidden">
-            <x-button.secondary class="mt-6">
-                View details
-            </x-button.secondary>
+            @if(Auth::user()->hasRole('applicant'))
+                @if($movie && $movie->fiche && $movie->fiche->status->id == 1)
+                    <div class="m-6">
+                        <x-anchors.secondary :url="route('dist-fiche-form', compact('dossier', 'activity', 'fiche'))" :disabled="$dossier->call->closed">
+                            Edit
+                        </x-anchors.secondary>
+                    </div>
+                @elseif($movie && $movie->fiche)
+                    <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
+                        View details
+                    </x-button.secondary>
+                @endif
+            @endif
+
+            @if(Auth::user()->hasRole('editor'))
+            <div class="m-6">
+                <x-anchors.secondary :url="route('dist-fiche-form', compact('dossier', 'activity', 'fiche'))" :disabled="$dossier->call->closed">
+                    Edit
+                </x-anchors.secondary>
+            </div>
+            @endif
         </div>
         @endif
     </div>
+
+    <x-modal.dialog wire:model="showDetailsModal">
+        <x-slot name="title">
+            Movie details
+        </x-slot>
+
+        <x-slot name="content">
+            @if ($movie->id)
+                <div class="grid grid-cols-3 gap-4 px-16 my-8">
+                    <div class="col-span-2">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Original title
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->original_title }}
+                        </div>
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Status
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->fiche->status->name }}
+                        </div>
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Country of origin
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->film_country_of_origin }}
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Copyright
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->year_of_copyright }}
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Film genre
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->genre ? $movie->genre->name : '' }}
+                        </div>
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Audience
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->audience ? $movie->audience->name : '' }}
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Film type
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->film_type }}
+                        </div>
+                    </div>
+
+                    <div class="col-span-3">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Synopsis
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->synopsis }}
+                        </div>
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-light leading-5 text-gray-700" for="original-title">
+                            Film director
+                        </label>
+                        <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
+                            {{ $movie->director }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <x-slot name="footer">
+                <x-button.primary wire:click="$set('showDetailsModal', false)">
+                    OK
+                </x-button.primary>
+            </x-slot>
+        </x-slot>
+    </x-modal.dialog>
 </div>

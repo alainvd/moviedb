@@ -100,8 +100,8 @@ class DossierTest extends TestCase
             Action::where('name',
                 $this->faker->randomElement([
                     'DEVSLATE',
-                    'DEVSLATEMINI',
-                    'CODEVELOPMENT'
+                    'DEVMINISLATE',
+                    'CODEV'
             ]))->first()
         )->create();
 
@@ -120,7 +120,7 @@ class DossierTest extends TestCase
 
         $dossier = Dossier::factory()->for(
             Action::where('name', $this->faker->randomElement([
-                'DISTSEL',
+                'FILMOVE',
                 'DISTSAG',
             ]))->first()
         )->create();

@@ -7,17 +7,17 @@
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
               </svg></li>
             @foreach ($crumbs as $crumb)
-              @if (isset($crumb['url']))
+              @if (isset($crumb['url']) && isset($crumb['title']))
               <li class="ecl-breadcrumb-harmonised__segment" data-ecl-breadcrumb-harmonised-item="static" aria-hidden="false"><a href="{{ $crumb['url'] }}" class="ecl-breadcrumb-harmonised__link ecl-link ecl-link--standalone">{{ $crumb['title'] }}</a><svg focusable="false" aria-hidden="true" role="presentation" class="ecl-breadcrumb-harmonised__icon ecl-icon ecl-icon--2xs ecl-icon--rotate-90">
                 <use xlink:href="/ecl-images/icons/sprites/icons.svg#ui--corner-arrow"></use>
               </svg></li>
-              @else
+              @elseif (isset($crumb['title']))
               <li class="ecl-breadcrumb-harmonised__segment ecl-breadcrumb-harmonised__current-page" aria-current="page" data-ecl-breadcrumb-harmonised-item="static" aria-hidden="false">{{ $crumb['title'] }}</li>
               @endif
             @endforeach
           </ol>
         </nav>
-        <h1 class="ecl-page-header-harmonised__title">{{ $title ?? 'Page title' }}</h1>
+        <h1 class="ecl-page-header-harmonised__title">{{ $title ?? '' }}</h1>
       </div>
     </div>
   </div>

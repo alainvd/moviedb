@@ -152,7 +152,7 @@
                         Film genre
                     </label>
                     <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                        {{ $movie->genre->name }}
+                        {{ $movie->genre ? $movie->genre->name : '' }}
                     </div>
                 </div>
 
@@ -161,7 +161,7 @@
                         Film delivery platform
                     </label>
                     <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                        {{ $platforms[$movie->delivery_platform] }}
+                        {{ $movie->delivery_platform ? $platforms[$movie->delivery_platform] : '' }}
                     </div>
                 </div>
                 <div class="col-span-1">
@@ -169,7 +169,7 @@
                         Audience
                     </label>
                     <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                        {{ $movie->audience->name }}
+                        {{ $movie->audience ? $movie->audience->name : '' }}
                     </div>
                 </div>
                 <div class="col-span-1">

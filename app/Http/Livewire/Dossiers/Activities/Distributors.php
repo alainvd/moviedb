@@ -13,7 +13,9 @@ use Livewire\Component;
 class Distributors extends Component
 {
     // public $coordinatorCount = 0;
-    // public $participantCount = 0;
+    public $participantCount = 0;
+
+    public Dossier $dossier;
 
     public $isBackoffice = false;
 
@@ -37,7 +39,7 @@ class Distributors extends Component
         'currentDistributor.country_id' => 'required|integer',
         'currentDistributor.name' => 'required|string',
         'currentDistributor.role' => 'string',
-        'currentDistributor.forecast_release_date' => 'required|date:d.m.Y',
+        'currentDistributor.forecast_release_date' => 'required|date',
         'currentDistributor.pa_costs' => 'integer',
         'currentDistributor.forecast_grant' => 'integer',
     ];
@@ -83,6 +85,7 @@ class Distributors extends Component
         }
 
         $this->showAddModal = true;
+        $this->emit('showModalInit_Distributors', []);
     }
 
     public function showDelete($id)
@@ -127,6 +130,7 @@ class Distributors extends Component
 
         if ($this->movie) {
             $distributors = $this->movie->distributors();
+            $this->participantCount = $distributors->count();
         }
 
         return view('livewire.dossiers.activities.distributors', [

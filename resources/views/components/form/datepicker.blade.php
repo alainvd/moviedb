@@ -7,12 +7,17 @@
 
 <div
     x-data=""
+    @if($attributes['id'] == 'sales_distributors_release_date')
+    @elseif($attributes['id'] == 'distributors-forecast-release-date')
+    {{-- livewire modal datepickers are inited and destroyed in respective templates --}}
+    @else
     x-init="new Pikaday({
         field: $refs.input,
         theme: 'moviedb-theme',
         format: 'DD.MM.YYYY',
-        firstDay: 1
+        firstDay: 1,
     })"
+    @endif
     @change="$dispatch('input', $event.target.value)"
     class="relative"
 >
@@ -36,5 +41,5 @@
 @if (!empty($print) && !empty($value))
 <!-- Output for print -->
 <span class="font-bold">{{ $label }}</span>
-<span class="">{{ $value ? date('d.m.Y.', strtotime($value)) : '' }}</span>
+<span class="">{{ $value ? date('d.m.Y', strtotime($value)) : '' }}</span>
 @endif

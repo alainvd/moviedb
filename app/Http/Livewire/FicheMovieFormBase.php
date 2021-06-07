@@ -66,8 +66,24 @@ class FicheMovieFormBase extends FicheFormBase
         ];
     }
 
+    protected function refererStandAloneFiche() {
+        $referer = request()->headers->get('referer');
+        if (Str::contains($referer, '/movie-dist/')
+        || Str::contains($referer, '/movie-dev-current/')
+        || Str::contains($referer, '/movie-dev-prev/')
+        || Str::contains($referer, '/movie-tv/') 
+        || Str::contains($referer, '/vg-prev/')) {
+            return true;
+        }
+        return false;
+    }
+
     public function mount(Request $request)
     {
+        if ($this->fiche && request()->user()->cannot('view', $this->fiche)) {
+            abort(404);
+        }
+        
         $this->shootingLanguages = collect([]);
         if (!$this->fiche) {
             $this->isNew = true;
@@ -95,6 +111,7 @@ class FicheMovieFormBase extends FicheFormBase
 
     public function updated($name, $value)
     {
+
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
             $this->emit('movieCrewsAddDefault', $value);
@@ -125,16 +142,23 @@ class FicheMovieFormBase extends FicheFormBase
                 $this->movie->length_of_episodes = NULL;
             }
         }
+        if ($name == 'movie.dev_support_flag') {
+            if ($value !== 1) {
+                $this->movie->dev_support_reference = NULL;
+            }
+        }
+
     }
 
     // Save fiche as is (draft), without full validation
     public function saveFiche()
     {
+
         // Integer fields with "" value should be stored as null
         foreach ($this->rules() as $field => $rule) {
             list($var, $atr) = explode('.', $field);
             if (isset($this->{$var}->{$atr})) {
-                if ($this->{$var}->{$atr} == '') {
+                if ($this->{$var}->{$atr} === '') {
                     if (Str::contains($rule, 'integer')) {
                         $this->{$var}->{$atr} = NULL;
                     }
@@ -143,6 +167,7 @@ class FicheMovieFormBase extends FicheFormBase
         }
 
         // Bare bones validation
+        // Check formatting, but no field is required (except title)
         $this->validate($this->rulesDraft);
 
         unset($this->movie->shooting_language);
@@ -162,7 +187,7 @@ class FicheMovieFormBase extends FicheFormBase
                     $type = 'dev-prev';
                     break;
                 case 'current-work':
-                    if ($this->dossier->action->name == 'TV') {
+                    if ($this->dossier->action->name == 'TVONLINE') {
                         $type = 'tv';
                     } else {
                         $type = 'dev-current';
@@ -176,6 +201,7 @@ class FicheMovieFormBase extends FicheFormBase
                 'movie_id' => $this->movie->id,
                 'type' => $type,
                 'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
@@ -199,7 +225,10 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            $this->fiche->save();
+            $this->fiche->fill([
+                'updated_by' => Auth::user()->id,
+            ])->save();
+            $this->fiche->touch();
             $this->notify('Fiche is saved');
         }
         $this->fichePostSave();
@@ -227,7 +256,7 @@ class FicheMovieFormBase extends FicheFormBase
             $errors = $specialErrors;
         }
 
-        if($errors) {
+        if($errors->count()) {
             $this->setErrorBag($errors);
             return;
         }

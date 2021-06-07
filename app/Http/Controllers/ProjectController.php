@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Call;
-use App\Models\Dossier;
 use App\Models\Movie;
 use App\Models\Status;
-use Exception;
+use App\Models\Dossier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 /**
@@ -18,19 +21,19 @@ use Spatie\Activitylog\Models\Activity as ActivityLog;
  */
 class ProjectController extends Controller
 {
+    protected $picSearchUrl = 'https://ec.europa.eu/info/funding-tenders/opportunities/api/organisation/search.json';
 
     protected $dossierRules = [
-        'company' => 'required_without:film_title|string|min:3',
-        'film_title' => 'required_without:company',
+        'film_title' => 'required_with:movie_count',
     ];
 
     protected $pageTitles = [
-        'DISTSEL' => 'Films on the Move',
+        'FILMOVE' => 'Films on the Move',
         'DISTSAG' => 'European Sales Support',
         'DEVSLATE' => 'European Slate Development',
-        'DEVSLATEMINI' => 'European Mini-slate Development',
-        'CODEVELOPMENT' => 'European Co-development',
-        'TV' => 'TV and Online Content',
+        'DEVMINISLATE' => 'European Mini-slate Development',
+        'CODEV' => 'European Co-development',
+        'TVONLINE' => 'TV and Online Content',
         'DEVVG' => 'Videogame development'
     ];
 
@@ -41,6 +44,12 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        /** @var User $user */
+        if ($user->hasRole('editor')) {
+            return redirect()->to(route('datatables-dossiers'));
+        }
+
         // Display all projects
         $layout = $this->getLayout();
         // $dossiers = Dossier::forUser()->orderBy('updated_at', 'desc')->get();
@@ -57,16 +66,40 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $this->validate(request(), [
-            'call_id' => 'required',
-            'project_ref_id' => 'required',
+        $validator = Validator::make(request()->all(), [
+            // 'action_type' => 'required',
+            'call_id' => 'bail|required',
+            'draft_proposal_id' => 'bail|required',
+            'PIC' => 'required',
+            // 'topic' => 'required',
         ]);
-        $params = request(['call_id', 'project_ref_id']);
 
-        $call = Call::find($params['call_id']);
+        if (App::environment('production')) {
+            if ($validator->fails()) {
+                abort(500, 'SEP link seems to be broken');
+            }
+        }
+
+        $params = request(['call_id', 'draft_proposal_id', 'PIC', 'topic']);
+
+        $call = Call::where('name', $params['call_id'])->first();
+
+        if (!$call) {
+            abort(500, 'The call in your request could not be found');
+        }
+
+        if (App::environment('production')) {
+            if ($call->closed) {
+                abort(500, 'We do not accept any more applications for this call');
+            }
+
+            $company = $this->getCompanyByPic($params['PIC']);
+        } else {
+            $company = 'Test company';
+        }
 
         $dossier = Dossier::firstOrNew([
-            'project_ref_id' => $params['project_ref_id']
+            'project_ref_id' => $params['draft_proposal_id']
         ]);
 
         if ($dossier->id) {
@@ -74,7 +107,9 @@ class ProjectController extends Controller
         }
 
         $dossier->fill([
-            'call_id' => $params['call_id'],
+            'call_id' => $call->id,
+            'company' => $company,
+            'pic' => $params['PIC'],
             'action_id' => $call->action_id,
             'status_id' => 1,
             'year' => date('Y'),
@@ -105,6 +140,10 @@ class ProjectController extends Controller
      */
     public function show(Dossier $dossier)
     {
+        if (request()->user()->cannot('view', $dossier)) {
+            abort(404);
+        }
+
         $layout = $this->getLayout();
         $pageTitles = $this->pageTitles;
         $crumbs = $this->getCrumbs();
@@ -134,14 +173,32 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->buildValidator($request));
-
-        $params = $request->only(['company']);
-
         $dossier = Dossier::findOrFail($id);
 
+        if ($request->user()->cannot('update', $dossier)) {
+            return abort(404);
+        }
+
+        if ($dossier->call->closed) {
+            abort(500, 'We do not accept any more applications for this call');
+        }
+
+        $this->validate($request, $this->buildValidator($request));
+
+        // Check if there are any fiches in DRAFT and prevent submit
+        $hasAnyDrafts = $dossier->fiches()->where('status_id', Status::DRAFT)
+            ->count();
+
+        if ($hasAnyDrafts) {
+            $request->session()
+                ->flash(
+                    'error',
+                    'Cannot submit dossier while works are in DRAFT'
+                );
+            return redirect()->back();
+        }
+
         $dossier->fill([
-            'company' => $params['company'],
             'status_id' => Status::NEW,
             'updated_by' => Auth::user()->id,
         ]);
@@ -197,10 +254,9 @@ class ProjectController extends Controller
         //     $rules['coordinator_count'] = "integer|min:{$minCoordinators}";
         // }
 
-        // if ($request->has('participant_count')) {
-        //     $minParticipants = $request->input('min_participants');
-        //     $rules['participant_count'] = "integer|min:{$minParticipants}";
-        // }
+        if ($request->has('participant_count')) {
+            $rules['participant_count'] = $this->getMinMaxRule('participants');
+        }
 
         return $rules;
     }
@@ -226,7 +282,7 @@ class ProjectController extends Controller
     protected function getLayout()
     {
         $user = Auth::user();
-
+        /** @var User $user */
         if ($user->hasRole('applicant')) {
             return 'ecl-layout';
         }
@@ -255,5 +311,19 @@ class ProjectController extends Controller
                 ],
             ];
         }
+    }
+
+    protected function getCompanyByPic($pic)
+    {
+        $request = Http::post($this->picSearchUrl, [
+            'pic' => $pic
+        ])->collect();
+
+        $results = $request->collect();
+        if (!$results->count()) {
+            abort(500, 'The provided PIC is invalid');
+        }
+
+        return $results[0]['legalName'];
     }
 }

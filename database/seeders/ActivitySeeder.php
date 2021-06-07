@@ -19,27 +19,27 @@ class ActivitySeeder extends Seeder
             [
                 'name' => 'description',
                 'log_model' => 'Movie',
-                'actions' => ['DISTSEL', 'DISTSAG'],
+                'actions' => ['FILMOVE', 'DISTSAG'],
             ],
             [
                 'name' => 'previous-work',
                 'log_model' => 'Previous work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVMINISLATE', 'CODEV'],
             ],
             [
                 'name' => 'current-work',
                 'log_model' => 'Current work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT', 'TV'],
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVMINISLATE', 'CODEV', 'TVONLINE'],
             ],
             [
                 'name' => 'distributors',
                 'log_model' => 'Distributor',
-                'actions' => ['DISTSEL', 'DISTSAG'],
+                'actions' => ['FILMOVE', 'DISTSAG'],
             ],
             [
                 'name' => 'short-films',
                 'log_model' => 'Short film',
-                'actions' => ['DEVSLATE', 'DEVSLATEMINI']
+                'actions' => ['DEVSLATE', 'DEVMINISLATE']
             ]
         ];
 
@@ -52,7 +52,7 @@ class ActivitySeeder extends Seeder
                 'min_short_films' => 1,
                 'max_short_films' => 1,
             ],
-            'DEVSLATEMINI' => [
+            'DEVMINISLATE' => [
                 'min_previous_works' => 1,
                 'max_previous_works' => 1,
                 'min_current_works' => 2,
@@ -60,7 +60,7 @@ class ActivitySeeder extends Seeder
                 'min_short_films' => 1,
                 'max_short_films' => 1,
             ],
-            'CODEVELOPMENT' => [
+            'CODEV' => [
                 'min_previous_works' => 1,
                 'max_previous_works' => 1,
                 'min_current_works' => 1,
@@ -71,16 +71,17 @@ class ActivitySeeder extends Seeder
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],
-            'DISTSEL' => [
+            'FILMOVE' => [
                 'movie_count' => 1,
-                'min_coordinators' => 1,
-                'min_participants' => 7,
+                // 'min_coordinators' => 1,
+                'min_participants' => 8,
+                // 'max_participants' => 8,
                 'distinct_distribution_countries' => true,
             ],
             'DISTSAG' => [
                 'movie_count' => 1,
             ],
-            'TV' => [
+            'TVONLINE' => [
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],

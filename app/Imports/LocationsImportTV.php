@@ -57,22 +57,20 @@ class LocationsImportTV implements ToCollection, WithHeadingRow, WithChunkReadin
         echo "Error: no match for location name '".$location_name."'";
     }
 
-
     /**
      * @param Collection $collection
      */
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            // print_r($row);
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get country from location name
+            // Get country from location name
             $country = Country::firstWhere("name", "=", $row['nationality_code']);
 
-            //Create the crew entry
+            // Create the location
             if ($movie) {
                 $location = new Location([
                     "movie_id" => $movie->id,
@@ -86,13 +84,12 @@ class LocationsImportTV implements ToCollection, WithHeadingRow, WithChunkReadin
             }
 
         }
-
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 

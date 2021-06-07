@@ -74,6 +74,13 @@ class FormHelpers
         return ['One producer is required.'];
     }
 
+    // Check if sales agent is present
+    public static function requiredSalesAgents($sales_agents) {
+        if(!empty($sales_agents))
+            return [];
+        return ['One sales agent is required.'];
+    }
+
     // Check if financing plan document is present
     public static function validateDocumentsFinancingPlan($documents) {
         foreach ($documents as $document) {
@@ -99,9 +106,20 @@ class FormHelpers
 
     // Will also return all "requiredIf" fields as required
     // But those fields are always hidden in the frontend
-    public static function isRequired($rules, $field) {
+    public static function isRequired($rules, $field, $context = null) {
         if (isset($rules[$field])) {
-            return Str::contains($rules[$field], 'required');
+            if (Str::contains($rules[$field], 'required')) {
+                // Custom rule for currency field
+                if ($field == 'movie.total_budget_currency_rate') {
+                    if ($context !== 'EUR') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                // Default
+                return true;
+            }
         }
         return false;
     }

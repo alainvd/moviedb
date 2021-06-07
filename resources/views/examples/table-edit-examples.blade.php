@@ -1,4 +1,5 @@
-<x-landing-layout>
+<x-ecl-layout>
+    
     <div>
         <p>This is a simple table edit component.</p>
         <p>Elements are saved to database.</p>
@@ -15,4 +16,4 @@
 
     @livewire('table-edit-example-memory', ['movie_id' => $movie_id])
 
-</x-landing-layout>
+</x-ecl-layout>

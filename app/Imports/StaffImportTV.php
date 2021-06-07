@@ -27,16 +27,16 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         foreach ($collection as $row) {
 
-            //Get Person
+            // Get Person
             $person = $this->getPerson($row);
 
-            //Get Media
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Get Title
+            // Get Title
             $title = $this->getTitle($row);
 
-            //Create the crew entry
+            // Create the crew entry
             $crew = new Crew([
                 "person_id" => $person->id,
                 "title_id" => $title->id,
@@ -46,23 +46,20 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
             $crew->save();
 
         }
-
     }
 
     private function getTitle($row)
     {
-
         return Title::firstWhere("name", "=", $row["role"]);
     }
 
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        echo($filmID);
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        echo($filmID."\n");
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
-
 
     public function getFirstName($fullname)
     {
@@ -73,8 +70,6 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
     {
         return substr($fullname, strlen($firstname) + 1);
     }
-
-
 
     /**
      * @param $actor
@@ -92,10 +87,20 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
             "firstname" => $firstName,
             "lastname" => $lastName,
             "nationality1" => $row["nationality_code"]?? '',
-            "gender" => $row["gender"],
+            "gender" => $this->getGender($row["gender"]),
             "country_of_residence" => $row["residence_code"] ?? '',
         ]);
         $person->save();
         return $person;
+    }
+
+    public function getGender($gender)
+    {
+        if ($gender == 'X') return 'NA';
+        if ($gender == 'Undefined') return 'NA';
+        if ($gender == 'UNDEFINED') return 'NA';
+        if ($gender == 'Female') return 'FEMALE';
+        if ($gender == 'Male') return 'MALE';
+        return $gender;
     }
 }

@@ -34,7 +34,6 @@ class SalesDistributor extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'release_date' => 'date:d.m.Y'
     ];
 
     const DISTRIBUTOR_ROLES = [
@@ -61,5 +60,10 @@ class SalesDistributor extends Model
             'countries' => [],
             'release_date' => null,
         ];
+    }
+
+    public function getReleaseDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }

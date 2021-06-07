@@ -19,6 +19,7 @@ class HistoryController extends Controller
         $logs = self::getFormattedLogs($dossier);
 
         return view('dossiers.history', [
+            'backUrl' => route('dossiers.show', $dossier),
             'crumbs' => $this->getCrumbs($dossier),
             'layout' => $this->getLayout(),
             'type' => class_basename($dossier),
@@ -27,13 +28,34 @@ class HistoryController extends Controller
         ]);
     }
 
-    public function fiche(Fiche $fiche)
+    public function fiche(Dossier $dossier = null, Fiche $fiche)
     {
         $logs = self::getFormattedLogs($fiche);
 
+        if ($dossier){
+            $crumbs = $this->getCrumbs($dossier);
+            $viewHistory = array_pop($crumbs);
+            $activity = $dossier->fiches()->find($fiche->id)->pivot->activity_id;
+            $url = route('dossier-create-fiche', [$dossier, $activity, $fiche]);
+            $crumbs[] = [
+                'title' => 'Edit fiche',
+                'url' => $url
+            ];
+            $crumbs[] = $viewHistory;
+        } else {
+            $crumbs = [];
+            $viewHistory = array_pop($crumbs);
+            $url = route('movie_show', [$fiche]);
+            $crumbs[] = [
+                'title' => 'Edit fiche',
+                'url' => $url
+            ];
+            $crumbs[] = $viewHistory;
+        }
+
         return view('dossiers.history', [
-            // 'crumbs' => $this->getCrumbs($fiche),
-            'crumbs' => [],
+            'backUrl' => $url,
+            'crumbs' => $crumbs,
             'layout' => $this->getLayout(),
             'type' => class_basename($fiche),
             'model' => $fiche,
@@ -55,14 +77,19 @@ class HistoryController extends Controller
     {
         $logs = ActivityLog::forSubject($model)->get();
 
-        $oldStatus = $logs[0]->properties['attributes']['status_id'];
-        $oldStatus = Status::find($oldStatus)->name;
+        if (isset($logs[0]->properties['attributes'])) {
+            $oldStatus = $logs[0]->properties['attributes']['status_id'];
+        }
+        $oldStatus = isset($oldStatus) ? Status::find($oldStatus)->name : 'Undefined';
 
         return $logs->map(function ($log) use ($model, &$oldStatus) {
                 // Get new status if exists on log, otherwise use old status
                 $newStatus = '';
-                if ($log->properties->has('attributes')
-                    && array_key_exists('status_id', $log->properties['attributes'])) {
+                if (
+                    $log->properties->has('attributes')
+                    && array_key_exists('status_id', $log->properties['attributes'])
+                    && $log->properties['attributes']['status_id']
+                ) {
                     $newStatus = $oldStatus = Status::find($log->properties['attributes']['status_id'])->name;
                 }
 
@@ -89,6 +116,7 @@ class HistoryController extends Controller
     {
         $user = Auth::user();
 
+        /** @var User $user */
         if ($user->hasRole('applicant')) {
             return 'ecl-layout';
         }

@@ -1,7 +1,7 @@
 <footer class="ecl-footer-harmonised ecl-footer-harmonised--group1">
   <div class="ecl-container ecl-footer-harmonised__container">
-    <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section1"><a href="/" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone" aria-label="Link to example">Creative Europe MEDIA database</a>
-      <div class="ecl-footer-harmonised__description">This site is managed by the Education, Audiovisual and Culture Executive Agency</div>
+    <section class="ecl-footer-harmonised__section ecl-footer-harmonised__section1"><a href="/" class="ecl-footer-harmonised__title ecl-link ecl-link--standalone" aria-label="Link to example">Creative Europe MEDIA Database</a>
+      <div class="ecl-footer-harmonised__description">This site is managed by the European Education and Culture Executive Agency</div>
     </section>
     <div class="ecl-footer-harmonised__section2">
       <section class="ecl-footer-harmonised__section">

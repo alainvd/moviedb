@@ -1,4 +1,12 @@
-<x-fiche-form :layout="$layout" :print="$print" :fiche="$fiche" :hasHistory="$hasHistory">
+<x-fiche-form
+    :layout="$layout"
+    :print="$print"
+    :fiche="$fiche"
+    :hasHistory="$hasHistory ?? false"
+    :dossier="$dossier ?? null"
+    :isApplicant="$isApplicant"
+    :isEditor="$isEditor"
+>
 
     <!-- title -->
     <div class="my-8">
@@ -9,7 +17,7 @@
     </div>
 
     <!-- basic -->
-    <div class="my-8">
+    <div class="mt-8 mb-4">
         <x-details.basic
             :print="$print"
             :isApplicant="$isApplicant"
@@ -26,14 +34,14 @@
             :movieGenres="$movieGenres"
             :allGenresById="$allGenresById"
             :platforms="$platforms"
-            :statuses="$statuses"
-            :statusesById="$statusesById"
+            :statuses="$statusesDist"
+            :statusesById="$statusesByIdDist"
             :years="$years"
         ></x-details.basic>
     </div>
 
     <!-- summary -->
-    <div class="my-8">
+    <div class="mb-8">
         <x-details.summary
             :print="$print"
             :rules="$rules"

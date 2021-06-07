@@ -2,13 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Audience;
-use App\Models\Genre;
 use App\Http\View\Composers\DistributorsComposer;
 use App\Http\View\Composers\MovieFicheFormComposer;
-use App\Models\Country;
-use App\Models\Language;
-use App\Models\Status;
+use App\Http\View\Composers\SearchComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -72,5 +68,7 @@ class ViewServiceProvider extends ServiceProvider
             'livewire.dossiers.movie-wizard',
             MovieFicheFormComposer::class
         );
+
+        View::composer('livewire.search-page', SearchComposer::class);
     }
 }

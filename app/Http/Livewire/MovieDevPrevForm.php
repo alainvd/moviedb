@@ -33,7 +33,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.original_title' => 'required|string|max:255',
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'required|integer',
@@ -41,12 +41,12 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
@@ -70,12 +70,12 @@ class MovieDevPrevForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => '',
-        'movie.film_length' => 'integer',
+        'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
@@ -95,6 +95,9 @@ class MovieDevPrevForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='dev-prev') {
+            abort(404);
+        }
     }
 
     public function saveFiche()
@@ -120,18 +123,23 @@ class MovieDevPrevForm extends FicheMovieFormBase
         foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_distributors, TableEditMovieSalesDistributors::class, function($sales_distributor) {return $sales_distributor['name'];});
-        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);    
+        foreach ($messages as $message) $specialErrors->add('salesDistributorErrorMessages', $message);
 
         return $specialErrors;
     }
-    
+
     public function fichePostSave()
     {
         // producers, sales distributor
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
-        
-        // only back, no wizard
+
+        // go back after saving fiche
+        // if editor is viewing stand-alone fiche, go back to movie listing
+        if ($this->isEditor && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('datatables-movies'));
+        }
+        // default redirect to stored previous page
         return redirect()->to($this->previous);
     }
 
@@ -139,8 +147,21 @@ class MovieDevPrevForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Films - Previous work';
-        
+        $title = 'Audiovisual Work - Development - Recent work / previous experience';
+        $crumbs[] = [
+            'url' => route('dossiers.index'),
+            'title' => 'My dossiers'
+        ];
+        if (isset($this->dossier)) {
+            $crumbs[] = [
+                'url' => route('dossiers.show', $this->dossier),
+                'title' => 'Edit dossier'
+            ];
+        }
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
+
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-prev-form', [

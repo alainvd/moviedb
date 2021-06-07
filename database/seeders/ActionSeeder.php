@@ -17,22 +17,13 @@ class ActionSeeder extends Seeder
     {
         $codes = [
             "DEVSLATE",
-            // "DEVSLATEEU",
-            "DEVSLATEMINI",
-            "CODEVELOPMENT",
-            // "DEVSPANI",
-            // "DEVSPDOC",
-            // "DEVSPFIC",
+            "DEVMINISLATE",
+            "CODEV",
             "DEVVG",
-            // "DISTAUTOG",
-            // "DISTAUTOR1",
-            // "DISTAUTOR2",
-            // "DISTAUTOR3",
             "DISTSAG",
-            // "DISTSAR1",
-            // "DISTSAR2",
-            "DISTSEL",
-            "TV"
+            "FILMOVE",
+            // "DISTAUTOG",
+            "TVONLINE"
         ];
 
 

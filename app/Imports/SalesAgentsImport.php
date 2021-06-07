@@ -24,17 +24,17 @@ class SalesAgentsImport implements ToCollection, WithHeadingRow, WithChunkReadin
     {
         foreach ($collection as $row) {
 
-            //Get Movie
+            // Get Movie
             $movie = $this->getMovie($row);
 
-            //Create the Sales Agent
+            // Create the sales agent
             if ($movie){
                 $salesAgent = new SalesAgent([
                     "movie_id" => $movie->id,
                     // "role" => $row["film_role_name"], // should be one of: PLATFORM, DISTRIBUTOR, BROADCASTER
                     "role" => null,
                     "name" => $row["sales_agent_name"],
-                    "country" => $row["sales_agent_nationality_1_code"] ?? null,
+                    "country" => MoviesImportDist::getCountryCode($row["sales_agent_nationality_1_code"]),
                 ]);
                 $salesAgent->save();
             }
@@ -45,7 +45,7 @@ class SalesAgentsImport implements ToCollection, WithHeadingRow, WithChunkReadin
     private function getMovie($row)
     {
         $filmID = $row["id_code_film"];
-        $movie = Movie::where("legacy_id","=",$filmID)->first();
+        $movie = Movie::where("legacy_id", "=", $filmID)->first();
         return $movie;
     }
 

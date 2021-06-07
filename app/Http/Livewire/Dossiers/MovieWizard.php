@@ -37,6 +37,10 @@ class MovieWizard extends Component
 
     public function mount(Dossier $dossier, Activity $activity)
     {
+        if (request()->user()->cannot('update', $dossier)) {
+            return abort(404);
+        }
+
         $this->dossier = $dossier;
         $this->movie = new Movie();
         $this->user = Auth::user();
@@ -83,12 +87,12 @@ class MovieWizard extends Component
         $action = $this->dossier->action->name;
 
         switch ($action) {
-            case 'DISTSEL':
+            case 'FILMOVE':
             case 'DISTSAG':
             case 'DEVSLATE':
-            case 'DEVSLATEMINI':
-            case 'CODEVELOPMENT':
-            case 'TV':
+            case 'DEVMINISLATE':
+            case 'CODEV':
+            case 'TVONLINE':
                 // Attach fiche for activity
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {

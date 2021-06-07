@@ -8,9 +8,6 @@
 
 @import '../../node_modules/pikaday/css/pikaday.css';
 
-/* looks like these can go away */
-/* @import '../../node_modules/tippy.js/dist/tippy.css'; */
-
 [x-cloak] {
     display: none;
 }
@@ -97,6 +94,14 @@ main {
 @media (min-width: 1280px) {
     body.dossier-page {
         background: url('../images/dossier/dots-vertical-1.png') 2% 305px no-repeat;
+    }
+
+    body.error-page {
+        background: url('../images/dossier/dots-vertical-1.png') 2% 152px no-repeat;
+    }
+
+    body.public-page {
+        background: url('../images/dossier/dots-vertical-1.png') 2% 158px no-repeat;
     }
 }
 

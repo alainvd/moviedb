@@ -48,19 +48,19 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
-        'movie.delivery_date' => 'required|date:d.m.Y',
-        'movie.broadcast_date' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
+        'movie.delivery_date' => 'required|date',
+        'movie.broadcast_date' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
-        'movie.film_length' => 'required|integer',
-        'movie.number_of_episodes' => 'integer',
-        'movie.length_of_episodes' => 'integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
-        'movie.dev_support_flag' => 'required|integer',
+        'movie.dev_support_flag' => 'required|boolean',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
         'movie.total_budget_euro' => 'required|integer',
@@ -77,20 +77,20 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
-        'movie.delivery_date' => 'required|date:d.m.Y',
-        'movie.broadcast_date' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
+        'movie.delivery_date' => 'required|date',
+        'movie.broadcast_date' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.development_costs_in_euro' => 'required|integer',
-        'movie.film_length' => 'required|integer',
-        'movie.number_of_episodes' => 'integer',
-        'movie.length_of_episodes' => 'integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
-        'movie.dev_support_flag' => 'required|integer',
+        'movie.dev_support_flag' => 'required|boolean',
         'movie.dev_support_reference' => 'string|requiredIf:movie.dev_support_flag,1',
 
         'movie.total_budget_euro' => 'required|integer',
@@ -109,20 +109,20 @@ class MovieTVForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
-        'movie.delivery_date' => 'date:d.m.Y',
-        'movie.broadcast_date' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
+        'movie.delivery_date' => 'date',
+        'movie.broadcast_date' => 'date',
         'movie.shooting_language' => '',
         'movie.development_costs_in_euro' => 'integer',
-        'movie.film_length' => 'integer',
-        'movie.number_of_episodes' => 'integer',
-        'movie.length_of_episodes' => 'integer',
+        'movie.film_length' => 'integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
 
-        'movie.dev_support_flag' => 'integer',
+        'movie.dev_support_flag' => 'boolean',
         'movie.dev_support_reference' => 'string',
 
         'movie.total_budget_euro' => 'integer',
@@ -141,6 +141,9 @@ class MovieTVForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='tv') {
+            abort(404);
+        }
         // init points value
         foreach($this->crews as $crew) {
             $this->totalPointsCrews += $crew['points'];
@@ -208,13 +211,17 @@ class MovieTVForm extends FicheMovieFormBase
         $this->saveItems(Location::where('movie_id',$this->movie->id)->get(), $this->locations, Location::class);
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
 
-        // back
+        // go back after saving fiche
         // if coming from wizard, go to dossier
         if (Str::endsWith($this->previous, 'movie-wizard')) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        } else {
-            return redirect()->to($this->previous);
         }
+        // if editor is viewing stand-alone fiche, go back to movie listing
+        if ($this->isEditor && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('datatables-movies'));
+        }
+        // default redirect to stored previous page
+        return redirect()->to($this->previous);
     }
 
     public function render()
@@ -222,6 +229,19 @@ class MovieTVForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Audiovisual Work - Production - TV and Online';
+        $crumbs[] = [
+            'url' => route('dossiers.index'),
+            'title' => 'My dossiers'
+        ];
+        if (isset($this->dossier)) {
+            $crumbs[] = [
+                'url' => route('dossiers.show', $this->dossier),
+                'title' => 'Edit dossier'
+            ];
+        }
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
 
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 

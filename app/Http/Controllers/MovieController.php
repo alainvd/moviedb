@@ -72,12 +72,12 @@ class MovieController extends Controller
         }
         elseif($fiche->type === 'tv')
         {
-               return redirect()->route('movie-tv', ['fiche' => $fiche]);
+            return redirect()->route('movie-tv', ['fiche' => $fiche]);
         }
         else
         {
             return view('movies.show', ['movie' => $fiche->movie]);
-        }    
+        }
     }
 
     /**

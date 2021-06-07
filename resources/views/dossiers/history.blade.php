@@ -5,7 +5,7 @@
     :class="'dossier-page'">
 
     @can('view advanced history')
-        @livewire('dossiers.advanced-history', ['model' => $model])
+        @livewire('dossiers.advanced-history', ['backUrl' => $backUrl, 'model' => $model,])
     @else
         <div class="px-4 mb-32 bg-white">
             <div class="w-full flex flex-col border border-gray-200">

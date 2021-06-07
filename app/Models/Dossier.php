@@ -40,6 +40,7 @@ class Dossier extends Model
         'company',
     ];
     protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
 
     /**
      * The attributes that should be cast to native types.
@@ -70,7 +71,8 @@ class Dossier extends Model
     {
         return $this->belongsToMany(Fiche::class)
             ->withPivot('activity_id')
-            ->using(DossierFiche::class);
+            ->using(DossierFiche::class)
+            ->orderBy('activity_id');
     }
 
     public function status()

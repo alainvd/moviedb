@@ -6,6 +6,12 @@
 
     <div class="px-4 bg-white">
 
+        @if (session()->has('error'))
+            <x-alerts.error>
+                {{ session()->get('error')}}
+            </x-alerts.error>
+        @endif
+
         @if(empty($print))
         @include('dossiers.instructions.index', ['dossier' => $dossier])
         @endif
@@ -40,6 +46,7 @@
                             :id="'company-name'"
                             :label="'Company Name'"
                             :hasError="$errors->has('company')"
+                            :disabled="true"
                             name="company"
                             value="{{$dossier->company}}"></x-form.input>
 
@@ -89,7 +96,7 @@
                     </a>
                 @endif
                 <x-button.download :dossier="$dossier"></x-button.download>
-                <x-button.primary type="submit">Save</x-button.primary>
+                <x-button.primary :disabled="$dossier->call->closed" type="submit">Save</x-button.primary>
             </div>
             @endif
         </form>

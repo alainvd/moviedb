@@ -44,7 +44,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
@@ -52,12 +52,12 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string',
 
         'movie.total_budget_currency_amount' => 'required|integer',
@@ -69,7 +69,7 @@ class MovieDistForm extends FicheMovieFormBase
         'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
-        'movie.year_of_copyright' => 'integer',
+        'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
         'movie.delivery_platform' => 'required|string',
         'movie.audience_id' => 'required|integer',
@@ -77,18 +77,18 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'required|string',
+        'movie.synopsis' => 'required|string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'required|date:d.m.Y',
-        'movie.photography_end' => 'required|date:d.m.Y',
+        'movie.photography_start' => 'required|date',
+        'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer',
+        'movie.film_length' => 'required|integer|min:1|max:10000',
         'movie.film_format' => 'required|string|max:255',
 
         'movie.total_budget_currency_amount' => 'required|integer',
         'movie.total_budget_currency_code' => 'required|string|max:255',
-        'movie.total_budget_currency_rate' => 'required|numeric',
+        'movie.total_budget_currency_rate' => 'requiredUnless:movie.total_budget_currency_code,EUR|numeric',
         'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
@@ -107,13 +107,13 @@ class MovieDistForm extends FicheMovieFormBase
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
-        'movie.synopsis' => 'string',
+        'movie.synopsis' => 'string|max:4000',
 
         'movie.country_of_origin_points' => 'numeric',
-        'movie.photography_start' => 'date:d.m.Y',
-        'movie.photography_end' => 'date:d.m.Y',
+        'movie.photography_start' => 'date',
+        'movie.photography_end' => 'date',
         'movie.shooting_language' => '',
-        'movie.film_length' => 'integer',
+        'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string|max:255',
 
         'movie.total_budget_currency_amount' => 'integer',
@@ -135,6 +135,9 @@ class MovieDistForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
+        if ($this->fiche->exists && $this->fiche->type!=='dist') {
+            abort(404);
+        }
         // init points value
         foreach($this->crews as $crew) {
             $this->totalPointsCrews += $crew['points'];
@@ -185,11 +188,17 @@ class MovieDistForm extends FicheMovieFormBase
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocations::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);    
 
-        // Validate subform
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredProducers($this->producers, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);        
+        // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
 
-        // Validate subform
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredSalesAgents($this->sales_agents, $this->movie->genre_id);
+        foreach ($messages as $message) $specialErrors->add('salesAgentErrorMessages', $message);       
+        // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];});
         foreach ($messages as $message) $specialErrors->add('salesAgentErrorMessages', $message);
 
@@ -209,13 +218,17 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
 
-        // back
+        // go back after saving fiche
         // if coming from wizard, go to dossier
         if (Str::endsWith($this->previous, 'movie-wizard')) {
             return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        } else {
-            return redirect()->to($this->previous);
         }
+        // if editor is viewing stand-alone fiche, go back to movie listing
+        if ($this->isEditor && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('datatables-movies'));
+        }
+        // default redirect to stored previous page
+        return redirect()->to($this->previous);
     }
 
     public function render()
@@ -223,6 +236,19 @@ class MovieDistForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Distribution';
+        $crumbs[] = [
+            'url' => route('dossiers.index'),
+            'title' => 'My dossiers'
+        ];
+        if (isset($this->dossier)) {
+            $crumbs[] = [
+                'url' => route('dossiers.show', $this->dossier),
+                'title' => 'Edit dossier'
+            ];
+        }
+        $crumbs[] = [
+            'title' => 'Edit fiche'
+        ];
         
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 

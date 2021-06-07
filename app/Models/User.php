@@ -6,7 +6,6 @@ use App\Tools\Generic;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -52,39 +51,52 @@ class User extends Authenticatable
         if (isset($attributes['domainUsername']) || isset($attributes['eu_login_username'])) {
             if (isset($attributes['domainUsername'])) $username = $attributes['domainUsername'];
             if (isset($attributes['eu_login_username'])) $username = $attributes['eu_login_username'];
-            $attributes['name'] = isset($attributes['firstName']) && isset($attributes['firstName']) ? $attributes['firstName'] . ' ' . $attributes['lastName'] : '';
+            $attributes['name'] = isset($attributes['firstName']) && isset($attributes['lastName'])
+                ? $attributes['firstName'] . ' ' . $attributes['lastName']
+                : (isset($attributes['name'])
+                    ? $attributes['name']
+                    : '');
+            if(session()->has('impersonate')) {
+                $user = User::where('id', session()->get('impersonate'))->first();
+                $username = $user->eu_login_username;
+            }
             $user = User::firstOrCreate(
                 [
                     'eu_login_username' => $username,
                 ],
                 $attributes
             );
-            if (DB::table('model_has_roles')->where('model_id', '=', $user->id)->count() == 0) {
-                DB::table('model_has_roles')->insert([
-                    [
-                        'role_id' => 1,
-                        'model_type' => 'App\Models\User',
-                        'model_id' => $user->id,
-                    ],
-                ]);
+
+            // if departmentNumber: EACEA.B.2 => editor
+            $devTeam = [
+                '90266814',
+                '10036578',
+            ];
+            if (!$user->roles->count()) {
+                if (
+                    (isset($attributes['departmentNumber']) && Str::contains($attributes['departmentNumber'], 'EACEA.B.2'))
+                    ||
+                    (isset($attributes['employeeNumber']) && in_array($attributes['employeeNumber'], $devTeam))
+                )
+                {
+                    $user->assignRole('editor');
+                } else {
+                    $user->assignRole('applicant');
+                }
             }
+
             return $user;
         }
     }
 
     public function setImpersonating($id)
     {
-        Session::put('impersonate', $id);
+        session()->put('impersonate', $id);
     }
 
     public function stopImpersonating()
     {
-        Session::forget('impersonate');
-    }
-
-    public function isImpersonating()
-    {
-        return Session::has('impersonate');
+        session()->forget('impersonate');
     }
 
 }

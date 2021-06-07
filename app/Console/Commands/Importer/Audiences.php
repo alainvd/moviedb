@@ -39,8 +39,6 @@ class Audiences extends Command
      */
     public function handle()
     {
-
         Excel::import(new AudiencesImport, 'Dist_Film_Audience.xlsx', 'excel');
-
     }
 }
