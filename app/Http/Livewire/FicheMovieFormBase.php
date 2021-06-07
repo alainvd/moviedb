@@ -100,6 +100,7 @@ class FicheMovieFormBase extends FicheFormBase
             // are not yet ready to receive them.
             // Therefore init values need to be loaded here.
             $this->crews = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+            array_multisort(array_column($this->crews, 'title_id'), SORT_ASC, $this->crews);
             $this->locations = Location::where('movie_id',$this->movie->id)->get()->toArray();
             $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();

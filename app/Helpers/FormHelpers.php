@@ -64,14 +64,19 @@ class FormHelpers
         return $requiredLocationsMessages;
     }
 
-    // Check if producer is present
+    // Check if producer or co-producers are present
     public static function requiredProducers($producers) {
+        $coproducers = 0;
         foreach ($producers as $producer) {
             if ($producer['role'] == 'PRODUCER') {
                 return [];
             }
+            if ($producer['role'] == 'COPRODUCER') {
+                if ($coproducers == 1) return [];
+                if ($coproducers == 0) $coproducers++;
+            }
         }
-        return ['One producer is required.'];
+        return ['One producer or two co-procuers are required.'];
     }
 
     // Check if sales agent is present

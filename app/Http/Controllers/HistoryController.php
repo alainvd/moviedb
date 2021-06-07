@@ -78,7 +78,8 @@ class HistoryController extends Controller
         $logs = ActivityLog::forSubject($model)->get();
 
         if (isset($logs[0]->properties['attributes'])) {
-            $oldStatus = $logs[0]->properties['attributes']['status_id'];
+            if (isset($logs[0]->properties['attributes']['status_id']))
+                $oldStatus = $logs[0]->properties['attributes']['status_id'];
         }
         $oldStatus = isset($oldStatus) ? Status::find($oldStatus)->name : 'Undefined';
 
