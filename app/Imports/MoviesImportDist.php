@@ -99,6 +99,7 @@ class MoviesImportDist implements ToCollection, WithHeadingRow
                 'status_id' => $status,
                 'created_by' => 3,
                 'type' => "dist",
+                'comments' => $row['basis_of_euro_nationality'],
             ]);
             $fiche->save();
 
