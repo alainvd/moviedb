@@ -23,7 +23,7 @@
                     @endif
                 @endif
                 @if($isApplicant)
-                    @if(!in_array(Request::segment(1),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv']))
+                    @if($standAloneFiche==false)
                         <x-button.primary id="button-save" wire:click="saveFiche">Save as Draft</x-button.primary>
                     @endif
                     <x-button.primary id="button-submit" type="submit">Submit</x-button.primary>

@@ -6,6 +6,7 @@
     :dossier="$dossier ?? null"
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
+    :standAloneFiche="$standAloneFiche"
 >
 
     <!-- title -->

@@ -60,7 +60,7 @@ Route::get('/', function () {
     } else {
         return redirect('homepage');
     }
-});
+})->name('root');
 
 if (!App::environment('production')) {
     Route::get('homepage', [
@@ -175,8 +175,10 @@ Route::middleware('cas.auth')->group(function () {
 Route::middleware('cas.auth')->group(function () {
     Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])
         ->name('movie_show');
+    // Applicant can submit a stand alone dist fiche
     Route::get('/movie-dist/{fiche?}', MovieDistForm::class)
         ->name('movie-dist');
+    // Applicant can not not submit other stand alone fiches
     Route::get('/movie-dev-current/{fiche?}', MovieDevCurrentForm::class)
         ->name('movie-dev-current');
     Route::get('/movie-dev-prev/{fiche?}', MovieDevPrevForm::class)

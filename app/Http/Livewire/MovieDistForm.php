@@ -227,6 +227,10 @@ class MovieDistForm extends FicheMovieFormBase
         if ($this->isEditor && $this->refererStandAloneFiche()) {
             return redirect()->to(route('datatables-movies'));
         }
+        // if applicant is viewing stand-alone fiche, go back to homepage
+        if ($this->isApplicant && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('root'));
+        }
         // default redirect to stored previous page
         return redirect()->to($this->previous);
     }
