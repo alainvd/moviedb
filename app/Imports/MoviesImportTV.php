@@ -83,7 +83,7 @@ class MoviesImportTV implements ToCollection, WithHeadingRow
             $fiche = new Fiche([
                 'movie_id' => $movie->id,
                 'status_id' => 3,
-                'created_by' => 1,
+                'created_by' => 3,
                 'type' => "tv",
             ]);
             $fiche->save();
