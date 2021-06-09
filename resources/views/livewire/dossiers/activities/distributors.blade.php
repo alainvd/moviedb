@@ -20,7 +20,7 @@
 
             <x-table.row>
                 <x-table.cell class="text-center">{{ $distributor->country->name }}</x-table.cell>
-                <x-table.cell class=" text-center">{{ $distributor->name }}</x-table.cell>
+                <x-table.cell class="text-center ">{{ $distributor->name }}</x-table.cell>
         <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
         <x-table.cell class="text-center">
             {{ $distributor->forecast_release_date }}
@@ -134,7 +134,7 @@
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
-                <x-form.simple-currency :id="'pa-costs'" :label="'P&A Costs'" :hasError="$errors->has('currentDistributor.pa_costs')" wire:model="currentDistributor.pa_costs">
+                <x-form.simple-currency :id="'pa-costs'" :label="'P&A Costs'" :hasError="$errors->has('currentDistributor.pa_costs')" wire:model="currentDistributor.pa_costs" placeholder="0">
                 </x-form.simple-currency>
 
                 @error ('currentDistributor.pa_costs')
@@ -142,7 +142,7 @@
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
-                <x-form.simple-currency :id="'forecast-grant'" :label="'Forecast Grant'" :hasError="$errors->has('currentDistributor.forecast_grant')" wire:model="currentDistributor.forecast_grant">
+                <x-form.simple-currency :id="'forecast-grant'" :label="'Forecast Grant'" :hasError="$errors->has('currentDistributor.forecast_grant')" wire:model="currentDistributor.forecast_grant" placeholder="0">
                 </x-form.simple-currency>
 
                 @error ('currentDistributor.forecast_grant')
