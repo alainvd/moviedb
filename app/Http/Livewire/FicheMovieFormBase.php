@@ -293,6 +293,26 @@ class FicheMovieFormBase extends FicheFormBase
         // post save operations
     }
 
+    function fichePostSaveRedirect()
+    {
+        // in dossier context, go back to dossier
+        // will also work when coming from wizard
+        if (isset($this->dossier) && isset($this->activity) && isset($this->fiche)) {
+            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+        }
+
+        // if editor is viewing stand-alone fiche, go back to movie listing
+        if ($this->isEditor && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('datatables-movies'));
+        }
+        // if applicant is viewing stand-alone fiche, go back to homepage
+        if ($this->isApplicant && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('root'));
+        }
+        // fallback: redirect to stored previous page
+        return redirect()->to($this->previous);
+    }
+
     public function saveItems($existing_items, $saving_items, $saving_class)
     {
         // delete first

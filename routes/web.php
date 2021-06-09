@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Call;
+use App\Models\Fiche;
 use App\Models\Dossier;
+use App\Models\Activity;
 use App\Http\Livewire\Export;
 use App\Http\Livewire\MovieTVForm;
 use Illuminate\Support\Facades\App;
@@ -128,10 +130,10 @@ Route::middleware('cas.auth')->group(function () {
         ])
         ->only('index')
         ->name('index', 'dossier-history');
-    Route::get('dossiers/{dossier:project_ref_id}/fiches/{fiche}/history', [HistoryController::class, 'fiche'])
+    Route::get('dossiers/{dossier:project_ref_id}/activity/{activity}/fiche/{fiche}/history', [HistoryController::class, 'fiche'])
         ->middleware('can:access dashboard')
         ->name('fiche-history');
-    Route::get('fiches/{fiche}/history', [HistoryController::class, 'fiche'])
+    Route::get('fiche/{fiche}/history', [HistoryController::class, 'fiche'])
         ->middleware('can:access dashboard')
         ->name('fiche-history-no-dossier');
 
@@ -140,32 +142,43 @@ Route::middleware('cas.auth')->group(function () {
         ->name('movie-wizard');
 });
 
-// One path that redirects to correct fiche form based on activity
-Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fiche?}', function(Dossier $dossier, $activity, $fiche = null) {
-    if ($activity == 1 && $dossier->action_id==7)
-        return redirect()->route('tv-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
-    if ($activity == 1)
+// Redirect for 'dossier-create-fiche', shows the correct form based on:
+//  - activity within dossier (description - which is typically dist; previous-work etc.)
+//  - action (which action is dossier for - FILMOVE, TVONLINE etc.)
+Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche-redirect/{fiche?}', function(Dossier $dossier, Activity $activity, Fiche $fiche = null) {
+
+    if ($activity->name == 'description')
         return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
-    if ($activity == 2)
+
+    if ($activity->name == 'previous-work' && $dossier->action->name == 'DEVVG')
+        return redirect()->route('vg-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity->name == 'previous-work')
         return redirect()->route('dev-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
-    if ($activity == 3 && $dossier->action_id==7)
+        
+    if ($activity->name == 'current-work' && $dossier->action->name == 'TVONLINE')
         return redirect()->route('tv-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
-    if ($activity == 3)
+    if ($activity->name == 'current-work' && $dossier->action->name == 'DEVVG')
+        return redirect()->route('vg-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity->name == 'current-work')
         return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
-    if ($activity == 5)
+
+    if ($activity->name == 'short-films')
         return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+
 })->middleware('cas.auth')->name('dossier-create-fiche');
 
 // Fiches within dossier context
 Route::middleware('cas.auth')->group(function () {
     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/{fiche?}', MovieDistForm::class)
         ->name('dist-fiche-form');
-    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPrevForm::class)
-        ->name('dev-prev-fiche-form');
     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche?}', MovieDevCurrentForm::class)
         ->name('dev-current-fiche-form');
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche?}', MovieDevPrevForm::class)
+        ->name('dev-prev-fiche-form');
     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)
         ->name('tv-fiche-form');
+    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-current/{fiche?}', VideoGameCurrentForm::class)
+    //     ->name('vg-current-fiche-form');
     // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)
     //     ->name('vg-prev-fiche-form');
 });
@@ -184,6 +197,8 @@ Route::middleware('cas.auth')->group(function () {
         ->name('movie-dev-prev');
     Route::get('/movie-tv/{fiche?}', MovieTVForm::class)
         ->name('movie-tv');
+    // Route::get('/vg-current/{fiche?}', VideoGameCurrentForm::class)
+    //     ->name('vg-current');
     // Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)
     //     ->name('vg-prev');
 });

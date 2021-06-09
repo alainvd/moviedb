@@ -168,13 +168,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
 
-        // go back after saving fiche
-        // if editor is viewing stand-alone fiche, go back to movie listing
-        if ($this->isEditor && $this->refererStandAloneFiche()) {
-            return redirect()->to(route('datatables-movies'));
-        }
-        // default redirect to stored previous page
-        return redirect()->to($this->previous);
+        $this->fichePostSaveRedirect();
     }
 
     public function render()
