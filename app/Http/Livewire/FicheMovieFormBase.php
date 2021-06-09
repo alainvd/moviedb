@@ -37,6 +37,8 @@ class FicheMovieFormBase extends FicheFormBase
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
 
+    public $standAloneFiche = false;
+
     public $shootingLanguages;
 
     public $crews = [];
@@ -68,11 +70,11 @@ class FicheMovieFormBase extends FicheFormBase
 
     protected function refererStandAloneFiche() {
         $referer = request()->headers->get('referer');
-        if (Str::contains($referer, '/movie-dist/')
-        || Str::contains($referer, '/movie-dev-current/')
-        || Str::contains($referer, '/movie-dev-prev/')
-        || Str::contains($referer, '/movie-tv/') 
-        || Str::contains($referer, '/vg-prev/')) {
+        if (Str::contains($referer, '/movie-dist')
+        || Str::contains($referer, '/movie-dev-current')
+        || Str::contains($referer, '/movie-dev-prev')
+        || Str::contains($referer, '/movie-tv')
+        || Str::contains($referer, '/vg-prev')) {
             return true;
         }
         return false;
@@ -83,9 +85,17 @@ class FicheMovieFormBase extends FicheFormBase
         if ($this->fiche && request()->user()->cannot('view', $this->fiche)) {
             abort(404);
         }
-        
+
+        if (in_array($request->segment(1),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv', 'vg-current', 'vg-prev'])) {
+            $this->standAloneFiche = true;
+        }
+
         $this->shootingLanguages = collect([]);
         if (!$this->fiche) {
+            // Applicant can only submit dist stand alone fiche
+            if (Auth::user()->hasRole('applicant') && $this->standAloneFiche && (get_class($this) !== 'App\Http\Livewire\MovieDistForm')) {
+                abort(404);
+            }
             $this->isNew = true;
             $this->fiche = new Fiche;
             $this->movie = new Movie(Movie::defaultsMovie());
@@ -180,23 +190,28 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            switch ($this->activity->name) {
-                case 'description':
-                    $type = 'dist';
-                    break;
-                case 'previous-work':
-                    $type = 'dev-prev';
-                    break;
-                case 'current-work':
-                    if ($this->dossier->action->name == 'TVONLINE') {
-                        $type = 'tv';
-                    } else {
+            if (isset($this->activity)) {
+                switch ($this->activity->name) {
+                    case 'description':
+                        $type = 'dist';
+                        break;
+                    case 'previous-work':
+                        $type = 'dev-prev';
+                        break;
+                    case 'current-work':
+                        if ($this->dossier->action->name == 'TVONLINE') {
+                            $type = 'tv';
+                        } else {
+                            $type = 'dev-current';
+                        }
+                        break;
+                    case 'short-films':
                         $type = 'dev-current';
-                    }
-                    break;
-                case 'short-films':
-                    $type = 'dev-current';
-                    break;
+                        break;
+                }
+            }
+            else {
+                $type = 'dist';
             }
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
@@ -206,14 +221,16 @@ class FicheMovieFormBase extends FicheFormBase
             ])->save();
 
             // TODO: code dublication with MovieWizard.php
-            $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
-            if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
-                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
-            } else {
-                $this->dossier->fiches()->attach(
-                    $this->movie->fiche->id,
-                    ['activity_id' => $this->activity->id]
-                );
+            if (isset($this->dossier)) {
+                $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
+                if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                } else {
+                    $this->dossier->fiches()->attach(
+                        $this->movie->fiche->id,
+                        ['activity_id' => $this->activity->id]
+                    );
+                }
             }
 
             // TODO: this will not show if we redirect away

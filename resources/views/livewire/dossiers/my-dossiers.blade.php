@@ -35,7 +35,7 @@
                     {{ $dossier->project_ref_id }}
                 </x-table.cell>
                 <x-table.cell class="text-center">
-                    {{ $dossier->updated_at->format('d-m-Y') }}
+                    {{ $dossier->updated_at->format('d.m.Y') }}
                 </x-table.cell>
                 <x-table.cell class="text-center uppercase">
                     {{ $dossier->call->status }}

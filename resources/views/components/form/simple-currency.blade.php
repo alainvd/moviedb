@@ -17,7 +17,7 @@
             step="any"
             id="{{ $id ?? 'currency' }}"
             class="block w-full mt-1 py-2 px-3 pl-8 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }}"
-            placeholder="0.00"
+            placeholder="{{ $placeholder ?? '0.00' }}"
             {{ $attributes }}>
     </div>
     @endif

@@ -39,7 +39,7 @@ class TableEditMovieDocuments extends TableEditBase
 
     protected $upload_rules = [
         'editing.document_type' => 'required|string',    
-        'editing.file' => 'required|mimetypes:application/pdf,application/excel,application/vnd.ms-excel, application/vnd.msexcel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|max:12288',
+        'editing.file' => 'required|mimetypes:application/pdf,application/excel,application/vnd.ms-excel,application/vnd.msexcel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.oasis.opendocument.spreadsheet,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text,image/jpeg,image/pjpeg,image/png,image/tiff,application/x-bzip,application/x-bzip2,application/gzip,application/vnd.rar,application/x-tar,application/zip,application/x-7z-compressed,application/vnd.ms-outlook|max:12288',
         'editing.comments' => 'required|string',
     ];
 
@@ -58,7 +58,7 @@ class TableEditMovieDocuments extends TableEditBase
     {
       return [            
         'editing.file.required' => "You must use the 'Choose file' button to select which file you wish to upload",
-        'editing.file.mimetypes' => "Only PDF or spreadsheet files are allowed",
+        'editing.file.mimetypes' => "PDF, spreadsheet, text document, image, archive and msg files are allowed",
       ];
     }
 

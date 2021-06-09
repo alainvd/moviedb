@@ -91,7 +91,7 @@
             @if(empty($print))
             <div x-data class="flex items-center justify-end mt-32 space-x-3 print:hidden">
                 @if ($hasHistory)
-                    <a href="{{ route('dossier-history', $dossier) }}" class="block text-md text-indigo-700 hover:text-indigo-400">
+                    <a href="{{ route('dossier-history', $dossier) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
                         View history
                     </a>
                 @endif
