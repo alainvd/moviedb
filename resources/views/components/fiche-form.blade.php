@@ -12,8 +12,8 @@
             @if(empty($print))
             <div id="fiche-form-buttons" class="flex items-center justify-end mt-12 space-x-3 asdf-123 print:hidden">
                 @if ($hasHistory && Auth::user()->hasRole('editor'))
-                    @if($dossier && $fiche)
-                    <a href="{{ route('fiche-history', [$dossier, $fiche]) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
+                    @if($dossier && $activity && $fiche)
+                    <a href="{{ route('fiche-history', [$dossier, $activity, $fiche]) }}" class="block text-indigo-700 text-md hover:text-indigo-400">
                         View history
                     </a>
                     @elseif($fiche)
