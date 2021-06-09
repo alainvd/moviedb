@@ -74,6 +74,10 @@ class MovieController extends Controller
         {
             return redirect()->route('movie-tv', ['fiche' => $fiche]);
         }
+        // elseif($fiche->type === 'vg')
+        // {
+        //     return redirect()->route('vg-prev', ['fiche' => $fiche]);
+        // }
         else
         {
             return view('movies.show', ['movie' => $fiche->movie]);
