@@ -123,7 +123,6 @@ Route::middleware('cas.auth')->group(function () {
 
     // History routes
     Route::resource('dossiers/{dossier}/history', HistoryController::class)
-        ->middleware('can:access dashboard')
         ->scoped([
             'dossier' => 'project_ref_id'
         ])
