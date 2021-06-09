@@ -218,21 +218,7 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(SalesAgent::where('movie_id', $this->movie->id)->get(), $this->sales_agents, SalesAgent::class);
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
 
-        // go back after saving fiche
-        // if coming from wizard, go to dossier
-        if (Str::endsWith($this->previous, 'movie-wizard')) {
-            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
-        }
-        // if editor is viewing stand-alone fiche, go back to movie listing
-        if ($this->isEditor && $this->refererStandAloneFiche()) {
-            return redirect()->to(route('datatables-movies'));
-        }
-        // if applicant is viewing stand-alone fiche, go back to homepage
-        if ($this->isApplicant && $this->refererStandAloneFiche()) {
-            return redirect()->to(route('root'));
-        }
-        // default redirect to stored previous page
-        return redirect()->to($this->previous);
+        $this->fichePostSaveRedirect();
     }
 
     public function render()

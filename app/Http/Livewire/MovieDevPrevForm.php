@@ -134,13 +134,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         $this->saveItems(Producer::where('movie_id', $this->movie->id)->get(), $this->producers, Producer::class);
         $this->saveItems(SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get(), $this->sales_distributors, 'sales_distributor_country');
 
-        // go back after saving fiche
-        // if editor is viewing stand-alone fiche, go back to movie listing
-        if ($this->isEditor && $this->refererStandAloneFiche()) {
-            return redirect()->to(route('datatables-movies'));
-        }
-        // default redirect to stored previous page
-        return redirect()->to($this->previous);
+        $this->fichePostSaveRedirect();
     }
 
     public function render()
