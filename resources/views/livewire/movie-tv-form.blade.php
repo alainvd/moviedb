@@ -4,6 +4,7 @@
     :fiche="$fiche"
     :hasHistory="$hasHistory ?? false"
     :dossier="$dossier ?? null"
+    :activity="$activity ?? null"
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
     :standAloneFiche="$standAloneFiche"

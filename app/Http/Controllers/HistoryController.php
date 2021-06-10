@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dossier;
+use Carbon\Carbon;
 use App\Models\Fiche;
 use App\Models\Movie;
 use App\Models\Status;
-use Carbon\Carbon;
+use App\Models\Dossier;
+use App\Models\Activity;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class HistoryController extends Controller
@@ -28,14 +29,13 @@ class HistoryController extends Controller
         ]);
     }
 
-    public function fiche(Dossier $dossier = null, Fiche $fiche)
+    public function fiche(Dossier $dossier = null, Activity $activity = null, Fiche $fiche)
     {
         $logs = self::getFormattedLogs($fiche);
 
-        if ($dossier){
+        if ($dossier && $activity){
             $crumbs = $this->getCrumbs($dossier);
             $viewHistory = array_pop($crumbs);
-            $activity = $dossier->fiches()->find($fiche->id)->pivot->activity_id;
             $url = route('dossier-create-fiche', [$dossier, $activity, $fiche]);
             $crumbs[] = [
                 'title' => 'Edit fiche',
