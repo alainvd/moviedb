@@ -37,10 +37,11 @@ class SearchController extends Controller
             }
 
             $query->where(function ($query) use ($q) {
-                    $query->forDirector($q)
-                        ->orWhere(function ($query) use ($q) {
-                            $query->where('original_title', 'like', "%{$q}%");
-                        });
+                $q = strip_tags(addslashes($q));
+                $query->forDirector($q)
+                    ->orWhere(function ($query) use ($q) {
+                        $query->where('original_title', 'like', "%{$q}%");
+                    });
                 });
         }
 
