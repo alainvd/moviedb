@@ -4,3 +4,6 @@
     cl.remove('no-js');
     cl.add('has-js');
 </script>
+@if(App::environment('production'))
+<script type="application/json">{"utility":"analytics","siteID":"599","sitePath":["creative-europe-media-database.eacea.ec.europa.eu"],"is404":false,"is403":false,"instance":"ec.europa.eu"}</script>
+@endif
