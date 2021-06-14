@@ -28,10 +28,12 @@ class FicheFormBase extends Component
 
     public function mount(Request $request)
     {
-        if (Auth::user()->hasRole('applicant')) {
+        $user = Auth::user();
+        /** @var User $user */
+        if ($user->hasRole('applicant')) {
             $this->isApplicant = true;
         }
-        if (Auth::user()->hasRole('editor')) {
+        if ($user->hasRole('editor')) {
             $this->isEditor = true;
         }
         if ($this->isApplicant && $this->isNew) {
@@ -93,7 +95,7 @@ class FicheFormBase extends Component
                 ];
             }
             $routes[] = [
-                    'title' => 'Edit fiche'    
+                    'title' => 'Edit fiche'
             ];
             return $routes;
         } else {

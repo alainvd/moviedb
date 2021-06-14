@@ -15,7 +15,7 @@ class ChecklistSeeder extends Seeder
      */
     public function run()
     {
-        $devslate = StepDefinition::where("action","=","DEVSLATE")->get();
+        $devslate = StepDefinition::where("action", "=", "DEVSLATE")->get();
 
         foreach ($devslate as $step_definition){
             Checklist::create([

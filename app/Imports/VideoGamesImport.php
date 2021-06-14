@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 
-use App\Media;
 use App\Models\VideoGame;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -16,16 +15,11 @@ class VideoGamesImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-
-
         return new VideoGame([
             'id' => $row['id'],
             'original_title' => $row['original_title'],
             'synopsis' => $row['logline'],
 
         ]);
-
-
     }
-
 }

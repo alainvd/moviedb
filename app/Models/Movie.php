@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Models\Crew;
-use App\Models\Location;
 use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Audience;
 use App\Models\Document;
 use App\Models\Language;
+use App\Models\Location;
 use App\Models\Distributor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class Movie extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
 
     /**
@@ -24,12 +26,25 @@ class Movie extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected static $logUnguarded = true;
+    protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
+    protected static $recordEvents = ['updated'];
 
     /**
      * Default attribute values
      */
     protected $attributes = [
+    ];
+
+    protected $appends = [
+        'director',
     ];
 
     protected $dates = [
@@ -52,16 +67,6 @@ class Movie extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'photography_start' => 'date:d.m.Y',
-        'photography_end' => 'date:d.m.Y',
-        'delivery_date' => 'date:d.m.Y',
-        'broadcast_date' => 'date:d.m.Y',
-        'rights_contract_start_date' => 'date:d.m.Y',
-        'rights_contract_end_date' => 'date:d.m.Y',
-        'rights_contract_signature_date' => 'date:d.m.Y',
-        'rights_adapt_contract_start_date' => 'date:d.m.Y',
-        'rights_adapt_contract_end_date' => 'date:d.m.Y',
-        'rights_adapt_contract_signature_date' => 'date:d.m.Y',
     ];
 
     const PLATFORMS = [
@@ -123,6 +128,11 @@ class Movie extends Model
         'PRODUCER' => 'Producer',
         'COPRODUCER' => 'Coproducer',
     ];
+
+    public function status()
+    {
+        return $this->hasOneThrough(Status::class, Fiche::class, 'movie_id', 'id', 'id', 'status_id');
+    }
 
     public function crew()
     {
@@ -199,7 +209,7 @@ class Movie extends Model
             $alias => Person::selectRaw('GROUP_CONCAT(firstname, " ", lastname SEPARATOR " , ")')
                 ->leftJoin('crews', 'crews.person_id', 'people.id')
                 ->whereColumn('crews.movie_id', 'movies.id')
-                ->where('crews.title_id', '=', 1)       
+                ->where('crews.title_id', '=', 1)
         ]);
     }
 
@@ -210,15 +220,87 @@ class Movie extends Model
             $query
             ->leftJoin('crews', 'crews.person_id', 'people.id')
             ->whereRaw("CONCAT(crew.people.firstname,'',crew.people.lastname) = '$value'");
-            
+
         });
     }
 
+    public function scopeForDirector($query, $director)
+    {
+        return $query->where(function ($query) use ($director) {
+            $query->select('titles.code')
+                ->from('crews')
+                ->join('people', 'people.id', '=', 'crews.person_id')
+                ->join('titles', 'titles.id', '=', 'crews.title_id')
+                ->whereColumn('crews.movie_id', 'movies.id')
+                ->whereRaw("CONCAT(people.firstname, ' ', people.lastname) like '%{$director}%'")
+                ->limit(1);
+            }, 'DIRECTOR');
+    }
+
+    public function scopeForStatusId($query, $statusId)
+    {
+        return $query->where(function ($query) {
+            $query->select('fiches.status_id')
+                ->from('fiches')
+                ->whereColumn('fiches.movie_id', 'movies.id')
+                ->limit(1);
+        }, $statusId);
+    }
 
     static function defaultsMovie()
     {
         return [
             'total_budget_currency_code' => 'EUR',
         ];
+    }
+
+    public function getPhotographyStartAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getPhotographyEndAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getDeliveryDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getBroadcastDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getRightsContractStartDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getRightsContractEndDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getRightsContractSignatureDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getRightsAdaptContractStartDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getRightsAdaptContractEndDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
+    }
+
+    public function getRightsAdaptContractSignatureDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }

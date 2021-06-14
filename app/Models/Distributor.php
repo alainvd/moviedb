@@ -10,6 +10,10 @@ class Distributor extends Model
 {
     use HasFactory;
 
+    protected $dates = [
+        'forecast_release_date'
+    ];
+
     protected $fillable = [
         'country_id',
         'name',

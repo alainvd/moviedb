@@ -13,7 +13,7 @@ class CurrentWork extends BaseActivity
             'activity' => $this->activity,
         ];
 
-        return $this->dossier->action->name === 'TV'
+        return $this->dossier->action->name === 'TVONLINE'
             ? route('tv-fiche-form', $params)
             : route('dev-current-fiche-form', $params);
     }

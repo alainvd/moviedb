@@ -7,12 +7,17 @@
 
 <div
     x-data=""
+    @if($attributes['id'] == 'sales_distributors_release_date')
+    @elseif($attributes['id'] == 'distributors-forecast-release-date')
+    {{-- livewire modal datepickers are inited and destroyed in respective templates --}}
+    @else
     x-init="new Pikaday({
         field: $refs.input,
         theme: 'moviedb-theme',
         format: 'DD.MM.YYYY',
-        firstDay: 1
+        firstDay: 1,
     })"
+    @endif
     @change="$dispatch('input', $event.target.value)"
     class="relative"
 >
@@ -20,7 +25,7 @@
         {{ $attributes }}
         x-ref="input"
         placeholder="DD.MM.YYYY"
-        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }}"
+        class="my-2 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }}"
         autocomplete="off"
         {{ $disabled ?? false ? 'disabled' : ''  }}
     />
@@ -36,5 +41,5 @@
 @if (!empty($print) && !empty($value))
 <!-- Output for print -->
 <span class="font-bold">{{ $label }}</span>
-<span class="">{{ $value ? date('d.m.Y.', strtotime($value)) : '' }}</span>
+<span class="">{{ $value ? date('d.m.Y', strtotime($value)) : '' }}</span>
 @endif

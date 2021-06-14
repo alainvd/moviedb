@@ -11,6 +11,7 @@ use App\Models\Admission;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class MovieWizard extends Component
 {
@@ -40,6 +41,10 @@ class MovieWizard extends Component
 
     public function mount(Dossier $dossier, Activity $activity)
     {
+        if (request()->user()->cannot('update', $dossier)) {
+            return abort(404);
+        }
+
         $this->dossier = $dossier;
         $this->movie = new Movie();
         $this->user = Auth::user();
@@ -92,12 +97,12 @@ class MovieWizard extends Component
         switch ($action) {
             // TODO: Wizard is only available to some of these actions
             // Or I could check for activity... it's always 'description' right?
-            case 'DISTSEL':
+            case 'FILMOVE':
             case 'DISTSAG':
             case 'DEVSLATE':
-            case 'DEVSLATEMINI':
-            case 'CODEVELOPMENT':
-            case 'TV':
+            case 'DEVMINISLATE':
+            case 'CODEV':
+            case 'TVONLINE':
                 // Attach fiche for activity
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
@@ -110,6 +115,17 @@ class MovieWizard extends Component
                         ['activity_id' => $this->activity->id]
                     );
                 }
+                $hasMovie = ActivityLog::forSubject($this->dossier)
+                    ->where('properties->model', 'Movie')
+                    ->count();
+                activity()->on($this->dossier)
+                    ->by($this->user)
+                    ->withProperties([
+                        'model' => 'Movie',
+                        'operation' => $hasMovie ? 'replaced' : 'attached',
+                        'movie' => $this->movie->only(['id', 'original_title', 'year_of_copyright', 'isan', 'imdb_url', 'synopsis']),
+                    ])
+                    ->log('updated');
                 $this->notify('Movie added/updated');
             case 'DISTAUTOG':
                 if ($this->admissionsTable && $this->admission) {
@@ -132,7 +148,7 @@ class MovieWizard extends Component
                 $query->whereNotIn('status_id', function ($query) {
                     $query->select('id')
                         ->from('statuses')
-                        ->whereIn('name', ['Duplicated']);
+                        ->whereIn('name', ['Duplicated', 'Draft']);
                 });
             });
 

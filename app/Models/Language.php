@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Movie;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Language extends Model
 {
@@ -36,48 +37,56 @@ class Language extends Model
     }
 
     public static function languagesGrouped() {
-        $languagesGrouped = Language::where('active', true)
-            ->orderBy('position', 'desc')
-            ->orderBy('name')
-            ->get()
-            ->groupBy('position')
-            ->toArray();
+        $languagesGrouped = Cache::rememberForever('languagesGrouped', function () {
+            return Language::where('active', true)
+                ->orderBy('position', 'desc')
+                ->orderBy('name')
+                ->get()
+                ->groupBy('position')
+                ->toArray();
+        });
         return $languagesGrouped;
     }
 
     public static function languagesGroupedChoices() {
-        $l = Language::where('active', true)
-            ->orderBy('position', 'desc')
-            ->orderBy('name')
-            ->get()
-            ->map(fn ($lang) => [
-                'position' => $lang->position,
-                'value' => $lang->id,
-                'label' => $lang->name,
-            ])
-            ->groupBy('position')
-            ->toArray();
-        $i = 0;
-        foreach ($l as $group => $choices) {
-            $i++;
-            $languagesGroupedChoices[] = [
-                'label' => '---',
-                'id' => $i,
-                'choices' => $choices,
-            ];
-        }
+        $languagesGroupedChoices = Cache::rememberForever('languagesGroupedChoices', function () {
+            $l = Language::where('active', true)
+                ->orderBy('position', 'desc')
+                ->orderBy('name')
+                ->get()
+                ->map(fn ($lang) => [
+                    'position' => $lang->position,
+                    'value' => $lang->id,
+                    'label' => $lang->name,
+                ])
+                ->groupBy('position')
+                ->toArray();
+            $i = 0;
+            foreach ($l as $group => $choices) {
+                $i++;
+                $lGroupedChoices[] = [
+                    'label' => '',
+                    'id' => $i,
+                    'choices' => $choices,
+                ];
+            }
+            return $lGroupedChoices;
+        });
         return $languagesGroupedChoices;
     }
 
     public static function languagesCodeName() {
-        return Language::where('active', true)
-            ->orderBy('position', 'desc')
-            ->orderBy('name')
-            ->get()
-            ->map(fn ($lang) => [
-                'code' => $lang->code,
-                'name' => $lang->name,
-            ])
-            ->toArray();
+        $languagesCodeName = Cache::rememberForever('languagesCodeName', function () {
+            return Language::where('active', true)
+                ->orderBy('position', 'desc')
+                ->orderBy('name')
+                ->get()
+                ->map(fn ($lang) => [
+                    'code' => $lang->code,
+                    'name' => $lang->name,
+                ])
+                ->toArray();
+        });
+        return $languagesCodeName;
     }
 }

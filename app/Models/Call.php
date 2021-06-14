@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,8 @@ class Call extends Model
     protected $fillable = [
         'name',
         'description',
+        'action_id',
+        'year',
         'published_at',
         'status',
     ];
@@ -39,6 +42,17 @@ class Call extends Model
         'published_at',
     ];
 
+    public function getClosedAttribute()
+    {
+        if ($this->deadline2) {
+            return Carbon::now()->greaterThanOrEqualTo($this->deadline2);
+        }
+        if ($this->deadline1) {
+            return Carbon::now()->greaterThanOrEqualTo($this->deadline1);
+        }
+        // TODO: change to true when testing is done
+        return false;
+    }
 
     public function dossiers()
     {
@@ -47,5 +61,15 @@ class Call extends Model
 
     public function action(){
         return $this->belongsTo(\App\Models\Action::class);
+    }
+
+    public function scopeClosed($query)
+    {
+        return $query->whereDate('deadline1', '<=', Carbon::now());
+    }
+
+    public function scopeOpen($query)
+    {
+        return $query->whereDate('deadline1', '>', Carbon::now());
     }
 }

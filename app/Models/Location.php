@@ -60,7 +60,7 @@ class Location extends Model
             $location[] = array_merge(Location::defaultsLocation(), ['type' => 'SHOOT']);
             $location[] = array_merge(Location::defaultsLocation(), ['type' => 'POST']);
         }
-        // Creative Documentary
+        // Documentary
         if ($genre_id == 2) {
             $location[] = array_merge(Location::defaultsLocation(), ['type' => 'SHOOT']);
             $location[] = array_merge(Location::defaultsLocation(), ['type' => 'POST']);
@@ -83,12 +83,14 @@ class Location extends Model
         }
         if ($genre_id == 2) {
             return [
+                'SHOOT',
                 'POST',
             ];
         }
         if ($genre_id == 3) {
             return [
                 'POST',
+                'STUDIO',
             ];
         }
         return [];

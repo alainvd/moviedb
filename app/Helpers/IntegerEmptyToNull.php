@@ -16,7 +16,7 @@ trait IntegerEmptyToNull {
             if (count(explode('.', $field)) == 2) {
                 list($var, $atr) = explode('.', $field);
                 if (isset($this->{$var}->{$atr})) {
-                    if ($this->{$var}->{$atr} == '') {
+                    if ($this->{$var}->{$atr} === '') {
                         if (Str::contains($rule, 'integer')) {
                             $this->{$var}->{$atr} = NULL;
                         }

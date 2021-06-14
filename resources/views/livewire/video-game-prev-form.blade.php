@@ -1,4 +1,14 @@
-<x-fiche-form :layout="$layout" :print="$print">
+<x-fiche-form
+    :layout="$layout"
+    :print="$print"
+    :fiche="$fiche"
+    :hasHistory="$hasHistory ?? false"
+    :dossier="$dossier"
+    :activity="$activity ?? null"
+    :isApplicant="$isApplicant"
+    :isEditor="$isEditor"
+    :standAloneFiche="$standAloneFiche"
+>
 
     <!-- title -->
     <div class="my-8">
@@ -50,7 +60,7 @@
             :movie="$movie"
         ></x-details.summary>
     </div>
-    
+
     <!--  tech-vg -->
     <div class="my-8">
         <x-details.tech-vg

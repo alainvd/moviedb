@@ -15,6 +15,7 @@ class CountrySeeder extends Seeder
     public function run()
     {
         DB::table('countries')->insert([
+            ["group" => "00zero", "name" => "N/A", "code" => "00", "continent" => "", "position" => 0],
             ["group" => "other", "name" => "Andorra", "code" => "AD", "continent" => "EU", "position" => 0],
             ["group" => "other", "name" => "Albania", "code" => "AL", "continent" => "EU", "position" => 0],
             ["group" => "eu", "name" => "Austria", "code" => "AT", "continent" => "EU", "position" => 0],

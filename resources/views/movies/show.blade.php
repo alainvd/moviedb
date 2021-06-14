@@ -1,4 +1,4 @@
-<x-landing-layout>
+<x-ecl-layout>
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
@@ -36,7 +36,6 @@
                     </dd>
                 </div>
 
-
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">
                         Distributors
@@ -48,22 +47,17 @@
                                 @foreach($movie->distributors as $distributor)
                                     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                         <div class="flex items-center flex-1 w-0">
-
-
-                                    <span class="flex-1 w-0 ml-2 truncate">
-                  {{$distributor->name}}
-                </span>
+                                            <span class="flex-1 w-0 ml-2 truncate">
+                                                {{$distributor->name}}
+                                            </span>
                                         </div>
-
                                     </li>
                                 @endforeach
-
                             </ul>
                         @else
                             No Distributor Found
                         @endif
                     </dd>
-
                 </div>
 
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -77,22 +71,17 @@
                                 @foreach($movie->documents as $document)
                                     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                         <div class="flex items-center flex-1 w-0">
-
-
-                                    <span class="flex-1 w-0 ml-2 truncate">
-                  {{$document->filename}}
-                </span>
+                                            <span class="flex-1 w-0 ml-2 truncate">
+                                                {{$document->filename}}
+                                            </span>
                                         </div>
-
                                     </li>
                                 @endforeach
-
                             </ul>
                         @else
                             No Documents Found
                         @endif
                     </dd>
-
                 </div>
 
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -106,24 +95,18 @@
                                 @foreach($movie->languages as $language)
                                     <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                         <div class="flex items-center flex-1 w-0">
-
-
-                                    <span class="flex-1 w-0 ml-2 truncate">
-                  {{$language->name}}
-                </span>
+                                            <span class="flex-1 w-0 ml-2 truncate">
+                                                {{$language->name}}
+                                            </span>
                                         </div>
-
                                     </li>
                                 @endforeach
-
                             </ul>
                         @else
                             No Languages Found
                         @endif
                     </dd>
-
                 </div>
-
 
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">
@@ -134,16 +117,12 @@
                             @foreach($movie->crew as $crewLine)
                                 <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div class="flex items-center flex-1 w-0">
-
-
-                                    <span class="flex-1 w-0 ml-2 truncate">
-                  {{$crewLine->person->fullName}} ({{$crewLine->title->name}}) - {{$crewLine->points}} points
-                </span>
+                                        <span class="flex-1 w-0 ml-2 truncate">
+                                            {{$crewLine->person->fullName}} ({{$crewLine->title->name}}) - {{$crewLine->points}} points
+                                        </span>
                                     </div>
-
                                 </li>
                             @endforeach
-
                         </ul>
                     </dd>
                 </div>
@@ -157,21 +136,16 @@
                             @foreach($movie->people as $person)
                                 <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div class="flex items-center flex-1 w-0">
-
-
-                                    <span class="flex-1 w-0 ml-2 truncate">
-                  {{$person->fullName}}
-                </span>
+                                        <span class="flex-1 w-0 ml-2 truncate">
+                                            {{$person->fullName}}
+                                        </span>
                                     </div>
-
                                 </li>
                             @endforeach
-
                         </ul>
                     </dd>
                 </div>
             </dl>
         </div>
     </div>
-
-</x-landing-layout>
+</x-ecl-layout>

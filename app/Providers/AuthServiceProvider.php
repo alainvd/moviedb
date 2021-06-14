@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Dossier;
 use App\Models\User;
+use App\Policies\DossierPolicy;
+use App\Policies\FichePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -16,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        Fiche::class => FichePolicy::class,
+        Dossier::class => DossierPolicy::class,
     ];
 
     /**
@@ -30,7 +34,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::viaRequest('movie-db', function ($request) {
             if (session()->get('cas_user')) {
-                return User::firstOrCreateByAttributes(cas()->getAttributes());
+                if (cas()->isAuthenticated()) {
+                    return User::firstOrCreateByAttributes(cas()->getAttributes());
+                } else return null;
             } else return null;
         });
     }

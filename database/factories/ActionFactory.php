@@ -24,12 +24,12 @@ class ActionFactory extends BaseFactory
     {
         return [
             'name' => $this->faker->randomElement([
-                'DISTSEL',
+                'FILMOVE',
                 'DISTSAG',
                 'DEVSLATE',
-                'DEVSLATEMINI',
-                'CODEVELOPMENT',
-                'TV',
+                'DEVMINISLATE',
+                'CODEV',
+                'TVONLINE',
                 'DEVVG',
                 'DISTAUTOG',
             ]),

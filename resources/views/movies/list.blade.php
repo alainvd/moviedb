@@ -1,4 +1,4 @@
-<x-landing-layout>
+<x-ecl-layout>
     <div class="pt-2 pb-6 md:py-6">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
             <div class="md:flex md:items-center md:justify-between">
@@ -8,7 +8,6 @@
                     </h2>
                 </div>
             </div>
-
 
             <div class="flex flex-col mt-4">
                 <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -51,7 +50,6 @@
                                     <tr class="bg-gray-100">
                                         @endif
                                         <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
-                                            <a href="{{route('movie_show', ['movie'=>$movie->id])}}">{{$movie->original_title}}</a>
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
                                             {{$movie->year_of_copyright}}
@@ -93,4 +91,4 @@
 
         </div>
     </div>
-</x-landing-layout>
+</x-ecl-layout>

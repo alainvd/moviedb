@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Action;
 use App\Models\Call;
+use Carbon\Carbon;
+use DateInterval;
 
 class CallFactory extends BaseFactory
 {
@@ -33,7 +35,11 @@ class CallFactory extends BaseFactory
         );
 
         $action = $this->getRelation(Action::class);
-        $publishedAt = $this->faker->dateTimeBetween('-3 years', 'now');
+        $publishedAt = $this->faker->dateTimeBetween('-1 years', 'now');
+        $deadline1 = $this->faker->dateTimeBetween(
+            $publishedAt,
+            $publishedAt->add(new DateInterval('P6M')
+        ));
 
         return [
             // H2020-LC-GD-2020-3
@@ -42,7 +48,8 @@ class CallFactory extends BaseFactory
             'year' => $this->faker->numberBetween(1990, 2020),
             'description' => $this->faker->text,
             'published_at' => $publishedAt,
-            'status' => in_array($publishedAt->format('Y'), [date('Y') - 1, date('Y')]) ? 'open' : 'closed',
+            'deadline1' => $deadline1,
+            'status' => $deadline1->diff(Carbon::now())->invert ? 'open' : 'closed',
         ];
     }
 }

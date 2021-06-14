@@ -31,6 +31,7 @@ class EULoginAuth
     public function handle($request, Closure $next)
     {
         if ($this->cas->checkAuthentication()) {
+
             // Store the user credentials in a Laravel managed session
             session()->put('cas_user', $this->cas->user());
 
@@ -38,17 +39,12 @@ class EULoginAuth
                 $user = User::where('eu_login_username', $this->cas->user())
                     ->first();
 
-                if (! $user) {
+                if (!$user) {
                     $user = User::factory()->make([
+                        'domain' => 'external',
+                        'domainUsername' => $this->cas->user(),
                         'eu_login_username' => $this->cas->user(),
-                    ])->assignRole('applicant');
-                }
-
-                // impersonate
-                if($request->session()->has('impersonate'))
-                {
-                    $user = User::where('id', $request->session()->get('impersonate'))
-                    ->first();
+                    ]);
                 }
 
                 cas()->setAttributes(
@@ -56,16 +52,17 @@ class EULoginAuth
                 );
             }
 
-            session()->put('cas_attributes', cas()->getAttributes());
-
-
+            // session()->put('cas_attributes', cas()->getAttributes());
         } else {
+
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             }
             $this->cas->authenticate();
+
         }
 
         return $next($request);
     }
+
 }

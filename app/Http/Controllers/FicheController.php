@@ -86,9 +86,7 @@ class FicheController extends Controller
      */
     public function destroy($id)
     {
-        Fiche::find($id)->delete();
-
-        return redirect()->back();
+        //
     }
 
     public static function prepareFiche(Fiche $fiche) {
@@ -97,11 +95,11 @@ class FicheController extends Controller
         switch ($fiche->type) {
             case 'dev-current':
                 $f = new MovieDevCurrentForm();
-                $title = 'Films - Current work';
+                $title = 'Audiovisual Work - Development - For grant request';
                 break;
             case 'dev-prev':
                 $f = new MovieDevPrevForm();
-                $title = 'Films - Previous work';
+                $title = 'Audiovisual Work - Development - Recent work / previous experience';
                 break;
             case 'dist':
                 $f = new MovieDistForm();
@@ -126,7 +124,6 @@ class FicheController extends Controller
         $crumbs = [];
 
         return compact('rules', 'layout', 'movie', 'fiche', 'isApplicant', 'isEditor', 'shootingLanguages', 'print', 'title', 'crumbs');
-
     }
 
     public static function template(Fiche $fiche) {
@@ -134,16 +131,20 @@ class FicheController extends Controller
     }
 
     public static function printFiche(Fiche $fiche) {
+        if (request()->user()->cannot('view', $fiche)) {
+            abort(404);
+        }
 
         return view(self::template($fiche), self::prepareFiche($fiche));
-
     }
 
     public static function downloadFiche(Fiche $fiche) {
+        if (request()->user()->cannot('view', $fiche)) {
+            abort(404);
+        }
 
         // mpdf
         $pdf = LaravelMpdf::loadView(self::template($fiche), self::prepareFiche($fiche));
         return $pdf->stream();
-
     }
 }

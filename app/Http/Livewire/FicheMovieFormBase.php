@@ -22,11 +22,13 @@ use App\Models\SalesAgent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\IntegerEmptyToNull;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class FicheMovieFormBase extends FicheFormBase
 {
@@ -38,6 +40,8 @@ class FicheMovieFormBase extends FicheFormBase
     public Activity $activity;
     public ?Fiche $fiche = null;
     public ?Movie $movie = null;
+
+    public $standAloneFiche = false;
 
     public $shootingLanguages;
 
@@ -55,6 +59,8 @@ class FicheMovieFormBase extends FicheFormBase
 
     public $admissionsTable = null;
     public $admission = null;
+    
+    public $hasHistory = false;
 
     public function validationAttributes()
     {
@@ -69,14 +75,39 @@ class FicheMovieFormBase extends FicheFormBase
         ];
     }
 
+    protected function refererStandAloneFiche() {
+        $referer = request()->headers->get('referer');
+        if (Str::contains($referer, '/movie-dist')
+        || Str::contains($referer, '/movie-dev-current')
+        || Str::contains($referer, '/movie-dev-prev')
+        || Str::contains($referer, '/movie-tv')
+        || Str::contains($referer, '/vg-prev')) {
+            return true;
+        }
+        return false;
+    }
+
     public function mount(Request $request)
     {
+        if ($this->fiche && request()->user()->cannot('view', $this->fiche)) {
+            abort(404);
+        }
+
+        if (in_array($request->segment(1),['movie-dist', 'movie-dev-current', 'movie-dev-prev', 'movie-tv', 'vg-current', 'vg-prev'])) {
+            $this->standAloneFiche = true;
+        }
+
         $this->shootingLanguages = collect([]);
         if (!$this->fiche) {
+            // Applicant can only submit dist stand alone fiche
+            if (Auth::user()->hasRole('applicant') && $this->standAloneFiche && (get_class($this) !== 'App\Http\Livewire\MovieDistForm')) {
+                abort(404);
+            }
             $this->isNew = true;
             $this->fiche = new Fiche;
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
+            $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
@@ -86,6 +117,7 @@ class FicheMovieFormBase extends FicheFormBase
             // are not yet ready to receive them.
             // Therefore init values need to be loaded here.
             $this->crews = Crew::with('person')->where('movie_id',$this->movie->id)->get()->toArray();
+            array_multisort(array_column($this->crews, 'title_id'), SORT_ASC, $this->crews);
             $this->locations = Location::where('movie_id',$this->movie->id)->get()->toArray();
             $this->producers = Producer::where('movie_id', $this->movie->id)->get()->toArray();
             $this->sales_agents = SalesAgent::where('movie_id', $this->movie->id)->get()->toArray();
@@ -99,6 +131,7 @@ class FicheMovieFormBase extends FicheFormBase
 
     public function updated($name, $value)
     {
+
         if ($name == 'movie.genre_id') {
             // Update the crews livewire component
             $this->emit('movieCrewsAddDefault', $value);
@@ -129,6 +162,12 @@ class FicheMovieFormBase extends FicheFormBase
                 $this->movie->length_of_episodes = NULL;
             }
         }
+        if ($name == 'movie.dev_support_flag') {
+            if ($value !== 1) {
+                $this->movie->dev_support_reference = NULL;
+            }
+        }
+
     }
 
     // Save fiche as is (draft), without full validation
@@ -139,6 +178,7 @@ class FicheMovieFormBase extends FicheFormBase
         $this->integerEmptyToNull_All();
 
         // Bare bones validation
+        // Check formatting, but no field is required (except title)
         $this->validate($this->rulesDraft);
 
         unset($this->movie->shooting_language);
@@ -150,31 +190,34 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
-            switch ($this->activity->name) {
-                case 'description':
-                    $type = 'dist';
-                    break;
-                case 'previous-work':
-                    $type = 'dev-prev';
-                    break;
-                case 'current-work':
-                    if ($this->dossier->action->name == 'TV') {
-                        $type = 'tv';
-                    } else {
+            if (isset($this->activity)) {
+                switch ($this->activity->name) {
+                    case 'description':
+                        $type = 'dist';
+                        break;
+                    case 'previous-work':
+                        $type = 'dev-prev';
+                        break;
+                    case 'current-work':
+                        if ($this->dossier->action->name == 'TVONLINE') {
+                            $type = 'tv';
+                        } else {
+                            $type = 'dev-current';
+                        }
+                        break;
+                    case 'short-films':
                         $type = 'dev-current';
-                    }
-                    break;
-                case 'short-films':
-                    $type = 'dev-current';
-                    break;
-                case 'admissions-tables':
-                    $type = 'dist';
-                    break;
+                        break;
+                    case 'admissions-tables':
+                        $type = 'dist';
+                        break;
+                }
             }
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
                 'type' => $type,
-                'created_by' => 1,
+                'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
             ])->save();
 
             // Note: this serves:
@@ -220,8 +263,9 @@ class FicheMovieFormBase extends FicheFormBase
             );
             // TODO: this it wrong, right? Update with current user...
             $this->fiche->fill([
-                'updated_by' => 1,
+                'updated_by' => Auth::user()->id,
             ])->save();
+            $this->fiche->touch();
             $this->notify('Fiche is saved');
         }
         $this->fichePostSave();
@@ -249,7 +293,7 @@ class FicheMovieFormBase extends FicheFormBase
             $errors = $specialErrors;
         }
 
-        if($errors) {
+        if($errors->count()) {
             $this->setErrorBag($errors);
             return;
         }
@@ -266,6 +310,26 @@ class FicheMovieFormBase extends FicheFormBase
     function fichePostSave()
     {
         // post save operations
+    }
+
+    function fichePostSaveRedirect()
+    {
+        // in dossier context, go back to dossier
+        // will also work when coming from wizard
+        if (isset($this->dossier) && isset($this->activity) && isset($this->fiche)) {
+            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+        }
+
+        // if editor is viewing stand-alone fiche, go back to movie listing
+        if ($this->isEditor && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('datatables-movies'));
+        }
+        // if applicant is viewing stand-alone fiche, go back to homepage
+        if ($this->isApplicant && $this->refererStandAloneFiche()) {
+            return redirect()->to(route('root'));
+        }
+        // fallback: redirect to stored previous page
+        return redirect()->to($this->previous);
     }
 
     public function saveItems($existing_items, $saving_items, $saving_class)

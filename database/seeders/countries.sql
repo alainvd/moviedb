@@ -49,6 +49,7 @@ LOCK TABLES `countries` WRITE;
 
 INSERT INTO `countries` (`group`, `code`, `parent`, `name`, `population`, `continent`, `facebook`, `website`, `created_at`, `updated_at`,`longitude`,`latitude`)
 VALUES
+('00zero', '00','','N/A',0,'','','','2018-08-10 13:06:16','2018-08-10 13:06:16',0, 0),
 ('other', 'AD','','Andorra',84000,'EU','','','2018-08-10 13:06:16','2018-08-10 13:06:16',1.56054377918, 42.5422910219),
 ('other', 'AE','','United Arab Emirates',4975593,'AS','','','2018-08-10 13:06:16','2018-08-10 13:06:16',54.3001671016,23.9052818785),
 ('other', 'AF','','Afghanistan',29121286,'AS','','','2018-08-10 13:06:16','2018-08-10 13:06:16',66.0047336558,33.8352307278),

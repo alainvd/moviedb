@@ -1,22 +1,17 @@
-<header class="w-full bg-white">
-    <div class="py-2 sm:px-8 sm:py-4 md:px-16 lg:px-24">
-        <img class="h-12 mx-auto sm:mx-0 lg:h-16" src="{{asset('images/ec-logo.svg')}}" alt="EC Logo">
-    </div>
-    <div class="px-4 py-2 bg-ec-blue text-white sm:px-8 sm:py-4 md:px-16 lg:px-24">
-        <div class="w-full pb-2 border-b-2 border-white mb-4 md:mb-8">
-            <div class="text-xs md:text-md">
-                <a class="no-underline hover:underline focus:underline" href="#">
-                    European Commission
-                </a> &gt;
-                <a class="no-underline hover:underline focus:underline" href="#">
-                    EACEA
-                </a> &gt;
-                <a class="no-underline hover:underline focus:underline" href="{{route('welcome')}}">
-                    MediaDB
-                </a>
+<header data-ecl-auto-init="SiteHeaderHarmonised" class="ecl-site-header-harmonised--group1 ecl-site-header-harmonised" data-ecl-has-menu="true">
+    <div class="ecl-site-header-harmonised__container ecl-container print:hidden">
+        <div class="ecl-site-header-harmonised__top"><a class="ecl-link ecl-link--standalone ecl-site-header-harmonised__logo-link" href="/" aria-label="European Commission"><img alt="European Commission logo" title="European Commission" class="ecl-site-header-harmonised__logo-image" src="/ecl-images/logo/logo--en.svg" /></a>
+            <div class="ecl-site-header-harmonised__action">
+
+                @include('livewire.login')
+
             </div>
         </div>
-        <h2 class="text-xl md:text-3xl font-light tracking-normal">EACEA</h2>
-        <h1 class="text-2xl md:text-4xl font-normal tracking-tight">Media Database</h1>
     </div>
+
+    <nav data-ecl-auto-init="Menu" class="ecl-menu--group1 ecl-menu" aria-expanded="false" data-ecl-menu="true">
+      <div class="ecl-container ecl-menu__container">
+        <div class="ecl-menu__site-name lg:pb-8">Creative Europe MEDIA Database</div>
+      </div>
+    </nav>
 </header>

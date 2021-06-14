@@ -37,7 +37,6 @@ class SalesAgent extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'distribution_date' => 'date:d.m.Y'
     ];
 
     public function country()
@@ -60,5 +59,10 @@ class SalesAgent extends Model
             'email' => '',
             'distribution_date' => null,
         ];
+    }
+
+    public function getDistributionDateAttribute($value)
+    {
+        return $value ? date('d.m.Y', strtotime($value)) : null;
     }
 }

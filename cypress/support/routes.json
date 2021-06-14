@@ -1,0 +1,660 @@
+{
+  "ignition.healthCheck": {
+    "name": "ignition.healthCheck",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\HealthCheckController",
+    "uri": "_ignition/health-check",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "ignition.executeSolution": {
+    "name": "ignition.executeSolution",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\ExecuteSolutionController",
+    "uri": "_ignition/execute-solution",
+    "method": [
+      "POST"
+    ]
+  },
+  "ignition.shareReport": {
+    "name": "ignition.shareReport",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\ShareReportController",
+    "uri": "_ignition/share-report",
+    "method": [
+      "POST"
+    ]
+  },
+  "ignition.scripts": {
+    "name": "ignition.scripts",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\ScriptController",
+    "uri": "_ignition/scripts/{script}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "ignition.styles": {
+    "name": "ignition.styles",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\StyleController",
+    "uri": "_ignition/styles/{style}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "cypress.factory": {
+    "name": "cypress.factory",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@factory",
+    "uri": "__cypress__/factory",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.login": {
+    "name": "cypress.login",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@login",
+    "uri": "__cypress__/login",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.logout": {
+    "name": "cypress.logout",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@logout",
+    "uri": "__cypress__/logout",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.artisan": {
+    "name": "cypress.artisan",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@artisan",
+    "uri": "__cypress__/artisan",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.run-php": {
+    "name": "cypress.run-php",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@runPhp",
+    "uri": "__cypress__/run-php",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.csrf-token": {
+    "name": "cypress.csrf-token",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@csrfToken",
+    "uri": "__cypress__/csrf_token",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "cypress.routes": {
+    "name": "cypress.routes",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@routes",
+    "uri": "__cypress__/routes",
+    "method": [
+      "POST"
+    ]
+  },
+  "livewire.message": {
+    "name": "livewire.message",
+    "domain": null,
+    "action": "Livewire\\Controllers\\HttpConnectionHandler",
+    "uri": "livewire/message/{name}",
+    "method": [
+      "POST"
+    ]
+  },
+  "livewire.upload-file": {
+    "name": "livewire.upload-file",
+    "domain": null,
+    "action": "Livewire\\Controllers\\FileUploadHandler@handle",
+    "uri": "livewire/upload-file",
+    "method": [
+      "POST"
+    ]
+  },
+  "livewire.preview-file": {
+    "name": "livewire.preview-file",
+    "domain": null,
+    "action": "Livewire\\Controllers\\FilePreviewHandler@handle",
+    "uri": "livewire/preview-file/{filename}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "": {
+    "name": null,
+    "domain": null,
+    "action": "Closure",
+    "uri": "movies",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "welcome": {
+    "name": "welcome",
+    "domain": null,
+    "action": "Closure",
+    "uri": "/",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "homepage": {
+    "name": "homepage",
+    "domain": null,
+    "action": "Closure",
+    "uri": "homepage",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossiers-public": {
+    "name": "dossiers-public",
+    "domain": null,
+    "action": "Closure",
+    "uri": "dossiers-public",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossiers.index": {
+    "name": "dossiers.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@index",
+    "uri": "dossiers",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossiers.create": {
+    "name": "dossiers.create",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@create",
+    "uri": "dossiers/create",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossiers.store": {
+    "name": "dossiers.store",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@store",
+    "uri": "dossiers",
+    "method": [
+      "POST"
+    ]
+  },
+  "dossiers.show": {
+    "name": "dossiers.show",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@show",
+    "uri": "dossiers/{dossier}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossiers.edit": {
+    "name": "dossiers.edit",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@edit",
+    "uri": "dossiers/{dossier}/edit",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossiers.update": {
+    "name": "dossiers.update",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@update",
+    "uri": "dossiers/{dossier}",
+    "method": [
+      "PUT",
+      "PATCH"
+    ]
+  },
+  "dossiers.destroy": {
+    "name": "dossiers.destroy",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProjectController@destroy",
+    "uri": "dossiers/{dossier}",
+    "method": [
+      "DELETE"
+    ]
+  },
+  "movie-wizard": {
+    "name": "movie-wizard",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\Dossiers\\MovieWizard",
+    "uri": "dossiers/{dossier}/activity/{activity}/movie-wizard",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossier-create-fiche": {
+    "name": "dossier-create-fiche",
+    "domain": null,
+    "action": "Closure",
+    "uri": "dossiers/{dossier}/activities/{activity}/fiches/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dist-fiche-form": {
+    "name": "dist-fiche-form",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDistForm",
+    "uri": "dossiers/{dossier}/activities/{activity}/fiche/dist/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dev-prev-fiche-form": {
+    "name": "dev-prev-fiche-form",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDevPrevForm",
+    "uri": "dossiers/{dossier}/activities/{activity}/fiche/dev-prev/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dev-current-fiche-form": {
+    "name": "dev-current-fiche-form",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDevCurrentForm",
+    "uri": "dossiers/{dossier}/activities/{activity}/fiche/dev-current/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "tv-fiche-form": {
+    "name": "tv-fiche-form",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieTVForm",
+    "uri": "dossiers/{dossier}/activities/{activity}/fiche/tv/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "vg-prev-fiche-form": {
+    "name": "vg-prev-fiche-form",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\VideoGamePrevForm",
+    "uri": "dossiers/{dossier}/activities/{activity}/fiche/vg-prev/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "impersonate": {
+    "name": "impersonate",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ImpersonateController@impersonate",
+    "uri": "impersonate/{id}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "impersonate_stop": {
+    "name": "impersonate_stop",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ImpersonateController@stopImpersonate",
+    "uri": "impersonate/stop",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "movie-dist": {
+    "name": "movie-dist",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDistForm",
+    "uri": "movie-dist/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "movie-dev-current": {
+    "name": "movie-dev-current",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDevCurrentForm",
+    "uri": "movie-dev-current/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "movie-dev-prev": {
+    "name": "movie-dev-prev",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDevPrevForm",
+    "uri": "movie-dev-prev/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "movie-tv": {
+    "name": "movie-tv",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieTVForm",
+    "uri": "movie-tv/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "table_edit_examples": {
+    "name": "table_edit_examples",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\TableEditExamplesController@examples",
+    "uri": "table-edit-example",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dist-fiche": {
+    "name": "dist-fiche",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\MovieDistForm",
+    "uri": "media/{fiche?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "movies": {
+    "name": "movies",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\MovieController@index",
+    "uri": "browse/movies",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "test_index": {
+    "name": "test_index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\TestController@index",
+    "uri": "test",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "pic": {
+    "name": "pic",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\PICController@index",
+    "uri": "pic",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dashboard": {
+    "name": "dashboard",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\DashboardController@index",
+    "uri": "dashboard",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "movie_show": {
+    "name": "movie_show",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\MovieController@edit",
+    "uri": "browse/movies/{fiche}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "SEP": {
+    "name": "SEP",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\SEPController@index",
+    "uri": "landing/SEP",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "call.index": {
+    "name": "call.index",
+    "domain": null,
+    "action": "\\App\\Http\\Controllers\\CallController@index",
+    "uri": "call",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "submission.index": {
+    "name": "submission.index",
+    "domain": null,
+    "action": "\\App\\Http\\Controllers\\SubmissionController@index",
+    "uri": "submission",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "step.index": {
+    "name": "step.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\StepController@index",
+    "uri": "step",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "step-definition.index": {
+    "name": "step-definition.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\StepDefinitionController@index",
+    "uri": "step-definition",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "checklist.index": {
+    "name": "checklist.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ChecklistController@index",
+    "uri": "checklist",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "person.index": {
+    "name": "person.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\PersonController@index",
+    "uri": "person",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "title.index": {
+    "name": "title.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\TitleController@index",
+    "uri": "title",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "crew.index": {
+    "name": "crew.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\CrewController@index",
+    "uri": "crew",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "audience.index": {
+    "name": "audience.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\AudienceController@index",
+    "uri": "audience",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "genre.index": {
+    "name": "genre.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\GenreController@index",
+    "uri": "genre",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "producer.index": {
+    "name": "producer.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProducerController@index",
+    "uri": "producer",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "sales-agent.index": {
+    "name": "sales-agent.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\SalesAgentController@index",
+    "uri": "sales-agent",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "sales-distributor.index": {
+    "name": "sales-distributor.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\SalesDistributorController@index",
+    "uri": "sales-distributor",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "document.index": {
+    "name": "document.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\DocumentController@index",
+    "uri": "document",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "location.index": {
+    "name": "location.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\LocationController@index",
+    "uri": "location",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "document-download": {
+    "name": "document-download",
+    "domain": null,
+    "action": "App\\Http\\Livewire\\TableEditMovieDocuments@download",
+    "uri": "document-download",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossier-print": {
+    "name": "dossier-print",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\DossierController@printDossier",
+    "uri": "dossiers/{dossier}/print",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "dossier-full-download": {
+    "name": "dossier-full-download",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\DossierController@downloadFullDossier",
+    "uri": "dossiers/{dossier}/download-full",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "fiche-print": {
+    "name": "fiche-print",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\FicheController@printFiche",
+    "uri": "fiche/{fiche}/print",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "fiche-download": {
+    "name": "fiche-download",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\FicheController@downloadFiche",
+    "uri": "fiche/{fiche}/download",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  }
+}

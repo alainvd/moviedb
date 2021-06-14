@@ -3,7 +3,7 @@
     <h3 class="my-4 text-lg font-normal leading-tight">
         Audiovisual Work - Development - Recent work / previous experience
     </h3>
-    <x-table class="{{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
+    <x-table class="previous-work-list {{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">
             <x-table.heading>TITLE</x-table.heading>
             <x-table.heading>GENRE</x-table.heading>
@@ -44,7 +44,7 @@
     <div class="mt-5 text-right print:hidden">
         <x-anchors.secondary
             :url="route('dev-prev-fiche-form', compact('dossier', 'activity'))"
-            :disabled="$isAddDisabled">
+            :disabled="$dossier->call->closed || $isAddDisabled">
             Add
         </x-anchors.secondary>
     </div>
@@ -61,7 +61,7 @@
 
         <x-slot name="footer">
             <div class="flex items-center justify-end space-x-3">
-                <x-button.primary wire:click="delete">Yes</x-button>
+                <x-button.primary class="confirm-remove-previous-work" wire:click="delete">Yes</x-button>
 
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button>
             </div>

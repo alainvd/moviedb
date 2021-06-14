@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Movie;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Country extends Model
@@ -18,14 +19,19 @@ class Country extends Model
     }
 
     public static function countries() {
-        return Country::where('active', true)
-            ->orderBy('name')
-            ->get()
-            ->toArray();
+        $countries = Cache::rememberForever('countries', function () {
+            return Country::where('active', true)
+                ->orderBy('name')
+                ->get()
+                ->toArray();
+        });
+        return $countries;
     }
 
     public static function countriesGrouped() {
-        $countriesGrouped = Country::where('active', true)->get()
+        $countriesGrouped = Cache::rememberForever('countriesGrouped', function () {
+            return Country::where('active', true)
+            ->get()
             ->sortBy([
                 function ($a, $b) {
                     if ($a['group'] == 'eu' && $b['group'] == 'eu') return 0;
@@ -43,11 +49,13 @@ class Country extends Model
             ])
             ->groupBy('group')
             ->toArray();
+        });
         return $countriesGrouped;
     }
 
     public static function countriesGroupedChoices() {
-        $c = Country::where('active', true)
+        $countriesGroupedChoices = Cache::rememberForever('countriesGroupedChoices', function () {
+            $c = Country::where('active', true)
             ->get()
             ->sortBy([
                 function ($a, $b) {
@@ -71,15 +79,17 @@ class Country extends Model
             ])
             ->groupBy('group')
             ->toArray();
-        $i = 0;
-        foreach ($c as $group => $choices) {
-            $i++;
-            $countriesGroupedChoices[] = [
-                'label' => '---',
-                'id' => $i,
-                'choices' => $choices,
-            ];
-        }
+            $i = 0;
+            foreach ($c as $group => $choices) {
+                $i++;
+                $cGroupedChoices[] = [
+                    'label' => '---',
+                    'id' => $i,
+                    'choices' => $choices,
+                ];
+            }
+            return $cGroupedChoices;
+        });
         return $countriesGroupedChoices;
     }
 
@@ -92,20 +102,26 @@ class Country extends Model
     }
 
     public static function countriesByCode() {
-        return Country::where('active', true)
-            ->orderBy('name')
-            ->get()
-            ->keyBy('code')
-            ->toArray();
+        $countriesByCode = Cache::rememberForever('countriesByCode', function () {
+            return Country::where('active', true)
+                ->orderBy('name')
+                ->get()
+                ->keyBy('code')
+                ->toArray();
+        });
+        return $countriesByCode;
     }
 
     public static function countriesValueLabel() {
-        return Country::where('active', true)
-            ->get()
-            ->map(fn ($country) => [
-                'value' => $country->id,
-                'label' => $country->name,
-            ])
-            ->toArray();    
+        $countriesValueLabel = Cache::rememberForever('countriesValueLabel', function () {
+            return Country::where('active', true)
+                ->get()
+                ->map(fn ($country) => [
+                    'value' => $country->id,
+                    'label' => $country->name,
+                ])
+                ->toArray();
+        });
+        return $countriesValueLabel;
     }
 }

@@ -10,6 +10,8 @@ module.exports = {
       },
       screens: {
         'print': {'raw': 'print'},
+        '2xl': '1536px',
+        '3xl': '1600px',
       }
     },
     zIndex: {

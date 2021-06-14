@@ -53,6 +53,7 @@
             :isRequired="FormHelpers::isRequired($rules, 'movie.film_country_of_origin')"
             wire:model="movie.film_country_of_origin"
             value="{{ isset($countriesByCode[$movie->film_country_of_origin]) ? $countriesByCode[$movie->film_country_of_origin]['name'] : '' }}"
+            :emptyValueLabel="$isApplicant ? 'TBC by EACEA' : 'Choose an option'"
         >
 
             @foreach ($countriesGrouped as $group=>$countries)

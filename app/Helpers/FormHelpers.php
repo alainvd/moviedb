@@ -64,14 +64,26 @@ class FormHelpers
         return $requiredLocationsMessages;
     }
 
-    // Check if producer is present
+    // Check if producer or co-producers are present
     public static function requiredProducers($producers) {
+        $coproducers = 0;
         foreach ($producers as $producer) {
             if ($producer['role'] == 'PRODUCER') {
                 return [];
             }
+            if ($producer['role'] == 'COPRODUCER') {
+                if ($coproducers == 1) return [];
+                if ($coproducers == 0) $coproducers++;
+            }
         }
-        return ['One producer is required.'];
+        return ['One producer or two co-procuers are required.'];
+    }
+
+    // Check if sales agent is present
+    public static function requiredSalesAgents($sales_agents) {
+        if(!empty($sales_agents))
+            return [];
+        return ['One sales agent is required.'];
     }
 
     // Check if financing plan document is present
@@ -99,9 +111,20 @@ class FormHelpers
 
     // Will also return all "requiredIf" fields as required
     // But those fields are always hidden in the frontend
-    public static function isRequired($rules, $field) {
+    public static function isRequired($rules, $field, $context = null) {
         if (isset($rules[$field])) {
-            return Str::contains($rules[$field], 'required');
+            if (Str::contains($rules[$field], 'required')) {
+                // Custom rule for currency field
+                if ($field == 'movie.total_budget_currency_rate') {
+                    if ($context !== 'EUR') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                // Default
+                return true;
+            }
         }
         return false;
     }

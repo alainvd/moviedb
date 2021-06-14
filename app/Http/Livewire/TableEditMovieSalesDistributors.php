@@ -21,7 +21,7 @@ class TableEditMovieSalesDistributors extends TableEditBase
             'editing.name' => 'required|string|max:255',
             'editing.role' => 'required|string',
             'editing.countries' => 'required',
-            'editing.release_date' => 'required|date:d.m.Y',
+            'editing.release_date' => 'required|date',
         ] + TableEditBase::rules();
     }
 
@@ -77,13 +77,13 @@ class TableEditMovieSalesDistributors extends TableEditBase
                 return in_array($c['value'], $editing_countries_ids);
             }
         )->values();
-        $this->emit('showModalInit', $countries_values);
+        $this->emit('showModalInit_SalesDistributors', $countries_values);
     }
 
     public function showModalAdd()
     {
         parent::showModalAdd();
-        $this->emit('showModalInit', []);
+        $this->emit('showModalInit_SalesDistributors', []);
     }
 
     public function addCountry($id) {

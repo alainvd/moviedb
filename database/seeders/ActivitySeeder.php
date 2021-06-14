@@ -18,26 +18,32 @@ class ActivitySeeder extends Seeder
         $activities =[
             [
                 'name' => 'description',
-                'actions' => ['DISTSEL', 'DISTSAG'],
+                'log_model' => 'Movie',
+                'actions' => ['FILMOVE', 'DISTSAG'],
             ],
             [
                 'name' => 'previous-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT'],
+                'log_model' => 'Previous work',
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVMINISLATE', 'CODEV'],
             ],
             [
                 'name' => 'current-work',
-                'actions' => ['DEVVG', 'DEVSLATE', 'DEVSLATEMINI', 'CODEVELOPMENT', 'TV'],
+                'log_model' => 'Current work',
+                'actions' => ['DEVVG', 'DEVSLATE', 'DEVMINISLATE', 'CODEV', 'TVONLINE'],
             ],
             [
                 'name' => 'distributors',
-                'actions' => ['DISTSEL', 'DISTSAG'],
+                'log_model' => 'Distributor',
+                'actions' => ['FILMOVE', 'DISTSAG'],
             ],
             [
                 'name' => 'short-films',
-                'actions' => ['DEVSLATE', 'DEVSLATEMINI']
+                'log_model' => 'Short film',
+                'actions' => ['DEVSLATE', 'DEVMINISLATE']
             ],
             [
                 'name' => 'admissions-tables',
+                'log_model' => 'Admissions table',
                 'actions' => ['DISTAUTOG']
             ]
         ];
@@ -51,7 +57,7 @@ class ActivitySeeder extends Seeder
                 'min_short_films' => 1,
                 'max_short_films' => 1,
             ],
-            'DEVSLATEMINI' => [
+            'DEVMINISLATE' => [
                 'min_previous_works' => 1,
                 'max_previous_works' => 1,
                 'min_current_works' => 2,
@@ -59,7 +65,7 @@ class ActivitySeeder extends Seeder
                 'min_short_films' => 1,
                 'max_short_films' => 1,
             ],
-            'CODEVELOPMENT' => [
+            'CODEV' => [
                 'min_previous_works' => 1,
                 'max_previous_works' => 1,
                 'min_current_works' => 1,
@@ -70,16 +76,17 @@ class ActivitySeeder extends Seeder
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],
-            'DISTSEL' => [
+            'FILMOVE' => [
                 'movie_count' => 1,
-                'min_coordinators' => 1,
-                'min_participants' => 7,
+                // 'min_coordinators' => 1,
+                'min_participants' => 8,
+                // 'max_participants' => 8,
                 'distinct_distribution_countries' => true,
             ],
             'DISTSAG' => [
                 'movie_count' => 1,
             ],
-            'TV' => [
+            'TVONLINE' => [
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],
@@ -89,6 +96,7 @@ class ActivitySeeder extends Seeder
         foreach ($activities as $activity) {
             $newActivity = Activity::create([
                 'name' => $activity['name'],
+                'log_model' => $activity['log_model'],
             ]);
 
             foreach ($activity['actions'] as $action) {

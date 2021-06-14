@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Importer;
 
 use App\Imports\AudiencesImport;
-use App\Imports\MoviesImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -40,8 +39,6 @@ class Audiences extends Command
      */
     public function handle()
     {
-
         Excel::import(new AudiencesImport, 'Dist_Film_Audience.xlsx', 'excel');
-
     }
 }
