@@ -2,10 +2,10 @@
 
     <x-table.row>
         <x-table.cell class="tracking-tight text-center font-md">
-            {{ $admission->fiche->movie->original_title }}
+            {{ !empty($admission->fiche) ? $admission->fiche->movie->original_title : '' }}
         </x-table.cell>
         <x-table.cell class="tracking-tight text-center font-md">
-            {{ $countriesById[$admission->admissionsTable->country_id]['name'] }}
+            {{ !empty($admission->admissionsTable->country_id) ? $countriesById[$admission->admissionsTable->country_id]['name'] : '' }}
         </x-table.cell>
         <x-table.cell class="tracking-tight text-center font-md">
             {{ $admission->admissionsTable->year }}

@@ -17,15 +17,16 @@ use App\Models\Document;
 use App\Models\Language;
 use App\Models\Location;
 use App\Models\Producer;
+use App\Models\Admission;
 use App\Models\SalesAgent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\IntegerEmptyToNull;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use App\Helpers\IntegerEmptyToNull;
 
 class FicheMovieFormBase extends FicheFormBase
 {
@@ -51,6 +52,9 @@ class FicheMovieFormBase extends FicheFormBase
     public $producerErrorMessages;
 
     public $crumbs = [];
+
+    public $admissionsTable = null;
+    public $admission = null;
 
     public function validationAttributes()
     {
@@ -88,6 +92,8 @@ class FicheMovieFormBase extends FicheFormBase
             $this->sales_distributors = SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get()->toArray();
             $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
         }
+        if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
+        if (request()->input('admission')) $this->admission = request()->input('admission');
         parent::mount($request);
     }
 
@@ -161,6 +167,9 @@ class FicheMovieFormBase extends FicheFormBase
                 case 'short-films':
                     $type = 'dev-current';
                     break;
+                case 'admissions-tables':
+                    $type = 'dist';
+                    break;
             }
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
@@ -168,15 +177,35 @@ class FicheMovieFormBase extends FicheFormBase
                 'created_by' => 1,
             ])->save();
 
-            // TODO: code dublication with MovieWizard.php
-            $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
-            if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
-                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+            // Note: this serves:
+            // - when the wizard moves to creating a new fiche
+            // - when creating new fiche from dossier
+
+            Log::info('activity', [$this->activity]);
+            if ($this->activity->name == 'admissions-tables') {
+                if ($this->admissionsTable && $this->admission) {
+                    $admission = Admission::find($this->admission);
+                    $admission->fiche_id = $this->movie->fiche->id;
+                    $admission->save();
+                }
             } else {
-                $this->dossier->fiches()->attach(
-                    $this->movie->fiche->id,
-                    ['activity_id' => $this->activity->id]
-                );
+                // TODO: code dublication with MovieWizard.php
+                $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
+                // TODO: better way to decide the movie needs to be attached (or synced)
+                // dd(serialize($this->dossier));
+                Log::info('dossier', [serialize($this->dossier)]);
+                Log::info('activities', [$this->dossier->action->activities]);
+                Log::info('rules', $rules);
+                if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                    Log::info('attach', ['attach 1']);
+                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                } else {
+                    Log::info('attach', ['attach 2']);
+                    $this->dossier->fiches()->attach(
+                        $this->movie->fiche->id,
+                        ['activity_id' => $this->activity->id]
+                    );
+                }
             }
 
             // TODO: this will not show if we redirect away
@@ -189,6 +218,7 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            // TODO: this it wrong, right? Update with current user...
             $this->fiche->fill([
                 'updated_by' => 1,
             ])->save();

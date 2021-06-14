@@ -210,9 +210,16 @@ class MovieDistForm extends FicheMovieFormBase
         $this->saveItems(Document::where('movie_id', $this->movie->id)->get(), $this->documents, Document::class);
 
         // back
-        // if coming from wizard, go to dossier
+        // if coming from wizard, go to dossier ar admissions form
         if (Str::endsWith($this->previous, 'movie-wizard')) {
-            return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+            $parts = explode('/', $this->previous);
+            // dd($parts);
+            // dd(Request->input('admission'));
+            if (($parts[5] == 'activity') && ($parts[6] == 6)) {
+                return redirect()->route('admission', ['dossier' => $this->dossier]);
+            } else {
+                return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+            }
         } else {
             return redirect()->to($this->previous);
         }

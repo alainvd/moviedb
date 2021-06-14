@@ -15,7 +15,7 @@
                         <div class="col-span-4 text-gray-800 text-md">
                             Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus.
                         </div>
-                    </div>            
+                    </div>
                 </div>
                 @endif
 
@@ -47,34 +47,24 @@
             <!-- FILM DATA -->
             <div class="mt-12 mb-4 text-lg">
                 <h3>Film Data</h3>
-            </div>    
+            </div>
 
             <!-- film selection form goes here -->
             <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7">
-                <input type="hidden" name="movie_id" wire:model="movie.id">
-
                 <div class="col-span-2 md:col-span-3">
                     <x-form.input
                         :id="'film-title'"
                         :label="'Original Title'"
-                        :hasError="$errors->has('filmZZZ.original_title')"
                         :disabled="true"
-                        wire:model="filmZZZ.original_title"
+                        :value="!empty($admission->fiche) ? $admission->fiche->movie->original_title : ''"
                     ></x-form.input>
-
-                    @error('filmZZZ.original_title')
-                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="col-span-1 print:hidden">
                     <x-anchors.primary
                         class="mt-6"
-                        :url="'test'"
-                        {{--
-                        :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])"
-                        --}}
-                        >
+                        :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 6, 'admissionsTable' => $this->admissionsTable->id, 'admission' => $this->admission->id])"
+                    >
                         Select the Film
                     </x-anchors.primary>
                 </div>
@@ -86,42 +76,27 @@
                     <x-form.input
                         :id="'director'"
                         :label="'MEDIA Film Nationality'"
-                        :hasError="$errors->has('filmZZZ.original_title')"
                         :disabled="true"
-                        wire:model="filmZZZ.director"
+                        :value="!empty($admission->fiche) ? $admission->fiche->movie->film_country_of_origin : ''"
                     ></x-form.input>
-
-                    @error('filmZZZ.original_title')
-                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="col-span-1">
                     <x-form.input
                         :id="'country'"
                         :label="'Year of Copyright'"
-                        :hasError="$errors->has('filmZZZ.original_title')"
                         :disabled="true"
-                        wire:model="filmZZZ.film_country_of_origin"
+                        :value="!empty($admission->fiche) ? $admission->fiche->movie->year_of_copyright : ''"
                     ></x-form.input>
-
-                    @error('filmZZZ.original_title')
-                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                    @enderror
                 </div>
                 
                 <div class="col-span-1">
                     <x-form.input
                         :id="'copyright'"
                         :label="'Status'"
-                        :hasError="$errors->has('filmZZZ.original_title')"
                         :disabled="true"
-                        wire:model="filmZZZ.year_of_copyright"
+                        :value="!empty($admission->fiche) ? $admission->fiche->status->name : ''"
                     ></x-form.input>
-
-                    @error('filmZZZ.original_title')
-                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                    @enderror
                 </div>
             </div>
             <!-- ----------------------------- -->

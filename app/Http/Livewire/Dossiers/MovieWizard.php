@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\Dossier;
 use Livewire\Component;
 use App\Models\Activity;
+use App\Models\Admission;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -34,12 +35,17 @@ class MovieWizard extends Component
 
     public Activity $activity;
 
+    public $admissionsTable = null;
+    public $admission = null;
+
     public function mount(Dossier $dossier, Activity $activity)
     {
         $this->dossier = $dossier;
         $this->movie = new Movie();
         $this->user = Auth::user();
         $this->activity = $activity;
+        if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
+        if (request()->input('admission')) $this->admission = request()->input('admission');
     }
 
     public function updatingOriginalTitle()
@@ -81,25 +87,37 @@ class MovieWizard extends Component
     {
         $action = $this->dossier->action->name;
 
+        // Note: this serves the wizard (when attaching existing fiche, I believe)
+
         switch ($action) {
+            // TODO: Wizard is only available to some of these actions
+            // Or I could check for activity... it's always 'description' right?
             case 'DISTSEL':
             case 'DISTSAG':
             case 'DEVSLATE':
             case 'DEVSLATEMINI':
             case 'CODEVELOPMENT':
             case 'TV':
-            case 'DISTAUTOG':
                 // Attach fiche for activity
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                    Log::info('wizard attach', ['attach 1']);
                     $this->dossier->fiches()->sync([$this->movie->fiche->id]);
                 } else {
+                    Log::info('wizard attach', ['attach 2']);
                     $this->dossier->fiches()->attach(
                         $this->movie->fiche->id,
                         ['activity_id' => $this->activity->id]
                     );
                 }
                 $this->notify('Movie added/updated');
+            case 'DISTAUTOG':
+                if ($this->admissionsTable && $this->admission) {
+                    $admission = Admission::find($this->admission);
+                    $admission->fiche_id = $this->movie->fiche->id;
+                    $admission->save();
+                }
+                $this->notify('Movie added');
             default:
                 break;
         }

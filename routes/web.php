@@ -98,6 +98,11 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiches/{fic
     if ($activity == 1) return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity == 2) return redirect()->route('dev-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity == 3) return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+    if ($activity == 6) {
+        $admissionsTable = request()->input('admissionsTable') ?? null;
+        $admission = request()->input('admission') ?? null;
+        return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche, 'admissionsTable' => $admissionsTable, 'admission' => $admission]);
+    }
 })->middleware('cas.auth')->name('dossier-create-fiche');
 
 Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/{fiche?}', MovieDistForm::class)->middleware('cas.auth')->name('dist-fiche-form');
@@ -179,4 +184,4 @@ Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierControlle
 Route::get('/fiche/{fiche}/print', [FicheController::class, 'printFiche'])->middleware('cas.auth')->name('fiche-print');
 Route::get('/fiche/{fiche}/download', [FicheController::class, 'downloadFiche'])->middleware('cas.auth')->name('fiche-download');
 
-Route::get('/admission/{dossier:project_ref_id}/{admissionsTable?}/{admission?}', AdmissionForm::class)->middleware('cas.auth')->name('admission');
+Route::get('/admission/{dossier:project_ref_id}/{admissionsTable}/{admission?}', AdmissionForm::class)->middleware('cas.auth')->name('admission');

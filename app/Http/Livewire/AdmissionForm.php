@@ -19,7 +19,7 @@ class AdmissionForm extends Component
     public $isEditor = false;
 
     public Dossier $dossier;
-    public ?AdmissionsTable $admissionsTable = null;
+    public AdmissionsTable $admissionsTable;
     public ?Admission $admission = null;
     public array $countriesById;
 
@@ -61,9 +61,9 @@ class AdmissionForm extends Component
         if (!$this->admission) {
             $this->admission = new Admission([
                 'admissions_table_id' => $this->admissionsTable->id,
-                'fiche_id' => 1 // todo: fix when we have the wizard
             ]);
-            // dd($this->admission);
+            $this->admission->save();
+            $this->redirect(route('admission', [$this->dossier, $this->admissionsTable, $this->admission]));
         }
         /** @var \App\Models\User */
         $currentUser = Auth::user();
