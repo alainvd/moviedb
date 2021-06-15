@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Call extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
     /**
@@ -44,6 +45,9 @@ class Call extends Model
 
     public function getClosedAttribute()
     {
+        if ($this->attributes['status']) {
+            return $this->attributes['status'] === 'closed';
+        }
         if ($this->deadline2) {
             return Carbon::now()->greaterThanOrEqualTo($this->deadline2);
         }
@@ -52,6 +56,11 @@ class Call extends Model
         }
         // TODO: change to true when testing is done
         return false;
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->closed ? 'closed' : 'open';
     }
 
     public function dossiers()
@@ -65,11 +74,19 @@ class Call extends Model
 
     public function scopeClosed($query)
     {
-        return $query->whereDate('deadline1', '<=', Carbon::now());
+        return $query->where('status', 'closed')
+            ->orWhere(function ($query) {
+                $query->whereDate('deadline1', '<=', Carbon::now())
+                    ->orWhereDate('deadline2', '<=', Carbon::now());
+            });
     }
 
     public function scopeOpen($query)
     {
-        return $query->whereDate('deadline1', '>', Carbon::now());
+        return $query->where('status', 'open')
+            ->orWhere(function ($query) {
+                $query->whereDate('deadline1', '>', Carbon::now())
+                    ->orWhereDate('deadline2', '>', Carbon::now());
+            });
     }
 }

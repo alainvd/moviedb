@@ -111,7 +111,7 @@ class Export extends Component
                     'label' => $action->name,
                     'value' => $action->id,
                 ]),
-            'calls' => Call::where('status', '!=', 'closed')
+            'calls' => Call::open()
                 ->get()
                 ->map(fn ($call) => [
                     'label' => $call->name,

@@ -68,7 +68,7 @@ if (!App::environment('production')) {
     Route::get('homepage', [
         'middleware' => 'cas.auth',
         function () {
-            $calls = Call::where('status', 'open')->get();
+            $calls = Call::open()->get();
             return view('homepage', compact('calls'));
         }
     ])->name('homepage');
@@ -154,7 +154,7 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche-redir
         return redirect()->route('vg-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity->name == 'previous-work')
         return redirect()->route('dev-prev-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
-        
+
     if ($activity->name == 'current-work' && $dossier->action->name == 'TVONLINE')
         return redirect()->route('tv-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
     if ($activity->name == 'current-work' && $dossier->action->name == 'DEVVG')

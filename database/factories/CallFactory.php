@@ -49,7 +49,7 @@ class CallFactory extends BaseFactory
             'description' => $this->faker->text,
             'published_at' => $publishedAt,
             'deadline1' => $deadline1,
-            'status' => $deadline1->diff(Carbon::now())->invert ? 'open' : 'closed',
+            // 'status' => $deadline1->diff(Carbon::now())->invert ? 'open' : 'closed',
         ];
     }
 }

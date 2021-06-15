@@ -22,7 +22,7 @@ class CreateCallsTable extends Migration
             $table->timestamp('published_at')->nullable();
             $table->dateTime('deadline1')->nullable();
             $table->dateTime('deadline2')->nullable();
-            $table->enum('status', ["open","closed"]);
+            $table->enum('status', ["open", "closed"])->nullable();
             $table->timestamps();
         });
     }
