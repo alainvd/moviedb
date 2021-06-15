@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Dossiers\Activities;
 
-use App\Helpers\IntegerEmptyToNull;
 use App\Models\Country;
+use App\Models\Admission;
 use App\Models\AdmissionsTable;
 use Illuminate\Support\Collection;
+use App\Helpers\IntegerEmptyToNull;
 
 class AdmissionsTables extends BaseActivity
 {
@@ -62,6 +63,15 @@ class AdmissionsTables extends BaseActivity
         ]);
         // add the new table at the end of collection
         $this->admissionsTables->push($newTable);
+    }
+
+    public function delete() {
+        if ($this->deletingId) {
+            Admission::find($this->deletingId)->delete();
+            $this->deletingId = null;
+            $this->showDeleteModal = false;
+            $this->admissionsTables = AdmissionsTable::where(['dossier_id' => $this->dossier->id])->get();
+        }
     }
 
     public function render()

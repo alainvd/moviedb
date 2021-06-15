@@ -64,6 +64,7 @@
                         :dossier="$dossier"
                         :admissions="$admissionsTable->admissions"
                         :countriesById="$countriesById"
+                        :print="$print"
                     >
                     </x-dossiers.admissions-table-rows>
                 @else
