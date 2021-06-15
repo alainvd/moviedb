@@ -307,7 +307,6 @@ class FicheMovieFormBase extends FicheFormBase
     {
         // admission
         if ($this->admissionsTable && $this->admission) {
-            Log::info('redirect', ['redirect1']);
             return redirect()->route('admission', [$this->dossier, $this->admissionsTable, $this->admission]);
         }
 

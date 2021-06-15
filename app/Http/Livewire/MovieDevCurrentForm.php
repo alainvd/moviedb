@@ -176,20 +176,6 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Audiovisual Work - Development - For grant request';
-        $crumbs[] = [
-            'url' => route('dossiers.index'),
-            'title' => 'My dossiers'
-        ];
-        if (isset($this->dossier)) {
-            $crumbs[] = [
-                'url' => route('dossiers.show', $this->dossier),
-                'title' => 'Edit dossier'
-            ];
-        }
-        $crumbs[] = [
-            'title' => 'Edit fiche'
-        ];
-
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-current-form', [

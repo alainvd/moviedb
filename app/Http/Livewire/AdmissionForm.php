@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\AdmissionsTable;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class AdmissionForm extends Component
 {
@@ -52,7 +53,20 @@ class AdmissionForm extends Component
     }
 
     public function getCrumbs() {
-        return [];
+        $routes[] = [
+            'url' => route('dossiers.index'),
+            'title' => 'My dossiers',
+        ];
+        if (isset($this->dossier)) {
+            $routes[] = [
+                'url' => url('dossiers/'.$this->dossier->project_ref_id),
+                'title' => 'Edit dossier',
+            ];
+        }
+        $routes[] = [
+                'title' => 'Edit admission'
+        ];
+        return $routes;
     }
 
     public function mount(Request $request)

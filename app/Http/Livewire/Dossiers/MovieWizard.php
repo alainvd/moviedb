@@ -166,21 +166,30 @@ class MovieWizard extends Component
                 'results' => $results,
             ])
             ->layout($layout, [
-                'crumbs' => [
-                    [
-                        'url' => route('dossiers.index'),
-                        'title' => 'My dossiers',
-                    ],
-                    [
-                        'title' => 'Edit dossier',
-                        'url' => route('dossiers.show', $this->dossier)
-                    ],
-                    [
-                        'title' => 'Select work'
-                    ]
-                ],
+                'crumbs' => $this->getCrumbs(),
                 'title' => 'Films on the move',
                 'class' => 'wizard-page',
             ]);
+    }
+
+    public function getCrumbs() {
+        $routes[] = [
+                'url' => route('dossiers.index'),
+                'title' => 'My dossiers',
+            ];
+        $routes[] = [
+                'title' => 'Edit dossier',
+                'url' => route('dossiers.show', $this->dossier)
+            ];
+        if ($this->admissionsTable && $this->admission) {
+            $routes[] = [
+                'title' => 'Edit admission',
+                'url' => route('admission', [$this->dossier, $this->admissionsTable, $this->admission])
+            ];
+        }
+        $routes[] = [
+            'title' => 'Select work'
+        ];
+        return $routes;
     }
 }
