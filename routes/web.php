@@ -168,7 +168,7 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche-redir
     if ($activity->name == 'short-films')
         return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
 
-    if ($activity == 'admissions-tables') {
+    if ($activity->name == 'admissions-tables') {
         $admissionsTable = request()->input('admissionsTable') ?? null;
         $admission = request()->input('admission') ?? null;
         return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche, 'admissionsTable' => $admissionsTable, 'admission' => $admission]);
