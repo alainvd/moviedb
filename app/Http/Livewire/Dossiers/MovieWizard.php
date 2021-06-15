@@ -9,7 +9,6 @@ use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Admission;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
@@ -72,7 +71,11 @@ class MovieWizard extends Component
 
         if ($this->currentStep === 3) {
             $this->saveMovie();
-            return redirect(route('dossiers.show', $this->dossier));
+            if ($this->admissionsTable && $this->admission) {
+                $this->redirect(route('admission', [$this->dossier, $this->admissionsTable, $this->admission]));
+            } else {
+                return redirect(route('dossiers.show', $this->dossier));
+            }
         }
 
         $this->currentStep++;
@@ -90,31 +93,14 @@ class MovieWizard extends Component
 
     protected function saveMovie()
     {
+        // Note: this serves the wizard (when attaching existing fiche)
+        // Wizard is only used to select and add one movie
         $action = $this->dossier->action->name;
-
-        // Note: this serves the wizard (when attaching existing fiche, I believe)
-
         switch ($action) {
-            // TODO: Wizard is only available to some of these actions
-            // Or I could check for activity... it's always 'description' right?
             case 'FILMOVE':
             case 'DISTSAG':
-            case 'DEVSLATE':
-            case 'DEVMINISLATE':
-            case 'CODEV':
-            case 'TVONLINE':
-                // Attach fiche for activity
-                $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
-                if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
-                    Log::info('wizard attach', ['attach 1']);
-                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
-                } else {
-                    Log::info('wizard attach', ['attach 2']);
-                    $this->dossier->fiches()->attach(
-                        $this->movie->fiche->id,
-                        ['activity_id' => $this->activity->id]
-                    );
-                }
+                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+
                 $hasMovie = ActivityLog::forSubject($this->dossier)
                     ->where('properties->model', 'Movie')
                     ->count();

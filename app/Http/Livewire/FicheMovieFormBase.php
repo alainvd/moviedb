@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Crew;
+use App\Models\User;
 use App\Models\Fiche;
 use App\Models\Genre;
 use App\Models\Movie;
@@ -22,10 +23,8 @@ use App\Models\SalesAgent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\IntegerEmptyToNull;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
@@ -223,8 +222,8 @@ class FicheMovieFormBase extends FicheFormBase
             // Note: this serves:
             // - when the wizard moves to creating a new fiche
             // - when creating new fiche from dossier
+            // - when wizard creates new fiche in admission (admissions tables)
 
-            Log::info('activity', [$this->activity]);
             if ($this->activity->name == 'admissions-tables') {
                 if ($this->admissionsTable && $this->admission) {
                     $admission = Admission::find($this->admission);
@@ -232,18 +231,10 @@ class FicheMovieFormBase extends FicheFormBase
                     $admission->save();
                 }
             } else {
-                // TODO: code dublication with MovieWizard.php
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
-                // TODO: better way to decide the movie needs to be attached (or synced)
-                // dd(serialize($this->dossier));
-                Log::info('dossier', [serialize($this->dossier)]);
-                Log::info('activities', [$this->dossier->action->activities]);
-                Log::info('rules', $rules);
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
-                    Log::info('attach', ['attach 1']);
                     $this->dossier->fiches()->sync([$this->movie->fiche->id]);
                 } else {
-                    Log::info('attach', ['attach 2']);
                     $this->dossier->fiches()->attach(
                         $this->movie->fiche->id,
                         ['activity_id' => $this->activity->id]
@@ -314,6 +305,12 @@ class FicheMovieFormBase extends FicheFormBase
 
     function fichePostSaveRedirect()
     {
+        // admission
+        if ($this->admissionsTable && $this->admission) {
+            Log::info('redirect', ['redirect1']);
+            return redirect()->route('admission', [$this->dossier, $this->admissionsTable, $this->admission]);
+        }
+
         // in dossier context, go back to dossier
         // will also work when coming from wizard
         if (isset($this->dossier) && isset($this->activity) && isset($this->fiche)) {
