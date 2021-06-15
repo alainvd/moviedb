@@ -7,7 +7,7 @@
     :activity="$activity ?? null"
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
-    :standAloneFiche="$standAloneFiche"
+    :standAloneFiche="$standAloneFiche ?? null"
 >
 
     <!-- title -->
