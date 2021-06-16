@@ -98,7 +98,8 @@ class Movie extends Model
 
     const LINK_APPLICANT_WORK = [
         'WRKPRODAP' => 'Work Produced by the Applicant Company',
-        'WRKPERS' => 'Work where Personnal Credit is Eligible'
+        'WRKPERS' => 'Work where Personal Credit is Eligible',
+        'WRKCOPROD' => 'Co-production with Another Company'
     ];
 
     const USER_EXPERIENCES = [
