@@ -29,6 +29,7 @@ class CallCrudController extends CrudController
         CRUD::setModel(\App\Models\Call::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/call');
         CRUD::setEntityNameStrings('call', 'calls');
+        CRUD::denyAccess(['delete']);
     }
 
     /**
@@ -47,6 +48,8 @@ class CallCrudController extends CrudController
         CRUD::column('deadline1');
         CRUD::column('deadline2');
         CRUD::column('status');
+
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -88,8 +91,19 @@ class CallCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-        CRUD::removeField('deadline1');
+        // CRUD::removeField('deadline1');
         CRUD::field('deadline2');
-        CRUD::field('status');
+
+        $statusField = [
+            'label' => 'Status',
+            'name' => 'status',
+            'type' => 'select_from_array',
+            'allows_null' => true,
+            'options' => [
+                'open' => 'open',
+                'closed' => 'closed'
+            ]
+        ];
+        CRUD::addField($statusField);
     }
 }

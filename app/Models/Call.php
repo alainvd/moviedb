@@ -23,6 +23,8 @@ class Call extends Model
         'year',
         'published_at',
         'status',
+        'deadline1',
+        'deadline2',
     ];
 
     /**
@@ -47,6 +49,9 @@ class Call extends Model
     {
         if ($this->attributes['status']) {
             return $this->attributes['status'] === 'closed';
+        }
+        if (Carbon::now()->lessThan($this->published_at)) {
+            return true;
         }
         if ($this->deadline2) {
             return Carbon::now()->greaterThanOrEqualTo($this->deadline2);
