@@ -76,7 +76,7 @@ class FormHelpers
                 if ($coproducers == 0) $coproducers++;
             }
         }
-        return ['One producer or two co-procuers are required.'];
+        return ['One producer or two co-producers are required.'];
     }
 
     // Check if sales agent is present

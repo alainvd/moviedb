@@ -7,6 +7,7 @@
     <meta content="width=device-width,initial-scale=1" name="viewport" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @include('partials.scripts.webtools')
     @include('partials.scripts.alpine')
     @include('partials.scripts.functions')
     @include('partials.scripts.choices')

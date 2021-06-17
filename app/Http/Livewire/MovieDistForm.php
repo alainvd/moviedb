@@ -58,6 +58,8 @@ class MovieDistForm extends FicheMovieFormBase
         'movie.photography_end' => 'required|date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
         'movie.film_format' => 'required|string',
 
         'movie.total_budget_currency_amount' => 'required|integer',
@@ -189,14 +191,14 @@ class MovieDistForm extends FicheMovieFormBase
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);    
 
         // Validate subform: if required items are added
-        $messages = FormHelpers::requiredProducers($this->producers, $this->movie->genre_id);
+        $messages = FormHelpers::requiredProducers($this->producers);
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);        
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducers::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
 
         // Validate subform: if required items are added
-        $messages = FormHelpers::requiredSalesAgents($this->sales_agents, $this->movie->genre_id);
+        $messages = FormHelpers::requiredSalesAgents($this->sales_agents);
         foreach ($messages as $message) $specialErrors->add('salesAgentErrorMessages', $message);       
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->sales_agents, TableEditMovieSalesAgents::class, function($sales_agent) {return $sales_agent['name'];});

@@ -50,7 +50,7 @@ class FichesExport extends BaseExport
         'Link between applicant and work' => 'movies.link_applicant_work',
         'Name of person for personal credit' => 'movies.link_applicant_work_person_name',
         'Position of person for personal credit' => 'movies.link_applicant_work_person_position',
-        'Personal on-screen credit' => 'movies.link_applicant_work_person_credit',
+        'On-screen credit' => 'movies.link_applicant_work_person_credit',
         'Origin of work' => 'movies.rights_origin_of_work',
         'Type of contract with author' => 'movies.rights_contract_type',
         'Start date of ownership' => 'movies.rights_contract_start_date',
