@@ -153,7 +153,10 @@ class MovieDevCurrentForm extends FicheMovieFormBase
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->locations, TableEditMovieLocationsDevCurrent::class, function($location) {return Location::LOCATION_TYPES[$location['type']];});
         foreach ($messages as $message) $specialErrors->add('locationErrorMessages', $message);
 
-        // Validate subform
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredProducers($this->producers);
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
+        // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevCurrent::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
 

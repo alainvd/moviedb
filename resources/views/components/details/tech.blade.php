@@ -82,6 +82,42 @@
         @enderror
     </div>
 
+    <!-- dependent field -->
+    <div class="col-span-1 col-start-2" x-data="{ show: false }" x-show="$wire.movie.film_type == 'SERIES'">
+        <x-form.input
+            :print="$print"
+            :id="'number_of_episodes'"
+            :label="'Number of episodes'"
+            :hasError="$errors->has('movie.number_of_episodes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.number_of_episodes')"
+            wire:model="movie.number_of_episodes"
+            value="{{ $movie->number_of_episodes }}"
+        ></x-form.input>
+
+        @error('movie.number_of_episodes')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <!-- dependent field -->
+    <div class="col-span-1 col-start-3" x-data="{ show: false }" x-show="$wire.movie.film_type == 'SERIES'">
+        <x-form.input-trailing
+            :print="$print"
+            :id="'length_of_episodes'"
+            :label="'Average duration of episode'"
+            :trailing="'Minutes'"
+            :isAmount="false"
+            :hasError="$errors->has('movie.length_of_episodes')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.length_of_episodes')"
+            wire:model="movie.length_of_episodes"
+            value="{{ $movie->length_of_episodes }}"
+        ></x-form.input-trailing>
+
+        @error('movie.length_of_episodes')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
     <div class="col-span-1">
         <x-form.select
             :print="$print"            

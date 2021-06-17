@@ -47,6 +47,8 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.photography_end' => 'date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
@@ -114,6 +116,9 @@ class MovieDevPrevForm extends FicheMovieFormBase
     {
         $specialErrors = new MessageBag;
 
+        // Validate subform: if required items are added
+        $messages = FormHelpers::requiredProducers($this->producers);
+        foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
         // Validate subform: if all item fields are filled
         $messages = FormHelpers::validateTableEditItems($this->isEditor, $this->producers, TableEditMovieProducersDevPrevious::class, function($producer) {return $producer['role'];});
         foreach ($messages as $message) $specialErrors->add('producerErrorMessages', $message);
