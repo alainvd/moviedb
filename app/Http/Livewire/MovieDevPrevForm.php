@@ -47,6 +47,8 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.photography_end' => 'date',
         'movie.shooting_language' => 'required',
         'movie.film_length' => 'required|integer|min:1|max:10000',
+        'movie.number_of_episodes' => 'integer|min:1|max:10000',
+        'movie.length_of_episodes' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
         'movie.link_applicant_work' => 'string',
