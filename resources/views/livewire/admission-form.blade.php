@@ -68,6 +68,14 @@
                         Select the Film
                     </x-anchors.primary>
                 </div>
+
+                @if(Auth::user()->hasRole('editor') || (Auth::user()->hasRole('applicant') && $admission && $admission->fiche && $admission->fiche->status->id == 1))
+                    <div class="m-6">
+                        <x-anchors.secondary :url="route('dist-fiche-form', ['dossier'=>$dossier, 'activity'=>6, 'fiche'=>$admission->fiche, 'admissionsTable' => $admissionsTable, 'admission' => $admission])" :disabled="$dossier->call->closed">
+                            Edit
+                        </x-anchors.secondary>
+                    </div>
+                @endif
             </div>
 
             <div class="grid grid-cols-2 gap-4 my-4 md:grid-cols-3">
