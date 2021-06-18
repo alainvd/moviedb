@@ -208,26 +208,28 @@
             Previous
         </x-button.secondary>
 
-        @if ($currentStep > 1)
-            <div class="text-gray-500 text-md">
-                Could not find the work you are looking for?
-                &nbsp;
-                @if($admissionsTable && $admission)
-                <a href="{{ route('dossier-create-fiche', [
-                    'dossier' => $dossier,
-                    'activity' => $activity,
-                    'admissionsTable' => $admissionsTable,
-                    'admission' => $admission
-                ]) }}" class="text-indigo-600">
-                @else
-                <a href="{{ route('dossier-create-fiche', [
-                    'dossier' => $dossier,
-                    'activity' => $activity,
-                ]) }}" class="text-indigo-600">
-                @endif
-                    Create a new work
-                </a>
-            </div>
+        @if ($reinvested == null)
+            @if ($currentStep > 1)
+                <div class="text-gray-500 text-md">
+                    Could not find the work you are looking for?
+                    &nbsp;
+                    @if($admissionsTable && $admission)
+                    <a href="{{ route('dossier-create-fiche', [
+                        'dossier' => $dossier,
+                        'activity' => $activity,
+                        'admissionsTable' => $admissionsTable,
+                        'admission' => $admission
+                    ]) }}" class="text-indigo-600">
+                    @else
+                    <a href="{{ route('dossier-create-fiche', [
+                        'dossier' => $dossier,
+                        'activity' => $activity,
+                    ]) }}" class="text-indigo-600">
+                    @endif
+                        Create a new work
+                    </a>
+                </div>
+            @endif
         @endif
 
         <x-button.primary wire:click="nextStep" x-text="currentStep === 3 ? 'Yes, I confirm' : 'Next'">

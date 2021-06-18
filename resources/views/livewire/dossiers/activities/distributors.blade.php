@@ -16,38 +16,38 @@
 
         <x-slot name="body">
 
-            @forelse ($distributors as $index => $distributor)
+        @forelse ($distributors as $index => $distributor)
 
             <x-table.row>
                 <x-table.cell class="text-center">{{ $distributor->country->name }}</x-table.cell>
                 <x-table.cell class="text-center ">{{ $distributor->name }}</x-table.cell>
-        <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
-        <x-table.cell class="text-center">
-            {{ $distributor->forecast_release_date }}
-        </x-table.cell>
-        <x-table.cell class="text-center">
-            {{ !empty($distributor->pa_costs) ? euro($distributor->pa_costs) : '' }}
-        </x-table.cell>
-        <x-table.cell class="text-center">
-            {{ !empty($distributor->pa_costs) ? euro($distributor->forecast_grant) : '' }}
-        </x-table.cell>
-        @if(empty($print))
-        <x-table.cell class="space-x-2 text-center">
-            <a wire:click="showAdd({{ $distributor->id }})" class="text-indigo-600 cursor-pointer hover:text-indigo-900 print:hidden edit-distributor">
-                Edit
-            </a>
-            <a wire:click="showDelete({{ $distributor->id }})" class="text-red-600 cursor-pointer hover:text-red-900 print:hidden remove-distributor">
-                Remove
-            </a>
-        </x-table.cell>
-        @endif
-        </x-table.row>
+                <x-table.cell class="text-center">{{ $distributor->role }}</x-table.cell>
+                <x-table.cell class="text-center">
+                    {{ $distributor->forecast_release_date }}
+                </x-table.cell>
+                <x-table.cell class="text-center">
+                    {{ !empty($distributor->pa_costs) ? euro($distributor->pa_costs) : '' }}
+                </x-table.cell>
+                <x-table.cell class="text-center">
+                    {{ !empty($distributor->pa_costs) ? euro($distributor->forecast_grant) : '' }}
+                </x-table.cell>
+                @if(empty($print))
+                <x-table.cell class="space-x-2 text-center">
+                    <a wire:click="showAdd({{ $distributor->id }})" class="text-indigo-600 cursor-pointer hover:text-indigo-900 print:hidden edit-distributor">
+                        Edit
+                    </a>
+                    <a wire:click="showDelete({{ $distributor->id }})" class="text-red-600 cursor-pointer hover:text-red-900 print:hidden remove-distributor">
+                        Remove
+                    </a>
+                </x-table.cell>
+                @endif
+            </x-table.row>
 
         @empty
 
-        <x-table.row>
-            <x-table.cell class="text-center" colspan="7">No distributors yet</x-table.cell>
-        </x-table.row>
+            <x-table.row>
+                <x-table.cell class="text-center" colspan="7">No distributors yet</x-table.cell>
+            </x-table.row>
 
         @endforelse
         </x-slot>

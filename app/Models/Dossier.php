@@ -93,6 +93,6 @@ class Dossier extends Model
 
     public function reinvested()
     {
-        return $this->belongsToMany(Reinvested::class);
+        return $this->belongsToMany(Reinvested::class, 'reinvested_dossier');
     }
 }

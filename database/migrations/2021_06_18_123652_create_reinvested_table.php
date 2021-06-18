@@ -13,13 +13,15 @@ class CreateReinvestedTable extends Migration
      */
     public function up()
     {
-        Schema::create('reinvested', function (Blueprint $table) {
+        Schema::create('reinvesteds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fiche_id')->nullable();
             $table->text('type_subtype')->nullable();
             $table->bigInteger('grant')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**

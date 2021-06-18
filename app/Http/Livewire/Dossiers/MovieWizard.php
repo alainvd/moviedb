@@ -8,6 +8,7 @@ use App\Models\Dossier;
 use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Admission;
+use App\Models\Reinvested;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
@@ -37,6 +38,7 @@ class MovieWizard extends Component
 
     public $admissionsTable = null;
     public $admission = null;
+    public $reinvested = null;
 
     public function mount(Dossier $dossier, Activity $activity)
     {
@@ -50,6 +52,7 @@ class MovieWizard extends Component
         $this->activity = $activity;
         if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
         if (request()->input('admission')) $this->admission = request()->input('admission');
+        if (request()->input('reinvested')) $this->reinvested = request()->input('reinvested');
     }
 
     public function updatingOriginalTitle()
@@ -118,6 +121,11 @@ class MovieWizard extends Component
                     $admission = Admission::find($this->admission);
                     $admission->fiche_id = $this->movie->fiche->id;
                     $admission->save();
+                }
+                if ($this->reinvested) {
+                    $reinvested = Reinvested::find($this->reinvested);
+                    $reinvested->fiche_id = $this->movie->fiche->id;
+                    $reinvested->save();
                 }
                 $this->notify('Movie added');
             default:
