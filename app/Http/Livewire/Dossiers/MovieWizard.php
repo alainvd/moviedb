@@ -139,6 +139,7 @@ class MovieWizard extends Component
         $hasSearch = false;
 
         $query = Movie::whereHas('fiche', function ($query) {
+                $query->where('type', 'dist');
                 $query->whereNotIn('status_id', function ($query) {
                     $query->select('id')
                         ->from('statuses')
