@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Action;
 use App\Models\Fiche;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Action;
+use App\Models\Reinvested;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Dossier extends Model
 {
@@ -88,5 +89,10 @@ class Dossier extends Model
     public function scopeForUser($query, $id)
     {
         return $query->where('created_by', $id);
+    }
+
+    public function reinvested()
+    {
+        return $this->belongsToMany(Reinvested::class);
     }
 }
