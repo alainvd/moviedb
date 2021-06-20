@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Tools\Generic;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use CausesActivity, Notifiable, HasRoles, HasFactory;
+    use CausesActivity, CrudTrait, Notifiable, HasRoles, HasFactory;
 
     /**
      * The attributes that are mass assignable.

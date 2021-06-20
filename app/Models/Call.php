@@ -63,7 +63,7 @@ class Call extends Model
         return false;
     }
 
-    public function getStatusAttribute()
+    public function getComputedStatusAttribute()
     {
         return $this->closed ? 'closed' : 'open';
     }

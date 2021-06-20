@@ -47,9 +47,10 @@ class CallCrudController extends CrudController
         CRUD::column('published_at');
         CRUD::column('deadline1');
         CRUD::column('deadline2');
-        CRUD::column('status');
-
-
+        CRUD::addColumn([
+            'label' => 'Status',
+            'name' => 'computed_status'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
