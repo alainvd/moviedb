@@ -25,9 +25,9 @@
 </div>
 
 <!-- dependent fields -->
-<div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3" x-data="{ show: false }" x-show="$wire.movie.link_applicant_work == 'WRKPERS'">
+<div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3">
     <!-- link_applicant_work_person_name -->
-    <div class="col-span-1">
+    <div class="col-span-1" x-data="{ show: false }" x-show="$wire.movie.link_applicant_work == 'WRKPERS'">
         <x-form.input
             :print="$print"
             :id="'link_applicant_work_person_name'"
@@ -44,7 +44,7 @@
     </div>
 
     <!-- link_applicant_work_person_position -->
-    <div class="col-span-1">
+    <div class="col-span-1" x-data="{ show: false }" x-show="$wire.movie.link_applicant_work == 'WRKPERS'">
         <x-form.input
             :print="$print"
             :id="'link_applicant_work_person_position'"
@@ -61,11 +61,11 @@
     </div>
 
     <!-- link_applicant_work_person_credit -->
-    <div class="col-span-1">
+    <div class="col-span-1" x-data="{ show: false }" x-show="$wire.movie.link_applicant_work == 'WRKPERS' || $wire.movie.link_applicant_work == 'WRKCOPROD'">
         <x-form.input
             :print="$print"
             :id="'link_applicant_work_person_credit'"
-            :label="'Personal on-screen Credit'"
+            :label="'On-screen Credit'"
             :hasError="$errors->has('movie.link_applicant_work_person_credit')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.link_applicant_work_person_credit')"
             wire:model="movie.link_applicant_work_person_credit"

@@ -134,6 +134,8 @@ class FicheMovieFormBase extends FicheFormBase
             if ($value !== 'WRKPERS') {
                 $this->movie->link_applicant_work_person_name = NULL;
                 $this->movie->link_applicant_work_person_position = NULL;
+            }
+            if ($value !== 'WRKPERS' && $value !== 'WRKCOPROD') {
                 $this->movie->link_applicant_work_person_credit = NULL;
             }
         }

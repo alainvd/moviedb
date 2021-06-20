@@ -1,3 +1,4 @@
+@if(App::environment('production') || App::environment('acceptance'))
 <script>
     window.onload = (event) => {
         $wt.render("ec-globan", {
@@ -10,5 +11,5 @@
             zindex : 40
         });
     };
-    </script>
-    
+</script>
+@endif
