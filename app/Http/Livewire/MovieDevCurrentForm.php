@@ -75,7 +75,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
 
     protected $rulesDraft = [
         'movie.original_title' => 'required|string|max:255',
-        'fiche.status_id' => 'integer',
+        'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.audience_id' => 'integer',
         'movie.genre_id' => 'integer',

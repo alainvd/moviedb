@@ -22,7 +22,7 @@
                 :label="'Film Title'"
                 :hasError="$errors->has('film_title')"
                 name="film_title"
-                :readonly="true"
+                :disabled="true"
                 wire:model="movie.original_title"
                 value="{{ $movie->original_title }}">
             </x-form.input>
@@ -62,26 +62,16 @@
         </div>
         @if(empty($print))
         <div class="col-span-1 print:hidden">
-            @if(Auth::user()->hasRole('applicant'))
-                @if($movie && $movie->fiche && $movie->fiche->status->id == 1)
-                    <div class="m-6">
-                        <x-anchors.secondary :url="route('dist-fiche-form', compact('dossier', 'activity', 'fiche'))" :disabled="$dossier->call->closed">
-                            Edit
-                        </x-anchors.secondary>
-                    </div>
-                @elseif($movie && $movie->fiche)
-                    <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
-                        View details
-                    </x-button.secondary>
-                @endif
-            @endif
-
-            @if(Auth::user()->hasRole('editor'))
+            @if($fiche && request()->user()->can('view', $fiche))
             <div class="m-6">
                 <x-anchors.secondary :url="route('dist-fiche-form', compact('dossier', 'activity', 'fiche'))" :disabled="$dossier->call->closed">
                     Edit
                 </x-anchors.secondary>
             </div>
+            @elseif($movie && $movie->fiche )
+            <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
+                View details
+            </x-button.secondary>
             @endif
         </div>
         @endif

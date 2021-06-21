@@ -103,7 +103,7 @@ class FicheMovieFormBase extends FicheFormBase
                 abort(404);
             }
             $this->isNew = true;
-            $this->fiche = new Fiche;
+            $this->fiche = new Fiche(Fiche::defaultsFiche());
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
             $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
