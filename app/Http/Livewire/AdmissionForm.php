@@ -71,6 +71,10 @@ class AdmissionForm extends Component
 
     public function mount(Request $request)
     {
+        if ($this->admissionsTable->dossier && request()->user()->cannot('view', $this->admissionsTable->dossier)) {
+            abort(404);
+        }
+
         $this->countriesById = Country::countriesById();
         if (!$this->admission) {
             $this->admission = new Admission([

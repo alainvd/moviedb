@@ -102,7 +102,11 @@ class MovieWizard extends Component
         switch ($action) {
             case 'FILMOVE':
             case 'DISTSAG':
-                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                if (Auth::user()->can('view', $dossier)) {
+                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                } else {
+                    abort(404);
+                }
 
                 $hasMovie = ActivityLog::forSubject($this->dossier)
                     ->where('properties->model', 'Movie')
@@ -119,13 +123,21 @@ class MovieWizard extends Component
             case 'DISTAUTOG':
                 if ($this->admissionsTable && $this->admission) {
                     $admission = Admission::find($this->admission);
-                    $admission->fiche_id = $this->movie->fiche->id;
-                    $admission->save();
+                    if (Auth::user()->can('view', $admission->admissionsTable->dossier)) {
+                        $admission->fiche_id = $this->movie->fiche->id;
+                        $admission->save();
+                    } else {
+                        abort(404);
+                    }
                 }
                 if ($this->reinvested) {
                     $reinvested = Reinvested::find($this->reinvested);
-                    $reinvested->fiche_id = $this->movie->fiche->id;
-                    $reinvested->save();
+                    if (Auth::user()->can('view', $reinvested->dossier)) {
+                        $reinvested->fiche_id = $this->movie->fiche->id;
+                        $reinvested->save();
+                    } else {
+                        abort(404);
+                    }
                 }
                 $this->notify('Movie added');
             default:
