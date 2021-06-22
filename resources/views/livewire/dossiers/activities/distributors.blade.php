@@ -90,7 +90,13 @@
 
         <x-slot name="content">
             <div class="my-4">
-                <x-form.select :id="'distribution-country'" :label="'Distribution Country'" :hasError="$errors->has('currentDistributor.country_id')" wire:model="currentDistributor.country_id">
+                <x-form.select
+                    :id="'distribution-country'"
+                    :label="'Distribution Country'"
+                    :hasError="$errors->has('currentDistributor.country_id')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentDistributor.country_id')"
+                    wire:model="currentDistributor.country_id"
+                    >
                     @foreach ($countriesGrouped as $group=>$countries)
                     <optgroup label="---">
                         @foreach ($countries as $country)
@@ -105,7 +111,13 @@
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
-                <x-form.input :id="'distributor-company'" :label="'Company Name'" :hasError="$errors->has('currentDistributor.name')" wire:model="currentDistributor.name">
+                <x-form.input
+                    :id="'distributor-company'"
+                    :label="'Company Name'"
+                    :hasError="$errors->has('currentDistributor.name')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentDistributor.name')"
+                    wire:model="currentDistributor.name"
+                    >
                 </x-form.input>
 
                 @error ('currentDistributor.name')
@@ -113,7 +125,13 @@
                 @enderror
             </div>
             <div class="my-4">
-                <x-form.select :id="'company-role'" :label="'Company Role'" :hasError="$errors->has('currentDistributor.role')" wire:model="currentDistributor.role">
+                <x-form.select
+                    :id="'company-role'"
+                    :label="'Company Role'"
+                    :hasError="$errors->has('currentDistributor.role')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentDistributor.role')"
+                    wire:model="currentDistributor.role"
+                    >
                     @foreach ($distributorRoles as $distributorRole)
                     <option value="{{ $distributorRole }}">
                         {{ $distributorRole }}
@@ -126,7 +144,13 @@
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
-                <x-form.datepicker :id="'distributors-forecast-release-date'" :label="'Forecast Release Date'" :hasError="$errors->has('currentDistributor.forecast_release_date')" wire:model="currentDistributor.forecast_release_date">
+                <x-form.datepicker
+                    :id="'distributors-forecast-release-date'"
+                    :label="'Forecast Release Date'"
+                    :hasError="$errors->has('currentDistributor.forecast_release_date')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentDistributor.forecast_release_date')"
+                    wire:model="currentDistributor.forecast_release_date"
+                    >
                 </x-form.datepicker>
 
                 @error ('currentDistributor.forecast_release_date')
@@ -134,7 +158,14 @@
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
-                <x-form.simple-currency :id="'pa-costs'" :label="'P&A Costs'" :hasError="$errors->has('currentDistributor.pa_costs')" wire:model="currentDistributor.pa_costs" placeholder="0">
+                <x-form.simple-currency
+                    :id="'pa-costs'"
+                    :label="'P&A Costs'"
+                    :hasError="$errors->has('currentDistributor.pa_costs')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentDistributor.pa_costs')"
+                    wire:model="currentDistributor.pa_costs"
+                    placeholder="0"
+                    >
                 </x-form.simple-currency>
 
                 @error ('currentDistributor.pa_costs')
@@ -142,7 +173,14 @@
                 @enderror
             </div>
             <div class="my-4 md:w-1/2">
-                <x-form.simple-currency :id="'forecast-grant'" :label="'Forecast Grant'" :hasError="$errors->has('currentDistributor.forecast_grant')" wire:model="currentDistributor.forecast_grant" placeholder="0">
+                <x-form.simple-currency
+                    :id="'forecast-grant'"
+                    :label="'Forecast Grant'"
+                    :hasError="$errors->has('currentDistributor.forecast_grant')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentDistributor.forecast_grant')"
+                    wire:model="currentDistributor.forecast_grant"
+                    placeholder="0"
+                    >
                 </x-form.simple-currency>
 
                 @error ('currentDistributor.forecast_grant')

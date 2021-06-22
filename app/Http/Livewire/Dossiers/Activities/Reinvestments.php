@@ -26,12 +26,13 @@ class Reinvestments extends Component
 
     public Reinvestment $currentReinvestment;
 
+    public $typesSubtypes = Reinvestment::TYPES_SUBTYPES;
+
     public $print = false;
 
-    protected $rules = [
-        // 'currentReinvestment.fiche_id' => 'required|integer',
-        'currentReinvestment.type_subtype' => 'string',
-        'currentReinvestment.grant' => 'integer',
+    public $rules = [
+        'currentReinvestment.type_subtype' => 'required|string',
+        'currentReinvestment.grant' => 'required|integer',
     ];
 
     public function mount(Dossier $dossier)
@@ -97,7 +98,6 @@ class Reinvestments extends Component
     public function render()
     {
         $reinvestments = $this->dossier->reinvestments();
-        // $reinvestments = collect([]);
 
         return view('livewire.dossiers.activities.reinvestments', [
             'reinvestments' => $reinvestments->count() ? $reinvestments->get() : collect([]),

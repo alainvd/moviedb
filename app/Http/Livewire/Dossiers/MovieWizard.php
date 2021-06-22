@@ -123,7 +123,7 @@ class MovieWizard extends Component
             case 'DISTAUTOG':
                 if ($this->admissionsTable && $this->admission) {
                     $admission = Admission::find($this->admission);
-                    if (Auth::user()->can('view', $admission->admissionsTable->dossier)) {
+                    if (Auth::user()->can('update', $admission->admissionsTable->dossier)) {
                         $admission->fiche_id = $this->movie->fiche->id;
                         $admission->save();
                     } else {
@@ -132,10 +132,11 @@ class MovieWizard extends Component
                 }
                 if ($this->reinvestment) {
                     $reinvestment = Reinvestment::find($this->reinvestment);
-                    if (Auth::user()->can('view', $reinvestment->dossier)) {
-                        $r->fiche_id = $this->movie->fiche->id;
-                        $r->save();
+                    if (Auth::user()->can('update', $reinvestment->dossiers->first())) {
+                        $reinvestment->fiche_id = $this->movie->fiche->id;
+                        $reinvestment->save();
                     } else {
+                        dd('no can do');
                         abort(404);
                     }
                 }

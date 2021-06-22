@@ -17,12 +17,18 @@ class Reinvestment extends Model
         'grant',
     ];
 
+    const TYPES_SUBTYPES = [
+        'OPT1' => 'Film Financing / co-production',
+        'OPT2' => 'Film Financing / minimum guarantee',
+        'OPT3' => 'Release costs',
+    ];
+
     public function fiche()
     {
         return $this->belongsTo(Fiche::class);
     }
 
-    public function dossier()
+    public function dossiers()
     {
         return $this->belongsToMany(Dossier::class);
     }

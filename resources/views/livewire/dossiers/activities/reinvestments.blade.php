@@ -19,7 +19,7 @@
 
             <x-table.row>
                 <x-table.cell class="text-center ">{!! !empty($reinvestment->fiche_id) ? '<a class="text-indigo-600 cursor-pointer hover:text-indigo-900 goto-movie" href="'.route('movie-dist', ['fiche'=>$reinvestment->fiche]).'">'.$reinvestment->fiche->movie->original_title.'</a>' : '<a class="text-indigo-600 cursor-pointer hover:text-indigo-900 print:hidden select-movie" href="'.route('movie-wizard', ['dossier' => $dossier, 'activity' => 7, 'reinvestment' => $reinvestment->id]).'">select a movie</a>' !!}</x-table.cell>
-                <x-table.cell class="text-center">{{ !empty($reinvestment->type_subtype) ? $reinvestment->type_subtype : '' }}</x-table.cell>
+                <x-table.cell class="text-center">{{ !empty($reinvestment->type_subtype) ? $typesSubtypes[$reinvestment->type_subtype] : '' }}</x-table.cell>
                 <x-table.cell class="text-center">{{ !empty($reinvestment->grant) ? euro($reinvestment->grant) : '' }}</x-table.cell>
                 @if(empty($print))
                 <x-table.cell class="space-x-2 text-center">
@@ -56,8 +56,20 @@
 
         <x-slot name="content">
             <div class="my-4 md:w-1/2">
-                <x-form.input :id="'reinvestment-type_subtype'" :label="'Type / Subtype'" :hasError="$errors->has('currentReinvestment.type_subtype')" wire:model="currentReinvestment.type_subtype">
-                </x-form.input>
+                <x-form.select
+                    :id="'reinvestment-type_subtype'"
+                    :label="'Type / Subtype'"
+                    :hasError="$errors->has('currentReinvestment.type_subtype')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentReinvestment.type_subtype')"
+                    wire:model="currentReinvestment.type_subtype"
+                    value="{{ !empty($currentReinvestment->type_subtype) ? $typesSubtypes[$currentReinvestment->type_subtype] : '' }}"
+                >
+        
+                    @foreach ($typesSubtypes as $key=>$value)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+        
+                </x-form.select>
 
                 @error ('currentReinvestment.type_subtype')
                 <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
@@ -65,7 +77,13 @@
             </div>
 
             <div class="my-4 md:w-1/2">
-                <x-form.simple-currency :id="'reinvestment-grant'" :label="'Grant'" :hasError="$errors->has('currentReinvestment.grant')" wire:model="currentReinvestment.grant">
+                <x-form.simple-currency
+                    :id="'reinvestment-grant'"
+                    :label="'Grant'"
+                    :hasError="$errors->has('currentReinvestment.grant')"
+                    :isRequired="FormHelpers::isRequired($rules, 'currentReinvestment.grant')"
+                    wire:model="currentReinvestment.grant"
+                    >
                 </x-form.simple-currency>
 
                 @error ('currentReinvestment.grant')
