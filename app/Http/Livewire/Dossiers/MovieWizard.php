@@ -102,7 +102,7 @@ class MovieWizard extends Component
         switch ($action) {
             case 'FILMOVE':
             case 'DISTSAG':
-                if (Auth::user()->can('view', $dossier)) {
+                if (Auth::user()->can('view', $this->dossier)) {
                     $this->dossier->fiches()->sync([$this->movie->fiche->id]);
                 } else {
                     abort(404);
