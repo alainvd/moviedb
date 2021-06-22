@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReinvestedTable extends Migration
+class CreateReinvestmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateReinvestedTable extends Migration
      */
     public function up()
     {
-        Schema::create('reinvesteds', function (Blueprint $table) {
+        Schema::create('reinvestments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fiche_id')->nullable();
             $table->text('type_subtype')->nullable();
@@ -31,6 +31,6 @@ class CreateReinvestedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reinvested');
+        Schema::dropIfExists('reinvestments');
     }
 }

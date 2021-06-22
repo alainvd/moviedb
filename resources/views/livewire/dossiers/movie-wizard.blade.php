@@ -208,7 +208,7 @@
             Previous
         </x-button.secondary>
 
-        @if ($reinvested == null)
+        @if ($reinvestment == null)
             @if ($currentStep > 1)
                 <div class="text-gray-500 text-md">
                     Could not find the work you are looking for?

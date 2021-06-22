@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Dossiers\Activities;
 use App\Models\User;
 use App\Models\Dossier;
 use Livewire\Component;
-use App\Models\Reinvested;
+use App\Models\Reinvestment;
 use Illuminate\Support\Facades\Auth;
 
 class Reinvestments extends Component
@@ -24,21 +24,21 @@ class Reinvestments extends Component
     // The authenticated user
     public User $user;
 
-    public Reinvested $currentReinvested;
+    public Reinvestment $currentReinvestment;
 
     public $print = false;
 
     protected $rules = [
-        // 'currentReinvested.fiche_id' => 'required|integer',
-        'currentReinvested.type_subtype' => 'string',
-        'currentReinvested.grant' => 'integer',
+        // 'currentReinvestment.fiche_id' => 'required|integer',
+        'currentReinvestment.type_subtype' => 'string',
+        'currentReinvestment.grant' => 'integer',
     ];
 
     public function mount(Dossier $dossier)
     {
         $this->user = Auth::user();
         $this->isBackoffice = $this->user->hasAnyRole(['editor', 'admin']);
-        $this->currentReinvested = new Reinvested();
+        $this->currentReinvestment = new Reinvestment();
     }
 
     public function showAdd($id = null)
@@ -46,12 +46,12 @@ class Reinvestments extends Component
 
         if ($id) {
             $this->editId = $id;
-            $this->currentReinvested = $this->dossier
-                ->reinvested()
+            $this->currentReinvestment = $this->dossier
+                ->reinvestments()
                 ->find($id);
         } else {
             $this->editId = null;
-            $this->currentReinvested = new Reinvested();
+            $this->currentReinvestment = new Reinvestment();
         }
 
         $this->showAddModal = true;
@@ -63,30 +63,30 @@ class Reinvestments extends Component
         $this->deleteId = $id;
     }
 
-    public function addReinvested()
+    public function addReinvestment()
     {
         $this->validate();
 
         if ($this->editId) {
-            $this->currentReinvested->updated_by = $this->user->id;
+            $this->currentReinvestment->updated_by = $this->user->id;
             $this->dossier
-                ->reinvested()
+                ->reinvestments()
                 ->find($this->editId)
-                ->update($this->currentReinvested->toArray());
+                ->update($this->currentReinvestment->toArray());
         } else {
-            $this->currentReinvested->created_by = $this->user->id;
+            $this->currentReinvestment->created_by = $this->user->id;
             $this->dossier
-                ->reinvested()
-                ->save($this->currentReinvested);
+                ->reinvestments()
+                ->save($this->currentReinvestment);
         }
 
-        $this->currentReinvested = new Reinvested();
+        $this->currentReinvestment = new Reinvestment();
         $this->showAddModal = false;
     }
 
-    public function deleteReinvested()
+    public function deleteReinvestment()
     {
-        $this->dossier->reinvested()
+        $this->dossier->reinvestments()
             ->find($this->deleteId)
             ->delete();
         $this->deleteId = null;
@@ -96,11 +96,11 @@ class Reinvestments extends Component
 
     public function render()
     {
-        $reinvested = $this->dossier->reinvested();
-        // $reinvested = collect([]);
+        $reinvestments = $this->dossier->reinvestments();
+        // $reinvestments = collect([]);
 
         return view('livewire.dossiers.activities.reinvestments', [
-            'reinvested' => $reinvested->count() ? $reinvested->get() : collect([]),
+            'reinvestments' => $reinvestments->count() ? $reinvestments->get() : collect([]),
             'print' => $this->print,
         ]);
     }

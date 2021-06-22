@@ -7,7 +7,7 @@ use App\Models\Dossier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Reinvested extends Model
+class Reinvestment extends Model
 {
     use HasFactory;
 

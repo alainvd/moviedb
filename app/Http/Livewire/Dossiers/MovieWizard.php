@@ -8,7 +8,7 @@ use App\Models\Dossier;
 use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Admission;
-use App\Models\Reinvested;
+use App\Models\Reinvestment;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
@@ -38,7 +38,7 @@ class MovieWizard extends Component
 
     public $admissionsTable = null;
     public $admission = null;
-    public $reinvested = null;
+    public $reinvestment = null;
 
     public function mount(Dossier $dossier, Activity $activity)
     {
@@ -52,7 +52,7 @@ class MovieWizard extends Component
         $this->activity = $activity;
         if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
         if (request()->input('admission')) $this->admission = request()->input('admission');
-        if (request()->input('reinvested')) $this->reinvested = request()->input('reinvested');
+        if (request()->input('reinvestment')) $this->reinvestment = request()->input('reinvestment');
     }
 
     public function updatingOriginalTitle()
@@ -130,11 +130,11 @@ class MovieWizard extends Component
                         abort(404);
                     }
                 }
-                if ($this->reinvested) {
-                    $reinvested = Reinvested::find($this->reinvested);
-                    if (Auth::user()->can('view', $reinvested->dossier)) {
-                        $reinvested->fiche_id = $this->movie->fiche->id;
-                        $reinvested->save();
+                if ($this->reinvestment) {
+                    $reinvestment = Reinvestment::find($this->reinvestment);
+                    if (Auth::user()->can('view', $reinvestment->dossier)) {
+                        $r->fiche_id = $this->movie->fiche->id;
+                        $r->save();
                     } else {
                         abort(404);
                     }

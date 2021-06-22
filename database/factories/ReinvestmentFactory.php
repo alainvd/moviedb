@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Reinvested;
+use App\Models\Reinvestment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ReinvestedFactory extends Factory
+class ReinvestmentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Reinvested::class;
+    protected $model = Reinvestment::class;
 
     /**
      * Define the model's default state.

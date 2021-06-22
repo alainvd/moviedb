@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ReinvestedDossier extends Migration
+class CreateDossierReinvestment extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class ReinvestedDossier extends Migration
      */
     public function up()
     {
-        Schema::create('reinvested_dossier', function (Blueprint $table) {
-            $table->unsignedBigInteger('reinvested_id');
+        Schema::create('dossier_reinvestment', function (Blueprint $table) {
             $table->unsignedBigInteger('dossier_id');
+            $table->unsignedBigInteger('reinvestment_id');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class ReinvestedDossier extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reinvested_dossier');
+        Schema::dropIfExists('dossier_reinvestment');
     }
 }

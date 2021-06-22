@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Fiche;
 use App\Models\Action;
-use App\Models\Reinvested;
+use App\Models\Reinvestment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -91,8 +91,9 @@ class Dossier extends Model
         return $query->where('created_by', $id);
     }
 
-    public function reinvested()
+    public function reinvestments()
     {
-        return $this->belongsToMany(Reinvested::class, 'reinvested_dossier');
+        return $this->belongsToMany(Reinvestment::class);
+        // return $this->belongsToMany(Reinvestment::class, 'reinvestment_dossier');
     }
 }

@@ -75,14 +75,16 @@
                         Edit
                     </x-anchors.secondary>
                 </div>
-                @elseif($movie && $movie->fiche)
+                @elseif($movie)
                 <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
                     View details
                 </x-button.secondary>
                 @endif
             </div>
 
+            @if($movie)
             @include('dossiers.movie-details')
+            @endif
 
             <div class="grid grid-cols-2 gap-4 my-4 md:grid-cols-3">
                 <div class="col-span-1">

@@ -46,6 +46,6 @@ class DatabaseSeeder extends Seeder
         
         $this->call(\Database\Seeders\AdmissionsTableSeeder::class);
         $this->call(\Database\Seeders\AdmissionSeeder::class);
-        $this->call(\Database\Seeders\ReinvestedSeeder::class);
+        $this->call(\Database\Seeders\ReinvestmentSeeder::class);
     }
 }

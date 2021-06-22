@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Reinvested;
+use App\Models\Reinvestment;
 use Illuminate\Database\Seeder;
 
-class ReinvestedSeeder extends Seeder
+class ReinvestmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ReinvestedSeeder extends Seeder
      */
     public function run()
     {
-        Reinvested::factory()->count(5)->create();
+        Reinvestment::factory()->count(5)->create();
     }
 }
