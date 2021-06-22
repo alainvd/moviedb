@@ -65,8 +65,8 @@
             </div>
 
             <div class="my-4 md:w-1/2">
-                <x-form.input :id="'reinvested-grant'" :label="'Grant'" :hasError="$errors->has('currentReinvested.grant')" wire:model="currentReinvested.grant">
-                </x-form.input>
+                <x-form.simple-currency :id="'reinvested-grant'" :label="'Grant'" :hasError="$errors->has('currentReinvested.grant')" wire:model="currentReinvested.grant">
+                </x-form.simple-currency>
 
                 @error ('currentReinvested.grant')
                 <div class="mt-1 text-sm text-red-500">{{ $message }}</div>

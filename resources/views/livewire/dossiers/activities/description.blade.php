@@ -62,13 +62,13 @@
         </div>
         @if(empty($print))
         <div class="col-span-1 print:hidden">
-            @if($fiche && request()->user()->can('view', $fiche))
+            @if($fiche && request()->user()->can('update', $fiche))
             <div class="m-6">
                 <x-anchors.secondary :url="route('dist-fiche-form', compact('dossier', 'activity', 'fiche'))" :disabled="$dossier->call->closed">
                     Edit
                 </x-anchors.secondary>
             </div>
-            @elseif($movie && $movie->fiche )
+            @elseif($movie && $movie->fiche)
             <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
                 View details
             </x-button.secondary>
