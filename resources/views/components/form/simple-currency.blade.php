@@ -3,6 +3,7 @@
     <!-- Output for screen -->
     <label for="{{ $id ?? 'currency' }}" class="block text-sm font-light leading-5 text-gray-700">
         {{ $label }}
+        <span class="text-red-500">{{ $isRequired ?? false ? '*' : '' }}</span>
     </label>
 
     <div class="relative mt-1 rounded-md shadow-sm">

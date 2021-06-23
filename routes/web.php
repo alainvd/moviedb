@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Http\Livewire\Export;
 use App\Http\Livewire\MovieTVForm;
 use Illuminate\Support\Facades\App;
+use App\Http\Livewire\AdmissionForm;
 use App\Http\Livewire\MovieDistForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -140,6 +141,8 @@ Route::middleware('cas.auth')->group(function () {
     // Movie wizard
     Route::get('/dossiers/{dossier:project_ref_id}/activity/{activity}/movie-wizard', MovieWizard::class)
         ->name('movie-wizard');
+
+    Route::get('/admission/{dossier:project_ref_id}/{admissionsTable}/{admission?}', AdmissionForm::class)->middleware('cas.auth')->name('admission');
 });
 
 // Redirect for 'dossier-create-fiche', shows the correct form based on:
@@ -164,6 +167,12 @@ Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche-redir
 
     if ($activity->name == 'short-films')
         return redirect()->route('dev-current-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche]);
+
+    if ($activity->name == 'admissions-tables') {
+        $admissionsTable = request()->input('admissionsTable') ?? null;
+        $admission = request()->input('admission') ?? null;
+        return redirect()->route('dist-fiche-form', ['dossier' => $dossier, 'activity' => $activity, 'fiche' => $fiche, 'admissionsTable' => $admissionsTable, 'admission' => $admission]);
+    }
 
 })->middleware('cas.auth')->name('dossier-create-fiche');
 
@@ -243,4 +252,5 @@ if (!App::environment('production')) {
     Route::resource('sales-distributor', 'App\Http\Controllers\SalesDistributorController')->middleware('cas.auth')->only('index');
     Route::resource('document', 'App\Http\Controllers\DocumentController')->middleware('cas.auth')->only('index');
     Route::resource('location', 'App\Http\Controllers\LocationController')->middleware('cas.auth')->only('index');
+    Route::resource('admissions-table', 'App\Http\Controllers\AdmissionsTableController')->middleware('cas.auth')->only('index');
 }

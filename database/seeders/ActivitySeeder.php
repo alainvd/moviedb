@@ -40,6 +40,16 @@ class ActivitySeeder extends Seeder
                 'name' => 'short-films',
                 'log_model' => 'Short film',
                 'actions' => ['DEVSLATE', 'DEVMINISLATE']
+            ],
+            [
+                'name' => 'admissions-tables',
+                'log_model' => 'Admissions table',
+                'actions' => ['DISTAUTOG'],
+            ],
+            [
+                'name' => 'reinvestments',
+                'log_model' => 'Reinvestment',
+                'actions' => ['DISTAUTOG'],
             ]
         ];
 
@@ -85,6 +95,7 @@ class ActivitySeeder extends Seeder
                 'min_current_works' => 1,
                 'max_current_works' => 1,
             ],
+            'DISTAUTOG' => [],
         ];
 
         foreach ($activities as $activity) {

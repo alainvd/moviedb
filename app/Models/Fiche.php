@@ -123,4 +123,11 @@ class Fiche extends Model
             }
         }
     }
+
+    static function defaultsFiche()
+    {
+        return [
+            'status_id' => 1,
+        ];
+    }
 }

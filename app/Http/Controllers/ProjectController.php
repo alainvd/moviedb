@@ -34,7 +34,8 @@ class ProjectController extends Controller
         'DEVMINISLATE' => 'European Mini-slate Development',
         'CODEV' => 'European Co-development',
         'TVONLINE' => 'TV and Online Content',
-        'DEVVG' => 'Videogame development'
+        'DEVVG' => 'Videogame development',
+        'DISTAUTOG' => 'Distribution Automatic'
     ];
 
     /**

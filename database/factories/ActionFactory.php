@@ -31,6 +31,7 @@ class ActionFactory extends BaseFactory
                 'CODEV',
                 'TVONLINE',
                 'DEVVG',
+                'DISTAUTOG',
             ]),
         ];
     }

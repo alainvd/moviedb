@@ -84,7 +84,7 @@ class VideoGamePrevForm extends Component
         // $this->shootingLanguages = collect([]);
         if (! $this->fiche) {
             $this->isNew = true;
-            $this->fiche = new Fiche;
+            $this->fiche = new Fiche(Fiche::defaultsFiche());
             $this->media = new Media;
             $this->movie = new Movie($this->movieDefaults());
         } else {
