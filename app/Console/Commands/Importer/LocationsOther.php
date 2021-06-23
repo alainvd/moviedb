@@ -40,6 +40,7 @@ class LocationsOther extends Command
      */
     public function handle()
     {
-        Excel::import(new LocationsImportTV, 'TV_Locations.xlsx', 'excel');
+        Excel::import(new LocationsImportTV, 'TV_Locations_2014_2016.xlsx', 'excel');
+        Excel::import(new LocationsImportTV, 'TV_Locations_2017_2020.xlsx', 'excel');
     }
 }

@@ -27,11 +27,15 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
     {
         foreach ($collection as $row) {
 
-            // Get Person
-            $person = $this->getPerson($row);
+           
 
             // Get Movie
             $movie = $this->getMovie($row);
+
+            if($movie){
+
+            // Get Person
+            $person = $this->getPerson($row);
 
             // Get Title
             $title = $this->getTitle($row);
@@ -43,13 +47,13 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
                 "movie_id" => $movie->id
             ]);
             $crew->save();
-
+            }
         }
     }
 
     private function getTitle($row)
     {
-        return Title::firstWhere("name", "=", $row["role"]);
+        return Title::firstWhere("code", "=", $row["role"]);
     }
 
     private function getMovie($row)
@@ -85,7 +89,7 @@ class StaffImportDevSlate implements ToCollection, WithHeadingRow, WithChunkRead
         $person = new Person([
             "firstname" => $firstName,
             "lastname" => $lastName,
-            "nationality1" => $row["nationality_code"],
+            "nationality1" => $row["nationality"],
             "gender" => $this->getGender($row["gender"]),
         ]);
         $person->save();

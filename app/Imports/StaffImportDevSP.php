@@ -51,7 +51,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
 
     private function getTitle($row)
     {
-        return Title::firstWhere("name", "=", $row["role_name"]);
+        return Title::firstWhere("code", "=", $row["role"]);
     }
 
     private function getMovie($row)
@@ -87,7 +87,7 @@ class StaffImportDevSP implements ToCollection, WithHeadingRow, WithChunkReading
         $person = new Person([
             "firstname" => $firstName,
             "lastname" => $lastName,
-            "nationality1" => $row["nationality_code"],
+            "nationality1" => $row["nationality"],
             "gender" => $this->getGender($row["gender"]),
         ]);
         $person->save();
