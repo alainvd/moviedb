@@ -44,7 +44,12 @@ class ActivitySeeder extends Seeder
             [
                 'name' => 'admissions-tables',
                 'log_model' => 'Admissions table',
-                'actions' => ['DISTAUTOG']
+                'actions' => ['DISTAUTOG'],
+            ],
+            [
+                'name' => 'reinvestments',
+                'log_model' => 'Reinvestment',
+                'actions' => ['DISTAUTOG'],
             ]
         ];
 

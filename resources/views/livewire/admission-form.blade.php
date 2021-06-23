@@ -68,10 +68,25 @@
                         Select the Film
                     </x-anchors.primary>
                 </div>
+
+                @if($admission && $admission->fiche && request()->user()->can('update', $admission->fiche))
+                <div class="m-6">
+                    <x-anchors.secondary :url="route('dist-fiche-form', ['dossier'=>$dossier, 'activity'=>6, 'fiche'=>$admission->fiche, 'admissionsTable' => $admissionsTable, 'admission' => $admission])" :disabled="$dossier->call->closed">
+                        Edit
+                    </x-anchors.secondary>
+                </div>
+                @elseif($movie)
+                <x-button.secondary wire:click.prevent="toggleShowDetails" class="mt-6">
+                    View details
+                </x-button.secondary>
+                @endif
             </div>
 
-            <div class="grid grid-cols-2 gap-4 my-4 md:grid-cols-3">
+            @if($movie)
+            @include('dossiers.movie-details')
+            @endif
 
+            <div class="grid grid-cols-2 gap-4 my-4 md:grid-cols-3">
                 <div class="col-span-1">
                     <x-form.input
                         :id="'director'"

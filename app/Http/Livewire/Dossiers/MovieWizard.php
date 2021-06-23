@@ -8,6 +8,7 @@ use App\Models\Dossier;
 use Livewire\Component;
 use App\Models\Activity;
 use App\Models\Admission;
+use App\Models\Reinvestment;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
@@ -37,6 +38,7 @@ class MovieWizard extends Component
 
     public $admissionsTable = null;
     public $admission = null;
+    public $reinvestment = null;
 
     public function mount(Dossier $dossier, Activity $activity)
     {
@@ -50,6 +52,7 @@ class MovieWizard extends Component
         $this->activity = $activity;
         if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
         if (request()->input('admission')) $this->admission = request()->input('admission');
+        if (request()->input('reinvestment')) $this->reinvestment = request()->input('reinvestment');
     }
 
     public function updatingOriginalTitle()
@@ -99,7 +102,11 @@ class MovieWizard extends Component
         switch ($action) {
             case 'FILMOVE':
             case 'DISTSAG':
-                $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                if (Auth::user()->can('view', $this->dossier)) {
+                    $this->dossier->fiches()->sync([$this->movie->fiche->id]);
+                } else {
+                    abort(404);
+                }
 
                 $hasMovie = ActivityLog::forSubject($this->dossier)
                     ->where('properties->model', 'Movie')
@@ -116,8 +123,22 @@ class MovieWizard extends Component
             case 'DISTAUTOG':
                 if ($this->admissionsTable && $this->admission) {
                     $admission = Admission::find($this->admission);
-                    $admission->fiche_id = $this->movie->fiche->id;
-                    $admission->save();
+                    if (Auth::user()->can('update', $admission->admissionsTable->dossier)) {
+                        $admission->fiche_id = $this->movie->fiche->id;
+                        $admission->save();
+                    } else {
+                        abort(404);
+                    }
+                }
+                if ($this->reinvestment) {
+                    $reinvestment = Reinvestment::find($this->reinvestment);
+                    if (Auth::user()->can('update', $reinvestment->dossiers->first())) {
+                        $reinvestment->fiche_id = $this->movie->fiche->id;
+                        $reinvestment->save();
+                    } else {
+                        dd('no can do');
+                        abort(404);
+                    }
                 }
                 $this->notify('Movie added');
             default:
@@ -131,6 +152,7 @@ class MovieWizard extends Component
         $hasSearch = false;
 
         $query = Movie::whereHas('fiche', function ($query) {
+                $query->where('type', 'dist');
                 $query->whereNotIn('status_id', function ($query) {
                     $query->select('id')
                         ->from('statuses')

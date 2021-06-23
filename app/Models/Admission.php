@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Fiche;
+use App\Models\AdmissionsTable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Admission extends Model
 {
@@ -64,11 +66,11 @@ class Admission extends Model
 
     public function admissionsTable()
     {
-        return $this->belongsTo(\App\Models\AdmissionsTable::class);
+        return $this->belongsTo(AdmissionsTable::class);
     }
 
     public function fiche()
     {
-        return $this->belongsTo(\App\Models\Fiche::class);
+        return $this->belongsTo(Fiche::class);
     }
 }

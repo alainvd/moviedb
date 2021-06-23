@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Country;
+use App\Models\Dossier;
+use App\Models\Admission;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AdmissionsTable extends Model
 {
@@ -32,16 +35,16 @@ class AdmissionsTable extends Model
 
     public function dossier()
     {
-        return $this->belongsTo(\App\Models\Dossier::class);
+        return $this->belongsTo(Dossier::class);
     }
 
     public function country()
     {
-        return $this->belongsTo(\App\Models\Country::class);
+        return $this->belongsTo(Country::class);
     }
 
     public function admissions()
     {
-        return $this->hasMany(\App\Models\Admission::class);
+        return $this->hasMany(Admission::class);
     }
 }

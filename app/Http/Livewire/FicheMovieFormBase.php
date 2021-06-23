@@ -103,7 +103,7 @@ class FicheMovieFormBase extends FicheFormBase
                 abort(404);
             }
             $this->isNew = true;
-            $this->fiche = new Fiche;
+            $this->fiche = new Fiche(Fiche::defaultsFiche());
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
             $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
@@ -227,8 +227,12 @@ class FicheMovieFormBase extends FicheFormBase
             if ($this->activity->name == 'admissions-tables') {
                 if ($this->admissionsTable && $this->admission) {
                     $admission = Admission::find($this->admission);
-                    $admission->fiche_id = $this->movie->fiche->id;
-                    $admission->save();
+                    if (Auth::user()->can('view', $admission->admissionsTable->dossier)) {
+                        $admission->fiche_id = $this->movie->fiche->id;
+                        $admission->save();
+                    } else {
+                        abort(404);
+                    }
                 }
             } else {
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;

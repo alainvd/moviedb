@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Movie;
 use App\Models\Country;
 use App\Models\Dossier;
 use Livewire\Component;
@@ -25,6 +26,9 @@ class AdmissionForm extends Component
     public array $countriesById;
 
     public $crumbs = [];
+
+    public Movie $movie;
+    public $showDetailsModal = false;
 
     protected $rulesApplicant = [
         'admission.admissions_table_id' => '',
@@ -71,6 +75,10 @@ class AdmissionForm extends Component
 
     public function mount(Request $request)
     {
+        if ($this->admissionsTable->dossier && request()->user()->cannot('view', $this->admissionsTable->dossier)) {
+            abort(404);
+        }
+
         $this->countriesById = Country::countriesById();
         if (!$this->admission) {
             $this->admission = new Admission([
@@ -87,6 +95,9 @@ class AdmissionForm extends Component
         if ($currentUser->hasRole('editor')) {
             $this->isEditor = true;
         }
+        if ($this->admission->fiche) {
+            $this->movie = $this->admission->fiche->movie;
+        }
         $this->crumbs = $this->getCrumbs();
     }
 
@@ -100,6 +111,13 @@ class AdmissionForm extends Component
 
         // redirect to dossier
         return redirect()->route('dossiers.show', ['dossier' => $this->dossier]);
+    }
+
+    public function toggleShowDetails()
+    {
+        if ($this->movie->id) {
+            $this->showDetailsModal = true;
+        }
     }
 
     public function render()

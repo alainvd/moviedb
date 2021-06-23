@@ -96,7 +96,7 @@ class MovieDistForm extends FicheMovieFormBase
 
     protected $rulesDraft = [
         'movie.original_title' => 'required|string|max:255',
-        'fiche.status_id' => 'integer',
+        'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
         'movie.year_of_copyright' => 'integer',
