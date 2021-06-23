@@ -41,8 +41,11 @@ class StaffOther extends Command
      */
     public function handle()
     {
-        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff .xlsx', 'excel');
-        Excel::import(new StaffImportDevSlate, 'Dev_Slate_Staff_web_outcomes.xlsx', 'excel');
-        Excel::import(new StaffImportTV, 'TV_Staff.xlsx', 'excel');
+        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff_2015_2016.xlsx', 'excel');
+        Excel::import(new StaffImportDevSP, 'Dev_SP_Staff_2017_2020.xlsx', 'excel');
+        Excel::import(new StaffImportDevSlate, 'Dev_Slate_Staff_2015_2016.xlsx', 'excel');
+        Excel::import(new StaffImportDevSlate, 'Dev_Slate_Staff_2017_2020.xlsx', 'excel');
+        Excel::import(new StaffImportTV, 'TV_Staff_2014_2016.xlsx', 'excel');
+        Excel::import(new StaffImportTV, 'TV_Staff_2017_2020.xlsx', 'excel');
     }
 }
