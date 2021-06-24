@@ -94,6 +94,12 @@ class FicheFormBase extends Component
                     'title' => 'Edit dossier',
                 ];
             }
+            if ($this->admissionsTable && $this->admission) {
+                $routes[] = [
+                    'title' => 'Edit admission',
+                    'url' => route('admission', [$this->dossier, $this->admissionsTable, $this->admission])
+                ];
+            }    
             $routes[] = [
                     'title' => 'Edit fiche'
             ];

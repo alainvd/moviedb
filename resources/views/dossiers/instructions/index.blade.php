@@ -17,6 +17,8 @@
             @include('dossiers.instructions.codev')
         @elseif ($dossier->action->name === 'TVONLINE')
             @include('dossiers.instructions.tvonline')
+        @elseif ($dossier->action->name === 'DISTAUTOG')
+            @include('dossiers.instructions.distautog')
         @endif
     @endif
 </div>

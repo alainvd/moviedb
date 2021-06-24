@@ -22,18 +22,14 @@ class ActionSeeder extends Seeder
             "DEVVG",
             "DISTSAG",
             "FILMOVE",
-            // "DISTAUTOG",
-            "TVONLINE"
+            "TVONLINE",
+            "DISTAUTOG",
         ];
-
 
         foreach ($codes as $code) {
             Action::create([
                 'name' => $code
             ]);
-
         }
-
     }
 }
-

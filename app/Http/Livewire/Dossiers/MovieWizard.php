@@ -7,8 +7,9 @@ use App\Models\Movie;
 use App\Models\Dossier;
 use Livewire\Component;
 use App\Models\Activity;
+use App\Models\Admission;
+use App\Models\Reinvestment;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
@@ -35,6 +36,10 @@ class MovieWizard extends Component
 
     public Activity $activity;
 
+    public $admissionsTable = null;
+    public $admission = null;
+    public $reinvestment = null;
+
     public function mount(Dossier $dossier, Activity $activity)
     {
         if (request()->user()->cannot('update', $dossier)) {
@@ -45,6 +50,9 @@ class MovieWizard extends Component
         $this->movie = new Movie();
         $this->user = Auth::user();
         $this->activity = $activity;
+        if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
+        if (request()->input('admission')) $this->admission = request()->input('admission');
+        if (request()->input('reinvestment')) $this->reinvestment = request()->input('reinvestment');
     }
 
     public function updatingOriginalTitle()
@@ -66,7 +74,11 @@ class MovieWizard extends Component
 
         if ($this->currentStep === 3) {
             $this->saveMovie();
-            return redirect(route('dossiers.show', $this->dossier));
+            if ($this->admissionsTable && $this->admission) {
+                $this->redirect(route('admission', [$this->dossier, $this->admissionsTable, $this->admission]));
+            } else {
+                return redirect(route('dossiers.show', $this->dossier));
+            }
         }
 
         $this->currentStep++;
@@ -84,25 +96,18 @@ class MovieWizard extends Component
 
     protected function saveMovie()
     {
+        // Note: this serves the wizard (when attaching existing fiche)
+        // Wizard is only used to select and add one movie
         $action = $this->dossier->action->name;
-
         switch ($action) {
             case 'FILMOVE':
             case 'DISTSAG':
-            case 'DEVSLATE':
-            case 'DEVMINISLATE':
-            case 'CODEV':
-            case 'TVONLINE':
-                // Attach fiche for activity
-                $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
-                if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
+                if (Auth::user()->can('view', $this->dossier)) {
                     $this->dossier->fiches()->sync([$this->movie->fiche->id]);
                 } else {
-                    $this->dossier->fiches()->attach(
-                        $this->movie->fiche->id,
-                        ['activity_id' => $this->activity->id]
-                    );
+                    abort(404);
                 }
+
                 $hasMovie = ActivityLog::forSubject($this->dossier)
                     ->where('properties->model', 'Movie')
                     ->count();
@@ -115,6 +120,27 @@ class MovieWizard extends Component
                     ])
                     ->log('updated');
                 $this->notify('Movie added/updated');
+            case 'DISTAUTOG':
+                if ($this->admissionsTable && $this->admission) {
+                    $admission = Admission::find($this->admission);
+                    if (Auth::user()->can('update', $admission->admissionsTable->dossier)) {
+                        $admission->fiche_id = $this->movie->fiche->id;
+                        $admission->save();
+                    } else {
+                        abort(404);
+                    }
+                }
+                if ($this->reinvestment) {
+                    $reinvestment = Reinvestment::find($this->reinvestment);
+                    if (Auth::user()->can('update', $reinvestment->dossiers->first())) {
+                        $reinvestment->fiche_id = $this->movie->fiche->id;
+                        $reinvestment->save();
+                    } else {
+                        dd('no can do');
+                        abort(404);
+                    }
+                }
+                $this->notify('Movie added');
             default:
                 break;
         }
@@ -126,6 +152,7 @@ class MovieWizard extends Component
         $hasSearch = false;
 
         $query = Movie::whereHas('fiche', function ($query) {
+                $query->where('type', 'dist');
                 $query->whereNotIn('status_id', function ($query) {
                     $query->select('id')
                         ->from('statuses')
@@ -161,21 +188,30 @@ class MovieWizard extends Component
                 'results' => $results,
             ])
             ->layout($layout, [
-                'crumbs' => [
-                    [
-                        'url' => route('dossiers.index'),
-                        'title' => 'My dossiers',
-                    ],
-                    [
-                        'title' => 'Edit dossier',
-                        'url' => route('dossiers.show', $this->dossier)
-                    ],
-                    [
-                        'title' => 'Select work'
-                    ]
-                ],
+                'crumbs' => $this->getCrumbs(),
                 'title' => 'Films on the move',
                 'class' => 'wizard-page',
             ]);
+    }
+
+    public function getCrumbs() {
+        $routes[] = [
+                'url' => route('dossiers.index'),
+                'title' => 'My dossiers',
+            ];
+        $routes[] = [
+                'title' => 'Edit dossier',
+                'url' => route('dossiers.show', $this->dossier)
+            ];
+        if ($this->admissionsTable && $this->admission) {
+            $routes[] = [
+                'title' => 'Edit admission',
+                'url' => route('admission', [$this->dossier, $this->admissionsTable, $this->admission])
+            ];
+        }
+        $routes[] = [
+            'title' => 'Select work'
+        ];
+        return $routes;
     }
 }

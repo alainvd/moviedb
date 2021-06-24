@@ -28,6 +28,7 @@
             :disabled="$isApplicant"
             :hasError="$errors->has('fiche.status_id')"
             :isRequired="FormHelpers::isRequired($rules, 'fiche.status_id')"
+            :noEmptyValue="true"
             wire:model="fiche.status_id"
             value="{{ isset($statusesById[$fiche->status_id]) ? $statusesById[$fiche->status_id]['name'] : '' }}"
         >

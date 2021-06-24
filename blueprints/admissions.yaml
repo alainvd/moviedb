@@ -1,0 +1,40 @@
+models:
+
+  Models\AdmissionsTable:
+    dossier_id: integer nullable unsigned
+    country_id: integer nullable unsigned
+    year: integer nullable
+    relationships:
+      belongsTo: Dossier, Country
+
+  Models\Admission:
+    admissions_table_id: integer nullable unsigned
+    fiche_id: integer nullable unsigned
+    local_title: string nullable
+    release_date: date nullable
+    running_weeks: integer nullable
+    certified_admissions: integer nullable
+    screens_first_week: integer nullable
+    screens_widest_release_week: integer nullable
+    box_office_receipts: biginteger nullable
+    eligibility_european_criteria_film: boolean nullable
+    eligibility_year_copyright: boolean nullable
+    eligibility_release_date: boolean nullable
+    eligibility_european_criteria_distributor: boolean nullable
+    eligibility_legal_status: boolean nullable
+    eligibility_length: boolean nullable
+    eligibility_european_nonnational_film: boolean nullable
+    eligibility_other_criteria: boolean nullable
+    eligibility_global_status: boolean nullable
+    eligibility_justification: string nullable
+    comments: text nullable
+    relationships:
+      belongsTo: AdmissionsTable, Fiche
+
+controllers:
+  AdmissionsTable:
+    index:
+      query: all
+      render: admissions_table.index with:admissions_tables
+
+seeders: AdmissionsTable, Admission

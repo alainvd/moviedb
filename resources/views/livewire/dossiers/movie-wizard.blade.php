@@ -152,7 +152,7 @@
                         Film genre
                     </label>
                     <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                        {{ $movie->genre ? $movie->genre->name : '' }}
+                        {{ !empty($movie->genre) ? $movie->genre->name : '' }}
                     </div>
                 </div>
 
@@ -161,7 +161,7 @@
                         Film delivery platform
                     </label>
                     <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                        {{ $movie->delivery_platform ? $platforms[$movie->delivery_platform] : '' }}
+                        {{ !empty($movie->delivery_platform) ? $platforms[$movie->delivery_platform] : '' }}
                     </div>
                 </div>
                 <div class="col-span-1">
@@ -169,7 +169,7 @@
                         Audience
                     </label>
                     <div class="pb-2 border-b-2 border-indigo-600" id="original-title">
-                        {{ $movie->audience ? $movie->audience->name : '' }}
+                        {{ !empty($movie->audience) ? $movie->audience->name : '' }}
                     </div>
                 </div>
                 <div class="col-span-1">
@@ -208,17 +208,28 @@
             Previous
         </x-button.secondary>
 
-        @if ($currentStep > 1)
-            <div class="text-gray-500 text-md">
-                Could not find the work you are looking for?
-                &nbsp;
-                <a href="{{ route('dossier-create-fiche', [
-                    'dossier' => $dossier,
-                    'activity' => $activity,
-                ]) }}" class="text-indigo-600">
-                    Create a new work
-                </a>
-            </div>
+        @if ($reinvestment == null)
+            @if ($currentStep > 1)
+                <div class="text-gray-500 text-md">
+                    Could not find the work you are looking for?
+                    &nbsp;
+                    @if($admissionsTable && $admission)
+                    <a href="{{ route('dossier-create-fiche', [
+                        'dossier' => $dossier,
+                        'activity' => $activity,
+                        'admissionsTable' => $admissionsTable,
+                        'admission' => $admission
+                    ]) }}" class="text-indigo-600">
+                    @else
+                    <a href="{{ route('dossier-create-fiche', [
+                        'dossier' => $dossier,
+                        'activity' => $activity,
+                    ]) }}" class="text-indigo-600">
+                    @endif
+                        Create a new work
+                    </a>
+                </div>
+            @endif
         @endif
 
         <x-button.primary wire:click="nextStep" x-text="currentStep === 3 ? 'Yes, I confirm' : 'Next'">

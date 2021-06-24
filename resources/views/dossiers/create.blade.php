@@ -77,14 +77,16 @@
                         @endforeach
                     @endif
 
-                    @livewire(
-                        "dossiers.activities.$activity->name",
-                        [
-                            'activity' => $activity,
-                            'dossier' => $dossier,
-                            'print' => $print,
-                        ]
-                    )
+                    @if (Auth::user()->hasRole('editor') || $activity->name!=='reinvestments')
+                        @livewire(
+                            "dossiers.activities.$activity->name",
+                            [
+                                'activity' => $activity,
+                                'dossier' => $dossier,
+                                'print' => $print,
+                            ]
+                        )
+                    @endif
                 @endforeach
             </x-layout.section>
 
