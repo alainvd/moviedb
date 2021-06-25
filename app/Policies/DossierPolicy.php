@@ -30,6 +30,9 @@ class DossierPolicy
      */
     public function view(User $user, Dossier $dossier)
     {
+        if ($user->hasAnyRole(['editor', 'super admin'])) {
+            return true;
+        }
         if ($user->hasRole('applicant')) {
             return $user->id === $dossier->created_by;
         }
@@ -57,6 +60,9 @@ class DossierPolicy
      */
     public function update(User $user, Dossier $dossier)
     {
+        if ($user->hasAnyRole(['editor', 'super admin'])) {
+            return true;
+        }
         if ($user->hasRole('applicant')) {
             return $user->id === $dossier->created_by;
         }
