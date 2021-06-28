@@ -50,7 +50,7 @@ class StaffImportTV implements ToCollection, WithHeadingRow, WithChunkReading
 
     private function getTitle($row)
     {
-        return Title::firstWhere("name", "=", $row["role"]);
+        return Title::firstWhere("code", "=", $row["role"]);
     }
 
     private function getMovie($row)

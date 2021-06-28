@@ -23,7 +23,7 @@ class FichePolicy
             return true;
         }
         if ($user->hasRole('applicant')) {
-            return $user->id === $fiche->created_by;
+            return $user->id === $fiche->created_by && $fiche->status->id === 1;
         }
 
         return true;
@@ -42,7 +42,7 @@ class FichePolicy
             return true;
         }
         if ($user->hasRole('applicant')) {
-            return $user->id === $fiche->created_by;
+            return $user->id === $fiche->created_by && $fiche->status->id === 1;
         }
 
         return true;

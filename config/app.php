@@ -229,7 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'FormHelpers' => App\Helpers\FormHelpers::class,
-        'LaravelMpdf' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class
+        'LaravelMpdf' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
+        'IntegerEmptyToNull' => App\Helpers\IntegerEmptyToNull::class
     ],
 
 ];

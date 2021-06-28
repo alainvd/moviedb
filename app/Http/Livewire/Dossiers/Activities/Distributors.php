@@ -35,7 +35,7 @@ class Distributors extends Component
 
     public $print = false;
 
-    protected $rules = [
+    public $rules = [
         'currentDistributor.country_id' => 'required|integer',
         'currentDistributor.name' => 'required|string',
         'currentDistributor.role' => 'string',

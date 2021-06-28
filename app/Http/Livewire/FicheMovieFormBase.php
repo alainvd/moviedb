@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Crew;
+use App\Models\User;
 use App\Models\Fiche;
 use App\Models\Genre;
 use App\Models\Movie;
@@ -17,19 +18,21 @@ use App\Models\Document;
 use App\Models\Language;
 use App\Models\Location;
 use App\Models\Producer;
+use App\Models\Admission;
 use App\Models\SalesAgent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SalesDistributor;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use App\Helpers\IntegerEmptyToNull;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Spatie\Activitylog\Models\Activity as ActivityLog;
 
 class FicheMovieFormBase extends FicheFormBase
 {
+
+    use IntegerEmptyToNull;
 
     // Movie data for Livewire
     public Dossier $dossier;
@@ -53,6 +56,9 @@ class FicheMovieFormBase extends FicheFormBase
 
     public $crumbs = [];
 
+    public $admissionsTable = null;
+    public $admission = null;
+    
     public $hasHistory = false;
 
     public function validationAttributes()
@@ -97,7 +103,7 @@ class FicheMovieFormBase extends FicheFormBase
                 abort(404);
             }
             $this->isNew = true;
-            $this->fiche = new Fiche;
+            $this->fiche = new Fiche(Fiche::defaultsFiche());
             $this->movie = new Movie(Movie::defaultsMovie());
         } else {
             $this->hasHistory = ActivityLog::forSubject($this->fiche)->count() > 0;
@@ -117,6 +123,8 @@ class FicheMovieFormBase extends FicheFormBase
             $this->sales_distributors = SalesDistributor::with('countries')->where('movie_id', $this->movie->id)->get()->toArray();
             $this->documents = Document::where('movie_id', $this->movie->id)->get()->toArray();
         }
+        if (request()->input('admissionsTable')) $this->admissionsTable = request()->input('admissionsTable');
+        if (request()->input('admission')) $this->admission = request()->input('admission');
         parent::mount($request);
     }
 
@@ -167,17 +175,8 @@ class FicheMovieFormBase extends FicheFormBase
     public function saveFiche()
     {
 
-        // Integer fields with "" value should be stored as null
-        foreach ($this->rules() as $field => $rule) {
-            list($var, $atr) = explode('.', $field);
-            if (isset($this->{$var}->{$atr})) {
-                if ($this->{$var}->{$atr} === '') {
-                    if (Str::contains($rule, 'integer')) {
-                        $this->{$var}->{$atr} = NULL;
-                    }
-                }
-            }
-        }
+        // if integer field set to empty, make sure it's saved as null
+        $this->integerEmptyToNull_All();
 
         // Bare bones validation
         // Check formatting, but no field is required (except title)
@@ -210,10 +209,10 @@ class FicheMovieFormBase extends FicheFormBase
                     case 'short-films':
                         $type = 'dev-current';
                         break;
+                    case 'admissions-tables':
+                        $type = 'dist';
+                        break;
                 }
-            }
-            else {
-                $type = 'dist';
             }
             $this->fiche->fill([
                 'movie_id' => $this->movie->id,
@@ -222,8 +221,22 @@ class FicheMovieFormBase extends FicheFormBase
                 'updated_by' => Auth::user()->id,
             ])->save();
 
-            // TODO: code dublication with MovieWizard.php
-            if (isset($this->dossier)) {
+            // Note: this serves:
+            // - when the wizard moves to creating a new fiche
+            // - when creating new fiche from dossier
+            // - when wizard creates new fiche in admission (admissions tables)
+
+            if ($this->activity->name == 'admissions-tables') {
+                if ($this->admissionsTable && $this->admission) {
+                    $admission = Admission::find($this->admission);
+                    if (Auth::user()->can('view', $admission->admissionsTable->dossier)) {
+                        $admission->fiche_id = $this->movie->fiche->id;
+                        $admission->save();
+                    } else {
+                        abort(404);
+                    }
+                }
+            } else {
                 $rules = $this->dossier->action->activities->where('id', $this->activity->id)->first()->pivot->rules;
                 if ($rules && isset($rules['movie_count']) && $rules['movie_count'] == 1) {
                     $this->dossier->fiches()->sync([$this->movie->fiche->id]);
@@ -245,6 +258,7 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            // TODO: this it wrong, right? Update with current user...
             $this->fiche->fill([
                 'updated_by' => Auth::user()->id,
             ])->save();
@@ -297,6 +311,11 @@ class FicheMovieFormBase extends FicheFormBase
 
     function fichePostSaveRedirect()
     {
+        // admission
+        if ($this->admissionsTable && $this->admission) {
+            return redirect()->route('admission', [$this->dossier, $this->admissionsTable, $this->admission]);
+        }
+
         // in dossier context, go back to dossier
         // will also work when coming from wizard
         if (isset($this->dossier) && isset($this->activity) && isset($this->fiche)) {

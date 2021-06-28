@@ -98,7 +98,7 @@ class MovieDistForm extends FicheMovieFormBase
 
     protected $rulesDraft = [
         'movie.original_title' => 'required|string|max:255',
-        'fiche.status_id' => 'integer',
+        'fiche.status_id' => 'required|integer',
         'movie.film_country_of_origin' => 'string',
         'movie.film_country_of_origin_2014_2020' => 'string',
         'movie.year_of_copyright' => 'integer',
@@ -228,20 +228,6 @@ class MovieDistForm extends FicheMovieFormBase
         parent::render();
 
         $title = 'Films - Distribution';
-        $crumbs[] = [
-            'url' => route('dossiers.index'),
-            'title' => 'My dossiers'
-        ];
-        if (isset($this->dossier)) {
-            $crumbs[] = [
-                'url' => route('dossiers.show', $this->dossier),
-                'title' => 'Edit dossier'
-            ];
-        }
-        $crumbs[] = [
-            'title' => 'Edit fiche'
-        ];
-        
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dist-form', [
