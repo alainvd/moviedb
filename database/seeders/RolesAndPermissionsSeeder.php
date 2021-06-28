@@ -21,7 +21,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'view advanced history']);
 
         // Admin
-        Permission::create(['name' => 'access admin']);
+        // Permission::create(['name' => 'access admin']);
 
         // create roles and assign created permissions
         Role::create(['name' => 'applicant']);
