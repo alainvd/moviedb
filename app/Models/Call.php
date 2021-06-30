@@ -80,18 +80,40 @@ class Call extends Model
     public function scopeClosed($query)
     {
         return $query->where('status', 'closed')
+            ->orWhere(function($query) {
+                $query->whereNull('status')
+                    ->where(function ($query) {
+                        $now = Carbon::now();
+                        $add = Carbon::now()->addHour(1);
+                        $query->whereRaw("IFNULL(deadline2, '{$add}') <= '{$now}'");
+                    });
+            })
             ->orWhere(function ($query) {
-                $query->whereDate('deadline1', '<=', Carbon::now())
-                    ->orWhereDate('deadline2', '<=', Carbon::now());
+                $query->whereNull('status')
+                    ->whereNull('deadline2')
+                    ->where(function ($query) {
+                        $now = Carbon::now();
+                        $add = Carbon::now()->addHour(1);
+                        $query->whereRaw("IFNULL(deadline1, '{$add}') <= '{$now}'");
+                    });
+            })
+            ->orWhere(function ($query) {
+                $query->whereNull('status')
+                    ->whereDate('published_at', '>', Carbon::now());
             });
     }
 
     public function scopeOpen($query)
     {
-        return $query->where('status', 'open')
-            ->orWhere(function ($query) {
-                $query->whereDate('deadline1', '>', Carbon::now())
-                    ->orWhereDate('deadline2', '>', Carbon::now());
-            });
+        return $query->where(function ($query) {
+            $query->whereRaw("IFNULL(status, 'open') = 'open'")
+                ->whereDate('published_at', '<=', Carbon::now());
+        })->where(function ($query) {
+            $now = Carbon::now();
+            $add = Carbon::now()->addHour(1);
+            $sub = Carbon::now()->subHour(1);
+            $query->whereRaw("IFNULL(deadline2, '{$sub}') > '{$now}'")
+                ->orWhereRaw("IFNULL(deadline1, '{$add}') > '{$now}'");
+        });
     }
 }

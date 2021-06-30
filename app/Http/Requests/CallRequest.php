@@ -26,7 +26,11 @@ class CallRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => 'required|min:5|max:255|unique:calls',
+            'year' => 'required|date_format:Y',
+            'published_at' => 'required|date',
+            'deadline1' => 'date|after:published_at',
+            'deadline2' => 'date|after:deadline1'
         ];
     }
 
@@ -50,7 +54,7 @@ class CallRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'date_format' => 'You must provide a valid year'
         ];
     }
 }
