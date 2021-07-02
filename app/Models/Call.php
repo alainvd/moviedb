@@ -59,7 +59,6 @@ class Call extends Model
         if ($this->deadline1) {
             return Carbon::now()->greaterThanOrEqualTo($this->deadline1);
         }
-        // TODO: change to true when testing is done
         return false;
     }
 
