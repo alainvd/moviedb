@@ -98,7 +98,7 @@ class Call extends Model
             })
             ->orWhere(function ($query) {
                 $query->whereNull('status')
-                    ->whereDate('published_at', '>', Carbon::now());
+                    ->where('published_at', '>', Carbon::now()->format('Y-m-d H:i:s'));
             });
     }
 
@@ -106,7 +106,7 @@ class Call extends Model
     {
         return $query->where(function ($query) {
             $query->whereRaw("IFNULL(status, 'open') = 'open'")
-                ->whereDate('published_at', '<=', Carbon::now());
+                ->where('published_at', '<=', Carbon::now()->format('Y-m-d H:i:s'));
         })->where(function ($query) {
             $now = Carbon::now();
             $add = Carbon::now()->addHour(1);

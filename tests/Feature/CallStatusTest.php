@@ -110,4 +110,70 @@ class CallStatusTest extends TestCase
         $this->assertEquals(true, $call->closed);
         $this->assertScope($call->id, 'closed');
     }
+
+    /** @test */
+    public function call_should_be_open_5_mins_before_closed_after()
+    {
+        $this->init();
+
+        $call = Call::factory()->create([
+            'published_at' => Carbon::now()->subMinutes(5),
+            'deadline1' => null,
+            'deadline2' => null,
+        ]);
+
+        // Call should be closed before published_at date
+        $this->assertEquals(false, $call->closed);
+        $this->assertScope($call->id, 'open');
+
+        $call->published_at = Carbon::now()->addMinutes(5);
+        $call->save();
+
+        $this->assertEquals(true, $call->closed);
+        // $this->assertScope($call->id, 'closed');
+    }
+
+    /** @test */
+    public function call_should_be_closed_at_exactly_after_deadline()
+    {
+        $this->init();
+
+        $deadline = [2021, 8, 20, 17, 0, 0];
+
+        $call = Call::factory()->create([
+            'published_at' => Carbon::now()->subDay(1),
+            'deadline1' => Carbon::create(...$deadline),
+            'deadline2' => null,
+        ]);
+
+        // Call should be open one minute before deadline
+        Carbon::setTestNow(Carbon::create(...$deadline)->subMinute());
+        $this->assertEquals(false, $call->closed);
+        $this->assertScope($call->id, 'open');
+
+        // Call should be closed one minute after deadline
+        Carbon::setTestNow(Carbon::create(...$deadline)->addMinute());
+        $this->assertEquals(true, $call->closed);
+        $this->assertScope($call->id, 'closed');
+    }
+
+    /** @test */
+    public function call_should_be_closed_for_future_published_and_deadline()
+    {
+        $this->init();
+
+        $call = Call::factory()->create([
+            'published_at' => Carbon::now()->addHour(),
+            'deadline1' => Carbon::now()->addWeek(),
+            'deadline2' => null,
+        ]);
+
+        // Call should be closed
+        $this->assertEquals(true, $call->closed);
+        $this->assertScope($call->id, 'closed');
+
+        Carbon::setTestNow(Carbon::now()->addDay());
+        $this->assertEquals(false, $call->closed);
+        $this->assertScope($call->id, 'open');
+    }
 }
