@@ -13,8 +13,8 @@ class DashboardComposer
     public function compose(View $view)
     {
         $dials = [];
-        $colors = ['blue', 'orange', 'purple', 'teal'];
-        $actions = ['FILMOVE', 'DEVSLATE', 'CODEV', 'DEVSLATEMINI'];
+        $colors = ['blue', 'green', 'orange', 'purple', 'teal'];
+        $actions = ['FILMOVE', 'DEVSLATE', 'CODEV', 'DEVMINISLATE', 'TVONLINE'];
         $year = date('Y');
 
         $data = DB::table('dossiers')
