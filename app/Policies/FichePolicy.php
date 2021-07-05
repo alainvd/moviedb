@@ -39,10 +39,12 @@ class FichePolicy
      */
     public function update(User $user, Fiche $fiche)
     {
-        if ($fiche->type == 'dist') {
-            return $user->id === $fiche->created_by && $fiche->status->id === 1;
-        } else {
-            return $user->id === $fiche->created_by;
+        if ($user->hasRole('applicant')) {
+            if ($fiche->type == 'dist') {
+                return $user->id === $fiche->created_by && $fiche->status->id === 1;
+            } else {
+                return $user->id === $fiche->created_by;
+            }
         }
 
         return true;
