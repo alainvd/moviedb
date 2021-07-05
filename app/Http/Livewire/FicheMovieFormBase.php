@@ -43,6 +43,8 @@ class FicheMovieFormBase extends FicheFormBase
     public $standAloneFiche = false;
 
     public $shootingLanguages;
+    public $gameOptions;
+    public $gameModes;
 
     public $crews = [];
     public $locations = [];
@@ -97,6 +99,9 @@ class FicheMovieFormBase extends FicheFormBase
         }
 
         $this->shootingLanguages = collect([]);
+        $this->gameOptions = collect([]);
+        $this->gameModes = collect([]);
+
         if (!$this->fiche) {
             // Applicant can only submit dist stand alone fiche
             if (Auth::user()->hasRole('applicant') && $this->standAloneFiche && (get_class($this) !== 'App\Http\Livewire\MovieDistForm')) {
@@ -110,6 +115,13 @@ class FicheMovieFormBase extends FicheFormBase
             $this->movie = $this->fiche->movie;
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
+            ));
+
+            $this->gameOptions = collect($this->movie->gameOptions->map(
+                fn ($gameOpt) => ['value' => $gameOpt->id, 'label' => $gameOpt->name]
+            ));
+            $this->gameModes = collect($this->movie->gameModes->map(
+                fn ($gameMode) => ['value' => $gameMode->id, 'label' => $gameMode->name]
             ));
             // Load them all even if we don't need them on all forms.
             // If TableEdit classes emits items on mount, listeners on this class
@@ -183,6 +195,8 @@ class FicheMovieFormBase extends FicheFormBase
         $this->validate($this->rulesDraft);
 
         unset($this->movie->shooting_language);
+        unset($this->movie->gameOptions);
+
         if ($this->movie->country_of_origin_points == '') $this->movie->country_of_origin_points = null;
         if ($this->isNew) {
             $this->movie->save();
@@ -191,17 +205,34 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            $this->movie->gameOptions()->sync(
+                $this->gameOptions->map(
+                    fn ($gameOpt) => $gameOpt['value']
+                )
+            );
+            $this->movie->gameModes()->sync(
+                $this->gameModes->map(
+                    fn ($gameMode) => $gameMode['value']
+                )
+            );
             if (isset($this->activity)) {
                 switch ($this->activity->name) {
                     case 'description':
                         $type = 'dist';
                         break;
                     case 'previous-work':
+                        if ($this->dossier->action->name == 'DEVVG') {
+                            $type = 'vg-prev';
+                        } else {
                         $type = 'dev-prev';
+                        }
                         break;
                     case 'current-work':
                         if ($this->dossier->action->name == 'TVONLINE') {
                             $type = 'tv';
+                        } 
+                        else if ($this->dossier->action->name == 'DEVVG') {
+                            $type = 'vg-current';
                         } else {
                             $type = 'dev-current';
                         }
@@ -256,6 +287,16 @@ class FicheMovieFormBase extends FicheFormBase
             $this->movie->languages()->sync(
                 $this->shootingLanguages->map(
                     fn ($lang) => $lang['value']
+                )
+            );
+            $this->movie->gameOptions()->sync(
+                $this->gameOptions->map(
+                    fn ($gameOpt) => $gameOpt['value']
+                )
+            );
+            $this->movie->gameModes()->sync(
+                $this->gameModes->map(
+                    fn ($gameMode) => $gameMode['value']
                 )
             );
             // TODO: this it wrong, right? Update with current user...

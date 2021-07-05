@@ -54,7 +54,7 @@
         ></x-details.summary>
     </div>
 
-    <!-- tech-tv -->
+    <!-- tech-vg -->
     <div class="my-8">
         <x-details.tech-vg
             :print="$print"
@@ -72,6 +72,16 @@
         ></x-details.tech-vg>
     </div>
    
+    <!-- Ownership -->
+    <div class="my-8">
+        <x-details.ownership
+            :print="$print"
+            :rules="$rules"
+            :workOrigins="$workOrigins"
+            :workContractTypes="$workContractTypes"
+            :movie="$movie"
+        ></x-details.ownership>
+    </div>
 
     <!-- cast/crew -->
     <div class="my-8" id="table-crews">

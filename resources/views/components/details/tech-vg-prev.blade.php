@@ -6,7 +6,7 @@
 
     <div class="col-span-1 col-end-7">
         <x-form.select
-            :print="$print"
+            
             :id="'audience'"
             :label="'Audience'"
             :hasError="$errors->has('movie.audience_id')"

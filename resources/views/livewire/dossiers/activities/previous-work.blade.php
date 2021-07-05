@@ -1,7 +1,7 @@
 <div class="my-8">
     <input type="hidden" name="previous_works" wire:model="current">
     <h3 class="my-4 text-lg font-normal leading-tight">
-        Audiovisual Work - Development - Recent work / previous experience
+    {{ $dossier->action->name === 'DEVVG' ? 'Video Game' : ' Audiovisual Work'}} - Development - Recent work / previous experience
     </h3>
     <x-table class="previous-work-list {{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">
@@ -43,7 +43,7 @@
     @if(empty($print))
     <div class="mt-5 text-right print:hidden">
         <x-anchors.secondary
-            :url="route('dev-prev-fiche-form', compact('dossier', 'activity'))"
+            :url="$this->url"
             :disabled="$dossier->call->closed || $isAddDisabled">
             Add
         </x-anchors.secondary>

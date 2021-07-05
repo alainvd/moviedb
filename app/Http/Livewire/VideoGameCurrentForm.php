@@ -2,13 +2,15 @@
 
 namespace App\Http\Livewire;
 
+
 use App\Models\Producer;
 use App\Models\SalesDistributor;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use App\Helpers\FormHelpers;
 
-class VideoGamePrevForm extends FicheMovieFormBase
+
+class VideoGameCurrentForm extends FicheMovieFormBase
 {
 
     protected function getListeners()
@@ -36,7 +38,21 @@ class VideoGamePrevForm extends FicheMovieFormBase
         'movie.photography_start' => 'date',
         'movie.photography_end' => 'date',
         'movie.shooting_language' => 'required',
-        
+
+        'movie.rights_origin_of_work' => 'required|string',
+        'movie.rights_contract_type' => 'required|string',
+        'movie.rights_contract_start_date' => 'required|date',
+        'movie.rights_contract_end_date' => 'required',
+        'movie.rights_contract_signature_date' => 'required',
+        // dependent fields
+        'movie.rights_adapt_author_name' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_original_title' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_type' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_start_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_end_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_signature_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+
+        'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
     ];
@@ -52,7 +68,6 @@ class VideoGamePrevForm extends FicheMovieFormBase
         'movie.audience_id' => 'integer',
         'movie.game_audiences' => 'string',
         
-
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string|max:4000',
@@ -60,13 +75,23 @@ class VideoGamePrevForm extends FicheMovieFormBase
         'movie.photography_start' => 'date',
         'movie.photography_end' => 'date',
         'movie.shooting_language' => '',
-        
+        'movie.film_length' => 'integer|min:1|max:10000',
+        'movie.film_format' => 'string',
 
-        'movie.link_applicant_work' => 'string',
+        'movie.rights_origin_of_work' => 'string',
+        'movie.rights_contract_type' => 'string',
+        'movie.rights_contract_start_date' => 'date',
+        'movie.rights_contract_end_date' => 'date',
+        'movie.rights_contract_signature_date' => 'date',
         // dependent fields
-        'movie.link_applicant_work_person_name' => 'string',
-        'movie.link_applicant_work_person_position' => 'string',
-        'movie.link_applicant_work_person_credit' => 'string',
+        'movie.rights_adapt_author_name' => 'string',
+        'movie.rights_adapt_original_title' => 'string',
+        'movie.rights_adapt_contract_type' => 'string',
+        'movie.rights_adapt_contract_start_date' => 'date',
+        'movie.rights_adapt_contract_end_date' => 'date',
+        'movie.rights_adapt_contract_signature_date' => 'date',
+
+        'movie.total_budget_euro' => 'integer',
 
         'fiche.comments' => 'string',
     ];
@@ -79,9 +104,9 @@ class VideoGamePrevForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
-        $type='vg-prev';
-        $this->fiche->type='vg-prev';
-        if ($this->fiche->exists && $this->fiche->type!=='vg-prev') {
+        $type='vg-current';
+        $this->fiche->type='vg-current';
+        if ($this->fiche->exists && $this->fiche->type!=='vg-current') {
             abort(404);
         }
     }
@@ -130,10 +155,10 @@ class VideoGamePrevForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Video Game - Development - Recent work / previous experience';
+        $title = 'Video Game - Development - For grant request';
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
-        return view('livewire.video-game-prev-form', [
+        return view('livewire.video-game-current-form', [
                 'rules' => $this->rules(),
                 'layout' => $layout,
                 'print' => false,

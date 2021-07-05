@@ -8,6 +8,8 @@ use App\Models\Status;
 use App\Models\Country;
 use App\Models\Audience;
 use App\Models\Language;
+use App\Models\GameOption;
+use App\Models\GameMode;
 use Illuminate\View\View;
 
 class MovieFicheFormComposer
@@ -30,6 +32,8 @@ class MovieFicheFormComposer
         $languagesGrouped = Language::languagesGrouped();
         $languagesGroupedChoices = Language::languagesGroupedChoices();
         $languagesCodeName = Language::languagesCodeName();
+        $gameOptionsChoices = GameOption::gameOptionsChoices();
+        $gameModesChoices = GameMode::gameModesChoices();
         $statuses = Status::all()->toArray();
         $statusesDist = Status::where('dist', '=', 1)->get()->toArray();
         $statusesDev = Status::where('dev', '=', 1)->get()->toArray();
@@ -53,6 +57,8 @@ class MovieFicheFormComposer
         $view->with('languagesGrouped', $languagesGrouped);
         $view->with('languagesGroupedChoices', $languagesGroupedChoices);
         $view->with('languagesCodeName', $languagesCodeName);
+        $view->with('gameOptionsChoices', $gameOptionsChoices);
+        $view->with('gameModesChoices', $gameModesChoices);
         $view->with('platforms', Movie::PLATFORMS);
         $view->with('statuses', $statuses);
         $view->with('statusesDist', $statusesDist);
