@@ -108,7 +108,7 @@
     ">
     </div>
 
-    <form class="space-y-2 z-100">
+    <form class="space-y-2">
         <x-modal.dialog wire:model="showingEditModal">
             <x-slot name="title">
                 Add/Edit distribution countries
@@ -184,11 +184,6 @@
 
                     <x-button.secondary wire:click="$set('showingEditModal', false)">Cancel</x-button.secondary>
                 </div>
-            </x-slot>
-
-            <x-slot name="footer">
-                <br/>
-                <br/>
                 <br/>
                 <br/>
                 <br/>
@@ -198,7 +193,7 @@
                 <br/>
                 <br/>
             </x-slot>
-            
+
         </x-modal.dialog>
     </form>
 

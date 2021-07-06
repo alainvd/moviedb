@@ -13,6 +13,12 @@
                                 {{ ucfirst($label) }}
                             </a>
                         @endforeach
+
+                        @can('access admin')
+                            <a href="/admin" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-white focus:bg-gray-700 {{ $url === $active ? 'bg-gray-900' : '' }}">
+                                Admin
+                            </a>
+                        @endcan
                     </div>
                 </div>
             </div>

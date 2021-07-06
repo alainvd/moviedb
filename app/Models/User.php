@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Tools\Generic;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use CausesActivity, Notifiable, HasRoles, HasFactory;
+    use CausesActivity, CrudTrait, Notifiable, HasRoles, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -68,16 +69,8 @@ class User extends Authenticatable
             );
 
             // if departmentNumber: EACEA.B.2 => editor
-            $devTeam = [
-                '90266814',
-                '10036578',
-            ];
             if (!$user->roles->count()) {
-                if (
-                    (isset($attributes['departmentNumber']) && Str::contains($attributes['departmentNumber'], 'EACEA.B.2'))
-                    ||
-                    (isset($attributes['employeeNumber']) && in_array($attributes['employeeNumber'], $devTeam))
-                )
+                if (isset($attributes['departmentNumber']) && Str::contains($attributes['departmentNumber'], 'EACEA.B.2'))
                 {
                     $user->assignRole('editor');
                 } else {

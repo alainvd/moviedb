@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Call extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
     /**
@@ -22,6 +23,8 @@ class Call extends Model
         'year',
         'published_at',
         'status',
+        'deadline1',
+        'deadline2',
     ];
 
     /**
@@ -44,14 +47,24 @@ class Call extends Model
 
     public function getClosedAttribute()
     {
+        if ($this->attributes['status']) {
+            return $this->attributes['status'] === 'closed';
+        }
+        if (Carbon::now()->lessThan($this->published_at)) {
+            return true;
+        }
         if ($this->deadline2) {
             return Carbon::now()->greaterThanOrEqualTo($this->deadline2);
         }
         if ($this->deadline1) {
             return Carbon::now()->greaterThanOrEqualTo($this->deadline1);
         }
-        // TODO: change to true when testing is done
         return false;
+    }
+
+    public function getComputedStatusAttribute()
+    {
+        return $this->closed ? 'closed' : 'open';
     }
 
     public function dossiers()
@@ -65,11 +78,45 @@ class Call extends Model
 
     public function scopeClosed($query)
     {
-        return $query->whereDate('deadline1', '<=', Carbon::now());
+        return $query
+            ->where('status', 'closed')
+            ->orWhere(function($query) {
+                $query->whereNull('status')
+                    ->where(function ($query) {
+                        $now = Carbon::now();
+                        $add = Carbon::now()->addHour(1);
+                        $query->whereRaw("IFNULL(deadline2, '{$add}') <= '{$now}'");
+                    });
+            })
+            ->orWhere(function ($query) {
+                $query->whereNull('status')
+                    ->whereNull('deadline2')
+                    ->where(function ($query) {
+                        $now = Carbon::now();
+                        $add = Carbon::now()->addHour(1);
+                        $query->whereRaw("IFNULL(deadline1, '{$add}') <= '{$now}'");
+                    });
+            })
+            ->orWhere(function ($query) {
+                $query->whereNull('status')
+                    ->where('published_at', '>', Carbon::now()->format('Y-m-d H:i:s'));
+            });
     }
 
     public function scopeOpen($query)
     {
-        return $query->whereDate('deadline1', '>', Carbon::now());
+        return $query
+            ->where('status', 'open')
+            ->orWhere(function($query) {
+                $query->whereNull('status')
+                    ->where('published_at', '<', Carbon::now()->format('Y-m-d H:i:s'))
+                    ->where(function ($query) {
+                        $now = Carbon::now();
+                        $add = Carbon::now()->addHour(1);
+                        $sub = Carbon::now()->subHour(1);
+                        $query->whereRaw("IFNULL(deadline1, '{$add}') > '{$now}'")
+                            ->orWhereRaw("IFNULL(deadline2, '{$sub}') > '{$now}'");
+                    });
+            });
     }
 }
