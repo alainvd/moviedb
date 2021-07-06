@@ -24,6 +24,12 @@ main {
     display: inline;
 }
 
+@media (min-width: 996px) {
+    .ecl-menu:not(.ecl-menu--forced-mobile) .ecl-menu__link {
+        height: auto !important;
+    }
+}
+
 /*
 .fiche-details-component {
     border: 1px solid green;

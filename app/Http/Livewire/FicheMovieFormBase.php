@@ -88,7 +88,7 @@ class FicheMovieFormBase extends FicheFormBase
 
     public function mount(Request $request)
     {
-        if ($this->fiche && request()->user()->cannot('view', $this->fiche)) {
+        if ($this->fiche && request()->user()->cannot('update', $this->fiche)) {
             abort(404);
         }
 
