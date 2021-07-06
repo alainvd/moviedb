@@ -176,4 +176,38 @@ class CallStatusTest extends TestCase
         $this->assertEquals(false, $call->closed);
         $this->assertScope($call->id, 'open');
     }
+
+    /** @test */
+    public function call_is_closed_by_override()
+    {
+        $this->init();
+
+        $call = Call::factory()->create([
+            'published_at' => Carbon::now()->subHour(),
+            'deadline1' => Carbon::now()->addHour(),
+            'deadline2' => null,
+            'status' => 'closed'
+        ]);
+
+        // Call should be closed
+        $this->assertEquals(true, $call->closed);
+        $this->assertScope($call->id, 'closed');
+    }
+
+    /** @test */
+    public function call_is_open_by_override()
+    {
+        $this->init();
+
+        $call = Call::factory()->create([
+            'published_at' => Carbon::now()->addHour(),
+            'deadline1' => Carbon::now()->addHour(),
+            'deadline2' => null,
+            'status' => 'open'
+        ]);
+
+        // Call should be open
+        $this->assertEquals(false, $call->closed);
+        $this->assertScope($call->id, 'open');
+    }
 }
