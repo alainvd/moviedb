@@ -19,6 +19,9 @@ class FichePolicy
      */
     public function view(User $user, Fiche $fiche)
     {
+        if ($user->hasAnyRole(['editor', 'super admin'])) {
+            return true;
+        }
         if ($user->hasRole('applicant')) {
             if ($fiche->type == 'dist') {
                 return $user->id === $fiche->created_by && $fiche->status->id === 1;
@@ -39,6 +42,9 @@ class FichePolicy
      */
     public function update(User $user, Fiche $fiche)
     {
+        if ($user->hasAnyRole(['editor', 'super admin'])) {
+            return true;
+        }
         if ($user->hasRole('applicant')) {
             if ($fiche->type == 'dist') {
                 return $user->id === $fiche->created_by && $fiche->status->id === 1;

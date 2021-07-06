@@ -20,6 +20,11 @@ class RolesAndPermissionsSeeder extends Seeder
         // Editor permissions
         Permission::create(['name' => 'view advanced history']);
 
+        // Admin
+        if (Permission::where(['name' => 'access admin'])->get()->isEmpty()) {
+            Permission::create(['name' => 'access admin']);
+        }
+
         // create roles and assign created permissions
         Role::create(['name' => 'applicant']);
 

@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+
     }
 
     /**
@@ -27,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->bind(
+            \Backpack\PermissionManager\app\Http\Controllers\UserCrudController::class,
+            \App\Http\Controllers\Admin\UserCrudController::class
+        );
+
         Component::macro('notify', function ($text, $type = 'success') {
             $this->dispatchBrowserEvent('notify', ['text'=>$text, 'type'=>$type]);
         });
