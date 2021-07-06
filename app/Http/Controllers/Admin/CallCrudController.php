@@ -74,7 +74,13 @@ class CallCrudController extends CrudController
         CRUD::field('action_id');
         CRUD::field('year');
         CRUD::field('published_at');
-        CRUD::field('deadline1');
+        $deadline1Field = [
+            'label' => 'First Deadline',
+            'name' => 'deadline1',
+            'type' => 'datetime_picker',
+            'allows_null' => false,
+        ];
+        CRUD::addField($deadline1Field);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -92,8 +98,13 @@ class CallCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-        // CRUD::removeField('deadline1');
-        CRUD::field('deadline2');
+        $deadline2Field = [
+            'label' => 'Second Deadline',
+            'name' => 'deadline2',
+            'type' => 'datetime_picker',
+            'allows_null' => true,
+        ];
+        CRUD::addField($deadline2Field);
 
         $statusField = [
             'label' => 'Status',

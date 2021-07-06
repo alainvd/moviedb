@@ -32,7 +32,8 @@ class SearchController extends Controller
             $q = $params['q'];
 
             if (is_numeric($params['q'])) {
-                $query->where('id', $params['q']);
+                $query->where('id', $params['q'])
+                    ->orWhere('original_title', 'like', "%{$params['q']}%");
                 return $query;
             }
 
