@@ -78,7 +78,8 @@ class Call extends Model
 
     public function scopeClosed($query)
     {
-        return $query->where('status', 'closed')
+        return $query
+            ->where('status', 'closed')
             ->orWhere(function($query) {
                 $query->whereNull('status')
                     ->where(function ($query) {
@@ -98,21 +99,24 @@ class Call extends Model
             })
             ->orWhere(function ($query) {
                 $query->whereNull('status')
-                    ->whereDate('published_at', '>', Carbon::now());
+                    ->where('published_at', '>', Carbon::now()->format('Y-m-d H:i:s'));
             });
     }
 
     public function scopeOpen($query)
     {
-        return $query->where(function ($query) {
-            $query->whereRaw("IFNULL(status, 'open') = 'open'")
-                ->whereDate('published_at', '<=', Carbon::now());
-        })->where(function ($query) {
-            $now = Carbon::now();
-            $add = Carbon::now()->addHour(1);
-            $sub = Carbon::now()->subHour(1);
-            $query->whereRaw("IFNULL(deadline2, '{$sub}') > '{$now}'")
-                ->orWhereRaw("IFNULL(deadline1, '{$add}') > '{$now}'");
-        });
+        return $query
+            ->where('status', 'open')
+            ->orWhere(function($query) {
+                $query->whereNull('status')
+                    ->where('published_at', '<', Carbon::now()->format('Y-m-d H:i:s'))
+                    ->where(function ($query) {
+                        $now = Carbon::now();
+                        $add = Carbon::now()->addHour(1);
+                        $sub = Carbon::now()->subHour(1);
+                        $query->whereRaw("IFNULL(deadline1, '{$add}') > '{$now}'")
+                            ->orWhereRaw("IFNULL(deadline2, '{$sub}') > '{$now}'");
+                    });
+            });
     }
 }

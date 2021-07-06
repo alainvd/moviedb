@@ -136,18 +136,10 @@ class FicheController extends Controller
     }
 
     public static function printFiche(Fiche $fiche) {
-        if (request()->user()->cannot('view', $fiche)) {
-            abort(404);
-        }
-
         return view(self::template($fiche), self::prepareFiche($fiche));
     }
 
     public static function downloadFiche(Fiche $fiche) {
-        if (request()->user()->cannot('view', $fiche)) {
-            abort(404);
-        }
-
         // mpdf
         $pdf = LaravelMpdf::loadView(self::template($fiche), self::prepareFiche($fiche));
         return $pdf->stream();
