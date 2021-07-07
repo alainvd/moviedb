@@ -36,6 +36,7 @@ class DossierFactory extends BaseFactory
             'call_id' => $call->id,
             'contact_person' => $this->faker->safeEmail,
             'company' => $this->faker->company,
+            'created_at' => $this->faker->dateTimeBetween('- 1 month', 'now'),
             'created_by' => $this->getRelationId(User::class),
         ];
     }

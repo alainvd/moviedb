@@ -29,7 +29,8 @@ class UserFactory extends Factory
             'eu_login_username' => $this->faker->unique()->words(2,true),
             'email_verified_at' => $this->faker->date(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            'remember_token' => Str::random(10)
+            'remember_token' => Str::random(10),
+            'created_at' => $this->faker->dateTimeBetween('- 1 month', 'now')
         ];
 
 
