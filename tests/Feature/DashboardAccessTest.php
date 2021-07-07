@@ -2,56 +2,59 @@
 
 namespace Tests\Feature;
 
-use App\Models\Movie;
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Movie;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DashboardAccessTest extends TestCase
 {
 
-    use DatabaseMigrations;
-
-    public function setup(): void
-    {
-        parent::setUp();
-        $this->seed('RolesAndPermissionsSeeder');
-
-    }
+    use RefreshDatabase, WithFaker;
 
     /** @test */
-    function it_should_prevent_access_to_normal_users()
+    function anonumous_have_no_access_to_dashboard()
     {
-        $response = $this->get(route('dashboard'));
+        $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
 
+        $applicant = User::factory()->create()->assignRole('applicant');
+        $this->actingAs($applicant);
+
+        $response = $this->get(route('dashboard'));
         $response->assertForbidden();
     }
-
+    
     /** @test */
-    function it_should_grant_access_to_editors()
+    function editors_dashboard()
     {
+        $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
 
         $editor = User::factory()->create()->assignRole('editor');
         $this->actingAs($editor);
 
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('root'));
+        $response->assertRedirect('dashboard/dossiers');
 
-        $response->assertOk();
+        // Can't test with sqlite because it doesn't support function 'year' in DashboardComposer.php
+        // $response = $this->get(route('datatables-dossiers'));
+        // $response->assertOk();
     }
 
     /** @test */
-    function it_should_grant_access_to_super_admin()
+    function super_admins_dashboard()
     {
+        $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
 
         $superadmin = User::factory()->create()->assignRole('super admin');
         $this->actingAs($superadmin);
 
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('root'));
+        $response->assertRedirect('dashboard/dossiers');
 
-        $response->assertOk();
+        // ...
     }
 }
