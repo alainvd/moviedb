@@ -94,11 +94,11 @@ Route::middleware('cas.auth')->group(function () {
     Route::prefix('dashboard')
         ->middleware('can:access dashboard')
         ->group(function () {
-            Route::redirect('/', 'dashboard/dossiers')->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
             // Datatables
             Route::get('/dossiers', function () {
-                return view('livewire.dossier-datatables',['title' => "Dossiers"]);
+                return view('livewire.dossier-datatables', ['title' => "Dossiers"]);
             })->name('datatables-dossiers');
             Route::get('/movies', function () {
                 return view('livewire.movie-datatables', ['title' => "Movies"]);

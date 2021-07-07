@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\DashboardComposer;
 use App\Http\View\Composers\DistributorsComposer;
 use App\Http\View\Composers\MovieFicheFormComposer;
 use App\Http\View\Composers\SearchComposer;
@@ -74,5 +75,10 @@ class ViewServiceProvider extends ServiceProvider
         );
 
         View::composer('livewire.search-page', SearchComposer::class);
+
+        View::composer(
+            'livewire.dashboard.dials',
+            DashboardComposer::class
+        );
     }
 }
