@@ -9,7 +9,7 @@ class Navbar extends Component
 {
     public $active = '';
     public $links = [
-        // 'dashboard' => 'dashboard',
+        'dashboard' => 'dashboard',
         'dossiers' => 'dashboard/dossiers',
         'movies' => 'dashboard/movies',
         // 'reports' => 'reports',
