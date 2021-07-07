@@ -1,4 +1,4 @@
-<div class="grid grid-cols-4 gap-8 text-white">
+<div class="w-full grid grid-cols-5 gap-4 text-white overflow-hidden">
     @foreach ($dials as $dial)
         <div class="px-8 py-4 col-span-1 bg-{{ $dial['color'] }}-500 relative">
             <h1 class="text-5xl font-thin">{{ $dial['data'] }} <span class="text-sm font-normal">dossiers</span></h1>

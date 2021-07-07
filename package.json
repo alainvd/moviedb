@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "alpinejs": "^2.7.3",
+        "apexcharts": "^3.27.1",
         "faker": "^5.5.3",
         "pikaday": "^1.8.2",
         "tailwindcss": "^1.9.6"
