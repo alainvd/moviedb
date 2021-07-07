@@ -28,6 +28,13 @@ class ProjectController extends Controller
         'status' => 'sometimes|exists:statuses,id'
     ];
 
+    public function dossierMessages()
+    {
+        return [
+            'film_title.required_with' => 'You must select a movie.',
+        ];
+    }
+
     protected $pageTitles = [
         'FILMOVE' => 'Films on the Move',
         'DISTSAG' => 'European Sales Support',
@@ -186,7 +193,7 @@ class ProjectController extends Controller
             abort(500, 'We do not accept any more applications for this call');
         }
 
-        $this->validate($request, $this->buildValidator($request));
+        $this->validate($request, $this->buildValidator($request), $this->dossierMessages());
 
         // Check if there are any fiches in DRAFT and prevent submit
         $hasAnyDrafts = $dossier->fiches()->where('status_id', Status::DRAFT)
