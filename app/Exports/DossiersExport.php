@@ -5,9 +5,6 @@ namespace App\Exports;
 use App\Models\Dossier;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class DossiersExport extends BaseExport
 {

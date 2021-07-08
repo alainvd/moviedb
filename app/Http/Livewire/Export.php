@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Exports\DossiersExport;
-use App\Exports\FichesExport;
+use App\Exports\DossiersWithDistribution;
 use App\Exports\FichesWithCrews;
 use App\Models\Action;
 use App\Models\Call;
@@ -96,6 +96,15 @@ class Export extends Component
 
         if ($this->exportFiches) {
             $export = new FichesWithCrews($params);
+        } else {
+            if (
+                $this->selectedActions->every(fn ($item) => in_array($item['label'], ['FILMOVE'])
+                || Call::whereIn('id', $this->selectedCalls->pluck('value'))
+                    ->every(fn ($call) => in_array($call->action->name, ['FILMOVE'])))
+            ) {
+                // Get distribution for DIST fiches (only FILMOVE so far)
+                $export = new DossiersWithDistribution($params);
+            }
         }
 
         $filename = ($this->exportFiches ? 'fiches' : 'dossiers') . '-' . date('U') . '.xlsx';
@@ -111,8 +120,7 @@ class Export extends Component
                     'label' => $action->name,
                     'value' => $action->id,
                 ]),
-            'calls' => Call::open()
-                ->get()
+            'calls' => Call::all()
                 ->map(fn ($call) => [
                     'label' => $call->name,
                     'value' => $call->id,
