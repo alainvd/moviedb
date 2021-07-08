@@ -51,6 +51,9 @@ class DossierController extends Controller
         if (request()->user()->cannot('view', $dossier)) {
             abort(404);
         }
+        if($dossier->status->id == 1) {
+            abort(404);
+        }
 
         ini_set("pcre.backtrack_limit", "5000000");
 
