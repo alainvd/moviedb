@@ -80,7 +80,7 @@
 
         <span class="inline-flex justify-end rounded-md print:hidden">
               <button type="button"
-                      class="px-3 py-2 mt-3 text-xs font-medium leading-4 text-gray-900 transition duration-150 ease-in-out border border-gray-700 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
+                      class="px-3 py-2 mt-3 text-xs font-medium leading-4 text-gray-900 transition duration-150 ease-in-out border border-gray-700 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring-blue active:bg-gray-50 active:text-gray-800">
                 Add
               </button>
         </span>

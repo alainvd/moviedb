@@ -16,7 +16,7 @@
     <!-- hidden if we want to show and edit formatted number value (thousands separated by dot: 1.000) -->
     <input
         id="{{ $id }}"
-        class="block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }} {{ !empty($isAmount) ? 'hidden' : '' }}"
+        class="block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }} {{ !empty($isAmount) ? 'hidden' : '' }}"
         {{ $disabled ?? false ? 'disabled' : ''  }}
         {{ $attributes }}
     >
@@ -30,7 +30,7 @@
     @if (!empty($isAmount))
     <input
         id="{{ $id.'_amount' }}"
-        class="block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }} {{ empty($isAmount) ? 'hidden' : '' }}"
+        class="block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }} {{ empty($isAmount) ? 'hidden' : '' }}"
         {{ $disabled ?? false ? 'disabled' : ''  }}
         x-model="value_formatted"
         x-on:input="value_formatted = amount(value_formatted); value = unformat_amount(value_formatted);"

@@ -5,7 +5,7 @@
                 <div class="flex-shrink-0">
                     <img class="w-8 h-8" src="{{ asset('images/vector.svg') }}" alt="Movie DB logo">
                 </div>
-                <div class="ml-4 text-white font-bold leading-tight tracking-wide text-xl">Media DB</div>
+                <div class="ml-4 text-xl font-bold leading-tight tracking-wide text-white">Media DB</div>
                 <div class="hidden md:block">
                     <div class="flex items-baseline ml-10 space-x-4">
                         @foreach($links as $label => $url)

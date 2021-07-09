@@ -25,7 +25,7 @@
         {{ $attributes }}
         x-ref="input"
         placeholder="DD.MM.YYYY"
-        class="my-2 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }}"
+        class="my-2 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 {{ $hasError ?? false ? 'border-red-500': '' }} {{ $disabled ?? false ? 'bg-gray-200': '' }}"
         autocomplete="off"
         {{ $disabled ?? false ? 'disabled' : ''  }}
         readonly="readonly"
