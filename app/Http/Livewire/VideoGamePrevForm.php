@@ -253,7 +253,7 @@ class VideoGamePrevForm extends Component
     public function render()
     {
 
-        $title = 'Audiovisual Work - Production - Videogames';
+        $title = Fiche::TITLE_VG;
 
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 

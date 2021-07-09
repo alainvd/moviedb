@@ -178,7 +178,7 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Audiovisual Work - Development - For grant request';
+        $title = Fiche::TITLE_DEVCURRENT;
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-current-form', [

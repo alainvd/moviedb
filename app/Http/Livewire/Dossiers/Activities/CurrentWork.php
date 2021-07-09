@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dossiers\Activities;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class CurrentWork extends BaseActivity
 {
@@ -22,9 +23,10 @@ class CurrentWork extends BaseActivity
     {
         $results = $this->dossier->fiches()->forActivity($this->activity->id)->get();
         $print = $this->print;
+        $isEditor = Auth::user()->hasRole('editor');
         return view(
             'livewire.dossiers.activities.current-work',
-            compact('results', 'print')
+            compact('results', 'print', 'isEditor')
         );
     }
 }

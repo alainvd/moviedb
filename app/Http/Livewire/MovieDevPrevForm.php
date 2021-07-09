@@ -146,7 +146,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Audiovisual Work - Development - Recent work / previous experience';
+        $title = Fiche::TITLE_DEVPREV;
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dev-prev-form', [

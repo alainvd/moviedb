@@ -1,5 +1,4 @@
 @foreach ($fiches as $fiche)
-
     @if (in_array($type, ['current', 'short']))
         <x-table.row>
             <x-table.cell class="tracking-tight text-center font-md">

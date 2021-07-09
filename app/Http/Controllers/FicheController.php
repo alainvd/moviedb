@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Livewire\MovieDevCurrentForm;
-use App\Http\Livewire\MovieDevPrevForm;
 use App\Models\Fiche;
+use App\Models\Dossier;
 use Illuminate\Http\Request;
-use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieTVForm;
+use App\Http\Livewire\MovieDistForm;
+use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
+use App\Http\Livewire\MovieDevCurrentForm;
 use Meneses\LaravelMpdf\Facades\LaravelMpdf as LaravelMpdf;
 
 class FicheController extends Controller
@@ -95,25 +96,21 @@ class FicheController extends Controller
         switch ($fiche->type) {
             case 'dev-current':
                 $f = new MovieDevCurrentForm();
-                $title = 'Audiovisual Work - Development - For grant request';
                 break;
             case 'dev-prev':
                 $f = new MovieDevPrevForm();
-                $title = 'Audiovisual Work - Development - Recent work / previous experience';
                 break;
             case 'dist':
                 $f = new MovieDistForm();
-                $title = 'Films - Distribution';
                 break;
             case 'tv':
                 $f = new MovieTVForm();
-                $title = 'Audiovisual Work - Production - TV and Online';
                 break;
             case 'vg':
                 $f = new VideoGamePrevForm();
-                $title = 'Audiovisual Work - Production - Videogames';
                 break;
         }
+        $title = $fiche->ficheTypeTitle();
         $rules = $f->rules();
         $layout = 'print-layout';
         $movie = $fiche->movie;
@@ -138,5 +135,13 @@ class FicheController extends Controller
         // mpdf
         $pdf = LaravelMpdf::loadView(self::template($fiche), self::prepareFiche($fiche));
         return $pdf->stream();
+    }
+
+    public function ficheDossiers(Fiche $fiche) {
+        $tab = 'dossiers';
+        $title = $fiche->ficheTypeTitle();
+        $movie = $fiche->movie;
+        $dossiers = $fiche->dossiers;
+        return view('components.details.fiche-dossiers', compact('tab', 'title', 'movie', 'fiche', 'dossiers'));
     }
 }

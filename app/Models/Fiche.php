@@ -14,6 +14,12 @@ class Fiche extends Model
 {
     use HasFactory, LogsActivity;
 
+    const TITLE_DEVCURRENT = 'Audiovisual Work - Development - For grant request';
+    const TITLE_DEVPREV = 'Audiovisual Work - Development - Recent work / previous experience';
+    const TITLE_DIST = 'Films - Distribution';
+    const TITLE_TV = 'Audiovisual Work - Production - TV and Online';
+    const TITLE_VG = 'Audiovisual Work - Production - Videogames';
+
     protected $fillable = [
         'movie_id',
         'dossier_id',
@@ -129,5 +135,27 @@ class Fiche extends Model
         return [
             'status_id' => 1,
         ];
+    }
+
+    public function ficheTypeTitle()
+    {
+        switch ($this->type) {
+            case 'dev-current':
+                $title = Fiche::TITLE_DEVCURRENT;
+                break;
+            case 'dev-prev':
+                $title = Fiche::TITLE_DEVPREV;
+                break;
+            case 'dist':
+                $title = Fiche::TITLE_DIST;
+                break;
+            case 'tv':
+                $title = Fiche::TITLE_TV;
+                break;
+            case 'vg':
+                $title = Fiche::TITLE_VG;
+                break;
+        }
+        return $title;
     }
 }

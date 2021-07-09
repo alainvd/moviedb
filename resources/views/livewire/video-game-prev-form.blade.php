@@ -1,6 +1,7 @@
 <x-fiche-form
     :layout="$layout"
     :print="$print"
+    :movie="$movie"
     :fiche="$fiche"
     :hasHistory="$hasHistory ?? false"
     :dossier="$dossier"
@@ -8,8 +9,10 @@
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
     :standAloneFiche="$standAloneFiche"
+    :tab="'fiche'"
 >
 
+    @if($isApplicant)
     <!-- title -->
     <div class="my-8">
         <x-details.title
@@ -17,6 +20,7 @@
             :fiche="$fiche"
         ></x-details.title>
     </div>
+    @endif
 
     <!-- basic-vg-prev -->
     <div class="my-8">

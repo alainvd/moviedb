@@ -1,7 +1,7 @@
 <div class="my-8">
     <input type="hidden" name="previous_works" wire:model="current">
     <h3 class="my-4 text-lg font-normal leading-tight">
-        Audiovisual Work - Development - Recent work / previous experience
+        {{ App\Models\Fiche::TITLE_DEVPREV }}
     </h3>
     <x-table class="previous-work-list {{ $errors->has('previous_works') ? 'border border-red-500' : '' }}">
         <x-slot name="head">

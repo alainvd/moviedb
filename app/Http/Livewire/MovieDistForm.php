@@ -227,7 +227,7 @@ class MovieDistForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Films - Distribution';
+        $title = Fiche::TITLE_DIST;
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
         return view('livewire.movie-dist-form', [
