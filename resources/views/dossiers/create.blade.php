@@ -106,7 +106,7 @@
                         View history
                     </a>
                 @endif
-                @if($dossier->status->id !== 1)
+                @if($dossier->status->id !== App\Models\Status::DRAFT)
                 <x-button.download :dossier="$dossier"></x-button.download>
                 @endif
                 <x-button.primary :disabled="$dossier->call->closed" type="submit">Save</x-button.primary>

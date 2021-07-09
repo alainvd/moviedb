@@ -47,7 +47,7 @@
                     <a href="{{ route('dossiers.show', $dossier) }}" class="text-indigo-600 cursor-pointer hover:text-indigo-900">
                         {{ $dossier->call->status === 'open' ? 'Edit' : 'View'}}
                     </a>
-                    @if($dossier->status->id !== 1)
+                    @if($dossier->status->id !== App\Models\Status::DRAFT)
                     <a href="{{ url('dossiers/'.$dossier->project_ref_id.'/download-full')  }}" class="ml-8 text-indigo-600 cursor-pointer hover:text-indigo-900">
                         Download
                     </a>
