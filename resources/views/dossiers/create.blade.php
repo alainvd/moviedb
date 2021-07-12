@@ -5,8 +5,8 @@
     :class="'dossier-page'">
 
     <x-slot name="slotAbove">
-        <a href="{{ url()->previous() }}" class="mt-8 ml-4 outline-none text-blue-500 text-md font-normal tracking-wide flex align-middle">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a href="{{ url()->previous() }}" class="flex mt-8 ml-4 font-normal tracking-wide text-blue-500 align-middle outline-none text-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
             </svg>
             Go back
@@ -129,7 +129,9 @@
                         View history
                     </a>
                 @endif
+                @if($dossier->status->id !== 1)
                 <x-button.download :dossier="$dossier"></x-button.download>
+                @endif
                 <x-button.primary :disabled="$dossier->call->closed" type="submit">Save</x-button.primary>
             </div>
             @endif
