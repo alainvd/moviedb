@@ -9,13 +9,13 @@
                 <div class="hidden md:block">
                     <div class="flex items-baseline ml-10 space-x-4">
                         @foreach($links as $label => $url)
-                            <a href="/{{$url}}" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-white focus:bg-gray-700 {{ $url === $active ? 'bg-gray-900' : '' }}">
+                            <a href="/{{$url}}" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-indigo-500 hover:text-indigo-500 {{ $url === $active ? 'text-indigo-500' : '' }}">
                                 {{ ucfirst($label) }}
                             </a>
                         @endforeach
 
                         @can('access admin')
-                            <a href="/admin" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-white focus:bg-gray-700 {{ $url === $active ? 'bg-gray-900' : '' }}">
+                            <a href="/admin" class="px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:text-indigo-500 hover:text-indigo-500 {{ $url === $active ? 'text-indigo-500' : '' }}">
                                 Admin
                             </a>
                         @endcan
@@ -63,11 +63,11 @@
     <div class="hidden" x-description="Mobile menu, toggle classes based on menu state." :class="{ 'block': open, 'hidden': !open }">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 
-            <a href="#" class="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md focus:outline-none focus:text-white focus:bg-gray-700">Media</a>
-
-            <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Projects</a>
-
-            <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Reports</a>
+            @foreach($links as $label => $url)
+                <a href="/{{ $url }}" class="block px-3 py-2 text-base font-medium text-gray-400 rounded-md focus:outline-none focus:text-white focus:bg-gray-700 {{ $url === $active ? 'bg-gray-900' : '' }}">
+                    {{ ucfirst($label) }}
+                </a>
+            @endforeach
 
         </div>
         <div class="pt-4 pb-3 border-t border-gray-700">
