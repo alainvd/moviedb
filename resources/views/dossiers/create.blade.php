@@ -72,6 +72,29 @@
                             name="contact_person"
                             value="{{ $dossier->contact_person }}"></x-form.input>
                     </div>
+                    <div class="col-span-1">
+                        @role('applicant')
+                            <x-form.input
+                                type="text"
+                                :print="$print"
+                                :id="'status'"
+                                :label="'Status'"
+                                :disabled="true"
+                                value="{{ $dossier->public_status }}">
+                            </x-form.input>
+                        @else
+                            <label for="status" class="block text-sm font-light leading-5 text-gray-700">
+                                Status
+                            </label>
+                            <select
+                                class="mt-1 block w-full form-select py-2 px-3 pr-8 border border-gray-300 bg-white rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                name="status" id="status">
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}" {{ $status->id === $dossier->status_id ? 'selected' : ''}}>{{ $status->name }}</option>
+                                @endforeach
+                            </select>
+                        @endrole
+                    </div>
                 </div>
             </x-layout.section>
 

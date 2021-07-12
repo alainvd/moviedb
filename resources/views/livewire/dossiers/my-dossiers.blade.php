@@ -10,7 +10,7 @@
             </span>
         </label>
     </div>
-    
+
     <x-table class="mb-4 dossiers-list">
         <x-slot name="head">
             <x-table.heading>CALL</x-table.heading>
@@ -41,7 +41,7 @@
                     {{ $dossier->call->status }}
                 </x-table.cell>
                 <x-table.cell class="text-center uppercase {{ $dossier->status->name === 'Draft' ? 'text-red-600' : '' }}">
-                    {{ $dossier->status->name }}
+                    {{ $dossier->public_status }}
                 </x-table.cell>
                 <x-table.cell class="text-center">
                     <a href="{{ route('dossiers.show', $dossier) }}" class="text-indigo-600 cursor-pointer hover:text-indigo-900">

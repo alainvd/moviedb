@@ -8,7 +8,7 @@
         @if(empty($print))
         <div class="col-span-1 print:hidden">
             <x-anchors.primary
-                class="mt-6"
+                class="mt-6 whitespace-no-wrap"
                 :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])"
                 :disabled="$dossier->call->closed">
                 Search and Select
@@ -22,7 +22,7 @@
                 :label="'Film Title'"
                 :hasError="$errors->has('film_title')"
                 name="film_title"
-                :disabled="true"
+                readonly
                 wire:model="movie.original_title"
                 value="{{ $movie->original_title }}">
             </x-form.input>
@@ -36,7 +36,7 @@
                 :print="$print"
                 :id="'director'"
                 :label="'Film Director'"
-                :disabled="true"
+                readonly
                 value="{{ $movie->director }}">
             </x-form.input>
         </div>
@@ -45,7 +45,7 @@
                 :print="$print"
                 :id="'country'"
                 :label="'Country'"
-                :disabled="true"
+                readonly
                 wire:model="movie.film_country_of_origin"
                 value="{{ $movie->film_country_of_origin }}">
             </x-form.input>
@@ -55,7 +55,7 @@
                 :print="$print"
                 :id="'copyright'"
                 :label="'Year of Copyright'"
-                :disabled="true"
+                readonly
                 wire:model="movie.year_of_copyright"
                 value="{{ $movie->year_of_copyright }}">
             </x-form.input>
