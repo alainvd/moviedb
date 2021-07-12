@@ -86,6 +86,16 @@ class Dossier extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function getPublicStatusAttribute()
+    {
+        $status = $this->status->name;
+        if (Auth::user()->hasRole('applicant')) {
+            return in_array($status, ['Draft', 'Submitted']) ? $status : 'Submitted';
+        }
+
+        return $status;
+    }
+
     public function scopeForUser($query, $id)
     {
         return $query->where('created_by', $id);
