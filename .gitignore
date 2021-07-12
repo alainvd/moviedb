@@ -19,7 +19,6 @@ public/css/app.css
 public/css/download.css
 !app/Nova
 auth.json
-composer.lock
 /storage/debugbar/
 /phpunit.xml
 /.phpunit.result.cache
@@ -30,3 +29,4 @@ public/mix-manifest.json
 /bin/
 /storage/files/
 .DS_Store
+/public/vendor/livewire/

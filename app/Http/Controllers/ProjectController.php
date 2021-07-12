@@ -25,7 +25,15 @@ class ProjectController extends Controller
 
     protected $dossierRules = [
         'film_title' => 'required_with:movie_count',
+        'status' => 'sometimes|exists:statuses,id'
     ];
+
+    public function dossierMessages()
+    {
+        return [
+            'film_title.required_with' => 'You must select a movie.',
+        ];
+    }
 
     protected $pageTitles = [
         'FILMOVE' => 'Films on the Move',
@@ -150,8 +158,9 @@ class ProjectController extends Controller
         $crumbs = $this->getCrumbs();
         $print = false;
         $hasHistory = ActivityLog::forSubject($dossier)->count() > 0;
+        $statuses = Status::forDossier()->get();
 
-        return view('dossiers.create', compact('crumbs', 'dossier', 'hasHistory', 'layout', 'pageTitles', 'print'));
+        return view('dossiers.create', compact('crumbs', 'dossier', 'hasHistory', 'layout', 'pageTitles', 'print', 'statuses'));
     }
 
     /**
@@ -184,7 +193,7 @@ class ProjectController extends Controller
             abort(500, 'We do not accept any more applications for this call');
         }
 
-        $this->validate($request, $this->buildValidator($request));
+        $this->validate($request, $this->buildValidator($request), $this->dossierMessages());
 
         // Check if there are any fiches in DRAFT and prevent submit
         $hasAnyDrafts = $dossier->fiches()->where('status_id', Status::DRAFT)
@@ -200,7 +209,7 @@ class ProjectController extends Controller
         }
 
         $dossier->fill([
-            'status_id' => Status::NEW,
+            'status_id' => $request->has('status') ? $request->get('status') : Status::NEW,
             'updated_by' => Auth::user()->id,
         ]);
         $dossier->save();
