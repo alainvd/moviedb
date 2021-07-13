@@ -37,43 +37,43 @@
                         </thead>
                         <tbody>
                             <tr class="bg-white">
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                     Producer
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     FreeFilm s.a.
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     Paris
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     France
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     45%
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
 
                             <tr class="bg-gray-100">
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                     Co-Producer
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     ChefProduction
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     Bruxelles
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     Belgium
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     55%
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>

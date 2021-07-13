@@ -46,28 +46,28 @@
                         @else
                         <tr class="bg-gray-100">
                         @endif
-                            <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->role}}
                             </td>
-                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->first_name}}
                             </td>
-                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->last_name}}
                             </td>
-                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->gender}}
                             </td>
-                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->nationality1}}
                             </td>
-                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->nationality2}}
                             </td>
-                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                 {{$user->country_of_residence}}
                             </td>
-                            <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                            <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                 <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                             </td>
                         </tr>

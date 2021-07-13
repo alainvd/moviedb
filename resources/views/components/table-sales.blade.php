@@ -33,37 +33,37 @@
                         </thead>
                         <tbody>
                             <tr class="bg-white">
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                     Gloria Patterson
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     France
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     -
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     -
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
 
                             <tr class="bg-gray-100">
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                     Robert Peterson
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     France
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     -
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     rpeterson@gmail.com
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
