@@ -81,7 +81,7 @@
             :hasError="$errors->has('movie.audience_id')"
             :isRequired="FormHelpers::isRequired($rules, 'movie.audience_id')"
             wire:model="movie.audience_id"
-            value="{{ isset($allAaudiencesById[$movie->audience_id]) ? $allAaudiencesById[$movie->audience_id]['name'] : '' }}"
+            value="{{ isset($allAudiencesById[$movie->audience_id]) ? $allAudiencesById[$movie->audience_id]['name'] : '' }}"
         >
 
             @foreach ($movieAudiences as $audience)

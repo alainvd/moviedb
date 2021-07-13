@@ -43,8 +43,10 @@ class FicheMovieFormBase extends FicheFormBase
     public $standAloneFiche = false;
 
     public $shootingLanguages;
+    public $gameGenres;
     public $gameOptions;
     public $gameModes;
+    public $gamePlatforms;
 
     public $crews = [];
     public $locations = [];
@@ -99,8 +101,10 @@ class FicheMovieFormBase extends FicheFormBase
         }
 
         $this->shootingLanguages = collect([]);
+        $this->gameGenres = collect([]);
         $this->gameOptions = collect([]);
         $this->gameModes = collect([]);
+        $this->gamePlatforms = collect([]);
 
         if (!$this->fiche) {
             // Applicant can only submit dist stand alone fiche
@@ -116,12 +120,17 @@ class FicheMovieFormBase extends FicheFormBase
             $this->shootingLanguages = collect($this->movie->languages->map(
                 fn ($lang) => ['value' => $lang->id, 'label' => $lang->name]
             ));
-
+            $this->gameGenres = collect($this->movie->gameGenres->map(
+                fn ($gameGenre) => ['value' => $gameGenre->id, 'label' => $gameGenre->name]
+            ));
             $this->gameOptions = collect($this->movie->gameOptions->map(
                 fn ($gameOpt) => ['value' => $gameOpt->id, 'label' => $gameOpt->name]
             ));
             $this->gameModes = collect($this->movie->gameModes->map(
                 fn ($gameMode) => ['value' => $gameMode->id, 'label' => $gameMode->name]
+            ));
+            $this->gamePlatforms = collect($this->movie->gamePlatforms->map(
+                fn ($gamePlatform) => ['value' => $gamePlatform->id, 'label' => $gamePlatform->name]
             ));
             // Load them all even if we don't need them on all forms.
             // If TableEdit classes emits items on mount, listeners on this class
@@ -205,6 +214,11 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            $this->movie->gameGenres()->sync(
+                $this->gameGenres->map(
+                    fn ($gameGenre) => $gameGenre['value']
+                )
+            );
             $this->movie->gameOptions()->sync(
                 $this->gameOptions->map(
                     fn ($gameOpt) => $gameOpt['value']
@@ -215,6 +229,12 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($gameMode) => $gameMode['value']
                 )
             );
+            $this->movie->gamePlatforms()->sync(
+                $this->gamePlatforms->map(
+                    fn ($gamePlatform) => $gamePlatform['value']
+                )
+            );
+
             if (isset($this->activity)) {
                 switch ($this->activity->name) {
                     case 'description':
@@ -289,6 +309,11 @@ class FicheMovieFormBase extends FicheFormBase
                     fn ($lang) => $lang['value']
                 )
             );
+            $this->movie->gameGenres()->sync(
+                $this->gameGenres->map(
+                    fn ($gameGenre) => $gameGenre['value']
+                )
+            );
             $this->movie->gameOptions()->sync(
                 $this->gameOptions->map(
                     fn ($gameOpt) => $gameOpt['value']
@@ -297,6 +322,11 @@ class FicheMovieFormBase extends FicheFormBase
             $this->movie->gameModes()->sync(
                 $this->gameModes->map(
                     fn ($gameMode) => $gameMode['value']
+                )
+            );
+            $this->movie->gamePlatforms()->sync(
+                $this->gamePlatforms->map(
+                    fn ($gamePlatform) => $gamePlatform['value']
                 )
             );
             // TODO: this it wrong, right? Update with current user...

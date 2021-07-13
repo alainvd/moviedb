@@ -17,7 +17,7 @@
             'ref' => 'choices_gameplay_options',
             'domId' => 'gameplay-option',
             'label' => 'Gameplay Options',
-            'isRequired' => FormHelpers::isRequired($rules, 'movie.gameplay_options'),
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.game_options'),
             'name' => 'gameOptions',
             'options' => json_encode($gameOptionsChoices),
             'items' => json_encode($gameOptionsSelected),
@@ -47,7 +47,7 @@
             'ref' => 'choices_game_modes',
             'domId' => 'game-mode',
             'label' => 'Game Modes',
-            'isRequired' => FormHelpers::isRequired($rules, 'movie.gameplay_options'),
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.game_modes'),
             'name' => 'gameModes',
             'options' => json_encode($gameModesChoices),
             'items' => json_encode($gameModesSelected),
@@ -61,25 +61,41 @@
 
     @if (!empty($print))
     <span class="font-bold">Game Modes</span>
-    <span>{{ $gameModesSelected->implode('label', ', ') }}</span>
+    <span>{{ $gamePlatformsSelected->implode('label', ', ') }}</span>
     @endif
 
-    <div class="col-span-1 sm:col-span-1 md:col-span-1">
-        <x-form.input
-            :print="$print"
-            :id="'gaming_platform'"
-            :label="'Gaming Platform'"
-            :hasError="$errors->has('movie.gaming_platform')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.gaming_platform')"
-            wire:model="movie.gaming_platform"
-            value="{{ $movie->gaming_platform }}"
-        ></x-form.input>
 
-        @error('movie.gaming_platform')
+    @if (empty($print))
+    <div
+        x-data="{ error: {{ $errors->has('movie.game_modes') ? 1 : 0 }} }"
+        x-init="$watch('error', value => error == 1 ?
+        document.getElementById('game_platforms').parentElement.classList.add('border', 'rounded-md', 'border-red-500')
+        :
+        document.getElementById('game_platforms').parentElement.classList.remove('border', 'rounded-md', 'border-red-500')
+        )"
+        class="col-span-1 col-start-3 sm:col-span-1">
+        @livewire('select-component', [
+            'ref' => 'choices_game_modes',
+            'domId' => 'game-platform',
+            'label' => 'Game Platforms',
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.game_platforms'),
+            'name' => 'gamePlatforms',
+            'options' => json_encode($gamePlatformsChoices),
+            'items' => json_encode($gamePlatformsSelected),
+        ])
+
+        @error('movie.game_platforms')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>
+    @endif
 
+    @if (!empty($print))
+    <span class="font-bold">Game Modes</span>
+    <span>{{ $gamePlatformsSelected->implode('label', ', ') }}</span>
+    @endif
+
+    
     <div class="col-span-1 sm:col-span-1 md:col-span-1">
         <x-form.input
             :print="$print"
@@ -135,6 +151,26 @@
         @error('movie.game_delivery_media')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
-    </div>    
+    </div>
+
+
+    <div class="col-span-1">
+        <x-form.input
+            :print="$print"
+            :id="'total_budget_euro'"
+            :label="'Total Development Budget'"
+            :isAmount="true"
+            :hasError="$errors->has('movie.total_budget_euro')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.total_budget_euro')"
+            wire:model="movie.total_budget_euro"
+            placeholder="0"
+            value="{{ $movie->total_budget_euro }}"
+        ></x-form.input>
+
+        @error('movie.total_budget_euro')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
 
 </div>

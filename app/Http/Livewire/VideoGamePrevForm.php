@@ -48,7 +48,7 @@ class VideoGamePrevForm extends FicheMovieFormBase
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'integer',
         'movie.game_genres' => 'string',        
-        'movie.delivery_platform' => 'string',
+        'movie.game_platforms' => 'string',
         'movie.audience_id' => 'integer',
         'movie.game_audiences' => 'string',
         
@@ -79,8 +79,7 @@ class VideoGamePrevForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
-        $type='vg-prev';
-        $this->fiche->type='vg-prev';
+        
         if ($this->fiche->exists && $this->fiche->type!=='vg-prev') {
             abort(404);
         }

@@ -157,6 +157,11 @@ class Movie extends Model
         return $this->belongsTo(Genre::class);
     }
 
+    public function gameGenres()
+    {
+        return $this->belongsToMany(Genre::class,'movie_game_genres' );
+    }
+
     public function audience()
     {
         return $this->belongsTo(Audience::class);
@@ -175,6 +180,11 @@ class Movie extends Model
     public function gameModes()
     {
         return $this->belongsToMany(GameMode::class, 'movie_game_modes');
+    }
+
+    public function gamePlatforms()
+    {
+        return $this->belongsToMany(GamePlatform::class, 'movie_game_platforms');
     }
 
     public function crews()

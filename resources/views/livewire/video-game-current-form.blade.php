@@ -27,13 +27,15 @@
             :rules="$rules"
             :movie="$movie"
             :fiche="$fiche"
-            :movieAudiences="$movieAudiences"
-            :allAaudiencesById="$allAaudiencesById"
+            :gameAudiences="$gameAudiences"
+            :allAudiencesById="$allAudiencesById"
             :countries="$countries"
             :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
             :gameGenres="$gameGenres"
+            :gameGenresChoices="$gamePlatformsChoices"
+            :gameGenresSelected="$gamePlatforms"
             :allGenresById="$allGenresById"
             :platforms="$platforms"
             :statuses="$statuses"
@@ -69,6 +71,8 @@
             :gameOptionsSelected="$gameOptions"
             :gameModesChoices="$gameModesChoices"
             :gameModesSelected="$gameModes"
+            :gamePlatformsChoices="$gamePlatformsChoices"
+            :gamePlatformsSelected="$gamePlatforms"
         ></x-details.tech-vg>
     </div>
    

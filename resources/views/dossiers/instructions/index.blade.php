@@ -15,6 +15,8 @@
             @include('dossiers.instructions.devminislate')
         @elseif ($dossier->action->name === 'CODEV')
             @include('dossiers.instructions.codev')
+        @elseif ($dossier->action->name === 'DEVVG')
+            @include('dossiers.instructions.devvg')
         @elseif ($dossier->action->name === 'TVONLINE')
             @include('dossiers.instructions.tvonline')
         @elseif ($dossier->action->name === 'DISTAUTOG')

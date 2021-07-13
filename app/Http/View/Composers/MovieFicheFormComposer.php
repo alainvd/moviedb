@@ -10,6 +10,7 @@ use App\Models\Audience;
 use App\Models\Language;
 use App\Models\GameOption;
 use App\Models\GameMode;
+use App\Models\GamePlatform;
 use Illuminate\View\View;
 
 class MovieFicheFormComposer
@@ -27,13 +28,14 @@ class MovieFicheFormComposer
         $countriesByCode = Country::countriesByCode();
         $countriesValueLabel = Country::countriesValueLabel();
         $movieGenres = Genre::where('type', 'Movie')->get()->toArray();
-        $gameGenres = Genre::where('type', 'VideoGame')->get()->toArray();
+        $gameGenresChoices = Genre::gameGenresChoices(); 
         $allGenresById = Genre::get()->keyBy('id')->toArray();
         $languagesGrouped = Language::languagesGrouped();
         $languagesGroupedChoices = Language::languagesGroupedChoices();
         $languagesCodeName = Language::languagesCodeName();
         $gameOptionsChoices = GameOption::gameOptionsChoices();
         $gameModesChoices = GameMode::gameModesChoices();
+        $gamePlatformsChoices = GamePlatform::gamePlatformsChoices();
         $statuses = Status::all()->toArray();
         $statusesDist = Status::where('dist', '=', 1)->get()->toArray();
         $statusesDev = Status::where('dev', '=', 1)->get()->toArray();
@@ -44,7 +46,7 @@ class MovieFicheFormComposer
 
         $view->with('movieAudiences', $movieAudiences);
         $view->with('gameAudiences', $gameAudiences);
-        $view->with('allAaudiencesById', $allAudiencesById);
+        $view->with('allAudiencesById', $allAudiencesById);
         $view->with('countries', $countries);
         $view->with('countriesGrouped', $countriesGrouped);
         $view->with('countriesByCode', $countriesByCode);
@@ -52,13 +54,14 @@ class MovieFicheFormComposer
         $view->with('filmFormats', Movie::FILM_FORMATS);
         $view->with('filmTypes', Movie::FILM_TYPES);
         $view->with('movieGenres', $movieGenres);
-        $view->with('gameGenres', $gameGenres);
+        $view->with('gameGenresChoices', $gameGenresChoices);
         $view->with('allGenresById', $allGenresById);
         $view->with('languagesGrouped', $languagesGrouped);
         $view->with('languagesGroupedChoices', $languagesGroupedChoices);
         $view->with('languagesCodeName', $languagesCodeName);
         $view->with('gameOptionsChoices', $gameOptionsChoices);
         $view->with('gameModesChoices', $gameModesChoices);
+        $view->with('gamePlatformsChoices', $gamePlatformsChoices);
         $view->with('platforms', Movie::PLATFORMS);
         $view->with('statuses', $statuses);
         $view->with('statusesDist', $statusesDist);

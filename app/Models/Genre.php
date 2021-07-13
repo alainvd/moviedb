@@ -34,4 +34,15 @@ class Genre extends Model
     {
         return $this->hasMany(Movie::class);
     }
+
+    public static function gameGenresChoices() {
+        $gameGenresChoices = Genre::where('type', 'VideoGame')->get()
+                ->map(fn ($gameGenre) => [
+                    'value' => $gameGenre->id,
+                    'label' => $gameGenre->name,
+                ])
+                ->toArray();
+            
+        return $gameGenresChoices;
+    }
 }

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\LanguageSeeder::class);
         $this->call(\Database\Seeders\GameOptionsSeeder::class);
         $this->call(\Database\Seeders\GameModesSeeder::class);
+        $this->call(\Database\Seeders\GamePlatformsSeeder::class);
 
         $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
         $this->call(\Database\Seeders\UserSeeder::class);

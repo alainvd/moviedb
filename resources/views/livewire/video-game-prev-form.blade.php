@@ -27,15 +27,16 @@
             :rules="$rules"
             :movie="$movie"
             :fiche="$fiche"
-            :movieAudiences="$movieAudiences"
-            :allAaudiencesById="$allAaudiencesById"
+            :gameAudiences="$gameAudiences"
+            :allAudiencesById="$allAudiencesById"
             :countries="$countries"
             :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
             :filmTypes="$filmTypes"
-            :gameGenres="$gameGenres"
+            
+            :gameGenresChoices="$gameGenresChoices"
+            :gameGenresSelected="$gameGenres"
             :allGenresById="$allGenresById"
-            :platforms="$platforms"
             :statuses="$statuses"
             :statusesById="$statusesById"
             :years="$years"
@@ -56,7 +57,7 @@
 
     <!-- tech-tv -->
     <div class="my-8">
-        <x-details.tech-vg
+        <x-details.tech-vg-prev
             :print="$print"
             :rules="$rules"
             :movie="$movie"
@@ -69,6 +70,8 @@
             :gameOptionsSelected="$gameOptions"
             :gameModesChoices="$gameModesChoices"
             :gameModesSelected="$gameModes"
+            :gamePlatformsChoices="$gamePlatformsChoices"
+            :gamePlatformsSelected="$gamePlatforms"
         ></x-details.tech-vg>
     </div>
    
@@ -78,14 +81,26 @@
         @livewire('table-edit-movie-crews', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
     </div>
 
-    <!-- producers-dev-previous -->
-    <div class="my-8" id="table-producers">
-        @livewire('table-edit-movie-producers', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+   <!-- producers-dev-previous -->
+   <div class="my-8" id="table-producers">
+        <div id="table-producers-wrapper" class="@if ($errors->has('producerErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
+        @livewire('table-edit-movie-producers-dev-previous', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+        </div>
+
+        <div id="table-producers-messages">
+        @foreach ($errors->get('producerErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
+        </div>
     </div>
 
-    <!-- agents-dev-previous -->
-    <div class="my-8" id="table-agents">
-        @livewire('table-edit-movie-sales-agents', ['movie_id' => $movie->id, 'print' => $print])
+    <!-- sales distributors -->
+    <div class="my-8" id="table-sales-distributors">
+        <div id="table-sales-distributors-wrapper" class="@if ($errors->has('salesDistributorErrorMessages')) px-3 py-2 mt-1 transition duration-150 ease-in-out border border-red-500 rounded-md shadow-md @endif">
+        @livewire('table-edit-movie-sales-distributors', ['movie_id' => $movie->id, 'isApplicant' => $isApplicant, 'isEditor' => $isEditor, 'print' => $print])
+        </div>
+
+        <div id="table-sales-distributors-messages">
+        @foreach ($errors->get('salesDistributorErrorMessages') as $message)<div class="mt-1 text-sm text-red-500">{{ $message }}</div>@endforeach
+        </div>
     </div>
 
     @if($isEditor)

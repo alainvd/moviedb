@@ -94,24 +94,52 @@
         @enderror
     </div>
 
-    <div class="col-span-2 sm:col-span-1">
+    @if (empty($print))
+    <div
+        x-data="{ error: {{ $errors->has('movie.game_genres') ? 1 : 0 }} }"
+        x-init="$watch('error', value => error == 1 ?
+        document.getElementById('game_genres').parentElement.classList.add('border', 'rounded-md', 'border-red-500')
+        :
+        document.getElementById('game_genres').parentElement.classList.remove('border', 'rounded-md', 'border-red-500')
+        )"
+        class="col-span-1 col-start-3 sm:col-span-1">
+        @livewire('select-component', [
+            'ref' => 'choices_game_genres',
+            'domId' => 'game-genres',
+            'label' => 'Genres/Sub-genres',
+            'isRequired' => FormHelpers::isRequired($rules, 'movie.game_genre'),
+            'name' => 'gameGenres',
+            'options' => json_encode($gameGenresChoices),
+            'items' => json_encode($gameGenresSelected),
+        ])
+
+        @error('movie.game_genres')
+            <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+    @endif
+    
+
+    <div class="col-span-1">
         <x-form.select
             :print="$print"
-            :id="'film_genre'"
-            :label="'Film Genre'"
-            :hasError="$errors->has('movie.genre_id')"
-            :isRequired="FormHelpers::isRequired($rules, 'movie.genre_id')"
-            wire:model="movie.genre_id"
-            value="{{ isset($allGenresById[$movie->genre_id]) ? $allGenresById[$movie->genre_id]['name'] : '' }}"
+            :id="'audience'"
+            :label="'Target Audience'"
+            :hasError="$errors->has('movie.audience_id')"
+            :isRequired="FormHelpers::isRequired($rules, 'movie.audience_id')"
+            wire:model="movie.audience_id"
+            value="{{ isset($allAudiencesById[$movie->audience_id]) ? $allAudiencesById[$movie->audience_id]['name'] : '' }}"
         >
 
-            @foreach($gameGenres as $genre)
-                <option value="{{ $genre['id'] }}">{{ $genre['name'] }}</option>
+            @foreach ($gameAudiences as $audience)
+                <option value="{{ $audience['id'] }}">
+                    {{ $audience['name'] }}
+                </option>
             @endforeach
 
         </x-form.select>
 
-        @error('media.genre_id')
+        @error('movie.audience_id')
             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
         @enderror
     </div>

@@ -28,7 +28,7 @@
             :movie="$movie"
             :fiche="$fiche"
             :movieAudiences="$movieAudiences"
-            :allAaudiencesById="$allAaudiencesById"
+            :allAudiencesById="$allAudiencesById"
             :countries="$countries"
             :countriesGrouped="$countriesGrouped"
             :countriesByCode="$countriesByCode"
