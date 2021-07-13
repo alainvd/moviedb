@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Call;
-use App\Models\Dossier;
+use App\Models\User;
 use App\Models\Action;
 use App\Models\Status;
-use App\Models\User;
+use App\Models\Country;
+use App\Models\Dossier;
 
 class DossierFactory extends BaseFactory
 {
@@ -28,14 +29,23 @@ class DossierFactory extends BaseFactory
 
         $call = $this->getRelation(Call::class);
 
+        if(Country::all()->count() > 0){
+            $country_code1 = Country::all()->random()->code;
+        } else {
+            $country1 = Country::factory()->make();
+            $country_code1 = $country1->code;
+        }
+
         return [
             'project_ref_id' => $ref,
             'action_id' => $call->action_id,
-            'year' => $this->faker->numberBetween(1990, 2020),
             'status_id' => $this->getRelationId(Status::class),
+            'year' => $this->faker->numberBetween(1990, 2020),
             'call_id' => $call->id,
             'contact_person' => $this->faker->safeEmail,
+            'pic' => $this->faker->numberBetween(100000,999999),
             'company' => $this->faker->company,
+            'country' => $country_code1,
             'created_at' => $this->faker->dateTimeBetween('- 1 month', 'now'),
             'created_by' => $this->getRelationId(User::class),
         ];
