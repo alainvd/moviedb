@@ -14,7 +14,7 @@ class DossiersCountry extends Migration
     public function up()
     {
         Schema::table('dossiers', function($table) {
-            $table->string('country')->after('company')->nullable;
+            $table->string('country')->after('company')->nullable();
         });
     }
 
