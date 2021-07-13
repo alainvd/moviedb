@@ -26,11 +26,13 @@ class Dossier extends Model
     protected $fillable = [
         'project_ref_id',
         'action_id',
-        'year',
         'status_id',
+        'year',
         'call_id',
         'contact_person',
+        'pic',
         'company',
+        'country',
         'created_by',
         'updated_by',
     ];
