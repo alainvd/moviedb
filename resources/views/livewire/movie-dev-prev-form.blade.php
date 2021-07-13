@@ -10,6 +10,8 @@
     :isEditor="$isEditor"
     :standAloneFiche="$standAloneFiche ?? null"
     :tab="'fiche'"
+    :routeDetails="$routeDetails ?? null"
+    :routeDossiers="$routeDossiers ?? null"
 >
 
     @if($isApplicant)

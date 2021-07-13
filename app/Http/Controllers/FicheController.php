@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fiche;
 use App\Models\Dossier;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Http\Livewire\MovieTVForm;
 use App\Http\Livewire\MovieDistForm;
@@ -92,7 +93,6 @@ class FicheController extends Controller
 
     public static function prepareFiche(Fiche $fiche) {
 
-        // TODO: complete this
         switch ($fiche->type) {
             case 'dev-current':
                 $f = new MovieDevCurrentForm();
@@ -119,8 +119,10 @@ class FicheController extends Controller
         $shootingLanguages = $movie->languages;
         $print = true;
         $crumbs = [];
-
-        return compact('rules', 'layout', 'movie', 'fiche', 'isApplicant', 'isEditor', 'shootingLanguages', 'print', 'title', 'crumbs');
+        $fiche_routes = $fiche->ficheTypeRoutes($dossier, $activity, $fiche);
+        $routeDetails = $fiche_routes['details_route'];
+        $routeDossiers = $fiche_routes['dossiers_route'];
+        return compact('rules', 'layout', 'movie', 'fiche', 'isApplicant', 'isEditor', 'shootingLanguages', 'print', 'title', 'crumbs', 'routeDetails', 'routeDossiers');
     }
 
     public static function template(Fiche $fiche) {
@@ -137,11 +139,14 @@ class FicheController extends Controller
         return $pdf->stream();
     }
 
-    public function ficheDossiers(Fiche $fiche) {
+    public function ficheDossiers(Dossier $dossier = null, Activity $activity = null, Fiche $fiche) {
         $tab = 'dossiers';
         $title = $fiche->ficheTypeTitle();
         $movie = $fiche->movie;
         $dossiers = $fiche->dossiers;
-        return view('components.details.fiche-dossiers', compact('tab', 'title', 'movie', 'fiche', 'dossiers'));
+        $fiche_routes = $fiche->ficheTypeRoutes($dossier, $activity, $fiche);
+        $routeDetails = $fiche_routes['details_route'];
+        $routeDossiers = $fiche_routes['dossiers_route'];
+        return view('components.details.fiche-dossiers', compact('tab', 'title', 'movie', 'fiche', 'dossiers', 'routeDetails', 'routeDossiers'));
     }
 }

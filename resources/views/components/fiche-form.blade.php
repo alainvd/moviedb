@@ -16,7 +16,7 @@
             </div>
             @endif
 
-            @if($isEditor)
+            @if($isEditor && $fiche && $routeDetails)
             @include('components.details.fiche-tabs')
             @endif
 

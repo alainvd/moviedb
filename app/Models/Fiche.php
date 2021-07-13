@@ -140,14 +140,14 @@ class Fiche extends Model
     public function ficheTypeTitle()
     {
         switch ($this->type) {
+            case 'dist':
+                $title = Fiche::TITLE_DIST;
+                break;
             case 'dev-current':
                 $title = Fiche::TITLE_DEVCURRENT;
                 break;
             case 'dev-prev':
                 $title = Fiche::TITLE_DEVPREV;
-                break;
-            case 'dist':
-                $title = Fiche::TITLE_DIST;
                 break;
             case 'tv':
                 $title = Fiche::TITLE_TV;
@@ -158,4 +158,68 @@ class Fiche extends Model
         }
         return $title;
     }
+
+    public function ficheTypeRoutes(Dossier $dossier = null, Activity $activity = null, Fiche $fiche)
+    {
+        if ($dossier && $activity && $fiche) {
+            switch ($this->type) {
+                case 'dist':
+                    $details_route = route('dist-fiche-form', [$dossier, $activity, $fiche]);
+                    $dossiers_route = route('dist-fiche-dossiers', [$dossier, $activity, $fiche]);
+                    break;
+                case 'dev-current':
+                    $details_route = route('dev-current-fiche-form', [$dossier, $activity, $fiche]);
+                    $dossiers_route = route('dev-current-fiche-dossiers', [$dossier, $activity, $fiche]);
+                    break;
+                case 'dev-prev':
+                    $details_route = route('dev-prev-fiche-form', [$dossier, $activity, $fiche]);
+                    $dossiers_route = route('dev-prev-fiche-dossiers', [$dossier, $activity, $fiche]);
+                    break;
+                case 'tv':
+                    $details_route = route('tv-fiche-form', [$dossier, $activity, $fiche]);
+                    $dossiers_route = route('tv-fiche-dossiers', [$dossier, $activity, $fiche]);
+                    break;
+                case 'vg':
+                    // $details_route = route('vg-fiche-form', [$dossier, $activity, $fiche]);
+                    // $dossiers_route = route('vg-fiche-dossiers', [$dossier, $activity, $fiche]);
+                    break;
+                default:
+                    $details_route = null;
+                    $dossiers_route = null;
+                    break;
+                    
+            }
+        } else {
+            switch ($this->type) {
+                case 'dist':
+                    $details_route = route('movie-dist', [$fiche]);
+                    $dossiers_route = route('movie-dist-dossiers', [$fiche]);
+                    break;
+                case 'dev-current':
+                    $details_route = route('movie-dev-current', [$fiche]);
+                    $dossiers_route = route('movie-dev-current-dossiers', [$fiche]);
+                    break;
+                case 'dev-prev':
+                    $details_route = route('movie-dev-prev', [$fiche]);
+                    $dossiers_route = route('movie-dev-prev-dossiers', [$fiche]);
+                    break;
+                case 'tv':
+                    $details_route = route('movie-tv', [$fiche]);
+                    $dossiers_route = route('movie-tv-dossiers', [$fiche]);
+                    break;
+                case 'vg':
+                    // $details_route = route('movie-vg', [$fiche]);
+                    // $dossiers_route = route('movie-vg-dossiers', [$fiche]);
+                    break;
+                default:
+                    $details_route = null;
+                    $dossiers_route = null;
+                    break;
+            }
+        }
+        return [
+            'details_route' => $details_route,
+            'dossiers_route' => $dossiers_route,
+        ];
+    }    
 }
