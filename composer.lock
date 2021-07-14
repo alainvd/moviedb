@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c96c2ba1ba69bca39f7f72d97389ee91",
+    "content-hash": "7e56a991377d664aef3e72121fa09570",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2820,23 +2820,23 @@
         },
         {
             "name": "mediconesystems/livewire-datatables",
-            "version": "v0.4.3",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MedicOneSystems/livewire-datatables.git",
-                "reference": "b0f3b3b9ee801d6870de898436090b27b2bc19c0"
+                "reference": "518d99aed319aaed38b3b899e315ab8e029d2e54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MedicOneSystems/livewire-datatables/zipball/b0f3b3b9ee801d6870de898436090b27b2bc19c0",
-                "reference": "b0f3b3b9ee801d6870de898436090b27b2bc19c0",
+                "url": "https://api.github.com/repos/MedicOneSystems/livewire-datatables/zipball/518d99aed319aaed38b3b899e315ab8e029d2e54",
+                "reference": "518d99aed319aaed38b3b899e315ab8e029d2e54",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^7.0|^8.0",
                 "livewire/livewire": "^1.2|^2.0",
                 "maatwebsite/excel": "^3.1",
-                "php": "^7.2.5"
+                "php": "^7.2.5|^8.0"
             },
             "require-dev": {
                 "laravel/legacy-factories": "^1.0.4",
@@ -2877,9 +2877,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MedicOneSystems/livewire-datatables/issues",
-                "source": "https://github.com/MedicOneSystems/livewire-datatables/tree/v0.4.3"
+                "source": "https://github.com/MedicOneSystems/livewire-datatables/tree/v0.5.1"
             },
-            "time": "2020-11-16T12:02:40+00:00"
+            "time": "2021-07-03T23:07:41+00:00"
         },
         {
             "name": "monolog/monolog",

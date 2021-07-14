@@ -161,5 +161,8 @@ module.exports = {
       'auto': 'auto',
     }
   },
-  variants: {}
+  variants: {},
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }

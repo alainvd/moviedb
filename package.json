@@ -29,6 +29,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.3.3",
         "alpinejs": "^2.7.3",
         "apexcharts": "^3.27.1",
         "faker": "^5.5.3",
