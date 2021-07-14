@@ -33,37 +33,37 @@
                         </thead>
                         <tbody>
                             <tr class="bg-white">
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                     Gloria Patterson
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     France
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     -
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     -
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
 
                             <tr class="bg-gray-100">
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                     Robert Peterson
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     France
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     -
                                 </td>
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                     rpeterson@gmail.com
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
+                                <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-nowrap">
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
@@ -75,7 +75,7 @@
 
         <span class="inline-flex justify-end rounded-md print:hidden">
             <button type="button"
-                class="px-3 py-2 mt-3 text-xs font-medium leading-4 text-gray-900 transition duration-150 ease-in-out border border-gray-700 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
+                class="px-3 py-2 mt-3 text-xs font-medium leading-4 text-gray-900 transition duration-150 ease-in-out border border-gray-700 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring-blue active:bg-gray-50 active:text-gray-800">
                 Add
             </button>
         </span>

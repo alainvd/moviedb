@@ -130,6 +130,7 @@ class VideoGamePrevForm extends FicheMovieFormBase
     {
         parent::render();
 
+        $title = Fiche::TITLE_VG;
         $title = 'Video Game - Development - Recent work / previous experience';
         $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 

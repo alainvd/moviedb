@@ -5,7 +5,7 @@
                 <div class="flex-shrink-0">
                     <img class="w-8 h-8" src="{{ asset('images/vector.svg') }}" alt="Movie DB logo">
                 </div>
-                <div class="ml-4 text-white font-bold leading-tight tracking-wide text-xl">Media DB</div>
+                <div class="ml-4 text-xl font-bold leading-tight tracking-wide text-white">Media DB</div>
                 <div class="hidden md:block">
                     <div class="flex items-baseline ml-10 space-x-4">
                         @foreach($links as $label => $url)
@@ -24,8 +24,8 @@
             </div>
             <div class="z-10 hidden md:block">
                 <div class="flex items-center ml-4 md:ml-6">
-                    <div class="text-white text-md font-medium tracking-wider self-center">
-                        {{ auth()->user()->name }}
+                    <div class="self-center font-medium tracking-wider text-white text-md">
+                        {{ auth()->user()->name ?? '' }}
                     </div>
                     <!-- Profile dropdown -->
                     <div x-data="{ open: false }" @click.away="open = false" class="relative ml-3">

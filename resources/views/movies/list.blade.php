@@ -49,27 +49,27 @@
                                 @else
                                     <tr class="bg-gray-100">
                                         @endif
-                                        <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-nowrap">
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             {{$movie->year_of_copyright}}
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             ---
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             {{$movie->film_country_of_origin}}
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             Matteo SOLARO
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             30-06-2020
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             Complete
                                         </td>
-                                        <td class="flex justify-center px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-no-wrap">
+                                        <td class="flex justify-center px-6 py-4 text-sm leading-5 text-center text-gray-700 whitespace-nowrap">
                                             <svg width="20" height="20" fill="none"
                                                  xmlns="http://www.w3.org/2000/svg">
                                                 <path
