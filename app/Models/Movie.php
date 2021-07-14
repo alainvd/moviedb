@@ -130,6 +130,13 @@ class Movie extends Model
         'COPRODUCER' => 'Coproducer',
     ];
 
+
+
+    CONST GAME_MODES = [
+        'SINGLE' => 'Single Player',
+        'MULTI' => 'Multi Player',
+    ];
+
     public function status()
     {
         return $this->hasOneThrough(Status::class, Fiche::class, 'movie_id', 'id', 'id', 'status_id');
@@ -158,6 +165,16 @@ class Movie extends Model
     public function languages()
     {
         return $this->belongsToMany(Language::class, 'movie_language');
+    }
+
+    public function gameOptions()
+    {
+        return $this->belongsToMany(GameOption::class, 'movie_game_options');
+    }
+
+    public function gameModes()
+    {
+        return $this->belongsToMany(GameMode::class, 'movie_game_modes');
     }
 
     public function crews()

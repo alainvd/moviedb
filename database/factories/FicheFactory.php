@@ -25,7 +25,7 @@ class FicheFactory extends BaseFactory
     public function definition()
     {
         $fiche_types = [
-            "dist", "dev-prev","dev-current", "tv"
+            "dist", "dev-prev","dev-current", "tv","vg-prev","vg-current"
         ];
         return [
             'movie_id' => $this->getRelationId(Movie::class),

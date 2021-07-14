@@ -11,6 +11,7 @@ use App\Http\Livewire\MovieDistForm;
 use App\Http\Livewire\MovieDevPrevForm;
 use App\Http\Livewire\VideoGamePrevForm;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\VideoGameCurrentForm;
 use Meneses\LaravelMpdf\Facades\LaravelMpdf as LaravelMpdf;
 
 class FicheController extends Controller
@@ -106,8 +107,13 @@ class FicheController extends Controller
             case 'tv':
                 $f = new MovieTVForm();
                 break;
-            case 'vg':
+            case 'vg-prev':
                 $f = new VideoGamePrevForm();
+                $title = 'Videogames - Development - Recent work / previous experience';
+                break;
+            case 'vg-current':
+                $f = new VideoGameCurrentForm();
+                $title = 'Videogames - Development - For grant request';
                 break;
         }
         $title = $fiche->ficheTypeTitle();

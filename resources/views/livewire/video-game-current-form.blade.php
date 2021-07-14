@@ -1,7 +1,6 @@
 <x-fiche-form
     :layout="$layout"
     :print="$print"
-    :movie="$movie"
     :fiche="$fiche"
     :hasHistory="$hasHistory ?? false"
     :dossier="$dossier"
@@ -9,10 +8,8 @@
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
     :standAloneFiche="$standAloneFiche"
-    :tab="'fiche'"
 >
 
-    @if($isApplicant)
     <!-- title -->
     <div class="my-8">
         <x-details.title
@@ -20,7 +17,6 @@
             :fiche="$fiche"
         ></x-details.title>
     </div>
-    @endif
 
     <!-- basic-vg-prev -->
     <div class="my-8">
@@ -58,7 +54,7 @@
         ></x-details.summary>
     </div>
 
-    <!-- tech-tv -->
+    <!-- tech-vg -->
     <div class="my-8">
         <x-details.tech-vg
             :print="$print"
@@ -76,6 +72,16 @@
         ></x-details.tech-vg>
     </div>
    
+    <!-- Ownership -->
+    <div class="my-8">
+        <x-details.ownership
+            :print="$print"
+            :rules="$rules"
+            :workOrigins="$workOrigins"
+            :workContractTypes="$workContractTypes"
+            :movie="$movie"
+        ></x-details.ownership>
+    </div>
 
     <!-- cast/crew -->
     <div class="my-8" id="table-crews">

@@ -19,6 +19,7 @@ use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SearchController;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\VideoGameCurrentForm;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProjectController;
@@ -186,10 +187,10 @@ Route::middleware('cas.auth')->group(function () {
         ->name('dev-prev-fiche-form');
     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)
         ->name('tv-fiche-form');
-    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-current/{fiche?}', VideoGameCurrentForm::class)
-    //     ->name('vg-current-fiche-form');
-    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)
-    //     ->name('vg-prev-fiche-form');
+     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-current/{fiche?}', VideoGameCurrentForm::class)
+         ->name('vg-current-fiche-form');
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)
+        ->name('vg-prev-fiche-form');
 });
 
 // Fiche dossiers within dossier context
@@ -224,10 +225,10 @@ Route::middleware('cas.auth')->group(function () {
         ->name('movie-dev-prev');
     Route::get('/movie-tv/{fiche?}', MovieTVForm::class)
         ->name('movie-tv');
-    // Route::get('/vg-current/{fiche?}', VideoGameCurrentForm::class)
-    //     ->name('vg-current');
-    // Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)
-    //     ->name('vg-prev');
+    Route::get('/vg-current/{fiche?}', VideoGameCurrentForm::class)
+         ->name('vg-current');
+    Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)
+        ->name('vg-prev');
 });
 
 // Fiche dossiers for stand alone fiches
