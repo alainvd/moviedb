@@ -19,6 +19,7 @@ use App\Http\Controllers\FicheController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SearchController;
 use App\Http\Livewire\MovieDevCurrentForm;
+use App\Http\Livewire\VideoGameCurrentForm;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProjectController;
@@ -110,7 +111,7 @@ Route::middleware('cas.auth')->group(function () {
     Route::resource('dossiers', ProjectController::class)
         ->scoped([
             'dossier' => 'project_ref_id'
-        ])->name('index', 'dossiers.index');
+        ]);
 
     // PDF output
     Route::get('/dossiers/{dossier:project_ref_id}/download-full', [DossierController::class, 'downloadFullDossier'])
@@ -186,14 +187,32 @@ Route::middleware('cas.auth')->group(function () {
         ->name('dev-prev-fiche-form');
     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche?}', MovieTVForm::class)
         ->name('tv-fiche-form');
-    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-current/{fiche?}', VideoGameCurrentForm::class)
-    //     ->name('vg-current-fiche-form');
-    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)
-    //     ->name('vg-prev-fiche-form');
+     Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-current/{fiche?}', VideoGameCurrentForm::class)
+         ->name('vg-current-fiche-form');
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche?}', VideoGamePrevForm::class)
+        ->name('vg-prev-fiche-form');
 });
+
+// Fiche dossiers within dossier context
+Route::middleware('cas.auth')->group(function () {
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dist/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('dist-fiche-dossiers');
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-current/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('dev-current-fiche-dossiers');
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/dev-prev/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('dev-prev-fiche-dossiers');
+    Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/tv/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('tv-fiche-dossiers');
+    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-current/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+    //     ->name('vg-current-fiche-dossiers');
+    // Route::get('/dossiers/{dossier:project_ref_id}/activities/{activity}/fiche/vg-prev/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+    //     ->name('vg-prev-fiche-dossiers');
+});
+
 
 // Stand alone fiches
 Route::middleware('cas.auth')->group(function () {
+    // Redirects to the respective fiche type
     Route::get('/browse/movies/{fiche}', [MovieController::class,'edit'])
         ->name('movie_show');
     // Applicant can submit a stand alone dist fiche
@@ -206,10 +225,26 @@ Route::middleware('cas.auth')->group(function () {
         ->name('movie-dev-prev');
     Route::get('/movie-tv/{fiche?}', MovieTVForm::class)
         ->name('movie-tv');
-    // Route::get('/vg-current/{fiche?}', VideoGameCurrentForm::class)
-    //     ->name('vg-current');
-    // Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)
-    //     ->name('vg-prev');
+    Route::get('/vg-current/{fiche?}', VideoGameCurrentForm::class)
+         ->name('vg-current');
+    Route::get('/vg-prev/{fiche?}', VideoGamePrevForm::class)
+        ->name('vg-prev');
+});
+
+// Fiche dossiers for stand alone fiches
+Route::middleware('cas.auth')->group(function () {
+    Route::get('/movie-dist/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('movie-dist-dossiers');
+    Route::get('/movie-dev-current/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('movie-dev-current-dossiers');
+    Route::get('/movie-dev-prev/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('movie-dev-prev-dossiers');
+    Route::get('/movie-tv/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+        ->name('movie-tv-dossiers');
+    // Route::get('/vg-current/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+    //     ->name('vg-current-dossiers');
+    // Route::get('/vg-prev/{fiche}/dossiers', [FicheController::class, 'ficheDossiers'])
+    //     ->name('vg-prev-dossiers');
 });
 
 // File download
@@ -254,3 +289,5 @@ if (!App::environment('production')) {
     Route::resource('location', 'App\Http\Controllers\LocationController')->middleware('cas.auth')->only('index');
     Route::resource('admissions-table', 'App\Http\Controllers\AdmissionsTableController')->middleware('cas.auth')->only('index');
 }
+
+Route::get('/fiche/dossiers/{fiche}', [FicheController::class, 'ficheDossiers']);

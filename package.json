@@ -2,35 +2,37 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js",
         "cypress:open": "cypress open"
     },
     "devDependencies": {
-        "@tailwindcss/custom-forms": "^0.2",
+        "autoprefixer": "^10.2.6",
         "axios": "^0.21",
         "browser-sync": "^2.26.13",
         "browser-sync-webpack-plugin": "^2.2.2",
         "cross-env": "^7.0",
         "cypress": "^6.8.0",
-        "laravel-mix": "^5.0.7",
-        "laravel-mix-purgecss": "^5.0.0",
+        "laravel-mix": "^6.0.25",
+        "laravel-mix-purgecss": "^6.0.0",
         "laravel-mix-tailwind": "^0.1.1",
         "lodash": "^4.17.21",
+        "postcss": "^8.3.5",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.28.0",
         "sass-loader": "^8.0.0",
+        "tailwindcss": "^2.2.4",
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.3.3",
         "alpinejs": "^2.7.3",
         "apexcharts": "^3.27.1",
         "faker": "^5.5.3",
-        "pikaday": "^1.8.2",
-        "tailwindcss": "^1.9.6"
+        "pikaday": "^1.8.2"
     }
 }

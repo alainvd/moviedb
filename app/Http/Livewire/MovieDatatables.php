@@ -3,11 +3,12 @@
 namespace App\Http\Livewire;
 
 
-use App\Models\Country;
-use App\Models\Movie;
 use App\Models\Crew;
+use App\Models\Fiche;
+use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Status;
+use App\Models\Country;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -15,7 +16,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class MovieDatatables extends LivewireDatatable
 {
 
-    public $title = 'Films - Distribution';
+    public $title = Fiche::TITLE_DIST;
     public $hideable = 'select';
     public $countries = Country::class;
     public $model = Movie::class;

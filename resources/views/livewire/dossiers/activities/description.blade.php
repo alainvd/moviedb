@@ -8,7 +8,7 @@
         @if(empty($print))
         <div class="col-span-1 print:hidden">
             <x-anchors.primary
-                class="mt-6 whitespace-no-wrap"
+                class="mt-6 whitespace-nowrap"
                 :url="route('movie-wizard', ['dossier' => $dossier, 'activity' => 1])"
                 :disabled="$dossier->call->closed">
                 Search and Select

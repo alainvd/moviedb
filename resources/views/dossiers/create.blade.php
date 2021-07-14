@@ -87,7 +87,7 @@
                                 Status
                             </label>
                             <select
-                                class="mt-1 block w-full form-select py-2 px-3 pr-8 border border-gray-300 bg-white rounded-md shadow-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                class="block w-full px-3 py-2 pr-8 mt-1 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-md form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
                                 name="status" id="status">
                                 @foreach ($statuses as $status)
                                     <option value="{{ $status->id }}" {{ $status->id === $dossier->status_id ? 'selected' : ''}}>{{ $status->name }}</option>
@@ -129,7 +129,7 @@
                         View history
                     </a>
                 @endif
-                @if($dossier->status->id !== 1)
+                @if($dossier->status->id !== App\Models\Status::DRAFT)
                 <x-button.download :dossier="$dossier"></x-button.download>
                 @endif
                 <x-button.primary :disabled="$dossier->call->closed" type="submit">Save</x-button.primary>

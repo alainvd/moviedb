@@ -178,17 +178,19 @@ class MovieDevCurrentForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Audiovisual Work - Development - For grant request';
-        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+        $title = Fiche::TITLE_DEVCURRENT;
 
         return view('livewire.movie-dev-current-form', [
                 'rules' => $this->rules(),
-                'layout' => $layout,
+                'layout' => $this->layout,
                 'print' => false,
                 'title' => $title,
                 'crumbs' => $this->crumbs,
+                'routeDetails' => $this->routeDetails,
+                'routeDossiers' => $this->routeDossiers,
+
             ])
-            ->layout($layout, [
+            ->layout($this->layout, [
                 'title' => $title,
                 'crumbs' => $this->crumbs,
             ]);

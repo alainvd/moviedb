@@ -23,7 +23,7 @@
 @include('partials.ecl.site-header')
 @include('partials.ecl.page-header', ['title' => $title ?? null, 'crumbs' => $crumbs ?? []])
 
-<main class="relative flex-1 px-1 py-2 overflow-y-auto z-75 focus:outline-none" tabindex="0">
+<main class="relative flex-1 px-1 py-2 overflow-y-auto z-51 focus:outline-none" tabindex="0">
     {{ $slot }}
 </main>
 

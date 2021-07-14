@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Fiche;
+use App\Models\Status;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FichePolicy
@@ -24,7 +25,7 @@ class FichePolicy
         }
         if ($user->hasRole('applicant')) {
             if ($fiche->type == 'dist') {
-                return $user->id === $fiche->created_by && $fiche->status->id === 1;
+                return $user->id === $fiche->created_by && $fiche->status->id == Status::DRAFT;
             } else {
                 return $user->id === $fiche->created_by;
             }
@@ -47,7 +48,7 @@ class FichePolicy
         }
         if ($user->hasRole('applicant')) {
             if ($fiche->type == 'dist') {
-                return $user->id === $fiche->created_by && $fiche->status->id === 1;
+                return $user->id === $fiche->created_by && $fiche->status->id == Status::DRAFT;
             } else {
                 return $user->id === $fiche->created_by;
             }

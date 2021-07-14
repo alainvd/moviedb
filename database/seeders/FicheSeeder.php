@@ -82,6 +82,11 @@ class FicheSeeder extends Seeder
         // attach fiche - type:dev-current, activity:3
         $this->dossierCreateFiches(3, 'dev-prev', 2);
         $this->dossierCreateFiches(3, 'dev-current', 3);
+        // for dossier with action: 4 (vg)
+        // attach fiche - type:vg-prev, activity:1
+        // attach fiche - type:vg-current, activity:1
+        $this->dossierCreateFiches(4, 'vg-prev', 1);
+        $this->dossierCreateFiches(4, 'vg-current', 1);
         // for dossier with action: 5 (distsag)
         // attach fiche - type:dist, activity:NULL
         $this->dossierCreateFiches(5, 'dist', null);

@@ -1,5 +1,4 @@
 @foreach ($fiches as $fiche)
-
     @if (in_array($type, ['current', 'short']))
         <x-table.row>
             <x-table.cell class="tracking-tight text-center font-md">
@@ -19,7 +18,7 @@
             </x-table.cell>
             @if(empty($print))
             <x-table.cell class="space-x-2 text-center">
-                <a href="{{ route($dossier->action->name === 'TVONLINE' ? "tv-fiche-form" : "dev-current-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
+                <a href="{{ route($dossier->action->name === 'TVONLINE' ? 'tv-fiche-form' : ($dossier->action->name === 'DEVVG'? 'vg-current-fiche-form' : 'dev-current-fiche-form'), compact('dossier', 'activity', 'fiche'))  }}"
                     class="text-purple-600 cursor-pointer print:hidden">
                     Edit
                 </a>
@@ -40,7 +39,7 @@
             <x-table.cell class="tracking-tight text-center font-md">
                 {{ $fiche->movie->year_of_copyright }}
             </x-table.cell>
-            <x-table.cell class="tracking-tight text-center font-md">
+            <x-table.cell class="tracking-tight text-center font-md"> 
                 {{ $fiche->movie->id }}
             </x-table.cell>
             <x-table.cell class="tracking-tight text-center font-md {{ (!empty($fiche->status) && $fiche->status->name === 'Draft') ?  'text-red-600' : '' }}">
@@ -48,7 +47,7 @@
             </x-table.cell>
             @if(empty($print))
             <x-table.cell class="space-x-2 text-center">
-                <a href="{{ route("dev-prev-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
+                <a href="{{ route($dossier->action->name === 'DEVVG' ? "vg-prev-fiche-form" : "dev-prev-fiche-form", compact('dossier', 'activity', 'fiche'))  }}"
                     class="text-purple-600 cursor-pointer print:hidden">
                     Edit
                 </a>

@@ -2,21 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Crew;
-use App\Models\Fiche;
-use App\Models\Movie;
-use App\Models\Person;
-use App\Models\Dossier;
-use App\Models\Activity;
-use App\Models\Document;
-use App\Models\Producer;
-use App\Models\SalesAgent;
-use App\Helpers\FormHelpers;
-use Illuminate\Http\Request;
-use App\Models\SalesDistributor;
-use Illuminate\Support\MessageBag;
 
-class MovieDevPrevForm extends FicheMovieFormBase
+use App\Models\Producer;
+use App\Models\SalesDistributor;
+use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
+use App\Helpers\FormHelpers;
+
+
+class VideoGameCurrentForm extends FicheMovieFormBase
 {
 
     protected function getListeners()
@@ -35,9 +29,7 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'required|integer',
         'movie.genre_id' => 'required|integer',
-        'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'required|integer',
-        'movie.film_type' => 'string',
 
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
@@ -46,16 +38,21 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.photography_start' => 'date',
         'movie.photography_end' => 'date',
         'movie.shooting_language' => 'required',
-        'movie.film_length' => 'required|integer|min:1|max:10000',
-        'movie.number_of_episodes' => 'integer|min:1|max:10000',
-        'movie.length_of_episodes' => 'integer|min:1|max:10000',
-        'movie.film_format' => 'string',
 
-        'movie.link_applicant_work' => 'string',
+        'movie.rights_origin_of_work' => 'required|string',
+        'movie.rights_contract_type' => 'required|string',
+        'movie.rights_contract_start_date' => 'required|date',
+        'movie.rights_contract_end_date' => 'required',
+        'movie.rights_contract_signature_date' => 'required',
         // dependent fields
-        'movie.link_applicant_work_person_name' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
-        'movie.link_applicant_work_person_position' => 'string|requiredIf:movie.link_applicant_work,WRKPERS',
-        'movie.link_applicant_work_person_credit' => 'string|requiredIf:movie.link_applicant_work,WRKPERS|requiredIf:movie.link_applicant_work,WRKCOPROD',
+        'movie.rights_adapt_author_name' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_original_title' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_type' => 'string|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_start_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_end_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+        'movie.rights_adapt_contract_signature_date' => 'date|requiredIf:movie.rights_origin_of_work,ADAPTATION',
+
+        'movie.total_budget_euro' => 'required|integer',
 
         'fiche.comments' => 'string',
     ];
@@ -66,10 +63,11 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.film_country_of_origin' => 'string',
         'movie.year_of_copyright' => 'integer',
         'movie.genre_id' => 'integer',
+        'movie.game_genres' => 'string',        
         'movie.delivery_platform' => 'string',
         'movie.audience_id' => 'integer',
-        'movie.film_type' => 'string',
-
+        'movie.game_audiences' => 'string',
+        
         'movie.imdb_url' => 'string|max:255',
         'movie.isan' => 'string|max:255',
         'movie.synopsis' => 'string|max:4000',
@@ -80,11 +78,20 @@ class MovieDevPrevForm extends FicheMovieFormBase
         'movie.film_length' => 'integer|min:1|max:10000',
         'movie.film_format' => 'string',
 
-        'movie.link_applicant_work' => 'string',
+        'movie.rights_origin_of_work' => 'string',
+        'movie.rights_contract_type' => 'string',
+        'movie.rights_contract_start_date' => 'date',
+        'movie.rights_contract_end_date' => 'date',
+        'movie.rights_contract_signature_date' => 'date',
         // dependent fields
-        'movie.link_applicant_work_person_name' => 'string',
-        'movie.link_applicant_work_person_position' => 'string',
-        'movie.link_applicant_work_person_credit' => 'string',
+        'movie.rights_adapt_author_name' => 'string',
+        'movie.rights_adapt_original_title' => 'string',
+        'movie.rights_adapt_contract_type' => 'string',
+        'movie.rights_adapt_contract_start_date' => 'date',
+        'movie.rights_adapt_contract_end_date' => 'date',
+        'movie.rights_adapt_contract_signature_date' => 'date',
+
+        'movie.total_budget_euro' => 'integer',
 
         'fiche.comments' => 'string',
     ];
@@ -97,7 +104,9 @@ class MovieDevPrevForm extends FicheMovieFormBase
     public function mount(Request $request)
     {
         parent::mount($request);
-        if ($this->fiche->exists && $this->fiche->type!=='dev-prev') {
+        $type='vg-current';
+        $this->fiche->type='vg-current';
+        if ($this->fiche->exists && $this->fiche->type!=='vg-current') {
             abort(404);
         }
     }
@@ -146,18 +155,17 @@ class MovieDevPrevForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = Fiche::TITLE_DEVPREV;
+        $title = 'Video Game - Development - For grant request';
+        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
 
-        return view('livewire.movie-dev-prev-form', [
+        return view('livewire.video-game-current-form', [
                 'rules' => $this->rules(),
-                'layout' => $this->layout,
+                'layout' => $layout,
                 'print' => false,
                 'title' => $title,
                 'crumbs' => $this->crumbs,
-                'routeDetails' => $this->routeDetails,
-                'routeDossiers' => $this->routeDossiers,
             ])
-            ->layout($this->layout, [
+            ->layout($layout, [
                 'title' => $title,
                 'crumbs' => $this->crumbs,
             ]);
@@ -165,3 +173,5 @@ class MovieDevPrevForm extends FicheMovieFormBase
     }
 
 }
+
+
