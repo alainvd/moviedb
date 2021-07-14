@@ -51,7 +51,7 @@ Route::get('/', function () {
     if (auth()->user()) {
         $user = Auth::user();
         /** @var User $user */
-        if ($user->hasRole('editor')) {
+        if ($user->can('access dashboard')) {
             return redirect('dashboard/dossiers');
         }
         if ($user->hasRole('applicant')) {
