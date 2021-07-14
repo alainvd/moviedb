@@ -99,7 +99,7 @@ class Export extends Component
         } else {
             if (
                 $this->selectedActions->every(fn ($item) => in_array($item['label'], ['FILMOVE'])
-                || Call::whereIn('id', $this->selectedCalls->pluck('value'))
+                || Call::whereIn('id', $this->selectedCalls->pluck('value'))->get()
                     ->every(fn ($call) => in_array($call->action->name, ['FILMOVE'])))
             ) {
                 // Get distribution for DIST fiches (only FILMOVE so far)

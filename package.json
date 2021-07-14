@@ -21,6 +21,7 @@
         "laravel-mix-purgecss": "^5.0.0",
         "laravel-mix-tailwind": "^0.1.1",
         "lodash": "^4.17.21",
+        "read-excel-file": "^5.2.7",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.28.0",
         "sass-loader": "^8.0.0",
