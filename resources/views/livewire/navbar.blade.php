@@ -1,5 +1,5 @@
 <nav x-data="{ open: false }" @keydown.window.escape="open = false" class="bg-gray-800">
-    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="px-4 mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
