@@ -38,12 +38,12 @@
         </div>
 
         <div class="my-2">
-            <x-form.input class="w-1/2" :id="'year'" :label="'WORK PROGRAM YEAR'" wire:model="year"></x-form.input>
+            <x-form.input class="w-1/2" :id="'year'" :label="'WORK PROGRAM YEAR'" wire:model.defer="year"></x-form.input>
         </div>
 
-        <x-form.datepicker :id="'from'" :label="'CREATED STARTING AT'" wire:model="from"></x-form.datepicker>
+        <x-form.datepicker :id="'from'" :label="'CREATED STARTING AT'" wire:model.defer="from"></x-form.datepicker>
 
-        <x-form.datepicker :id="'to'" :label="'CREATED UNTIL'" wire:model="to"></x-form.datepicker>
+        <x-form.datepicker :id="'to'" :label="'CREATED UNTIL'" wire:model.defer="to"></x-form.datepicker>
 
         <label class="block mt-4 mb-2 text-sm font-light uppercase leading-tight text-gray-700" for="export-type">what to export</label>
         <div id="export-type" class="flex w-full mb-4">
@@ -54,6 +54,7 @@
                 <div class="flex leading-5 uppercase">Dossiers</div>
             </button>
             <button
+                data-cy="export-fiches"
                 type="button"
                 class="text-base w-1/2 rounded-l-none border-l-0  hover:scale-110 focus:outline-none inline-flex justify-center px-4 py-4 rounded font-bold cursor-pointer hover:bg-indigo-600 hover:text-white border duration-200 ease-in-out border-gray-600 transition {{ $exportFiches ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700' }}"
                 wire:click="$set('exportFiches', true)">

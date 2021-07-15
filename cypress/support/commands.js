@@ -50,9 +50,9 @@ Cypress.Commands.add('createDossier', (type, id) => {
         .wait(1000)
 })
 
-Cypress.Commands.add('impersonate', (id, role) => {
-    const minUserId = 4
-    const maxUserId = 33
+Cypress.Commands.add('impersonate', (role, id) => {
+    let minUserId = 4
+    let maxUserId = 33
 
     if (role === 'applicant') {
         maxUserId = 23
