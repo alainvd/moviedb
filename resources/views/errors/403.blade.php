@@ -6,7 +6,7 @@
             OOPS!
         </h2>
         <h3 class="my-4 text-3xl font-normal tracking-normal">
-            {{ $exception->getMessage() ? $exception->getMessage() : 'Something went wrong' }}
+            Something went wrong
         </h3>
         <x-anchors.primary
             class="mt-4"
