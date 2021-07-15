@@ -6,6 +6,20 @@
         <div class="w-full p-4 mx-auto my-4 bg-white rounded-md shadow-md">
         @endif
 
+            @if($isEditor)
+            <!-- title -->
+            <div class="my-8">
+                <x-details.title
+                    :movie="$movie"
+                    :fiche="$fiche"
+                ></x-details.title>
+            </div>
+            @endif
+
+            @if($isEditor && $fiche && $routeDetails)
+            @include('components.details.fiche-tabs')
+            @endif
+
             {{ $slot }}
 
             <!-- buttons -->

@@ -65,6 +65,9 @@ class FicheMovieFormBase extends FicheFormBase
     
     public $hasHistory = false;
 
+    public $routeDetails;
+    public $routeDossiers;
+
     public function validationAttributes()
     {
         // todo: finish for all fields

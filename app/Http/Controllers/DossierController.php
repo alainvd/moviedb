@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use App\Models\Dossier;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -49,6 +50,9 @@ class DossierController extends Controller
 
     public function downloadFullDossier(Dossier $dossier) {
         if (request()->user()->cannot('view', $dossier)) {
+            abort(404);
+        }
+        if($dossier->status->id == Status::DRAFT) {
             abort(404);
         }
 

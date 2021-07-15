@@ -218,17 +218,18 @@ class MovieTVForm extends FicheMovieFormBase
     {
         parent::render();
 
-        $title = 'Audiovisual Work - Production - TV and Online';
-        $layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+        $title = Fiche::TITLE_TV;
 
         return view('livewire.movie-tv-form', [
                 'rules' => $this->rules(),
-                'layout' => $layout,
+                'layout' => $this->layout,
                 'print' => false,
                 'title' => $title,
                 'crumbs' => $this->crumbs,
+                'routeDetails' => $this->routeDetails,
+                'routeDossiers' => $this->routeDossiers,
             ])
-            ->layout($layout, [
+            ->layout($this->layout, [
                 'title' => $title,
                 'crumbs' => $this->crumbs,
             ]);

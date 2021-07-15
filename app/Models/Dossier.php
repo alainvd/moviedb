@@ -26,11 +26,13 @@ class Dossier extends Model
     protected $fillable = [
         'project_ref_id',
         'action_id',
-        'year',
         'status_id',
+        'year',
         'call_id',
         'contact_person',
+        'pic',
         'company',
+        'country',
         'created_by',
         'updated_by',
     ];
@@ -84,6 +86,16 @@ class Dossier extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function getPublicStatusAttribute()
+    {
+        $status = $this->status->name;
+        if (Auth::user()->hasRole('applicant')) {
+            return in_array($status, ['Draft', 'Submitted']) ? $status : 'Submitted';
+        }
+
+        return $status;
     }
 
     public function scopeForUser($query, $id)

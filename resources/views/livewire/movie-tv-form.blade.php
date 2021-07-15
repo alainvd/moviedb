@@ -1,6 +1,7 @@
 <x-fiche-form
     :layout="$layout"
     :print="$print"
+    :movie="$movie"
     :fiche="$fiche"
     :hasHistory="$hasHistory ?? false"
     :dossier="$dossier ?? null"
@@ -8,8 +9,12 @@
     :isApplicant="$isApplicant"
     :isEditor="$isEditor"
     :standAloneFiche="$standAloneFiche ?? null"
+    :tab="'fiche'"
+    :routeDetails="$routeDetails ?? null"
+    :routeDossiers="$routeDossiers ?? null"
 >
 
+    @if($isApplicant)
     <!-- title -->
     <div class="my-8">
         <x-details.title
@@ -17,6 +22,7 @@
             :fiche="$fiche"
         ></x-details.title>
     </div>
+    @endif
 
     <!-- basic-tv -->
     <div class="mt-8 mb-4">

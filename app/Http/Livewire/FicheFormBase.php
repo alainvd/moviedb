@@ -17,6 +17,7 @@ class FicheFormBase extends Component
     public $isApplicant = false;
     public $isEditor = false;
     public $previous;
+    public $layout;
 
     protected function getListeners()
     {
@@ -51,6 +52,16 @@ class FicheFormBase extends Component
         // }
         // How do I limit that it would only show when I click validate button
         // Instead of when changing every field
+
+        $this->layout = 'components.' . ($this->isApplicant ? 'ecl-layout' : 'layout');
+
+        if (isset($this->dossier) && isset($this->activity) && isset($this->fiche)) {
+            $fiche_routes = $this->fiche->ficheTypeRoutes($this->dossier, $this->activity, $this->fiche);
+        } else {
+            $fiche_routes = $this->fiche->ficheTypeRoutes(null, null, $this->fiche);
+        }
+        $this->routeDetails = $fiche_routes['details_route'];
+        $this->routeDossiers = $fiche_routes['dossiers_route'];
     }
 
     public function addItem($data)
